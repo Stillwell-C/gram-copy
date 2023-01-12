@@ -7,7 +7,8 @@ import {
   limit,
   getDocs,
 } from "firebase/firestore";
-import { db } from "../firebase";
+import { ref, getDownloadURL } from "firebase/storage";
+import { db, storage, getURL } from "../firebase";
 
 const useGetPosts = (pageNum) => {
   const [loading, setLoading] = useState(true);
@@ -15,51 +16,62 @@ const useGetPosts = (pageNum) => {
   const [errorInfo, setErrorInfo] = useState({});
   const [posts, setPosts] = useState([]);
   const [hasMoreData, setHasMoreData] = useState(false);
+  const [lastDoc, setLastDoc] = useState();
 
   useEffect(() => {
-    console.log("pgNum", pageNum);
     setLoading(true);
     setError(false);
     setErrorInfo({});
 
     getNewDocs();
-    // getDocs(query(collection(db, "testStorage"), limit(5))).then((docs) => {
-    //   docs.forEach((doc) => console.log(doc.data()));
-    // });
   }, [pageNum]);
-
-  useEffect(() => {
-    console.log(posts);
-  }, [posts]);
 
   const getNewDocs = async () => {
     try {
       let newDocs;
 
-      if (!posts.length) {
+      if (pageNum === 1) {
         newDocs = await getDocs(
-          query(collection(db, "testStorage"), orderBy("order"), limit(5))
+          query(collection(db, "testImg"), orderBy("date"), limit(3))
         );
       }
-      if (posts.length) {
-        const lastPost = posts[posts.length - 1].order;
-        console.log(lastPost);
+      if (pageNum > 1) {
+        const lastPost = posts[posts.length - 1];
+        console.log("last post", lastPost);
         newDocs = await getDocs(
           query(
-            collection(db, "testStorage"),
-            orderBy("order"),
-            startAfter(lastPost),
-            limit(5)
+            collection(db, "testImg"),
+            orderBy("date"),
+            limit(3),
+            startAfter(lastDoc)
           )
         );
       }
 
+      setLastDoc(newDocs.docs[newDocs.docs.length - 1]);
+
       const newDocData = [];
-      newDocs.forEach((doc) => {
-        newDocData.push({ ...doc.data(), id: doc.id });
-      });
-      if (!posts.length) setPosts(newDocData);
-      if (posts.length) setPosts((prev) => [...prev, ...newDocData]);
+      const pushToArr = async (doc) => {
+        try {
+          const imgURL = await getURL(doc.data().imgLoc);
+          const userImgURL = await getURL(doc.data().userImg);
+          newDocData.push({
+            ...doc.data(),
+            imgURL: imgURL,
+            userImgURL: userImgURL,
+            id: doc.id,
+          });
+        } catch (err) {
+          console.log(err.message);
+        }
+      };
+
+      for (let doc of newDocs.docs) {
+        await pushToArr(doc);
+      }
+
+      if (pageNum === 1) setPosts(newDocData);
+      if (pageNum > 1) setPosts((prev) => [...prev, ...newDocData]);
       setHasMoreData(Boolean(newDocData.length));
       setLoading(false);
     } catch (err) {
