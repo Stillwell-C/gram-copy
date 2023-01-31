@@ -32,7 +32,7 @@ const useGetPosts = (pageNum) => {
 
       if (pageNum === 1) {
         newDocs = await getDocs(
-          query(collection(db, "testImg"), orderBy("date"), limit(3))
+          query(collection(db, "userImgs"), orderBy("date"), limit(3))
         );
       }
       if (pageNum > 1) {
@@ -53,7 +53,7 @@ const useGetPosts = (pageNum) => {
       const newDocData = [];
       const pushToArr = async (doc) => {
         try {
-          const imgURL = await getURL(doc.data().imgLoc);
+          const imgURL = await getURL(doc.data().imgName);
           const userImgURL = await getURL(doc.data().userImg);
           newDocData.push({
             ...doc.data(),
