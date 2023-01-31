@@ -1,0 +1,148 @@
+.navbar-container {
+  position: fixed;
+  width: 245px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-right: 1px solid #dbdbdb;
+  background-color: #fff;
+
+  .navbar-top,
+  .navbar-bottom {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 20px;
+    padding: 15px;
+
+    .navbar-header {
+      font-size: 1.5rem;
+      margin: 20px 0;
+      cursor: pointer;
+
+      img {
+        width: 103px;
+      }
+    }
+
+    .navbar-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 10px;
+      width: 100%;
+      height: 100%;
+      border-radius: 2rem;
+      cursor: pointer;
+
+      .navbar-line {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        width: 100%;
+        height: 100%;
+      }
+
+      a {
+        width: 100%;
+        height: 100%;
+        text-decoration: none;
+        color: black;
+      }
+
+      img {
+        height: 24px;
+        max-width: 24px;
+        transform: scale(1);
+      }
+
+      span {
+        padding-left: 16px;
+      }
+
+      &:hover {
+        background-color: #fafafa;
+        img {
+          transform: scale(1.1);
+          transition: transform 200ms ease-in;
+        }
+      }
+    }
+  }
+
+  .navbar-bottom {
+    position: relative;
+    .navbar-row {
+      margin-bottom: 20px;
+    }
+
+    .navbar-menu {
+      position: absolute;
+      top: -5rem;
+      display: none;
+      flex-direction: column;
+      box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.19);
+      -webkit-box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.19);
+      width: 98%;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      z-index: 10;
+
+      .menu-line {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        border-bottom: 1px solid #dbdbdb;
+        background-color: #fff;
+
+        a {
+          width: 100%;
+          height: 100%;
+          text-decoration: none;
+          color: black;
+        }
+
+        img {
+          height: 24px;
+          max-width: 24px;
+          transform: scale(1);
+        }
+
+        &:hover {
+          background-color: #fafafa;
+          img {
+            transform: scale(1.1);
+            transition: transform 200ms ease-in;
+          }
+        }
+      }
+
+      &.active {
+        display: flex;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+    .navbar-menu-close-field {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      z-index: -100;
+
+      &.active {
+        display: block;
+      }
+    }
+  }
+}
