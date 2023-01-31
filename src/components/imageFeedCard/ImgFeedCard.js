@@ -18,7 +18,11 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
           <img src={threeDots} alt='three dots' />
         </button>
       </div>
-      <img className='mainImg' alt='user upload' src={post.imgURL} />
+      <img
+        className='mainImg'
+        alt={post.altText ? post.altText : "user upload"}
+        src={post.imgURL}
+      />
       <div className='card-bottom'>
         <div className='buttons'>
           <div className='buttons-left'>
@@ -38,7 +42,7 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
             </button>
           </div>
         </div>
-        <div>Likes: {post.likes}</div>
+        <div>Likes: {post.likedUsers.length}</div>
       </div>
     </>
   );
