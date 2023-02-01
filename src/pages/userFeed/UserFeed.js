@@ -1,13 +1,21 @@
+import FeedRightInfo from "../../components/feedRightInfo/FeedRightInfo";
 import Navbar from "../../components/navbar/Navbar";
 import ImageFeed from "../imageFeed/ImageFeed";
+import "./userfeed.scss";
 
 const UserFeed = () => {
   return (
-    <>
-      <Navbar />
-      <ImageFeed />
-      <div></div>
-    </>
+    <div className='userfeed-container'>
+      <div>
+        <Navbar />
+      </div>
+      <div>
+        <ImageFeed />
+      </div>
+      <div>
+        <FeedRightInfo />
+      </div>
+    </div>
   );
 };
 
