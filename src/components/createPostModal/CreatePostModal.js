@@ -126,7 +126,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
       imgName: imgFileUploadName,
       likedUsers: [],
       savedUsers: [],
-      comments: [formData.caption],
+      comments: [{ [currentUser.username]: formData.caption }],
     };
     try {
       await addDoc(collection(db, "userImgs"), uploadData);
