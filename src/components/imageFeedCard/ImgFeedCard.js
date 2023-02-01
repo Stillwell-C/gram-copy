@@ -2,8 +2,10 @@ import React from "react";
 import threeDots from "../../assets/three-dots-line-svgrepo-com.svg";
 import heart from "../../assets/heart-rounded-svgrepo-com.svg";
 import comment from "../../assets/message-circle-01-svgrepo-com.svg";
-import message from "../../assets/message-circle-01-svgrepo-com.svg";
+import message from "../../assets/plane-svgrepo-com.svg";
 import bookmark from "../../assets/bookmark-svgrepo-com.svg";
+import Comment from "../comment/Comment";
+import moment from "moment";
 
 const ImgFeedCard = React.forwardRef(({ post }, ref) => {
   const imgContent = (
@@ -42,7 +44,39 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
             </button>
           </div>
         </div>
-        <div>Likes: {post.likedUsers.length}</div>
+        <div className='card-bottom-text'>
+          <div className='likes-counter'>{post.likedUsers.length} Likes</div>
+          <div className='comments'>
+            {post.comments[0] && (
+              <Comment comment={post.comments[0]} abbreviate={true} />
+            )}
+            {post.comments[1] && (
+              <Comment comment={post.comments[1]} abbreviate={true} />
+            )}
+          </div>
+          <div className='view-more-div'>
+            {post.comments[1]
+              ? `View all ${post.comments.length} posts`
+              : `View all posts`}
+          </div>
+          <div className='time-ago'>
+            {moment(post.date.toDate()).fromNow().toUpperCase()}
+          </div>
+        </div>
+        <div className='input-comment-div'>
+          <div className='input-left'>
+            <label>
+              <input
+                type='text'
+                maxLength={2200}
+                placeholder='Add a comment...'
+              />
+            </label>
+          </div>
+          <div className='input-right'>
+            <button>Post</button>
+          </div>
+        </div>
       </div>
     </>
   );
