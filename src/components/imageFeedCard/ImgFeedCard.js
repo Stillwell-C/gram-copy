@@ -12,7 +12,7 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
         <img className='userImg' src={post.userImgURL} alt='user profile' />
         <div className='photoInfo'>
           <div className='userName'>{post.userName}</div>
-          <div className='photoLocation'></div>
+          <div className='photoLocation'>{post.location && post.location}</div>
         </div>
         <button className='optionButton'>
           <img src={threeDots} alt='three dots' />
