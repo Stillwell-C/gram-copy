@@ -48,7 +48,12 @@ const SignupForm = () => {
         email: user.email,
         username: userName,
         fullname: fullName,
-        friends: [],
+        following: [],
+        followers: [],
+        likedPosts: [],
+        savedPosts: [],
+        userPosts: [],
+        userBio: "",
         userImg: "gs://driveproject-34ebb.appspot.com/Default_pfp.svg",
       };
       await addDoc(collection(db, "userInfo"), userData);
