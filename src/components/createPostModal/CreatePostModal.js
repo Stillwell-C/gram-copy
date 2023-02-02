@@ -5,7 +5,18 @@ import locationImg from "../../assets/location-svgrepo-com.svg";
 import downArrow from "../../assets/down-arrow-backup-2-svgrepo-com.svg";
 import { storage, db } from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  arrayUnion,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  serverTimestamp,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { AuthContext } from "../../context/authContext";
 
 const CreatePostModal = ({ setDisplayPostModal }) => {
@@ -24,14 +35,11 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
   const [expandAccessibility, setExpandAccessibility] = useState(false);
 
   useEffect(() => {
-    //upload file uploaded by user and get URL
+    //upload file uploaded by user to storage
     const uploadFile = () => {
-      //TODO: add username to name
       const fileName =
         new Date().getTime() + currentUser.username + imgFileUpload.name;
       const storageRef = ref(storage, fileName);
-      // setImgFileUploadName(fileName);
-
       const uploadTask = uploadBytesResumable(storageRef, imgFileUpload);
 
       uploadTask.on(
@@ -55,7 +63,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
           console.log(err.code);
         },
         () => {
-          console.log("ref", uploadTask.snapshot);
+          // console.log("ref", uploadTask.snapshot);
           // getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           //   console.log("File available at", downloadURL);
           //   setImgFileUploadName(downloadURL);
@@ -130,12 +138,24 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
         {
           username: currentUser.username,
           comment: formData.caption,
-          date: serverTimestamp(),
+          date: new Date().toUTCString(),
         },
       ],
     };
     try {
-      await addDoc(collection(db, "userImgs"), uploadData);
+      //upload post info to firestore
+      const docRef = await addDoc(collection(db, "userImgs"), uploadData);
+      //Add post to individual user's userInfo post array
+      const userQuery = await getDocs(
+        query(
+          collection(db, "userInfo"),
+          where("email", "==", currentUser.email)
+        )
+      );
+      console.log(userQuery.docs[0].id);
+      await updateDoc(doc(db, "userInfo", userQuery.docs[0].id), {
+        userPosts: arrayUnion(docRef.id),
+      });
       setFormData({
         caption: "",
         location: "",
