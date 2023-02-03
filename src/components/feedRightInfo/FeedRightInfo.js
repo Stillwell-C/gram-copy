@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../context/authContext";
+import Footer from "../footer/Footer";
 import "./feedRightInfo.scss";
 
 const FeedRightInfo = () => {
@@ -17,21 +18,7 @@ const FeedRightInfo = () => {
           <button>Switch</button>
         </div>
       </div>
-
-      <div className='footer'>
-        <nav>
-          <a href='#'>About</a>
-          <a href='https://github.com/Stillwell-C'>Github</a>
-          <a href='#'>Press</a>
-          <a href='#'>API</a>
-          <a href='#'>Jobs</a>
-          <a href='#'>Privacy</a>
-          <a href='#'>Terms</a>
-          <a href='#'>Locations</a>
-          <a href='#'>Language</a>
-        </nav>
-        <span className='copyright'>© Stillwell-C</span>
-      </div>
+      <Footer />
     </div>
   );
 };
