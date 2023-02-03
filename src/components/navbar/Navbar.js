@@ -75,7 +75,7 @@ const Navbar = () => {
             </div>
           </div>
           <div className='navbar-row'>
-            <Link to='/accounts/login'>
+            <Link to={`/${currentUser.username}`}>
               <div className='navbar-line'>
                 <img src={profile} alt='profile icon' />
                 <span>Profile</span>
