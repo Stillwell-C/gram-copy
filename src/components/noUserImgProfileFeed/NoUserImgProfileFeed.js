@@ -1,7 +1,8 @@
 import React from "react";
 import camera from "../../assets/camera-player-multimedia-svgrepo-com.svg";
+import "./noUserImgProfileFeed.scss";
 
-const NoUserImgProfileFeed = () => {
+const NoUserImgProfileFeed = ({ handleAddPostModal }) => {
   return (
     <div className='feed-empty-container'>
       <div className='share-photo-info'>
@@ -9,6 +10,7 @@ const NoUserImgProfileFeed = () => {
           type='button'
           className='camera-icon-button'
           aria-label='upload your image'
+          onClick={handleAddPostModal}
         >
           <img src={camera} alt='camera' />
         </button>
@@ -20,6 +22,7 @@ const NoUserImgProfileFeed = () => {
           type='button'
           className='bottom-upload-button'
           aria-label='upload your image'
+          onClick={handleAddPostModal}
         >
           Share your first photo
         </button>
