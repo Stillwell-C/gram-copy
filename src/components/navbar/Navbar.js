@@ -39,10 +39,12 @@ const Navbar = () => {
             <img src={logo} alt='Instagram logo' />
           </div>
           <div className='navbar-row'>
-            <div className='navbar-line'>
-              <img src={home} alt='home icon' />
-              <span>Home</span>
-            </div>
+            <Link to='/'>
+              <div className='navbar-line'>
+                <img src={home} alt='home icon' />
+                <span>Home</span>
+              </div>
+            </Link>
           </div>
           <div className='navbar-row'>
             <div className='navbar-line'>
