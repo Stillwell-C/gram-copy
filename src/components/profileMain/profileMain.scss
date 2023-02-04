@@ -1,0 +1,142 @@
+.profile-main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .profile-content-container {
+    max-width: 1000px;
+    width: 80%;
+    min-width: 700px;
+    display: flex;
+    flex-direction: column;
+
+    .profile-top {
+      display: flex;
+      padding: 30px 20px 0;
+      margin-bottom: 40px;
+
+      .profile-img-div {
+        flex-grow: 1;
+        overflow: hidden;
+        margin-right: 30px;
+        img {
+          width: 150px;
+          border-radius: 50%;
+        }
+      }
+
+      .user-info {
+        flex-grow: 2;
+
+        .user-info-top {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 15px;
+          margin-bottom: 20px;
+
+          .user-info-username {
+            font-size: 20px;
+            font-weight: 400;
+          }
+
+          .edit-profile-btn {
+            padding: 7px 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 0.5rem;
+            background-color: #efefef;
+            cursor: pointer;
+
+            &:hover {
+              background-color: #cccccc;
+            }
+          }
+
+          .user-settings-btn {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            background-color: transparent;
+            border: none;
+          }
+        }
+
+        .user-info-middle {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 40px;
+          margin-bottom: 20px;
+
+          .user-figure {
+            font-weight: bold;
+            margin-right: 5px;
+          }
+        }
+
+        .user-info-bottom {
+          font-size: 14px;
+          .user-fullname {
+            font-weight: bold;
+          }
+        }
+      }
+
+      .user-settings-btn {
+        img {
+          width: 24px;
+        }
+      }
+    }
+
+    .profile-bottom {
+      width: 100%;
+      border-top: 1px solid #cccc;
+
+      .display-selector {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .display-selector-individual {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          font-size: 12px;
+          margin-right: 50px;
+          color: #8e8e8e;
+          padding: 20px 0;
+          cursor: pointer;
+
+          img {
+            width: 12px;
+            margin-right: 5px;
+            filter: invert(66%) sepia(0%) saturate(1247%) hue-rotate(147deg)
+              brightness(85%) contrast(97%);
+          }
+
+          &.active {
+            color: black;
+            border-top: 1px solid black;
+
+            img {
+              filter: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .footer-container {
+    .footer {
+      align-items: center;
+    }
+  }
+}

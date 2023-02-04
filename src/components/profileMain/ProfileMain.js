@@ -7,6 +7,7 @@ import Footer from "../footer/Footer";
 import NoUserImgProfileFeed from "../noUserImgProfileFeed/NoUserImgProfileFeed";
 import { useParams } from "react-router-dom";
 import useGetUserInfo from "../../hooks/useGetUserInfo";
+import "./profileMain.scss";
 
 const ProfileMain = () => {
   const { userParam } = useParams();
@@ -22,7 +23,6 @@ const ProfileMain = () => {
     setLoading(true);
     if (userParam === currentUser.username) {
       setUserInfo(currentUser);
-      setLoading(false);
     } else {
       setUserInfo({
         userPosts: userPosts,
@@ -32,14 +32,13 @@ const ProfileMain = () => {
         userBio: userBio,
       });
     }
-    console.log("userParam", userParam);
-    console.log("userInfo", userInfo);
+    setLoading(false);
   }, []);
 
   return (
     <div className='profile-main-container'>
       {!loading && (
-        <>
+        <div className='profile-content-container'>
           <div className='profile-top'>
             <div className='profile-img-div'>
               <img src={userInfo.userImgURL} alt='user profile' />
@@ -84,20 +83,20 @@ const ProfileMain = () => {
           </div>
           <div className='profile-bottom'>
             <div className='display-selector'>
-              <div>
+              <div className='display-selector-individual'>
                 <img src={grid} alt='grid icon'></img>
                 <span>POSTS</span>
               </div>
-              <div>
+              <div className='display-selector-individual'>
                 <img src={bookmark} alt='bookmark icon'></img>
                 <span>SAVED</span>
               </div>
             </div>
             <div className='img-feed-container'>
-              {userInfo.userPosts.lenth < 1 && <NoUserImgProfileFeed />}
+              {userInfo.userPosts.length < 5 && <NoUserImgProfileFeed />}
             </div>
           </div>
-        </>
+        </div>
       )}
       <div className='footer-container'>
         <Footer />
