@@ -1,0 +1,13 @@
+.profile-page-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  .navbar {
+    width: 245px;
+  }
+
+  .profile-main {
+    flex: 1;
+  }
+}
