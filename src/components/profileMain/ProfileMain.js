@@ -8,6 +8,7 @@ import NoUserImgProfileFeed from "../noUserImgProfileFeed/NoUserImgProfileFeed";
 import { useParams } from "react-router-dom";
 import useGetUserInfo from "../../hooks/useGetUserInfo";
 import "./profileMain.scss";
+import CreatePostModal from "../createPostModal/CreatePostModal";
 
 const ProfileMain = () => {
   const { userParam } = useParams();
@@ -18,6 +19,8 @@ const ProfileMain = () => {
     "username"
   );
   const [loading, setLoading] = useState(true);
+  const [displayPostModal, setDisplayPostModal] = useState(false);
+  const [displaySelector, setDisplaySelector] = useState("posts");
 
   useEffect(() => {
     setLoading(true);
@@ -34,6 +37,10 @@ const ProfileMain = () => {
     }
     setLoading(false);
   }, []);
+
+  const handleAddPostModal = () => {
+    setDisplayPostModal(true);
+  };
 
   return (
     <div className='profile-main-container'>
@@ -60,13 +67,16 @@ const ProfileMain = () => {
                   <span className='user-figure'>
                     {userInfo.userPosts.length}
                   </span>
-                  <span className='category'>posts</span>
+                  <span className='category'>
+                    {userInfo.userPosts.length === 1 ? "post" : "posts"}
+                  </span>
                 </div>
                 <div>
                   <span className='user-figure'>
                     {userInfo.followers.length}
                   </span>
-                  followers<span className='category'></span>
+                  {userInfo.followers.length === 1 ? "follower" : "followers"}
+                  <span className='category'></span>
                 </div>
                 <div>
                   <span className='user-figure'>
@@ -83,17 +93,35 @@ const ProfileMain = () => {
           </div>
           <div className='profile-bottom'>
             <div className='display-selector'>
-              <div className='display-selector-individual'>
+              <div
+                className={
+                  displaySelector === "posts"
+                    ? "display-selector-individual active"
+                    : "display-selector-individual"
+                }
+                aria-label='click to see user posts'
+                onClick={() => setDisplaySelector("posts")}
+              >
                 <img src={grid} alt='grid icon'></img>
                 <span>POSTS</span>
               </div>
-              <div className='display-selector-individual'>
+              <div
+                className={
+                  displaySelector === "saved"
+                    ? "display-selector-individual active"
+                    : "display-selector-individual"
+                }
+                aria-label='click to see saved posts'
+                onClick={() => setDisplaySelector("saved")}
+              >
                 <img src={bookmark} alt='bookmark icon'></img>
                 <span>SAVED</span>
               </div>
             </div>
             <div className='img-feed-container'>
-              {userInfo.userPosts.length < 5 && <NoUserImgProfileFeed />}
+              {userInfo.userPosts.length < 5 && (
+                <NoUserImgProfileFeed handleAddPostModal={handleAddPostModal} />
+              )}
             </div>
           </div>
         </div>
@@ -101,6 +129,9 @@ const ProfileMain = () => {
       <div className='footer-container'>
         <Footer />
       </div>
+      {displayPostModal && (
+        <CreatePostModal setDisplayPostModal={setDisplayPostModal} />
+      )}
     </div>
   );
 };
