@@ -16,7 +16,9 @@ const useGetUserInfo = (queryInput, queryParameter) => {
   const [username, setUsername] = useState("");
   const [allData, setAllData] = useState({});
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
   const getUserInfo = async () => {
     try {
@@ -37,7 +39,7 @@ const useGetUserInfo = (queryInput, queryParameter) => {
       setSavedPosts([...userInfo.savedPosts]);
       setUserBio(userInfo.userBio);
       setUserImg(userInfo.userImg);
-      setUserImgURL(userInfo.userImgURL);
+      setUserImgURL(userImgURL);
       setUserPosts(userInfo.userPosts);
       setUsername(userInfo.username);
     } catch (err) {
