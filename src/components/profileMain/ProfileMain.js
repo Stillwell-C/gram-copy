@@ -14,29 +14,27 @@ const ProfileMain = () => {
   const { userParam } = useParams();
   const { currentUser } = useContext(AuthContext);
   const [userInfo, setUserInfo] = useState();
-  const { userPosts, followers, following, fullname, userBio } = useGetUserInfo(
-    userParam,
-    "username"
-  );
+  const { userPosts, followers, following, fullname, userBio, userImgURL } =
+    useGetUserInfo(userParam, "username");
   const [loading, setLoading] = useState(true);
   const [displayPostModal, setDisplayPostModal] = useState(false);
   const [displaySelector, setDisplaySelector] = useState("posts");
 
   useEffect(() => {
     setLoading(true);
-    if (userParam === currentUser.username) {
-      setUserInfo(currentUser);
-    } else {
-      setUserInfo({
-        userPosts: userPosts,
-        followers: followers,
-        following: following,
-        fullname: fullname,
-        userBio: userBio,
-      });
-    }
-    setLoading(false);
   }, []);
+
+  useEffect(() => {
+    setUserInfo({
+      userPosts: userPosts,
+      followers: followers,
+      following: following,
+      fullname: fullname,
+      userBio: userBio,
+      userImgURL: userImgURL,
+    });
+    setLoading(false);
+  }, [userImgURL]);
 
   const handleAddPostModal = () => {
     setDisplayPostModal(true);
