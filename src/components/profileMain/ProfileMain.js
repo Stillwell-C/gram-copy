@@ -9,6 +9,8 @@ import { useParams } from "react-router-dom";
 import useGetUserInfo from "../../hooks/useGetUserInfo";
 import "./profileMain.scss";
 import CreatePostModal from "../createPostModal/CreatePostModal";
+import useGetUserPosts from "../../hooks/useGetUserPosts";
+import ProfilePostCard from "../profilePostCard/ProfilePostCard";
 
 const ProfileMain = () => {
   const { userParam } = useParams();
@@ -16,12 +18,16 @@ const ProfileMain = () => {
   const [userInfo, setUserInfo] = useState();
   const { userPosts, followers, following, fullname, userBio, userImgURL } =
     useGetUserInfo(userParam, "username");
-  const [loading, setLoading] = useState(true);
+  const { loading, error, errorInfo, posts, hasMoreData } = useGetUserPosts(
+    userParam,
+    1
+  );
+  const [pageLoading, setPageLoading] = useState(true);
   const [displayPostModal, setDisplayPostModal] = useState(false);
   const [displaySelector, setDisplaySelector] = useState("posts");
 
   useEffect(() => {
-    setLoading(true);
+    setPageLoading(true);
   }, []);
 
   useEffect(() => {
@@ -33,7 +39,7 @@ const ProfileMain = () => {
       userBio: userBio,
       userImgURL: userImgURL,
     });
-    setLoading(false);
+    setPageLoading(false);
   }, [userImgURL]);
 
   const handleAddPostModal = () => {
@@ -42,7 +48,7 @@ const ProfileMain = () => {
 
   return (
     <div className='profile-main-container'>
-      {!loading && (
+      {!pageLoading && !loading && (
         <div className='profile-content-container'>
           <div className='profile-top'>
             <div className='profile-img-div'>
@@ -117,9 +123,13 @@ const ProfileMain = () => {
               </div>
             </div>
             <div className='img-feed-container'>
-              {userInfo.userPosts.length < 5 && (
+              {userInfo.userPosts.length < 1 && (
                 <NoUserImgProfileFeed handleAddPostModal={handleAddPostModal} />
               )}
+              {userInfo.userPosts.length >= 1 &&
+                posts.map((post) => (
+                  <ProfilePostCard key={post.id} post={post} />
+                ))}
             </div>
           </div>
         </div>
