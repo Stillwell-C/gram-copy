@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./navbar.scss";
 import home from "../../assets/home-2-svgrepo-com.svg";
 import search from "../../assets/search-svgrepo-com.svg";
@@ -18,6 +19,7 @@ import { AuthContext } from "../../context/authContext";
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
   const [displayMenu, setDisplayMenu] = useState(false);
+  const navigate = useNavigate();
 
   const { currentUser, dispatch } = useContext(AuthContext);
 
@@ -29,6 +31,7 @@ const Navbar = () => {
     dispatch({
       type: "LOGOUT",
     });
+    navigate("/");
   };
 
   return (
@@ -77,7 +80,9 @@ const Navbar = () => {
             </div>
           </div>
           <div className='navbar-row'>
-            <Link to={`/${currentUser.username}`}>
+            <Link
+              to={currentUser ? `/${currentUser.username}` : "/accounts/login"}
+            >
               <div className='navbar-line'>
                 <img src={profile} alt='profile icon' />
                 <span>Profile</span>
