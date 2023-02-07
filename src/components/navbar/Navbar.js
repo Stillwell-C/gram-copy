@@ -39,7 +39,9 @@ const Navbar = () => {
       <nav className='navbar-container'>
         <div className='navbar-top'>
           <div className='navbar-header'>
-            <img src={logo} alt='Instagram logo' />
+            <Link to='/'>
+              <img src={logo} alt='Instagram logo' />
+            </Link>
           </div>
           <div className='navbar-row'>
             <Link to='/'>
