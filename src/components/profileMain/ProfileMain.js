@@ -153,11 +153,13 @@ const ProfileMain = () => {
               {userInfo.userPosts.length < 1 && (
                 <NoUserImgProfileFeed handleAddPostModal={handleAddPostModal} />
               )}
-              {!postsLoading &&
-                userInfo.userPosts.length >= 1 &&
-                posts.map((post) => (
-                  <ProfilePostCard key={post.id} post={post} />
-                ))}
+              {!postsLoading && userInfo.userPosts.length >= 1 && (
+                <div className='user-posts-container'>
+                  {posts.map((post) => (
+                    <ProfilePostCard key={post.id} post={post} />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
