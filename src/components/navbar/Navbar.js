@@ -28,10 +28,10 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
+    navigate("/");
     dispatch({
       type: "LOGOUT",
     });
-    navigate("/");
   };
 
   return (
