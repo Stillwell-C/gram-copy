@@ -13,7 +13,7 @@ import { ref, getDownloadURL } from "firebase/storage";
 import { db, storage, getURL } from "../firebase";
 import useGetUserInfo from "./useGetUserInfo";
 
-const useGetUserPosts = (username, pageNum) => {
+const useGetUserPosts = (username, pageNum, userQueryInput) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [errorInfo, setErrorInfo] = useState({});
@@ -21,15 +21,25 @@ const useGetUserPosts = (username, pageNum) => {
   const [hasMoreData, setHasMoreData] = useState(false);
   const [lastDocIndex, setLastDocIndex] = useState();
   //TODO: possibly need some initial loading state for this if error
-  const { userPosts } = useGetUserInfo(username, "username");
+  const { userPosts, savedPosts } = useGetUserInfo(username, "username");
+  const [userQuery, setUserQuery] = useState();
 
   useEffect(() => {
     setLoading(true);
     setError(false);
     setErrorInfo({});
-    if (userPosts.length < 1) return;
+    setQuery();
+    if (userPosts.length < 1 && savedPosts.length < 1) return;
     getNewDocs();
   }, [pageNum, userPosts]);
+
+  const setQuery = () => {
+    if (userQueryInput === "saved") {
+      setUserQuery(savedPosts);
+      return;
+    }
+    setUserQuery(userPosts);
+  };
 
   const getNewDocs = async () => {
     try {
@@ -37,16 +47,16 @@ const useGetUserPosts = (username, pageNum) => {
 
       if (pageNum === 1) {
         for (let i = 1; i < 10; i++) {
-          if (userPosts[userPosts.length - i]) {
-            newIDs.push(userPosts[userPosts.length - i]);
+          if (userQuery[userQuery.length - i]) {
+            newIDs.push(userQuery[userQuery.length - i]);
             setLastDocIndex(i);
           }
         }
       }
       if (pageNum > 1) {
         for (let i = lastDocIndex + 1; i < lastDocIndex + 7; i++) {
-          if (userPosts[userPosts.length - i]) {
-            newIDs.push(userPosts[userPosts.length - i]);
+          if (userQuery[userQuery.length - i]) {
+            newIDs.push(userQuery[userQuery.length - i]);
             setLastDocIndex(i);
           }
         }
@@ -83,7 +93,6 @@ const useGetUserPosts = (username, pageNum) => {
       console.log(err);
       setErrorInfo({ message: err.message });
     }
-    console.log("posts", posts);
   };
 
   return { loading, error, errorInfo, posts, hasMoreData };
