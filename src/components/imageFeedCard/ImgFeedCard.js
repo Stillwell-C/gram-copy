@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import threeDots from "../../assets/three-dots-line-svgrepo-com.svg";
 import heart from "../../assets/heart-rounded-svgrepo-com.svg";
 import comment from "../../assets/message-circle-01-svgrepo-com.svg";
@@ -13,7 +14,9 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
       <div className='card-top'>
         <img className='userImg' src={post.userImgURL} alt='user profile' />
         <div className='photoInfo'>
-          <div className='userName'>{post.userName}</div>
+          <Link to={`/${post.userName}`}>
+            <div className='userName'>{post.userName}</div>
+          </Link>
           <div className='photoLocation'>{post.location && post.location}</div>
         </div>
         <button className='optionButton'>
