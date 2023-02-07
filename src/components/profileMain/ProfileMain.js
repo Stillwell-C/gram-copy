@@ -3,6 +3,7 @@ import { AuthContext } from "../../context/authContext";
 import sprocket from "../../assets/gear-wide-svgrepo-com.svg";
 import grid from "../../assets/grid-svgrepo-com.svg";
 import bookmark from "../../assets/bookmark-svgrepo-com.svg";
+import tagged from "../../assets/user-square-svgrepo-com.svg";
 import Footer from "../footer/Footer";
 import NoUserImgProfileFeed from "../noUserImgProfileFeed/NoUserImgProfileFeed";
 import { useParams } from "react-router-dom";
@@ -109,18 +110,34 @@ const ProfileMain = () => {
                 <img src={grid} alt='grid icon'></img>
                 <span>POSTS</span>
               </div>
-              <div
-                className={
-                  displaySelector === "saved"
-                    ? "display-selector-individual active"
-                    : "display-selector-individual"
-                }
-                aria-label='click to see saved posts'
-                onClick={() => setDisplaySelector("saved")}
-              >
-                <img src={bookmark} alt='bookmark icon'></img>
-                <span>SAVED</span>
-              </div>
+              {userParam === currentUser.username && (
+                <div
+                  className={
+                    displaySelector === "saved"
+                      ? "display-selector-individual active"
+                      : "display-selector-individual"
+                  }
+                  aria-label='click to see saved posts'
+                  onClick={() => setDisplaySelector("saved")}
+                >
+                  <img src={bookmark} alt='bookmark icon'></img>
+                  <span>SAVED</span>
+                </div>
+              )}
+              {userParam !== currentUser.username && (
+                <div
+                  className={
+                    displaySelector === "tagged"
+                      ? "display-selector-individual active"
+                      : "display-selector-individual"
+                  }
+                  aria-label='click to see posts where user was tagged'
+                  onClick={() => setDisplaySelector("tagged")}
+                >
+                  <img src={tagged} alt='tagged user icon'></img>
+                  <span>TAGGED</span>
+                </div>
+              )}
             </div>
             <div className='img-feed-container'>
               {userInfo.userPosts.length < 1 && (
