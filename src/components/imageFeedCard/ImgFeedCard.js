@@ -1,14 +1,30 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import threeDots from "../../assets/three-dots-line-svgrepo-com.svg";
-import heart from "../../assets/heart-rounded-svgrepo-com.svg";
 import comment from "../../assets/message-circle-01-svgrepo-com.svg";
 import message from "../../assets/plane-svgrepo-com.svg";
-import bookmark from "../../assets/bookmark-svgrepo-com.svg";
+import filledBookmark from "../../assets/bookmark-filled.svg";
+import outlinedBookmark from "../../assets/bookmark-outline.svg";
+import outlinedHeart from "../../assets/heart-outline.svg";
+import filledHeart from "../../assets/heart-filled.svg";
 import Comment from "../comment/Comment";
 import moment from "moment";
+import { AuthContext } from "../../context/authContext";
 
 const ImgFeedCard = React.forwardRef(({ post }, ref) => {
+  const [liked, setLiked] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  const { currentUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (!currentUser) return;
+    const liked = currentUser.likedPosts.filter((post) => post === post.ID);
+    const saved = currentUser.savedPosts.filter((post) => post === post.ID);
+    if (liked.length) setLiked(true);
+    if (saved.length) setSaved(true);
+  }, []);
+
   const imgContent = (
     <>
       <div className='card-top'>
@@ -32,7 +48,7 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
         <div className='buttons'>
           <div className='buttons-left'>
             <button className='likeButton'>
-              <img src={heart} alt='heart' />
+              <img src={liked ? filledHeart : outlinedHeart} alt='heart' />
             </button>
             <button className='commentButton'>
               <img src={comment} alt='comment bubble' />
@@ -43,7 +59,10 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
           </div>
           <div className='buttons-right'>
             <button className='bookmarkButton'>
-              <img src={bookmark} alt='bookmark' />
+              <img
+                src={saved ? filledBookmark : outlinedBookmark}
+                alt='bookmark'
+              />
             </button>
           </div>
         </div>

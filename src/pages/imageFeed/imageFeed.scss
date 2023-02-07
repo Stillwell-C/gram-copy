@@ -86,6 +86,15 @@
           justify-content: flex-start;
           gap: 10px;
         }
+
+        button {
+          img {
+            &:hover {
+              filter: invert(64%) sepia(0%) saturate(0%) hue-rotate(175deg)
+                brightness(87%) contrast(98%);
+            }
+          }
+        }
       }
 
       .card-bottom-text {
