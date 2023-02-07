@@ -18,6 +18,7 @@ import {
   where,
 } from "firebase/firestore";
 import { AuthContext } from "../../context/authContext";
+import useGetRandomDate from "../../hooks/useGetRandomDate";
 
 const CreatePostModal = ({ setDisplayPostModal }) => {
   const { currentUser } = useContext(AuthContext);
@@ -33,6 +34,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
   });
   const [showCaptionInfo, setShowCaptionInfo] = useState(false);
   const [expandAccessibility, setExpandAccessibility] = useState(false);
+  const newRandomDate = useGetRandomDate();
 
   useEffect(() => {
     //upload file uploaded by user to storage
@@ -130,7 +132,10 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
       ...formData,
       userName: currentUser.username,
       userImg: currentUser.userImg,
-      date: serverTimestamp(),
+      // date: serverTimestamp(),
+      // Random date included to populate with uploads
+      //TODO: remove later
+      date: newRandomDate,
       imgName: imgFileUploadName,
       likedUsers: [],
       savedUsers: [],
@@ -317,9 +322,9 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
                         : "accessibility-info segmented-div"
                     }
                   >
-                    <div className='accessibility-top'>
+                    <div className='accessibility-top' onClick={handleExpand}>
                       <div>Accessibility</div>
-                      <button onClick={handleExpand}>
+                      <button>
                         <img
                           className='down-arrow-img'
                           src={downArrow}
