@@ -23,6 +23,13 @@ const ProfileMain = () => {
     userParam,
     1
   );
+  const {
+    loading: savedLoading,
+    error: savedError,
+    errorInfo: savedErrorInfo,
+    posts: savedPosts,
+    hasMoreData: savedHasMoreData,
+  } = useGetUserPosts(currentUser.username, 1, "saved");
   const [pageLoading, setPageLoading] = useState(true);
   const [displayPostModal, setDisplayPostModal] = useState(false);
   const [displaySelector, setDisplaySelector] = useState("posts");
