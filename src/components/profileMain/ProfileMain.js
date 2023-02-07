@@ -19,10 +19,13 @@ const ProfileMain = () => {
   const [userInfo, setUserInfo] = useState();
   const { userPosts, followers, following, fullname, userBio, userImgURL } =
     useGetUserInfo(userParam, "username");
-  const { loading, error, errorInfo, posts, hasMoreData } = useGetUserPosts(
-    userParam,
-    1
-  );
+  const {
+    loading: postsLoading,
+    error,
+    errorInfo,
+    posts,
+    hasMoreData,
+  } = useGetUserPosts(userParam, 1);
   const {
     loading: savedLoading,
     error: savedError,
@@ -56,7 +59,7 @@ const ProfileMain = () => {
 
   return (
     <div className='profile-main-container'>
-      {!pageLoading && !loading && (
+      {!pageLoading && (
         <div className='profile-content-container'>
           <div className='profile-top'>
             <div className='profile-img-div'>
@@ -150,7 +153,8 @@ const ProfileMain = () => {
               {userInfo.userPosts.length < 1 && (
                 <NoUserImgProfileFeed handleAddPostModal={handleAddPostModal} />
               )}
-              {userInfo.userPosts.length >= 1 &&
+              {!postsLoading &&
+                userInfo.userPosts.length >= 1 &&
                 posts.map((post) => (
                   <ProfilePostCard key={post.id} post={post} />
                 ))}
