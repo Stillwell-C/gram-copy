@@ -44,19 +44,21 @@ const ImageFeed = () => {
       <>
         {content}
         {loading && (
-          <div className='lds-spinner'>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+          <div className='loading-div'>
+            <div className='lds-spinner'>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
           </div>
         )}
         {error && errorInfo.message}
