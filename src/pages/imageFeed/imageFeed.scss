@@ -98,6 +98,11 @@
             &:hover {
               filter: none;
             }
+
+            &.heart {
+              filter: invert(61%) sepia(68%) saturate(6105%) hue-rotate(328deg)
+                brightness(94%) contrast(96%);
+            }
           }
         }
       }
