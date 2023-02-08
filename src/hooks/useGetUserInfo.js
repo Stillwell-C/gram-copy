@@ -1,5 +1,6 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../context/authContext";
 import { db, getURL } from "../firebase";
 
 const useGetUserInfo = (queryInput, queryParameter) => {
@@ -16,11 +17,14 @@ const useGetUserInfo = (queryInput, queryParameter) => {
   const [username, setUsername] = useState("");
   const [allData, setAllData] = useState({});
 
+  const { currentUser } = useContext(AuthContext);
+
   useEffect(() => {
     getUserInfo();
   }, []);
 
   const getUserInfo = async () => {
+    // if (!currentUser) return;
     try {
       const userQuery = await getDocs(
         query(
