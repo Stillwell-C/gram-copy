@@ -41,6 +41,7 @@ const LoginForm = () => {
           ...userCredentials.user,
           ...userInfo,
           userImgURL: userImgURL,
+          userInfoID: userQuery.docs[0].id,
         },
       });
       navigate("/");

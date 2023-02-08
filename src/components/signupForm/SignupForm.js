@@ -56,11 +56,16 @@ const SignupForm = () => {
         userBio: "",
         userImg: "gs://driveproject-34ebb.appspot.com/Default_pfp.svg",
       };
-      await addDoc(collection(db, "userInfo"), userData);
+      const userInfoUpload = await addDoc(collection(db, "userInfo"), userData);
       const userImgURL = await getURL(userData.userImg);
       dispatch({
         type: "LOGIN",
-        payload: { ...user, ...userData, userImgURL: userImgURL },
+        payload: {
+          ...user,
+          ...userData,
+          userImgURL: userImgURL,
+          userInfoID: userInfoUpload.id,
+        },
       });
       navigate("/");
     } catch (err) {
