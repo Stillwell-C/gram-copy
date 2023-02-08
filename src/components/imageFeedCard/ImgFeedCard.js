@@ -5,8 +5,8 @@ import comment from "../../assets/message-circle-01-svgrepo-com.svg";
 import message from "../../assets/plane-svgrepo-com.svg";
 import filledBookmark from "../../assets/bookmark-filled.svg";
 import outlinedBookmark from "../../assets/bookmark-outline.svg";
-import outlinedHeart from "../../assets/heart-outline.svg";
-import filledHeart from "../../assets/heart-filled.svg";
+import outlinedHeart from "../../assets/heart-rounded-svgrepo-com.svg";
+import filledHeart from "../../assets/heart-svgrepo-com.svg";
 import Comment from "../comment/Comment";
 import moment from "moment";
 import { AuthContext } from "../../context/authContext";
@@ -92,7 +92,7 @@ const ImgFeedCard = React.forwardRef(
               >
                 <img
                   src={liked ? filledHeart : outlinedHeart}
-                  className={liked ? "filled" : ""}
+                  className={liked ? "filled heart" : "heart"}
                   alt='heart'
                 />
               </button>
