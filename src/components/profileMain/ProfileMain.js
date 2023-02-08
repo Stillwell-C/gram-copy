@@ -1,18 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/authContext";
+import { useParams } from "react-router-dom";
+
+import NoUserImgProfileFeed from "../noUserImgProfileFeed/NoUserImgProfileFeed";
+import Footer from "../footer/Footer";
+import ProfilePostCard from "../profilePostCard/ProfilePostCard";
+import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
+import CreatePostModal from "../createPostModal/CreatePostModal";
+import useGetUserInfo from "../../hooks/useGetUserInfo";
+import useGetUserPosts from "../../hooks/useGetUserPosts";
+import "./profileMain.scss";
 import sprocket from "../../assets/gear-wide-svgrepo-com.svg";
 import grid from "../../assets/grid-svgrepo-com.svg";
 import bookmark from "../../assets/bookmark-svgrepo-com.svg";
 import tagged from "../../assets/user-square-svgrepo-com.svg";
-import Footer from "../footer/Footer";
-import NoUserImgProfileFeed from "../noUserImgProfileFeed/NoUserImgProfileFeed";
-import { useParams } from "react-router-dom";
-import useGetUserInfo from "../../hooks/useGetUserInfo";
-import "./profileMain.scss";
-import CreatePostModal from "../createPostModal/CreatePostModal";
-import useGetUserPosts from "../../hooks/useGetUserPosts";
-import ProfilePostCard from "../profilePostCard/ProfilePostCard";
-import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 
 const ProfileMain = () => {
   const { userParam } = useParams();
@@ -151,7 +152,7 @@ const ProfileMain = () => {
               )}
             </div>
             <div className='img-feed-container'>
-              {userInfo.userPosts.length < 1 && (
+              {!postsLoading && userInfo.userPosts.length < 1 && (
                 <NoUserImgProfileFeed handleAddPostModal={handleAddPostModal} />
               )}
               {!postsLoading && userInfo.userPosts.length >= 1 && (
