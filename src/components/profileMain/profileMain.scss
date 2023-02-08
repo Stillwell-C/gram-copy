@@ -133,13 +133,21 @@
         }
       }
 
-      .user-posts-container {
+      .img-feed-container {
         width: 100%;
+        height: 100%;
         display: flex;
-        justify-content: flex-start;
         align-items: flex-start;
-        flex-wrap: wrap;
-        gap: 28px;
+        justify-content: center;
+
+        .user-posts-container {
+          width: 100%;
+          display: flex;
+          justify-content: flex-start;
+          align-items: flex-start;
+          flex-wrap: wrap;
+          gap: 28px;
+        }
       }
     }
   }

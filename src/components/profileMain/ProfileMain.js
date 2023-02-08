@@ -12,6 +12,7 @@ import "./profileMain.scss";
 import CreatePostModal from "../createPostModal/CreatePostModal";
 import useGetUserPosts from "../../hooks/useGetUserPosts";
 import ProfilePostCard from "../profilePostCard/ProfilePostCard";
+import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 
 const ProfileMain = () => {
   const { userParam } = useParams();
@@ -160,6 +161,7 @@ const ProfileMain = () => {
                   ))}
                 </div>
               )}
+              {postsLoading && <LoadingSpinner />}
             </div>
           </div>
         </div>
