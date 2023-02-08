@@ -5,7 +5,7 @@ import home from "../../assets/home-2-svgrepo-com.svg";
 import search from "../../assets/search-svgrepo-com.svg";
 import compass from "../../assets/compass-svgrepo-com.svg";
 import message from "../../assets/plane-svgrepo-com.svg";
-import heart from "../../assets/heart-outline.svg";
+import heart from "../../assets/heart-rounded-svgrepo-com.svg";
 import add from "../../assets/add-box-svgrepo-com.svg";
 import profile from "../../assets/Default_pfp.svg";
 import menu from "../../assets/menu-svgrepo-com.svg";
