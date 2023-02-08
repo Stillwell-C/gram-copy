@@ -61,7 +61,7 @@ const ImageFeed = () => {
   return (
     <div className='feedContainer'>
       <>
-        {!loading && content}
+        {content}
         {loading && <LoadingSpinner />}
         {error && errorInfo.message}
       </>
