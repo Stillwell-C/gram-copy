@@ -28,20 +28,36 @@ const useGetUserPosts = (username, pageNum, userQueryInput) => {
     setLoading(true);
     setError(false);
     setErrorInfo({});
-    setQuery();
-    if (userPosts.length < 1 && savedPosts.length < 1) {
+    runQuery();
+  }, [pageNum, userPosts]);
+
+  const runQuery = () => {
+    if (userQueryInput === "saved") {
+      setUserQuery(savedPosts);
+      if (savedPosts.length < 1) {
+        setLoading(false);
+        return;
+      }
+      getNewDocs();
+      return;
+    }
+    if (userQuery === "tagged") {
+      //TODO: Set up this mechanism
+      setUserQuery(userPosts);
+      if (userPosts.length < 1) {
+        setLoading(false);
+        return;
+      }
+      getNewDocs();
+      return;
+    }
+    setUserQuery(userPosts);
+    if (userPosts.length < 1) {
       setLoading(false);
       return;
     }
     getNewDocs();
-  }, [pageNum, userPosts]);
-
-  const setQuery = () => {
-    if (userQueryInput === "saved") {
-      setUserQuery(savedPosts);
-      return;
-    }
-    setUserQuery(userPosts);
+    return;
   };
 
   const getNewDocs = async () => {
