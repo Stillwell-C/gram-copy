@@ -19,7 +19,9 @@ const FeedRightInfo = () => {
     <div className='right-info-container'>
       {currentUser && (
         <div className='top-user-info'>
-          <img src={currentUser.userImgURL} alt='user profile' />
+          <Link to={`/${currentUser.username}`}>
+            <img src={currentUser.userImgURL} alt='user profile' />
+          </Link>
           <div className='user-name-div'>
             <Link to={`/${currentUser.username}`}>
               <div className='user-name-top'>{currentUser.username}</div>
