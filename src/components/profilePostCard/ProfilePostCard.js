@@ -3,7 +3,7 @@ import message from "../../assets/message-bubble-svgrepo-com.svg";
 import heart from "../../assets/heart-svgrepo-com.svg";
 import "./profilePostCard.scss";
 
-const ProfilePostCard = ({ post }) => {
+const ProfilePostCard = React.forwardRef(({ post }, ref) => {
   return (
     <div className='post-card-container'>
       <img
@@ -26,6 +26,6 @@ const ProfilePostCard = ({ post }) => {
       </div>
     </div>
   );
-};
+});
 
 export default ProfilePostCard;
