@@ -3,6 +3,7 @@ import {
   arrayUnion,
   collection,
   doc,
+  getDoc,
   getDocs,
   query,
   updateDoc,
@@ -18,14 +19,11 @@ const useLikePost = () => {
   const likePost = async (ID) => {
     if (!currentUser) return;
     try {
-      const userQuery = await getDocs(
-        query(
-          collection(db, "userInfo"),
-          where("email", "==", currentUser.email)
-        )
-      );
-      await updateDoc(doc(db, "userInfo", userQuery.docs[0].id), {
+      await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
         likedPosts: arrayUnion(ID),
+      });
+      await updateDoc(doc(db, "userImgs", ID), {
+        likedUsers: arrayUnion(currentUser.userInfoID),
       });
     } catch (err) {
       console.log(err.message);
@@ -36,14 +34,11 @@ const useLikePost = () => {
   const unlikePost = async (ID) => {
     if (!currentUser) return;
     try {
-      const userQuery = await getDocs(
-        query(
-          collection(db, "userInfo"),
-          where("email", "==", currentUser.email)
-        )
-      );
-      await updateDoc(doc(db, "userInfo", userQuery.docs[0].id), {
+      await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
         likedPosts: arrayRemove(ID),
+      });
+      await updateDoc(doc(db, "userImgs", ID), {
+        likedUsers: arrayRemove(currentUser.userInfoID),
       });
     } catch (err) {
       console.log(err.message);
