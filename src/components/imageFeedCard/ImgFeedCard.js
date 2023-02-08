@@ -107,7 +107,10 @@ const ImgFeedCard = React.forwardRef(
             </div>
           </div>
           <div className='card-bottom-text'>
-            <div className='likes-counter'>{post.likedUsers.length} Likes</div>
+            <div className='likes-counter'>
+              {post.likedUsers.length}{" "}
+              {post.likedUsers.length === 1 ? "Like" : "Likes"}
+            </div>
             <div className='comments'>
               {post.comments[0] && (
                 <Comment comment={post.comments[0]} abbreviate={true} />
