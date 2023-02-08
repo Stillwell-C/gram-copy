@@ -13,142 +13,146 @@ import { AuthContext } from "../../context/authContext";
 import useLikePost from "../../hooks/useLikePost";
 import useSavePost from "../../hooks/useSavePost";
 
-const ImgFeedCard = React.forwardRef(({ post }, ref) => {
-  const [liked, setLiked] = useState(false);
-  const [saved, setSaved] = useState(false);
+const ImgFeedCard = React.forwardRef(
+  ({ post, userLikedPosts, userSavedPosts }, ref) => {
+    const [liked, setLiked] = useState(false);
+    const [saved, setSaved] = useState(false);
 
-  const { currentUser } = useContext(AuthContext);
-  const { likePost, unlikePost } = useLikePost();
-  const { savePost, unsavePost } = useSavePost();
+    const { currentUser } = useContext(AuthContext);
+    const { likePost, unlikePost } = useLikePost();
+    const { savePost, unsavePost } = useSavePost();
 
-  useEffect(() => {
-    if (!currentUser) return;
-    //TODO: get updated info
-    //Figure out best way to do this
-    // const liked = userLikedPosts.filter(
-    //   (singleLikedPost) => singleLikedPost === post.id
-    // );
-    // const saved = userSavedPosts.filter(
-    //   (singleSavedPost) => singleSavedPost === post.id
-    // );
-    if (liked.length) setLiked(true);
-    if (saved.length) setSaved(true);
-  }, []);
+    useEffect(() => {
+      if (!currentUser) return;
+      //TODO: get updated info
+      //Figure out best way to do this
+      const liked = userLikedPosts.filter(
+        (singleLikedPost) => singleLikedPost === post.id
+      );
+      const saved = userSavedPosts.filter(
+        (singleSavedPost) => singleSavedPost === post.id
+      );
+      if (liked.length) setLiked(true);
+      if (saved.length) setSaved(true);
+    }, []);
 
-  const handleLike = () => {
-    if (!currentUser) return;
-    if (liked) unlikePost(post.id);
-    if (!liked) likePost(post.id);
-    setLiked(!liked);
-  };
+    const handleLike = () => {
+      if (!currentUser) return;
+      if (liked) unlikePost(post.id);
+      if (!liked) likePost(post.id);
+      setLiked(!liked);
+    };
 
-  const handleSave = () => {
-    if (!currentUser) return;
-    if (saved) unsavePost(post.id);
-    if (!saved) savePost(post.id);
-    setSaved(!saved);
-  };
+    const handleSave = () => {
+      if (!currentUser) return;
+      if (saved) unsavePost(post.id);
+      if (!saved) savePost(post.id);
+      setSaved(!saved);
+    };
 
-  const imgContent = (
-    <>
-      <div className='card-top'>
-        <img className='userImg' src={post.userImgURL} alt='user profile' />
-        <div className='photoInfo'>
-          <Link to={`/${post.userName}`}>
-            <div className='userName'>{post.userName}</div>
-          </Link>
-          <div className='photoLocation'>{post.location && post.location}</div>
+    const imgContent = (
+      <>
+        <div className='card-top'>
+          <img className='userImg' src={post.userImgURL} alt='user profile' />
+          <div className='photoInfo'>
+            <Link to={`/${post.userName}`}>
+              <div className='userName'>{post.userName}</div>
+            </Link>
+            <div className='photoLocation'>
+              {post.location && post.location}
+            </div>
+          </div>
+          <button className='optionButton'>
+            <img src={threeDots} alt='three dots' />
+          </button>
         </div>
-        <button className='optionButton'>
-          <img src={threeDots} alt='three dots' />
-        </button>
+        <img
+          className='mainImg'
+          alt={post.altText ? post.altText : "user upload"}
+          src={post.imgURL}
+        />
+        <div className='card-bottom'>
+          <div className='buttons'>
+            <div className='buttons-left'>
+              <button
+                className='likeButton'
+                aria-label='click to like post'
+                onClick={handleLike}
+              >
+                <img
+                  src={liked ? filledHeart : outlinedHeart}
+                  className={liked ? "filled" : ""}
+                  alt='heart'
+                />
+              </button>
+              <button className='commentButton'>
+                <img src={comment} alt='comment bubble' />
+              </button>
+              <button className='messageButton'>
+                <img src={message} alt='paper airplane' />
+              </button>
+            </div>
+            <div className='buttons-right'>
+              <button
+                className='bookmarkButton'
+                aria-label='click to save post'
+                onClick={handleSave}
+              >
+                <img
+                  src={saved ? filledBookmark : outlinedBookmark}
+                  alt='bookmark'
+                  className={saved ? "filled" : ""}
+                />
+              </button>
+            </div>
+          </div>
+          <div className='card-bottom-text'>
+            <div className='likes-counter'>{post.likedUsers.length} Likes</div>
+            <div className='comments'>
+              {post.comments[0] && (
+                <Comment comment={post.comments[0]} abbreviate={true} />
+              )}
+              {post.comments[1] && (
+                <Comment comment={post.comments[1]} abbreviate={true} />
+              )}
+            </div>
+            <div className='view-more-div'>
+              {post.comments[1]
+                ? `View all ${post.comments.length} posts`
+                : `View all posts`}
+            </div>
+            <div className='time-ago'>
+              {moment(post.date.toDate()).fromNow().toUpperCase()}
+            </div>
+          </div>
+          <div className='input-comment-div'>
+            <div className='input-left'>
+              <label>
+                <input
+                  type='text'
+                  maxLength={2200}
+                  placeholder='Add a comment...'
+                />
+              </label>
+            </div>
+            <div className='input-right'>
+              <button>Post</button>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+
+    const imgCard = ref ? (
+      <div className='card' ref={ref}>
+        {imgContent}
       </div>
-      <img
-        className='mainImg'
-        alt={post.altText ? post.altText : "user upload"}
-        src={post.imgURL}
-      />
-      <div className='card-bottom'>
-        <div className='buttons'>
-          <div className='buttons-left'>
-            <button
-              className='likeButton'
-              aria-label='click to like post'
-              onClick={handleLike}
-            >
-              <img
-                src={liked ? filledHeart : outlinedHeart}
-                className={liked ? "filled" : ""}
-                alt='heart'
-              />
-            </button>
-            <button className='commentButton'>
-              <img src={comment} alt='comment bubble' />
-            </button>
-            <button className='messageButton'>
-              <img src={message} alt='paper airplane' />
-            </button>
-          </div>
-          <div className='buttons-right'>
-            <button
-              className='bookmarkButton'
-              aria-label='click to save post'
-              onClick={handleSave}
-            >
-              <img
-                src={saved ? filledBookmark : outlinedBookmark}
-                alt='bookmark'
-                className={saved ? "filled" : ""}
-              />
-            </button>
-          </div>
-        </div>
-        <div className='card-bottom-text'>
-          <div className='likes-counter'>{post.likedUsers.length} Likes</div>
-          <div className='comments'>
-            {post.comments[0] && (
-              <Comment comment={post.comments[0]} abbreviate={true} />
-            )}
-            {post.comments[1] && (
-              <Comment comment={post.comments[1]} abbreviate={true} />
-            )}
-          </div>
-          <div className='view-more-div'>
-            {post.comments[1]
-              ? `View all ${post.comments.length} posts`
-              : `View all posts`}
-          </div>
-          <div className='time-ago'>
-            {moment(post.date.toDate()).fromNow().toUpperCase()}
-          </div>
-        </div>
-        <div className='input-comment-div'>
-          <div className='input-left'>
-            <label>
-              <input
-                type='text'
-                maxLength={2200}
-                placeholder='Add a comment...'
-              />
-            </label>
-          </div>
-          <div className='input-right'>
-            <button>Post</button>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+    ) : (
+      <div className='card'>{imgContent}</div>
+    );
 
-  const imgCard = ref ? (
-    <div className='card' ref={ref}>
-      {imgContent}
-    </div>
-  ) : (
-    <div className='card'>{imgContent}</div>
-  );
-
-  return imgCard;
-});
+    return imgCard;
+  }
+);
 
 export default ImgFeedCard;
