@@ -18,14 +18,11 @@ const useSavePost = () => {
   const savePost = async (ID) => {
     if (!currentUser) return;
     try {
-      const userQuery = await getDocs(
-        query(
-          collection(db, "userInfo"),
-          where("email", "==", currentUser.email)
-        )
-      );
-      await updateDoc(doc(db, "userInfo", userQuery.docs[0].id), {
+      await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
         savedPosts: arrayUnion(ID),
+      });
+      await updateDoc(doc(db, "userImgs", ID), {
+        savedUsers: arrayUnion(currentUser.userInfoID),
       });
     } catch (err) {
       console.log(err.message);
@@ -36,14 +33,11 @@ const useSavePost = () => {
   const unsavePost = async (ID) => {
     if (!currentUser) return;
     try {
-      const userQuery = await getDocs(
-        query(
-          collection(db, "userInfo"),
-          where("email", "==", currentUser.email)
-        )
-      );
-      await updateDoc(doc(db, "userInfo", userQuery.docs[0].id), {
+      await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
         savedPosts: arrayRemove(ID),
+      });
+      await updateDoc(doc(db, "userImgs", ID), {
+        savedUsers: arrayRemove(currentUser.userInfoID),
       });
     } catch (err) {
       console.log(err.message);
