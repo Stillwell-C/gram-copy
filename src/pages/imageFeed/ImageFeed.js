@@ -3,6 +3,7 @@ import useGetPosts from "../../hooks/useGetPosts";
 import "./imageFeed.scss";
 import ImgFeedCard from "../../components/imageFeedCard/ImgFeedCard";
 import { getURL } from "../../firebase";
+import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 
 const ImageFeed = () => {
   const [pageNum, setPageNum] = useState(1);
@@ -43,24 +44,7 @@ const ImageFeed = () => {
     <div className='feedContainer'>
       <>
         {content}
-        {loading && (
-          <div className='loading-div'>
-            <div className='lds-spinner'>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-          </div>
-        )}
+        {loading && <LoadingSpinner />}
         {error && errorInfo.message}
       </>
     </div>
