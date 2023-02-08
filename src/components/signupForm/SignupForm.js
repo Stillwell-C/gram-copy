@@ -52,6 +52,7 @@ const SignupForm = () => {
         followers: [],
         likedPosts: [],
         savedPosts: [],
+        taggedPosts: [],
         userPosts: [],
         userBio: "",
         userImg: "gs://driveproject-34ebb.appspot.com/Default_pfp.svg",
