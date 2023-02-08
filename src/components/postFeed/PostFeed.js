@@ -16,12 +16,12 @@ const PostFeed = ({ userParam, userPosts, userQueryInput }) => {
   );
 
   useEffect(() => {
-    if (userPosts.length < 1 && userQueryInput === "posts") {
+    if (!loading && userPosts.length < 1 && userQueryInput === "posts") {
       setDisplayNoImgFeed(true);
       return;
     }
     setDisplayNoImgFeed(false);
-  }, []);
+  }, [userPosts]);
 
   const observer = useRef();
   const lastPostRef = useCallback(
