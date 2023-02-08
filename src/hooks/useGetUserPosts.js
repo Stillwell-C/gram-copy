@@ -29,7 +29,10 @@ const useGetUserPosts = (username, pageNum, userQueryInput) => {
     setError(false);
     setErrorInfo({});
     setQuery();
-    if (userPosts.length < 1 && savedPosts.length < 1) return;
+    if (userPosts.length < 1 && savedPosts.length < 1) {
+      setLoading(false);
+      return;
+    }
     getNewDocs();
   }, [pageNum, userPosts]);
 
