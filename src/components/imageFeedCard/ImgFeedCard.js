@@ -16,6 +16,8 @@ import useSavePost from "../../hooks/useSavePost";
 const ImgFeedCard = React.forwardRef(
   ({ post, userLikedPosts, userSavedPosts }, ref) => {
     const [liked, setLiked] = useState(false);
+    const [initialLike, setInitialLike] = useState(false);
+    const [likesOffset, setLikesOffset] = useState(0);
     const [saved, setSaved] = useState(false);
 
     const { currentUser } = useContext(AuthContext);
@@ -32,14 +34,23 @@ const ImgFeedCard = React.forwardRef(
       const saved = userSavedPosts.filter(
         (singleSavedPost) => singleSavedPost === post.id
       );
-      if (liked.length) setLiked(true);
+      if (liked.length) {
+        setLiked(true);
+        setInitialLike(true);
+      }
       if (saved.length) setSaved(true);
     }, []);
 
     const handleLike = () => {
       if (!currentUser) return;
-      if (liked) unlikePost(post.id);
-      if (!liked) likePost(post.id);
+      if (liked) {
+        unlikePost(post.id);
+        initialLike ? setLikesOffset(-1) : setLikesOffset(0);
+      }
+      if (!liked) {
+        likePost(post.id);
+        initialLike ? setLikesOffset(0) : setLikesOffset(1);
+      }
       setLiked(!liked);
     };
 
@@ -108,8 +119,8 @@ const ImgFeedCard = React.forwardRef(
           </div>
           <div className='card-bottom-text'>
             <div className='likes-counter'>
-              {post.likedUsers.length}{" "}
-              {post.likedUsers.length === 1 ? "Like" : "Likes"}
+              {post.likedUsers.length + likesOffset}{" "}
+              {post.likedUsers.length + likesOffset === 1 ? "Like" : "Likes"}
             </div>
             <div className='comments'>
               {post.comments[0] && (
