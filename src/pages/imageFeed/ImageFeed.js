@@ -4,11 +4,14 @@ import "./imageFeed.scss";
 import ImgFeedCard from "../../components/imageFeedCard/ImgFeedCard";
 import { getURL } from "../../firebase";
 import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
+import useGetLoggedInUserInfo from "../../hooks/useGetLoggedInUserInfo";
 
 const ImageFeed = () => {
   const [pageNum, setPageNum] = useState(1);
   const { loading, error, errorInfo, posts, hasMoreData } =
     useGetPosts(pageNum);
+  const { likedPosts: userLikedPosts, savedPosts: userSavedPosts } =
+    useGetLoggedInUserInfo();
 
   const observer = useRef();
   const lastPostRef = useCallback(
@@ -35,15 +38,30 @@ const ImageFeed = () => {
 
   const content = posts.map((post, i) => {
     if (posts.length === i + 1) {
-      return <ImgFeedCard key={post.id} post={post} ref={lastPostRef} />;
+      return (
+        <ImgFeedCard
+          key={post.id}
+          post={post}
+          userLikedPosts={userLikedPosts}
+          userSavedPosts={userSavedPosts}
+          ref={lastPostRef}
+        />
+      );
     }
-    return <ImgFeedCard key={post.id} post={post} />;
+    return (
+      <ImgFeedCard
+        key={post.id}
+        post={post}
+        userLikedPosts={userLikedPosts}
+        userSavedPosts={userSavedPosts}
+      />
+    );
   });
 
   return (
     <div className='feedContainer'>
       <>
-        {content}
+        {!loading && content}
         {loading && <LoadingSpinner />}
         {error && errorInfo.message}
       </>
