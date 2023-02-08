@@ -2,41 +2,23 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import { useParams } from "react-router-dom";
 
-import NoUserImgProfileFeed from "../noUserImgProfileFeed/NoUserImgProfileFeed";
 import Footer from "../footer/Footer";
-import ProfilePostCard from "../profilePostCard/ProfilePostCard";
-import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
-import CreatePostModal from "../createPostModal/CreatePostModal";
+
 import useGetUserInfo from "../../hooks/useGetUserInfo";
-import useGetUserPosts from "../../hooks/useGetUserPosts";
 import "./profileMain.scss";
 import sprocket from "../../assets/gear-wide-svgrepo-com.svg";
 import grid from "../../assets/grid-svgrepo-com.svg";
 import bookmark from "../../assets/bookmark-svgrepo-com.svg";
 import tagged from "../../assets/user-square-svgrepo-com.svg";
+import PostFeed from "../postFeed/PostFeed";
 
 const ProfileMain = () => {
   const { userParam } = useParams();
   const { currentUser } = useContext(AuthContext);
-  const [userInfo, setUserInfo] = useState();
   const { userPosts, followers, following, fullname, userBio, userImgURL } =
     useGetUserInfo(userParam, "username");
-  const {
-    loading: postsLoading,
-    error,
-    errorInfo,
-    posts,
-    hasMoreData,
-  } = useGetUserPosts(userParam, 1);
-  const {
-    loading: savedLoading,
-    error: savedError,
-    errorInfo: savedErrorInfo,
-    posts: savedPosts,
-    hasMoreData: savedHasMoreData,
-  } = useGetUserPosts(currentUser.username, 1, "saved");
+
   const [pageLoading, setPageLoading] = useState(true);
-  const [displayPostModal, setDisplayPostModal] = useState(false);
   const [displaySelector, setDisplaySelector] = useState("posts");
 
   useEffect(() => {
@@ -44,20 +26,8 @@ const ProfileMain = () => {
   }, []);
 
   useEffect(() => {
-    setUserInfo({
-      userPosts: userPosts,
-      followers: followers,
-      following: following,
-      fullname: fullname,
-      userBio: userBio,
-      userImgURL: userImgURL,
-    });
     setPageLoading(false);
   }, [userImgURL]);
-
-  const handleAddPostModal = () => {
-    setDisplayPostModal(true);
-  };
 
   return (
     <div className='profile-main-container'>
@@ -65,11 +35,11 @@ const ProfileMain = () => {
         <div className='profile-content-container'>
           <div className='profile-top'>
             <div className='profile-img-div'>
-              <img src={userInfo.userImgURL} alt='user profile' />
+              <img src={userImgURL} alt='user profile' />
             </div>
             <div className='user-info'>
               <div className='user-info-top'>
-                <div className='user-info-username'>{userInfo.username}</div>
+                <div className='user-info-username'>{userParam}</div>
                 <div className='edit-profile'>
                   <button className='edit-profile-btn'>Edit profile</button>
                 </div>
@@ -81,30 +51,24 @@ const ProfileMain = () => {
               </div>
               <div className='user-info-middle'>
                 <div>
-                  <span className='user-figure'>
-                    {userInfo.userPosts.length}
-                  </span>
+                  <span className='user-figure'>{userPosts.length}</span>
                   <span className='category'>
-                    {userInfo.userPosts.length === 1 ? "post" : "posts"}
+                    {userPosts.length === 1 ? "post" : "posts"}
                   </span>
                 </div>
                 <div>
-                  <span className='user-figure'>
-                    {userInfo.followers.length}
-                  </span>
-                  {userInfo.followers.length === 1 ? "follower" : "followers"}
+                  <span className='user-figure'>{followers.length}</span>
+                  {followers.length === 1 ? "follower" : "followers"}
                   <span className='category'></span>
                 </div>
                 <div>
-                  <span className='user-figure'>
-                    {userInfo.following.length}
-                  </span>
+                  <span className='user-figure'>{following.length}</span>
                   following<span className='category'></span>
                 </div>
               </div>
               <div className='user-info-bottom'>
-                <div className='user-fullname'>{userInfo.fullname}</div>
-                <div className='user-bio'>{userInfo.userBio}</div>
+                <div className='user-fullname'>{fullname}</div>
+                <div className='user-bio'>{userBio}</div>
               </div>
             </div>
           </div>
@@ -152,17 +116,27 @@ const ProfileMain = () => {
               )}
             </div>
             <div className='img-feed-container'>
-              {!postsLoading && userInfo.userPosts.length < 1 && (
-                <NoUserImgProfileFeed handleAddPostModal={handleAddPostModal} />
+              {displaySelector === "posts" && (
+                <PostFeed
+                  userParam={userParam}
+                  userPosts={userPosts}
+                  userQueryInput={"posts"}
+                />
               )}
-              {!postsLoading && userInfo.userPosts.length >= 1 && (
-                <div className='user-posts-container'>
-                  {posts.map((post) => (
-                    <ProfilePostCard key={post.id} post={post} />
-                  ))}
-                </div>
+              {displaySelector === "saved" && (
+                <PostFeed
+                  userParam={userParam}
+                  userPosts={userPosts}
+                  userQueryInput={"saved"}
+                />
               )}
-              {postsLoading && <LoadingSpinner />}
+              {displaySelector === "tagged" && (
+                <PostFeed
+                  userParam={userParam}
+                  userPosts={userPosts}
+                  userQueryInput={"tagged"}
+                />
+              )}
             </div>
           </div>
         </div>
@@ -170,9 +144,6 @@ const ProfileMain = () => {
       <div className='footer-container'>
         <Footer />
       </div>
-      {displayPostModal && (
-        <CreatePostModal setDisplayPostModal={setDisplayPostModal} />
-      )}
     </div>
   );
 };
