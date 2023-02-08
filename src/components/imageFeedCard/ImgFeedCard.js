@@ -10,20 +10,44 @@ import filledHeart from "../../assets/heart-filled.svg";
 import Comment from "../comment/Comment";
 import moment from "moment";
 import { AuthContext } from "../../context/authContext";
+import useLikePost from "../../hooks/useLikePost";
+import useSavePost from "../../hooks/useSavePost";
 
 const ImgFeedCard = React.forwardRef(({ post }, ref) => {
   const [liked, setLiked] = useState(false);
   const [saved, setSaved] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
+  const { likePost, unlikePost } = useLikePost();
+  const { savePost, unsavePost } = useSavePost();
 
   useEffect(() => {
     if (!currentUser) return;
-    const liked = currentUser.likedPosts.filter((post) => post === post.ID);
-    const saved = currentUser.savedPosts.filter((post) => post === post.ID);
+    //TODO: get updated info
+    //Figure out best way to do this
+    // const liked = userLikedPosts.filter(
+    //   (singleLikedPost) => singleLikedPost === post.id
+    // );
+    // const saved = userSavedPosts.filter(
+    //   (singleSavedPost) => singleSavedPost === post.id
+    // );
     if (liked.length) setLiked(true);
     if (saved.length) setSaved(true);
   }, []);
+
+  const handleLike = () => {
+    if (!currentUser) return;
+    if (liked) unlikePost(post.id);
+    if (!liked) likePost(post.id);
+    setLiked(!liked);
+  };
+
+  const handleSave = () => {
+    if (!currentUser) return;
+    if (saved) unsavePost(post.id);
+    if (!saved) savePost(post.id);
+    setSaved(!saved);
+  };
 
   const imgContent = (
     <>
@@ -47,8 +71,16 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
       <div className='card-bottom'>
         <div className='buttons'>
           <div className='buttons-left'>
-            <button className='likeButton'>
-              <img src={liked ? filledHeart : outlinedHeart} alt='heart' />
+            <button
+              className='likeButton'
+              aria-label='click to like post'
+              onClick={handleLike}
+            >
+              <img
+                src={liked ? filledHeart : outlinedHeart}
+                className={liked ? "filled" : ""}
+                alt='heart'
+              />
             </button>
             <button className='commentButton'>
               <img src={comment} alt='comment bubble' />
@@ -58,10 +90,15 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
             </button>
           </div>
           <div className='buttons-right'>
-            <button className='bookmarkButton'>
+            <button
+              className='bookmarkButton'
+              aria-label='click to save post'
+              onClick={handleSave}
+            >
               <img
                 src={saved ? filledBookmark : outlinedBookmark}
                 alt='bookmark'
+                className={saved ? "filled" : ""}
               />
             </button>
           </div>
