@@ -24,9 +24,9 @@ const SignupForm = () => {
   };
 
   const signUpUser = async () => {
-    if (userName.length < 3 || userName.length > 15) {
+    if (userName.length < 3 || userName.length > 30) {
       setError(true);
-      setErrorMsg("Username must be 3-15 characters");
+      setErrorMsg("Username must be 3-30 characters");
       return;
     }
     if (fullName.length < 3 || userName.length > 30) {
