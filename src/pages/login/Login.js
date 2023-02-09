@@ -6,7 +6,7 @@ import { AuthContext } from "../../context/authContext";
 import "./login.scss";
 
 const Login = () => {
-  const { loginPath } = useParams();
+  const { accountsPath } = useParams();
 
   const { currentUser } = useContext(AuthContext);
 
@@ -14,8 +14,8 @@ const Login = () => {
 
   return (
     <div className='login-container'>
-      {loginPath === "login" && <LoginForm />}
-      {loginPath === "emailsignup" && <SignupForm />}
+      {accountsPath === "login" && <LoginForm />}
+      {accountsPath === "emailsignup" && <SignupForm />}
     </div>
   );
 };

@@ -13,7 +13,7 @@ function App() {
       <Routes>
         <Route path='/' element={<UserFeed />} />
         <Route path='/:userParam' element={<Profile />} />
-        <Route path='/accounts/:loginPath' element={<Login />} />
+        <Route path='/accounts/:accountsPath' element={<Login />} />
       </Routes>
     </div>
   );
