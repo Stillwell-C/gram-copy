@@ -13,6 +13,10 @@
   min-height: 300px;
   overflow: hidden;
 
+  &.initial {
+    width: min(80%, 682px);
+  }
+
   form {
     width: 100%;
     height: 100%;
