@@ -1,6 +1,7 @@
 import {
   EmailAuthProvider,
   reauthenticateWithCredential,
+  sendPasswordResetEmail,
   updatePassword,
 } from "firebase/auth";
 import React, { useContext, useEffect, useState } from "react";
@@ -43,6 +44,17 @@ export const EditProfilePassword = () => {
       );
       await reauthenticateWithCredential(user, credential);
       await updatePassword(user, newPassword);
+    } catch (err) {
+      console.log(err.message);
+      console.log(err.code);
+    }
+  };
+
+  const handleSendPasswordEmail = async () => {
+    //TODO: alert user of success or failure
+    //TODO: test with email yo ucontrol
+    try {
+      await sendPasswordResetEmail(auth, currentUser.email);
     } catch (err) {
       console.log(err.message);
       console.log(err.code);
@@ -119,7 +131,11 @@ export const EditProfilePassword = () => {
               </button>
             </div>
             <div className='extra-button-div'>
-              <button type='button' className='extra-button'>
+              <button
+                type='button'
+                className='extra-button'
+                onClick={handleSendPasswordEmail}
+              >
                 Forgot password?
               </button>
             </div>
