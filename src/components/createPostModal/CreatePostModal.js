@@ -200,6 +200,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
                   type='file'
                   id='initial-file-upload'
                   className='intial-file-upload'
+                  accept='image/png, image/jpeg'
                   ref={inputRef}
                   onChange={handleInitialClick}
                 />
