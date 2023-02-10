@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import useGetLoggedInUserInfo from "../../hooks/useGetLoggedInUserInfo";
-import useGetUserImgFunc from "../../hooks/useGetUserImgFunc";
 import useUploadProfileImg from "../../hooks/useUploadProfileImg";
 import "./editProfileInformation.scss";
 
@@ -9,7 +8,6 @@ const EditProfileInformation = () => {
     useGetLoggedInUserInfo();
 
   const uploadImg = useUploadProfileImg();
-  const getUserImg = useGetUserImgFunc();
 
   const [updatedImgURL, setUpdatedImgURL] = useState("");
   const [updatedUsername, setUpdatedUsername] = useState("");
