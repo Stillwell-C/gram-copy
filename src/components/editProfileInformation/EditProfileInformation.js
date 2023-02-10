@@ -14,7 +14,6 @@ const EditProfileInformation = () => {
   const [updatedUserBio, setUpdatedUserBio] = useState("");
   const [updatedWebsite, setUpdatedWebsite] = useState("Website");
   const [updatedEmail, setUpdatedEmail] = useState("");
-  const [imgFileUpload, setImgFileUpload] = useState(null);
 
   const imgInputRef = useRef(null);
   const btnInputRef = useRef(null);
@@ -37,7 +36,6 @@ const EditProfileInformation = () => {
   const handleImgUpload = (e) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
-      setImgFileUpload(e.target.files[0]);
       uploadImg(e.target.files[0]);
     }
   };
