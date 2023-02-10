@@ -1,3 +1,4 @@
+import { deleteUser } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/authContext";
@@ -83,6 +84,18 @@ const EditProfileInformation = () => {
       await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
         email: updatedEmail,
       });
+    } catch (err) {
+      console.log(err.message);
+      console.log(err.code);
+    }
+  };
+
+  const deleteAccount = async () => {
+    //TODO figure out how to best implement this.
+    //Maybe make a modal?
+    const user = auth.currentUser;
+    try {
+      deleteUser(user);
     } catch (err) {
       console.log(err.message);
       console.log(err.code);
