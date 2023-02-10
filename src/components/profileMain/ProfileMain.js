@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/authContext";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import Footer from "../footer/Footer";
 
@@ -41,7 +41,12 @@ const ProfileMain = () => {
               <div className='user-info-top'>
                 <div className='user-info-username'>{userParam}</div>
                 <div className='edit-profile'>
-                  <button className='edit-profile-btn'>Edit profile</button>
+                  <Link
+                    to='/accounts/edit'
+                    aria-label='click to edit profile information'
+                  >
+                    <button className='edit-profile-btn'>Edit profile</button>
+                  </Link>
                 </div>
                 <div className='user-settings'>
                   <button className='user-settings-btn'>
