@@ -23,11 +23,21 @@
         flex-grow: 1;
         overflow: hidden;
         margin-right: 30px;
-        img {
-          width: 150px;
-          height: 150px;
-          border-radius: 50%;
-          object-fit: cover;
+
+        button {
+          background-color: transparent;
+          border: none;
+          img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
+          }
+        }
+
+        input {
+          display: none;
         }
       }
 

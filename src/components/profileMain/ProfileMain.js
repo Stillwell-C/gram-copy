@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import { Link, useParams } from "react-router-dom";
 
@@ -11,12 +11,17 @@ import grid from "../../assets/grid-svgrepo-com.svg";
 import bookmark from "../../assets/bookmark-svgrepo-com.svg";
 import tagged from "../../assets/user-square-svgrepo-com.svg";
 import PostFeed from "../postFeed/PostFeed";
+import useUploadProfileImg from "../../hooks/useUploadProfileImg";
 
 const ProfileMain = () => {
   const { userParam } = useParams();
   const { currentUser } = useContext(AuthContext);
   const { userPosts, followers, following, fullname, userBio, userImgURL } =
     useGetUserInfo(userParam, "username");
+
+  const uploadImg = useUploadProfileImg();
+
+  const imgInputRef = useRef(null);
 
   const [pageLoading, setPageLoading] = useState(true);
   const [displaySelector, setDisplaySelector] = useState("posts");
@@ -29,13 +34,39 @@ const ProfileMain = () => {
     setPageLoading(false);
   }, [userImgURL]);
 
+  const handleImgClick = () => {
+    imgInputRef.current.click();
+  };
+
+  const handleImgUpload = (e) => {
+    e.preventDefault();
+    if (e.target.files && e.target.files[0]) {
+      uploadImg(e.target.files[0]);
+    }
+  };
+
   return (
     <div className='profile-main-container'>
       {!pageLoading && (
         <div className='profile-content-container'>
           <div className='profile-top'>
             <div className='profile-img-div'>
-              <img src={userImgURL} alt='user profile' />
+              <button
+                title='Click to change profile picture'
+                aria-label='click to change profile photo'
+                onClick={handleImgClick}
+              >
+                <img src={userImgURL} alt='user profile' />
+              </button>
+              <form>
+                <input
+                  type='file'
+                  className='file-upload-input'
+                  accept='image/png, image/jpeg'
+                  ref={imgInputRef}
+                  onChange={handleImgUpload}
+                />
+              </form>
             </div>
             <div className='user-info'>
               <div className='user-info-top'>
