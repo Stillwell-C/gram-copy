@@ -25,12 +25,14 @@ const ProfileMain = () => {
 
   const [pageLoading, setPageLoading] = useState(true);
   const [displaySelector, setDisplaySelector] = useState("posts");
+  const [updatedImgURL, setUpdatedImgURL] = useState("");
 
   useEffect(() => {
     setPageLoading(true);
   }, []);
 
   useEffect(() => {
+    setUpdatedImgURL(userImgURL);
     setPageLoading(false);
   }, [userImgURL]);
 
@@ -41,6 +43,7 @@ const ProfileMain = () => {
   const handleImgUpload = (e) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
+      setUpdatedImgURL(URL.createObjectURL(e.target.files[0]));
       uploadImg(e.target.files[0]);
     }
   };
@@ -56,7 +59,7 @@ const ProfileMain = () => {
                 aria-label='click to change profile photo'
                 onClick={handleImgClick}
               >
-                <img src={userImgURL} alt='user profile' />
+                <img src={updatedImgURL} alt='user profile' />
               </button>
               <form>
                 <input

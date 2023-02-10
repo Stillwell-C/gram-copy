@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import useGetLoggedInUserInfo from "../../hooks/useGetLoggedInUserInfo";
+import useGetUserImgFunc from "../../hooks/useGetUserImgFunc";
 import useUploadProfileImg from "../../hooks/useUploadProfileImg";
 import "./editProfileInformation.scss";
 
@@ -8,7 +9,9 @@ const EditProfileInformation = () => {
     useGetLoggedInUserInfo();
 
   const uploadImg = useUploadProfileImg();
+  const getUserImg = useGetUserImgFunc();
 
+  const [updatedImgURL, setUpdatedImgURL] = useState("");
   const [updatedUsername, setUpdatedUsername] = useState("");
   const [updatedFullname, setUpdatedFullname] = useState("");
   const [updatedUserBio, setUpdatedUserBio] = useState("");
@@ -23,6 +26,7 @@ const EditProfileInformation = () => {
     setUpdatedFullname(fullname);
     setUpdatedUserBio(userBio);
     setUpdatedEmail(email);
+    setUpdatedImgURL(userImgURL);
   }, [username]);
 
   const handleImgClick = () => {
@@ -36,6 +40,7 @@ const EditProfileInformation = () => {
   const handleImgUpload = (e) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
+      setUpdatedImgURL(URL.createObjectURL(e.target.files[0]));
       uploadImg(e.target.files[0]);
     }
   };
@@ -49,7 +54,7 @@ const EditProfileInformation = () => {
             aria-label='click to change profile photo'
             onClick={handleImgClick}
           >
-            <img src={userImgURL} alt='user profile upload' />
+            <img src={updatedImgURL} alt='user profile upload' />
           </button>
           <form>
             <input
