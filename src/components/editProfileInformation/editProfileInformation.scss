@@ -1,0 +1,13 @@
+.edit-profile-information-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  //necessary?
+  align-items: stretch;
+  flex: 1 1 400px;
+
+  .file-upload-input {
+    display: none;
+  }
+}
