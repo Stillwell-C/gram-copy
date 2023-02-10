@@ -2,7 +2,7 @@ import { doc, updateDoc } from "firebase/firestore";
 import { ref, uploadBytesResumable } from "firebase/storage";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/authContext";
-import { db, storage } from "../firebase";
+import { db, getURL, storage } from "../firebase";
 
 const useUploadProfileImg = () => {
   const { currentUser } = useContext(AuthContext);
@@ -36,12 +36,10 @@ const useUploadProfileImg = () => {
       () => {
         updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
           userImg: uploadTask.snapshot.metadata.fullPath,
-        })
-          .then(() => console.log("Document successfully updated"))
-          .catch((err) => {
-            console.log(err.message);
-            console.log(err.code);
-          });
+        }).catch((err) => {
+          console.log(err.message);
+          console.log(err.code);
+        });
       }
     );
   };
