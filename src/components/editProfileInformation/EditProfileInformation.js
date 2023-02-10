@@ -1,9 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import { doc, updateDoc } from "firebase/firestore";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { AuthContext } from "../../context/authContext";
+import { auth, db } from "../../firebase";
 import useGetLoggedInUserInfo from "../../hooks/useGetLoggedInUserInfo";
 import useUploadProfileImg from "../../hooks/useUploadProfileImg";
 import "./editProfileInformation.scss";
 
 const EditProfileInformation = () => {
+  const { currentUser } = useContext(AuthContext);
+
   const { userImgURL, username, fullname, userBio, email } =
     useGetLoggedInUserInfo();
 
@@ -37,9 +42,50 @@ const EditProfileInformation = () => {
 
   const handleImgUpload = (e) => {
     e.preventDefault();
+    //TODO: update authcontext
+
     if (e.target.files && e.target.files[0]) {
       setUpdatedImgURL(URL.createObjectURL(e.target.files[0]));
       uploadImg(e.target.files[0]);
+    }
+  };
+
+  const editUserInformation = (e) => {
+    e.preventDefault();
+    //TODO: handle errors in below functions
+    //TODO: update authcontext
+    if (
+      updatedFullname !== fullname ||
+      updatedUsername !== username ||
+      updatedUserBio !== userBio
+    ) {
+      editNameAndUserName();
+    }
+    if (updatedEmail !== email) editUserEmail();
+  };
+
+  const editNameAndUserName = async () => {
+    try {
+      await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
+        fullname: updatedFullname,
+        username: updatedUsername,
+        userBio: updatedUserBio,
+      });
+    } catch (err) {
+      console.log(err.message);
+      console.log(err.code);
+    }
+  };
+
+  const editUserEmail = async () => {
+    try {
+      await updatedEmail(auth.currentUser, updatedEmail);
+      await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
+        email: updatedEmail,
+      });
+    } catch (err) {
+      console.log(err.message);
+      console.log(err.code);
     }
   };
 
@@ -54,7 +100,7 @@ const EditProfileInformation = () => {
           >
             <img src={updatedImgURL} alt='user profile upload' />
           </button>
-          <form>
+          <form onSubmit={editUserInformation}>
             <input
               type='file'
               className='file-upload-input'
