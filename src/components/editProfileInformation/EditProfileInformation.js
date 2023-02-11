@@ -53,7 +53,7 @@ const EditProfileInformation = () => {
     }
   };
 
-  const editUserInformation = (e) => {
+  const handleEditUserInformation = (e) => {
     e.preventDefault();
     setConfirmation(false);
     setConfirmationMsg([]);
@@ -184,7 +184,7 @@ const EditProfileInformation = () => {
           >
             <img src={updatedImgURL} alt='user profile upload' />
           </button>
-          <form onSubmit={editUserInformation}>
+          <form>
             <input
               type='file'
               className='file-upload-input'
@@ -213,7 +213,7 @@ const EditProfileInformation = () => {
           </form>
         </div>
       </div>
-      <form>
+      <form onSubmit={handleEditUserInformation}>
         <div className='form-row'>
           <div className='form-left'>
             <label htmlFor='name-input'>Name</label>
