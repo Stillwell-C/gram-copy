@@ -19,7 +19,10 @@ export const EditProfilePassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [buttonActive, setButtonActive] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState([]);
+  const [confirmation, setConfirmation] = useState(false);
+  const [confirmationMsg, setConfirmationMsg] = useState([]);
 
   useEffect(() => {
     if (oldPassword.length && newPassword.length && confirmPassword.length) {
@@ -32,9 +35,19 @@ export const EditProfilePassword = () => {
   const handleChangePassword = async (e) => {
     //TODO: handle errors
     e.preventDefault();
+    setConfirmation(false);
+    setConfirmationMsg([]);
+    setError(false);
+    setErrorMsg([]);
     const user = auth.currentUser;
     if (newPassword !== confirmPassword) {
-      setErrorMsg("Passwords do not match");
+      setError(true);
+      setErrorMsg(["Passwords do not match"]);
+      return;
+    }
+    if (newPassword.length < 6) {
+      setError(true);
+      setErrorMsg(["Password must be at least 6 characters long"]);
       return;
     }
     try {
@@ -44,25 +57,67 @@ export const EditProfilePassword = () => {
       );
       await reauthenticateWithCredential(user, credential);
       await updatePassword(user, newPassword);
+      setConfirmation(true);
+      setConfirmationMsg(["Your password has been changed."]);
     } catch (err) {
       console.log(err.message);
       console.log(err.code);
+      setError(true);
+      setErrorMsg([err.message]);
     }
   };
 
   const handleSendPasswordEmail = async () => {
     //TODO: alert user of success or failure
     //TODO: test with email yo ucontrol
+    setConfirmation(false);
+    setConfirmationMsg([]);
+    setError(false);
+    setErrorMsg([]);
     try {
       await sendPasswordResetEmail(auth, currentUser.email);
+      setConfirmation(true);
+      setConfirmationMsg();
+      setConfirmation(true);
+      setConfirmationMsg([
+        "A password reset email has been sent to your inbox.",
+      ]);
     } catch (err) {
       console.log(err.message);
       console.log(err.code);
+      setError(true);
+      setErrorMsg(["Error. Please try again."]);
     }
   };
 
   return (
     <div className='edit-profile-password-container'>
+      <div
+        className={
+          error || confirmation ? "user-msg-div active" : "user-msg-div"
+        }
+      >
+        <div className={error ? "user-error-div active" : "user-error-div"}>
+          {errorMsg.map((msg) => (
+            <span key={msg} className='error-msg'>
+              {msg}
+            </span>
+          ))}
+        </div>
+        <div
+          className={
+            confirmation
+              ? "user-confirmation-div active"
+              : "user-confirmation-div"
+          }
+        >
+          {confirmationMsg.map((msg) => (
+            <span key={msg} className='confirmation-msg'>
+              {msg}
+            </span>
+          ))}
+        </div>
+      </div>
       <div className='user-info'>
         <div className='profile-img-div'>
           <img src={userImgURL} alt='user profile upload' />
