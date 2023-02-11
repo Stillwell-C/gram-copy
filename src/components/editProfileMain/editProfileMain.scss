@@ -41,6 +41,45 @@
     }
   }
 
+  .user-msg-div {
+    display: none;
+
+    &.active {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .user-error-div {
+      display: none;
+
+      &.active {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        color: red;
+      }
+    }
+
+    .user-confirmation-div {
+      display: none;
+
+      &.active {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        color: green;
+      }
+    }
+  }
+
   .user-info {
     display: flex;
     margin-top: 32px;
