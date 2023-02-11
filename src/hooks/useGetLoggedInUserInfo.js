@@ -25,7 +25,7 @@ const useGetLoggedInUserInfo = () => {
   const [username, setUsername] = useState("");
   const [allData, setAllData] = useState({});
 
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, dispatch } = useContext(AuthContext);
 
   useEffect(() => {
     getLoggedInUserInfo();
@@ -34,12 +34,6 @@ const useGetLoggedInUserInfo = () => {
   const getLoggedInUserInfo = async () => {
     if (!currentUser) return;
     try {
-      //   const userQuery = await getDocs(
-      //     query(
-      //       collection(db, "userInfo"),
-      //       where(queryParameter, "==", queryInput)
-      //     )
-      //   );
       const userQuery = await getDoc(
         doc(db, "userInfo", currentUser.userInfoID)
       );
@@ -57,6 +51,11 @@ const useGetLoggedInUserInfo = () => {
       setUserImgURL(userImgURL);
       setUserPosts(userInfo.userPosts);
       setUsername(userInfo.username);
+      //Update user info in auth context to ensure up to date
+      dispatch({
+        type: "LOGIN",
+        payload: { ...currentUser, ...userInfo, userImgURL: userImgURL },
+      });
     } catch (err) {
       console.log(err.message);
       console.log(err.code);
