@@ -1,11 +1,11 @@
 import { doc, updateDoc } from "firebase/firestore";
-import { ref, uploadBytesResumable } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/authContext";
-import { db, getURL, storage } from "../firebase";
+import { db, storage } from "../firebase";
 
 const useUploadProfileImg = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, dispatch } = useContext(AuthContext);
 
   const uploadFile = async (imgFileUpload) => {
     const fileName =
@@ -40,6 +40,20 @@ const useUploadProfileImg = () => {
           console.log(err.message);
           console.log(err.code);
         });
+        getDownloadURL(uploadTask.snapshot.ref)
+          .then((downloadURL) => {
+            dispatch({
+              type: "LOGIN",
+              payload: {
+                ...currentUser,
+                userImgURL: downloadURL,
+              },
+            });
+          })
+          .catch((err) => {
+            console.log(err.message);
+            console.log(err.code);
+          });
       }
     );
   };
