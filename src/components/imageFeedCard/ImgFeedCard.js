@@ -12,9 +12,13 @@ import moment from "moment";
 import { AuthContext } from "../../context/authContext";
 import useLikePost from "../../hooks/useLikePost";
 import useSavePost from "../../hooks/useSavePost";
+import useGetUserInfo from "../../hooks/useGetUserInfo";
 
 const ImgFeedCard = React.forwardRef(
   ({ post, userLikedPosts, userSavedPosts }, ref) => {
+    //TODO: Have infoID, so could streamline this later
+    const { userImgURL } = useGetUserInfo(post.userName, "username");
+
     const [liked, setLiked] = useState(false);
     const [initialLike, setInitialLike] = useState(false);
     const [likesOffset, setLikesOffset] = useState(0);
@@ -64,7 +68,7 @@ const ImgFeedCard = React.forwardRef(
     const imgContent = (
       <>
         <div className='card-top'>
-          <img className='userImg' src={post.userImgURL} alt='user profile' />
+          <img className='userImg' src={userImgURL} alt='user profile' />
           <div className='photoInfo'>
             <Link to={`/${post.userName}`}>
               <div className='userName'>{post.userName}</div>
