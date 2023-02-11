@@ -105,6 +105,7 @@ const EditProfileInformation = () => {
     } catch (err) {
       console.log(err.message);
       console.log(err.code);
+      setError(true);
       setErrorMsg([...errorMsg, err.message]);
     }
   };
@@ -127,6 +128,7 @@ const EditProfileInformation = () => {
     } catch (err) {
       console.log(err.message);
       console.log(err.code);
+      setError(true);
       setErrorMsg([...errorMsg, err.message]);
     }
   };
@@ -140,6 +142,7 @@ const EditProfileInformation = () => {
     } catch (err) {
       console.log(err.message);
       console.log(err.code);
+      setError(true);
       setErrorMsg([...errorMsg, err.message]);
     }
   };
