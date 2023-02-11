@@ -29,7 +29,7 @@ const SignupForm = () => {
       setErrorMsg("Username must be 3-30 characters");
       return;
     }
-    if (fullName.length < 3 || userName.length > 30) {
+    if (fullName.length < 3 || fullName.length > 30) {
       setError(true);
       setErrorMsg("Name must be 3-30 characters");
       return;
