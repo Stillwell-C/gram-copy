@@ -156,7 +156,9 @@ const EditProfileInformation = () => {
       >
         <div className={error ? "user-error-div active" : "user-error-div"}>
           {errorMsg.map((msg) => (
-            <span className='error-msg'>{msg}</span>
+            <span key={msg} className='error-msg'>
+              {msg}
+            </span>
           ))}
         </div>
         <div
@@ -167,7 +169,9 @@ const EditProfileInformation = () => {
           }
         >
           {confirmationMsg.map((msg) => (
-            <span className='confirmation-msg'>{msg}</span>
+            <span key={msg} className='confirmation-msg'>
+              {msg}
+            </span>
           ))}
         </div>
       </div>
