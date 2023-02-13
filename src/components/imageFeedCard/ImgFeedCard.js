@@ -13,6 +13,7 @@ import { AuthContext } from "../../context/authContext";
 import useLikePost from "../../hooks/useLikePost";
 import useSavePost from "../../hooks/useSavePost";
 import useGetUserInfo from "../../hooks/useGetUserInfo";
+import PhotoModal from "../photoModal/PhotoModal";
 
 const ImgFeedCard = React.forwardRef(
   ({ post, userLikedPosts, userSavedPosts }, ref) => {
@@ -23,6 +24,7 @@ const ImgFeedCard = React.forwardRef(
     const [initialLike, setInitialLike] = useState(false);
     const [likesOffset, setLikesOffset] = useState(0);
     const [saved, setSaved] = useState(false);
+    const [showPhotoModal, setShowPhotoModal] = useState(false);
 
     const { currentUser } = useContext(AuthContext);
     const { likePost, unlikePost } = useLikePost();
@@ -135,9 +137,16 @@ const ImgFeedCard = React.forwardRef(
               )}
             </div>
             <div className='view-more-div'>
-              {post.comments[1]
-                ? `View all ${post.comments.length} posts`
-                : `View all comments`}
+              <button
+                type='button'
+                className='view-comments-button'
+                aria-label='click to view more comments'
+                onClick={() => setShowPhotoModal(true)}
+              >
+                {post.comments[1]
+                  ? `View all ${post.comments.length} comments`
+                  : `View all comments`}
+              </button>
             </div>
             <div className='time-ago'>
               {moment(post.date.toDate()).fromNow().toUpperCase()}
@@ -158,6 +167,18 @@ const ImgFeedCard = React.forwardRef(
             </div>
           </div>
         </div>
+        {showPhotoModal && (
+          <PhotoModal
+            setShowPhotoModal={setShowPhotoModal}
+            userImgURL={userImgURL}
+            post={post}
+            liked={liked}
+            saved={saved}
+            handleLike={handleLike}
+            handleSave={handleSave}
+            likesOffset={likesOffset}
+          />
+        )}
       </>
     );
 
