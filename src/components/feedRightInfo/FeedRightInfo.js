@@ -33,7 +33,7 @@ const FeedRightInfo = () => {
             <div className='user-name-bottom'>{fullname}</div>
           </div>
           <div className='button-div'>
-            <button aria-label='click to log out' onClick={() => handleLogout}>
+            <button aria-label='click to log out' onClick={handleLogout}>
               Log out
             </button>
           </div>
