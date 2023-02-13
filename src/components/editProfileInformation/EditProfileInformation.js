@@ -5,6 +5,7 @@ import { AuthContext } from "../../context/authContext";
 import { auth, db } from "../../firebase";
 import useGetLoggedInUserInfo from "../../hooks/useGetLoggedInUserInfo";
 import useUploadProfileImg from "../../hooks/useUploadProfileImg";
+import DeleteAccountModal from "../deleteAccountModal/DeleteAccountModal";
 import "./editProfileInformation.scss";
 
 const EditProfileInformation = () => {
@@ -21,6 +22,7 @@ const EditProfileInformation = () => {
   const [updatedUserBio, setUpdatedUserBio] = useState("");
   const [updatedWebsite, setUpdatedWebsite] = useState("Website");
   const [updatedEmail, setUpdatedEmail] = useState("");
+  const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState([]);
   const [confirmation, setConfirmation] = useState(false);
@@ -125,20 +127,6 @@ const EditProfileInformation = () => {
       });
       setConfirmation(true);
       setConfirmationMsg([...confirmationMsg, "Updated user email"]);
-    } catch (err) {
-      console.log(err.message);
-      console.log(err.code);
-      setError(true);
-      setErrorMsg([...errorMsg, err.message]);
-    }
-  };
-
-  const deleteAccount = async () => {
-    //TODO figure out how to best implement this.
-    //Maybe make a modal?
-    const user = auth.currentUser;
-    try {
-      deleteUser(user);
     } catch (err) {
       console.log(err.message);
       console.log(err.code);
@@ -334,13 +322,20 @@ const EditProfileInformation = () => {
               </button>
             </div>
             <div className='extra-button-div'>
-              <button type='button' className='extra-button'>
+              <button
+                type='button'
+                className='extra-button'
+                onClick={() => setDisplayDeleteModal(true)}
+              >
                 Delete my account
               </button>
             </div>
           </div>
         </div>
       </form>
+      {displayDeleteModal && (
+        <DeleteAccountModal setDisplayDeleteModal={setDisplayDeleteModal} />
+      )}
     </div>
   );
 };
