@@ -137,7 +137,7 @@ const ImgFeedCard = React.forwardRef(
             <div className='view-more-div'>
               {post.comments[1]
                 ? `View all ${post.comments.length} posts`
-                : `View all posts`}
+                : `View all comments`}
             </div>
             <div className='time-ago'>
               {moment(post.date.toDate()).fromNow().toUpperCase()}
