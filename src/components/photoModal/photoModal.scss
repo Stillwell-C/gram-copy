@@ -1,0 +1,50 @@
+.photo-modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #cccccc;
+  border-radius: 0.5rem;
+  z-index: 10;
+  background-color: #fff;
+  min-width: 300px;
+  width: 80%;
+  height: 80%;
+  min-height: 300px;
+  overflow: hidden;
+  display: flex;
+
+  .photo-modal-left {
+    overflow: hidden;
+
+    img {
+      object-fit: contain;
+      width: 50%;
+    }
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+
+  .modal-overlay-close {
+    width: 100vw;
+    display: flex;
+    justify-content: flex-end;
+    pointer-events: all;
+
+    button {
+      border: none;
+      background-color: transparent;
+      color: #fff;
+      font-size: 3rem;
+      cursor: pointer;
+      margin: 5px 20px;
+    }
+  }
+}
