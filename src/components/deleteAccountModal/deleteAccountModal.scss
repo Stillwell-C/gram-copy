@@ -1,0 +1,154 @@
+.delete-account-modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid #cccccc;
+  border-radius: 0.5rem;
+  z-index: 10;
+  background-color: #fff;
+  min-width: 300px;
+  width: min(80%, 700px);
+  height: min(70%, 1600px);
+  min-height: 300px;
+  overflow: hidden;
+
+  .modal-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border-bottom: 0.5px solid #cccccc;
+    h1 {
+      font-size: 1.15rem;
+    }
+  }
+
+  .modal-body {
+    height: 100%;
+    width: 100%;
+    padding: 10px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h2 {
+      font-size: 1.3rem;
+    }
+
+    .user-msg-container {
+      .error-msg {
+        color: red;
+        margin-bottom: 10px;
+      }
+
+      .confirmation-msg {
+        color: green;
+        margin-bottom: 10px;
+      }
+    }
+
+    .modal-confirmation {
+      form {
+        margin-top: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        color: #8e8e8e;
+
+        .larger-text {
+          font-size: 1rem;
+          font-weight: bold;
+          color: #8e8e8e;
+        }
+
+        .fine-print-div {
+          height: 5rem;
+          overflow-y: scroll;
+          border: 1px solid #cccccc;
+          border-radius: 0.25rem;
+          padding: 5px 10px;
+
+          span {
+            font-size: 0.8rem;
+            color: #8e8e8e;
+          }
+        }
+
+        .agree-label {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          .agree-checkbox {
+            margin-right: 5px;
+            cursor: pointer;
+          }
+        }
+
+        .confirmation-div {
+          .confirmation-prompt {
+            font-size: 0.9rem;
+            color: black;
+            margin-bottom: 1rem;
+          }
+
+          input {
+            border: 1px solid #cccccc;
+            font-size: 16px;
+            padding: 0 10px;
+            height: 32px;
+            border-radius: 0.25rem;
+          }
+        }
+
+        .button-div {
+          margin-top: 1rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          button {
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            background-color: #0095f6;
+            padding: 7px 16px;
+            border: none;
+            border-radius: 0.5rem;
+
+            &:hover {
+              background-color: #1877f2;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+
+  .modal-overlay-close {
+    width: 100vw;
+    display: flex;
+    justify-content: flex-end;
+    pointer-events: all;
+
+    button {
+      border: none;
+      background-color: transparent;
+      color: #fff;
+      font-size: 3rem;
+      cursor: pointer;
+      margin: 5px 20px;
+    }
+  }
+}
