@@ -5,7 +5,13 @@ import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 import NoUserImgProfileFeed from "../noUserImgProfileFeed/NoUserImgProfileFeed";
 import ProfilePostCard from "../profilePostCard/ProfilePostCard";
 
-const PostFeed = ({ userParam, userPosts, userQueryInput }) => {
+const PostFeed = ({
+  userParam,
+  userPosts,
+  userQueryInput,
+  userLikedPosts,
+  userSavedPosts,
+}) => {
   const [displayNoImgFeed, setDisplayNoImgFeed] = useState(false);
   const [displayPostModal, setDisplayPostModal] = useState(false);
   const [pageNum, setPageNum] = useState(1);
@@ -43,9 +49,24 @@ const PostFeed = ({ userParam, userPosts, userQueryInput }) => {
 
   const content = posts.map((post, i) => {
     if (posts.length === i + 1) {
-      return <ProfilePostCard key={post.id} post={post} ref={lastPostRef} />;
+      return (
+        <ProfilePostCard
+          key={post.id}
+          post={post}
+          userLikedPosts={userLikedPosts}
+          userSavedPosts={userSavedPosts}
+          ref={lastPostRef}
+        />
+      );
     }
-    return <ProfilePostCard key={post.id} post={post} />;
+    return (
+      <ProfilePostCard
+        key={post.id}
+        post={post}
+        userLikedPosts={userLikedPosts}
+        userSavedPosts={userSavedPosts}
+      />
+    );
   });
 
   const handleAddPostModal = () => {
