@@ -153,18 +153,20 @@ const ImgFeedCard = React.forwardRef(
             </div>
           </div>
           <div className='input-comment-div'>
-            <div className='input-left'>
-              <label>
-                <input
-                  type='text'
-                  maxLength={2200}
-                  placeholder='Add a comment...'
-                />
-              </label>
-            </div>
-            <div className='input-right'>
-              <button>Post</button>
-            </div>
+            <form>
+              <div className='input-left'>
+                <label>
+                  <input
+                    type='text'
+                    maxLength={2200}
+                    placeholder='Add a comment...'
+                  />
+                </label>
+              </div>
+              <div className='input-right'>
+                <button>Post</button>
+              </div>
+            </form>
           </div>
         </div>
         {showPhotoModal && (
