@@ -23,10 +23,6 @@ const ProfilePostCard = React.forwardRef(
     const { savePost, unsavePost } = useSavePost();
 
     useEffect(() => {
-      console.log("From postcard. Current status: ", showPhotoModal);
-    }, [showPhotoModal]);
-
-    useEffect(() => {
       if (!currentUser) return;
       //TODO: get updated info
       //Figure out best way to do this
