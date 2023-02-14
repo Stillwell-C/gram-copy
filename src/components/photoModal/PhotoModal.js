@@ -26,6 +26,7 @@ const PhotoModal = ({
   const { currentUser } = useContext(AuthContext);
   const [commentsArr, setCommentsArr] = useState([]);
   const [commentsLoading, setCommentsLoading] = useState(true);
+  const [picInfoButton, setPicInfoButton] = useState();
 
   useEffect(() => {
     loadComments();
@@ -52,28 +53,31 @@ const PhotoModal = ({
     <Comment
       comment={comment}
       abbreviate={false}
+      showTime={true}
+      showImage={true}
       key={comment.date + comment.userName}
     />
   ));
 
-  let picInfoButton;
-  const friendArr = currentUser.following.filter(
-    (user) => user === post.userName
-  );
-  if (friendArr.length) {
-    picInfoButton = (
-      <button type='button' aria-label={`click to unfollow ${post.userName}`}>
-        Unfollow
-      </button>
+  useEffect(() => {
+    const friendArr = currentUser.following.filter(
+      (user) => user === post.userName
     );
-  }
-  if (!friendArr.length) {
-    picInfoButton = (
-      <button type='button' aria-label={`click to follow ${post.userName}`}>
-        Follow
-      </button>
-    );
-  }
+    if (friendArr.length) {
+      setPicInfoButton(
+        <button type='button' aria-label={`click to unfollow ${post.userName}`}>
+          Unfollow
+        </button>
+      );
+    }
+    if (!friendArr.length) {
+      setPicInfoButton(
+        <button type='button' aria-label={`click to follow ${post.userName}`}>
+          Follow
+        </button>
+      );
+    }
+  }, []);
 
   return (
     <>
@@ -97,10 +101,15 @@ const PhotoModal = ({
                   <Link to={`/${post.userName}`}>
                     <div className='userName'>{post.userName}</div>
                   </Link>
-                  {currentUser.username !== post.userName && picInfoButton}
+                  {currentUser.username !== post.userName && (
+                    <>
+                      <span>•</span>
+                      {picInfoButton}
+                    </>
+                  )}
                 </div>
-                <div className='photoLocation'>
-                  {post.location && post.location}
+                <div className='photo-location'>
+                  {post.location ? post.location : ""}
                 </div>
               </div>
               <button className='optionButton'>
@@ -155,7 +164,7 @@ const PhotoModal = ({
                   </button>
                 </div>
               </div>
-              <div className='card-bottom-text'>
+              <div className='photo-bottom-text'>
                 <div className='likes-counter'>
                   {post.likedUsers.length + likesOffset}{" "}
                   {post.likedUsers.length + likesOffset === 1
@@ -167,18 +176,22 @@ const PhotoModal = ({
                 </div>
               </div>
               <div className='input-comment-div'>
-                <div className='input-left'>
-                  <label>
-                    <input
-                      type='text'
-                      maxLength={2200}
-                      placeholder='Add a comment...'
-                    />
-                  </label>
-                </div>
-                <div className='input-right'>
-                  <button>Post</button>
-                </div>
+                <form>
+                  <div className='input-left'>
+                    <label aria-label='Type to input a comment'>
+                      <input
+                        type='text'
+                        maxLength={2200}
+                        placeholder='Add a comment...'
+                      />
+                    </label>
+                  </div>
+                  <div className='input-right'>
+                    <button type='submit' aria-label='click to submit comment'>
+                      Post
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
