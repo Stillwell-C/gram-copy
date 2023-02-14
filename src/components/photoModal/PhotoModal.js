@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import threeDots from "../../assets/three-dots-line-svgrepo-com.svg";
-import addComment from "../../assets/add-circle-svgrepo-com.svg";
+import addCommentIcon from "../../assets/add-circle-svgrepo-com.svg";
 import commentBubble from "../../assets/message-circle-01-svgrepo-com.svg";
 import message from "../../assets/plane-svgrepo-com.svg";
 import filledBookmark from "../../assets/bookmark-filled.svg";
@@ -139,14 +139,16 @@ const PhotoModal = ({
             <div className='photo-modal-right-middle'>
               {!commentsLoading && comments}
               {commentsArr.length < post.comments.length && (
-                <button
-                  type='button'
-                  aria-label='click to show more comments'
-                  title='click to show more comments'
-                  onClick={loadComments}
-                >
-                  <img src={addComment} alt='plus sign icon' />
-                </button>
+                <div className='add-comments-button-div'>
+                  <button
+                    type='button'
+                    aria-label='click to show more comments'
+                    title='click to show more comments'
+                    onClick={loadComments}
+                  >
+                    <img src={addCommentIcon} alt='plus sign icon' />
+                  </button>
+                </div>
               )}
             </div>
             <div className='photo-modal-right-bottom'>
