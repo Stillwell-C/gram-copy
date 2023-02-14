@@ -22,17 +22,18 @@ const Comment = ({
     if (comment.date) setDateCheck(true);
     if (typeof comment.date === "string") {
       let fromNow = moment(comment.date).fromNow(true);
-      let numArr = fromNow.match(/^\d{1,2}/);
-      let charArr = fromNow.match(/([a-z])/);
-      setFormatedDate(`${numArr[0]}${charArr[0]}`);
-      // setFormatedDate(fromNow);
+      // causes bugs for things such as 'a minute' & 'a few seconds'
+      // let numArr = fromNow.match(/^\d{1,2}/);
+      // let charArr = fromNow.match(/([a-z])/);
+      // setFormatedDate(`${numArr[0]}${charArr[0]}`);
+      setFormatedDate(fromNow);
     }
     if (typeof comment.date === "object") {
       let fromNow = moment(comment.date.toDate()).fromNow(true);
-      let numArr = fromNow.match(/^\d{1,2}/);
-      let charArr = fromNow.match(/([a-z])/);
-      setFormatedDate(`${numArr[0]}${charArr[0]}`);
-      // setFormatedDate(fromNow);
+      // let numArr = fromNow.match(/^\d{1,2}/);
+      // let charArr = fromNow.match(/([a-z])/);
+      // setFormatedDate(`${numArr[0]}${charArr[0]}`);
+      setFormatedDate(fromNow);
     }
   }, [comment.date]);
 
