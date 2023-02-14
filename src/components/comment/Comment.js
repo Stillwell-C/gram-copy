@@ -1,15 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import useGetUserInfo from "../../hooks/useGetUserInfo";
+import moment from "moment";
 
-const Comment = ({ comment, abbreviate }) => {
+const Comment = ({ comment, abbreviate, showImage, showTime }) => {
   let commentBody = comment.comment;
   if (abbreviate && commentBody.length > 150) {
     commentBody = `${commentBody.slice(0, 150)}...`;
   }
 
+  const [dateCheck, setDateCheck] = useState(false);
+  const [formatedDate, setFormatedDate] = useState("");
+
+  useEffect(() => {
+    if (comment.date) setDateCheck(true);
+    if (typeof comment.date === "string") {
+      let fromNow = moment(comment.date).fromNow(true);
+      let numArr = fromNow.match(/^\d{1,2}/);
+      let charArr = fromNow.match(/([a-z])/);
+      setFormatedDate(`${numArr[0]}${charArr[0]}`);
+    }
+    if (typeof comment.date === "object") {
+      let fromNow = moment(comment.date.toDate()).fromNow(true);
+      let numArr = fromNow.match(/^\d{1,2}/);
+      let charArr = fromNow.match(/([a-z])/);
+      setFormatedDate(`${numArr[0]}${charArr[0]}`);
+    }
+  }, [comment.date]);
+
+  const { userImgURL } = useGetUserInfo(comment.username, "username");
+
   return (
     <div className='single-comment'>
-      <span className='comment-username'>{comment.username}</span>
-      <span className='comment-comment-body'>{commentBody}</span>
+      {showImage && (
+        <div className='comment-image'>
+          <img src={userImgURL} alt='user profile' />
+        </div>
+      )}
+      <div className='comment-main'>
+        <div className='comment-main-top'>
+          <span className='comment-username'>{comment.username}</span>
+          <span className='comment-body'>{commentBody}</span>
+        </div>
+        {showTime && dateCheck && (
+          <div className='comment-main-bottom'>{formatedDate}</div>
+        )}
+      </div>
     </div>
   );
 };
