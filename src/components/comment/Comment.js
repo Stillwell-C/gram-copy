@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
 import useGetUserInfo from "../../hooks/useGetUserInfo";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
-const Comment = ({ comment, abbreviate, showImage, showTime }) => {
+const Comment = ({
+  comment,
+  abbreviate,
+  showImage,
+  showTime,
+  setShowPhotoModal,
+}) => {
   let commentBody = comment.comment;
   if (abbreviate && commentBody.length > 150) {
     commentBody = `${commentBody.slice(0, 150)}...`;
@@ -18,12 +25,14 @@ const Comment = ({ comment, abbreviate, showImage, showTime }) => {
       let numArr = fromNow.match(/^\d{1,2}/);
       let charArr = fromNow.match(/([a-z])/);
       setFormatedDate(`${numArr[0]}${charArr[0]}`);
+      // setFormatedDate(fromNow);
     }
     if (typeof comment.date === "object") {
       let fromNow = moment(comment.date.toDate()).fromNow(true);
       let numArr = fromNow.match(/^\d{1,2}/);
       let charArr = fromNow.match(/([a-z])/);
       setFormatedDate(`${numArr[0]}${charArr[0]}`);
+      // setFormatedDate(fromNow);
     }
   }, [comment.date]);
 
@@ -33,12 +42,22 @@ const Comment = ({ comment, abbreviate, showImage, showTime }) => {
     <div className='single-comment'>
       {showImage && (
         <div className='comment-image'>
-          <img src={userImgURL} alt='user profile' />
+          <Link
+            to={`/${comment.username}`}
+            onClick={() => setShowPhotoModal(false)}
+          >
+            <img src={userImgURL} alt='user profile' />
+          </Link>
         </div>
       )}
       <div className='comment-main'>
         <div className='comment-main-top'>
-          <span className='comment-username'>{comment.username}</span>
+          <Link
+            to={`/${comment.username}`}
+            onClick={() => setShowPhotoModal(false)}
+          >
+            <span className='comment-username'>{comment.username}</span>
+          </Link>
           <span className='comment-body'>{commentBody}</span>
         </div>
         {showTime && dateCheck && (
