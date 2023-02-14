@@ -121,6 +121,11 @@
           display: flex;
           margin-bottom: 1rem;
 
+          a {
+            text-decoration: none;
+            color: black;
+          }
+
           .comment-image {
             display: flex;
             align-items: flex-start;
@@ -250,6 +255,11 @@
               button {
                 color: #0095f6;
                 font-weight: bold;
+
+                &.deactivated {
+                  color: #b3bfff;
+                  cursor: default;
+                }
               }
             }
           }

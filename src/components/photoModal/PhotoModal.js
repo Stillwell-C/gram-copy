@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import threeDots from "../../assets/three-dots-line-svgrepo-com.svg";
 import addComment from "../../assets/add-circle-svgrepo-com.svg";
-import comment from "../../assets/message-circle-01-svgrepo-com.svg";
+import commentBubble from "../../assets/message-circle-01-svgrepo-com.svg";
 import message from "../../assets/plane-svgrepo-com.svg";
 import filledBookmark from "../../assets/bookmark-filled.svg";
 import outlinedBookmark from "../../assets/bookmark-outline.svg";
@@ -12,6 +12,7 @@ import Comment from "../comment/Comment";
 import moment from "moment";
 import { AuthContext } from "../../context/authContext";
 import "./photoModal.scss";
+import useAddComment from "../../hooks/useAddComment";
 
 const PhotoModal = ({
   setShowPhotoModal,
@@ -27,6 +28,10 @@ const PhotoModal = ({
   const [commentsArr, setCommentsArr] = useState([]);
   const [commentsLoading, setCommentsLoading] = useState(true);
   const [picInfoButton, setPicInfoButton] = useState();
+  const [activateButton, setActivateButton] = useState(false);
+  const [comment, setComment] = useState("");
+
+  const addComment = useAddComment();
 
   useEffect(() => {
     loadComments();
@@ -35,6 +40,14 @@ const PhotoModal = ({
   useEffect(() => {
     setCommentsLoading(false);
   }, [commentsArr]);
+
+  useEffect(() => {
+    if (comment.length) {
+      setActivateButton(true);
+      return;
+    }
+    setActivateButton(false);
+  }, [comment]);
 
   const loadComments = () => {
     const start = commentsArr.length;
@@ -55,6 +68,7 @@ const PhotoModal = ({
       abbreviate={false}
       showTime={true}
       showImage={true}
+      setShowPhotoModal={setShowPhotoModal}
       key={comment.date + comment.userName}
     />
   ));
@@ -78,6 +92,12 @@ const PhotoModal = ({
       );
     }
   }, []);
+
+  const handleAddComment = (e) => {
+    e.preventDefault();
+    addComment(currentUser.username, comment, post);
+    setComment("");
+  };
 
   return (
     <>
@@ -144,7 +164,7 @@ const PhotoModal = ({
                     />
                   </button>
                   <button className='commentButton'>
-                    <img src={comment} alt='comment bubble' />
+                    <img src={commentBubble} alt='comment bubble' />
                   </button>
                   <button className='messageButton'>
                     <img src={message} alt='paper airplane' />
@@ -183,11 +203,19 @@ const PhotoModal = ({
                         type='text'
                         maxLength={2200}
                         placeholder='Add a comment...'
+                        onChange={(e) => setComment(e.target.value)}
+                        value={comment}
                       />
                     </label>
                   </div>
                   <div className='input-right'>
-                    <button type='submit' aria-label='click to submit comment'>
+                    <button
+                      type='submit'
+                      aria-label='click to submit comment'
+                      className={activateButton ? "active" : "deactivated"}
+                      disabled={!activateButton}
+                      onClick={handleAddComment}
+                    >
                       Post
                     </button>
                   </div>
