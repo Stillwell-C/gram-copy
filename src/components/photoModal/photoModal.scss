@@ -11,6 +11,7 @@
   height: 80%;
   min-height: 300px;
   overflow: hidden;
+  cursor: default;
 
   .photo-modal-body {
     display: flex;
@@ -266,6 +267,7 @@
   right: 0;
   background-color: rgba(0, 0, 0, 0.6);
   pointer-events: all;
+  cursor: default;
 
   .modal-overlay-close {
     width: 100vw;
