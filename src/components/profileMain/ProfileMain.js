@@ -12,12 +12,15 @@ import bookmark from "../../assets/bookmark-svgrepo-com.svg";
 import tagged from "../../assets/user-square-svgrepo-com.svg";
 import PostFeed from "../postFeed/PostFeed";
 import useUploadProfileImg from "../../hooks/useUploadProfileImg";
+import useGetLoggedInUserInfo from "../../hooks/useGetLoggedInUserInfo";
 
 const ProfileMain = () => {
   const { userParam } = useParams();
   const { currentUser } = useContext(AuthContext);
   const { userPosts, followers, following, fullname, userBio, userImgURL } =
     useGetUserInfo(userParam, "username");
+  const { likedPosts: userLikedPosts, savedPosts: userSavedPosts } =
+    useGetLoggedInUserInfo();
 
   const uploadImg = useUploadProfileImg();
 
@@ -159,6 +162,8 @@ const ProfileMain = () => {
                 <PostFeed
                   userParam={userParam}
                   userPosts={userPosts}
+                  userLikedPosts={userLikedPosts}
+                  userSavedPosts={userSavedPosts}
                   userQueryInput={"posts"}
                 />
               )}
@@ -166,6 +171,8 @@ const ProfileMain = () => {
                 <PostFeed
                   userParam={userParam}
                   userPosts={userPosts}
+                  userLikedPosts={userLikedPosts}
+                  userSavedPosts={userSavedPosts}
                   userQueryInput={"saved"}
                 />
               )}
@@ -173,6 +180,8 @@ const ProfileMain = () => {
                 <PostFeed
                   userParam={userParam}
                   userPosts={userPosts}
+                  userLikedPosts={userLikedPosts}
+                  userSavedPosts={userSavedPosts}
                   userQueryInput={"tagged"}
                 />
               )}
