@@ -125,9 +125,17 @@
           color: black;
         }
 
-        .comment-username {
-          font-weight: bold;
-          margin-right: 10px;
+        .single-comment {
+          margin-bottom: 5px;
+
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+
+          .comment-username {
+            font-weight: bold;
+            margin-right: 10px;
+          }
         }
 
         .view-more-div {
