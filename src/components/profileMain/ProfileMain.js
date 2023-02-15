@@ -33,16 +33,30 @@ const ProfileMain = () => {
 
   useEffect(() => {
     setPageLoading(true);
-    setPageInfo({
-      pageUserPosts: [],
-      pageFollowers: [],
-      pageFollowing: [],
-      pageFullname: [],
-      pageUserBio: [],
-      pageUserImgURL: defaultProfilePic,
-      userLikedPosts: [],
-      userSavedPosts: [],
-    });
+    if (userParam === currentUser.username) {
+      setPageInfo({
+        pageUserPosts: currentUser.userPosts,
+        pageFollowers: currentUser.followers,
+        pageFollowing: currentUser.following,
+        pageFullname: currentUser.fullname,
+        pageUserBio: currentUser.userBio,
+        pageUserImgURL: currentUser.userImgURL,
+        userLikedPosts: currentUser.likedPosts,
+        userSavedPosts: currentUser.savedPosts,
+      });
+    }
+    if (userParam !== currentUser.username) {
+      setPageInfo({
+        pageUserPosts: [],
+        pageFollowers: [],
+        pageFollowing: [],
+        pageFullname: [],
+        pageUserBio: [],
+        pageUserImgURL: defaultProfilePic,
+        userLikedPosts: [],
+        userSavedPosts: [],
+      });
+    }
     const getAllPageData = async () => {
       const pageInfo = await getPageInfo(userParam, "username");
       const userInfo = await getUserInfo();
