@@ -8,10 +8,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import { auth } from "../../firebase";
 import useGetLoggedInUserInfo from "../../hooks/useGetLoggedInUserInfo";
+import useGetLoggedInUserInfoFunction from "../../hooks/useGetLoggedInUserInfoFunction";
 import "./editProfilePassword.scss";
 
 export const EditProfilePassword = () => {
-  const { userImgURL, username } = useGetLoggedInUserInfo();
+  // const { userImgURL, username } = useGetLoggedInUserInfo();
+  const getUserInfo = useGetLoggedInUserInfoFunction();
 
   const { currentUser } = useContext(AuthContext);
 
@@ -23,6 +25,17 @@ export const EditProfilePassword = () => {
   const [errorMsg, setErrorMsg] = useState([]);
   const [confirmation, setConfirmation] = useState(false);
   const [confirmationMsg, setConfirmationMsg] = useState([]);
+  const [pageImgURL, setPageImgURL] = useState(currentUser.userImgURL);
+  const [pageUsername, setPageUsername] = useState(currentUser.username);
+
+  useEffect(() => {
+    const getAllPageInfo = async () => {
+      const fetchedUserInfo = await getUserInfo();
+      setPageImgURL(fetchedUserInfo.userImgURL);
+      setPageUsername(fetchedUserInfo.username);
+    };
+    getAllPageInfo();
+  }, []);
 
   useEffect(() => {
     if (oldPassword.length && newPassword.length && confirmPassword.length) {
@@ -120,10 +133,10 @@ export const EditProfilePassword = () => {
       </div>
       <div className='user-info'>
         <div className='profile-img-div'>
-          <img src={userImgURL} alt='user profile upload' />
+          <img src={pageImgURL} alt='user profile upload' />
         </div>
         <div className='user-info-right'>
-          <div className='username'>{username}</div>
+          <div className='username'>{pageUsername}</div>
         </div>
       </div>
       <form onSubmit={handleChangePassword}>
@@ -133,6 +146,7 @@ export const EditProfilePassword = () => {
           </div>
           <div className='form-right'>
             <input
+              autoComplete='off'
               id='old-password'
               name='old-password'
               type='password'
@@ -148,6 +162,7 @@ export const EditProfilePassword = () => {
           </div>
           <div className='form-right'>
             <input
+              autoComplete='off'
               id='new-password'
               name='new-password'
               type='password'
@@ -163,6 +178,7 @@ export const EditProfilePassword = () => {
           </div>
           <div className='form-right'>
             <input
+              autoComplete='off'
               id='confirm-password'
               name='confirm-password'
               type='password'
