@@ -1,9 +1,10 @@
-import { deleteUser } from "firebase/auth";
+import { deleteUser, updateEmail } from "firebase/auth";
 import { doc, updateDoc } from "firebase/firestore";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import { auth, db } from "../../firebase";
 import useGetLoggedInUserInfo from "../../hooks/useGetLoggedInUserInfo";
+import useGetLoggedInUserInfoFunction from "../../hooks/useGetLoggedInUserInfoFunction";
 import useUploadProfileImg from "../../hooks/useUploadProfileImg";
 import DeleteAccountModal from "../deleteAccountModal/DeleteAccountModal";
 import "./editProfileInformation.scss";
@@ -11,17 +12,26 @@ import "./editProfileInformation.scss";
 const EditProfileInformation = () => {
   const { currentUser, dispatch } = useContext(AuthContext);
 
-  const { userImgURL, username, fullname, userBio, email } =
-    useGetLoggedInUserInfo();
+  const getUserInfo = useGetLoggedInUserInfoFunction();
 
   const uploadImg = useUploadProfileImg();
 
-  const [updatedImgURL, setUpdatedImgURL] = useState("");
-  const [updatedUsername, setUpdatedUsername] = useState("");
-  const [updatedFullname, setUpdatedFullname] = useState("");
-  const [updatedUserBio, setUpdatedUserBio] = useState("");
-  const [updatedWebsite, setUpdatedWebsite] = useState("Website");
-  const [updatedEmail, setUpdatedEmail] = useState("");
+  const [updatedInfo, setUpdatedInfo] = useState({
+    username: currentUser.username,
+    fullname: currentUser.fullname,
+    userBio: currentUser.userBio,
+    website: "Website",
+    email: currentUser.email,
+    userImgURL: currentUser.userImgURL,
+  });
+  const [initialInfo, setInitialInfo] = useState({
+    username: currentUser.username,
+    fullname: currentUser.fullname,
+    userBio: currentUser.userBio,
+    website: "Website",
+    email: currentUser.email,
+    userImgURL: currentUser.userImgURL,
+  });
   const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState([]);
@@ -32,12 +42,22 @@ const EditProfileInformation = () => {
   const btnInputRef = useRef(null);
 
   useEffect(() => {
-    setUpdatedUsername(username);
-    setUpdatedFullname(fullname);
-    setUpdatedUserBio(userBio);
-    setUpdatedEmail(email);
-    setUpdatedImgURL(userImgURL);
-  }, [username]);
+    getAllPageData();
+  }, []);
+
+  const getAllPageData = async () => {
+    const fetchedUserInfo = await getUserInfo();
+    const fetchedInfoObject = {
+      username: fetchedUserInfo.username,
+      fullname: fetchedUserInfo.fullname,
+      userBio: fetchedUserInfo.userBio,
+      website: "Website",
+      email: fetchedUserInfo.email,
+      userImgURL: fetchedUserInfo.userImgURL,
+    };
+    setInitialInfo(fetchedInfoObject);
+    setUpdatedInfo(fetchedInfoObject);
+  };
 
   const handleImgClick = () => {
     imgInputRef.current.click();
@@ -50,7 +70,10 @@ const EditProfileInformation = () => {
   const handleImgUpload = (e) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
-      setUpdatedImgURL(URL.createObjectURL(e.target.files[0]));
+      setUpdatedInfo({
+        ...updatedInfo,
+        userImgURL: URL.createObjectURL(e.target.files[0]),
+      });
       uploadImg(e.target.files[0]);
     }
   };
@@ -62,48 +85,49 @@ const EditProfileInformation = () => {
     setError(false);
     setErrorMsg([]);
     if (
-      updatedFullname !== fullname ||
-      updatedUsername !== username ||
-      updatedUserBio !== userBio
+      updatedInfo.fullname !== initialInfo.fullname ||
+      updatedInfo.username !== initialInfo.username ||
+      updatedInfo.userBio !== initialInfo.userBio
     ) {
       editNameAndUserName();
     }
-    if (updatedEmail !== email) editUserEmail();
+    if (updatedInfo.email !== initialInfo.email) editUserEmail();
   };
 
   const editNameAndUserName = async () => {
-    if (updatedUsername.length < 3 || updatedUsername.length > 30) {
+    if (updatedInfo.username.length < 3 || updatedInfo.username.length > 30) {
       setError(true);
       setErrorMsg([...errorMsg, "Username must be 3-30 characters"]);
       return;
     }
-    if (updatedFullname.length < 3 || updatedFullname.length > 30) {
+    if (updatedInfo.fullname.length < 3 || updatedInfo.fullname.length > 30) {
       setError(true);
       setErrorMsg([...errorMsg, "Name must be 3-30 characters"]);
       return;
     }
-    if (updatedUserBio.length > 150) {
+    if (updatedInfo.userBio.length > 150) {
       setError(true);
       setErrorMsg([...errorMsg, "Bio must be less than 150 characters"]);
       return;
     }
     try {
       await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
-        fullname: updatedFullname,
-        username: updatedUsername,
-        userBio: updatedUserBio,
+        fullname: updatedInfo.fullname,
+        username: updatedInfo.username,
+        userBio: updatedInfo.userBio,
       });
       dispatch({
         type: "LOGIN",
         payload: {
           ...currentUser,
-          fullname: updatedFullname,
-          username: updatedUsername,
-          userBio: updatedUserBio,
+          fullname: updatedInfo.fullname,
+          username: updatedInfo.username,
+          userBio: updatedInfo.userBio,
         },
       });
       setConfirmation(true);
       setConfirmationMsg([...confirmationMsg, "Updated user information"]);
+      getAllPageData();
     } catch (err) {
       console.log(err.message);
       console.log(err.code);
@@ -114,19 +138,20 @@ const EditProfileInformation = () => {
 
   const editUserEmail = async () => {
     try {
-      await updatedEmail(auth.currentUser, updatedEmail);
+      await updateEmail(auth.currentUser, updatedInfo.email);
       await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
-        email: updatedEmail,
+        email: updatedInfo.email,
       });
       dispatch({
         type: "LOGIN",
         payload: {
           ...currentUser,
-          email: updatedEmail,
+          email: updatedInfo.email,
         },
       });
       setConfirmation(true);
       setConfirmationMsg([...confirmationMsg, "Updated user email"]);
+      getAllPageData();
     } catch (err) {
       console.log(err.message);
       console.log(err.code);
@@ -170,10 +195,11 @@ const EditProfileInformation = () => {
             aria-label='click to change profile photo'
             onClick={handleImgClick}
           >
-            <img src={updatedImgURL} alt='user profile upload' />
+            <img src={updatedInfo.userImgURL} alt='user profile upload' />
           </button>
           <form>
             <input
+              autoComplete='off'
               type='file'
               className='file-upload-input'
               accept='image/png, image/jpeg'
@@ -183,7 +209,7 @@ const EditProfileInformation = () => {
           </form>
         </div>
         <div className='user-info-right'>
-          <div className='username'>{username}</div>
+          <div className='username'>{updatedInfo.username}</div>
           <button
             aria-label='click to change profile photo'
             onClick={handleBtnClick}
@@ -192,6 +218,7 @@ const EditProfileInformation = () => {
           </button>
           <form>
             <input
+              autoComplete='off'
               type='file'
               className='file-upload-input'
               accept='image/png, image/jpeg'
@@ -209,12 +236,15 @@ const EditProfileInformation = () => {
 
           <div className='form-right'>
             <input
+              autoComplete='off'
               id='name-input'
               name='name-input'
               type='text'
               placeholder='name'
-              value={updatedFullname}
-              onChange={(e) => setUpdatedFullname(e.target.value)}
+              value={updatedInfo.fullname}
+              onChange={(e) =>
+                setUpdatedInfo({ ...updatedInfo, fullname: e.target.value })
+              }
             />
             <div className='form-information'>
               <span>
@@ -230,12 +260,15 @@ const EditProfileInformation = () => {
           </div>
           <div className='form-right'>
             <input
+              autoComplete='off'
               id='username-input'
               name='username-input'
               type='text'
               placeholder='username'
-              value={updatedUsername}
-              onChange={(e) => setUpdatedUsername(e.target.value)}
+              value={updatedInfo.username}
+              onChange={(e) =>
+                setUpdatedInfo({ ...updatedInfo, username: e.target.value })
+              }
             />
             <div className='form-information'>
               <span>
@@ -251,12 +284,15 @@ const EditProfileInformation = () => {
           </div>
           <div className='form-right'>
             <input
+              autoComplete='off'
               id='website-input'
               name='website-input'
               type='text'
               placeholder='website'
-              value={updatedWebsite}
-              onChange={(e) => setUpdatedWebsite(e.target.value)}
+              value={updatedInfo.website}
+              onChange={(e) =>
+                setUpdatedInfo({ ...updatedInfo, website: e.target.value })
+              }
               disabled
             />
             <div className='form-information'>
@@ -277,12 +313,14 @@ const EditProfileInformation = () => {
               id='bio-input'
               name='bio-input'
               type='text'
-              value={updatedUserBio}
-              onChange={(e) => setUpdatedUserBio(e.target.value)}
+              value={updatedInfo.userBio}
+              onChange={(e) =>
+                setUpdatedInfo({ ...updatedInfo, userBio: e.target.value })
+              }
               maxLength='150'
             ></textarea>
             <div className='form-information'>
-              {updatedUserBio.length} / 150
+              {updatedInfo.userBio.length} / 150
             </div>
           </div>
         </div>
@@ -305,12 +343,15 @@ const EditProfileInformation = () => {
           </div>
           <div className='form-right'>
             <input
+              autoComplete='off'
               id='email-input'
               name='email-input'
               type='email'
               placeholder='Email'
-              value={updatedEmail}
-              onChange={(e) => setUpdatedEmail(e.target.value)}
+              value={updatedInfo.email}
+              onChange={(e) =>
+                setUpdatedInfo({ ...updatedInfo, email: e.target.value })
+              }
             />
           </div>
         </div>
