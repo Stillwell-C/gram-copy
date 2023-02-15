@@ -13,6 +13,8 @@ import moment from "moment";
 import { AuthContext } from "../../context/authContext";
 import "./photoModal.scss";
 import useAddComment from "../../hooks/useAddComment";
+import useFollowUnfollow from "../../hooks/useFollowUnfollow";
+import useGetLoggedInUserInfoFunction from "../../hooks/useGetLoggedInUserInfoFunction";
 
 const PhotoModal = ({
   setShowPhotoModal,
@@ -30,11 +32,23 @@ const PhotoModal = ({
   const [picInfoButton, setPicInfoButton] = useState();
   const [activateButton, setActivateButton] = useState(false);
   const [comment, setComment] = useState("");
+  const [isFriend, setIsFriend] = useState(null);
 
+  const getUserInfo = useGetLoggedInUserInfoFunction();
   const addComment = useAddComment();
+  const { follow: followUser, unfollow: unfollowUser } = useFollowUnfollow();
 
   useEffect(() => {
     loadComments();
+    const determineFriend = async () => {
+      const fetchedUserInfo = await getUserInfo();
+      const friendArr = fetchedUserInfo.following.filter(
+        (user) => user === post.userID
+      );
+      // const friendStatus = fetchedUserInfo.following.includes(post.userID);
+      setIsFriend(friendArr.length ? true : false);
+    };
+    determineFriend();
   }, []);
 
   useEffect(() => {
@@ -74,29 +88,43 @@ const PhotoModal = ({
   ));
 
   useEffect(() => {
-    const friendArr = currentUser.following.filter(
-      (user) => user === post.userName
-    );
-    if (friendArr.length) {
+    if (isFriend) {
       setPicInfoButton(
-        <button type='button' aria-label={`click to unfollow ${post.userName}`}>
+        <button
+          type='button'
+          aria-label={`click to unfollow ${post.userName}`}
+          onClick={handleUnfollow}
+        >
           Unfollow
         </button>
       );
+      return;
     }
-    if (!friendArr.length) {
-      setPicInfoButton(
-        <button type='button' aria-label={`click to follow ${post.userName}`}>
-          Follow
-        </button>
-      );
-    }
-  }, []);
+    setPicInfoButton(
+      <button
+        type='button'
+        aria-label={`click to follow ${post.userName}`}
+        onClick={handleFollow}
+      >
+        Follow
+      </button>
+    );
+  }, [isFriend]);
 
   const handleAddComment = (e) => {
     e.preventDefault();
     addComment(currentUser.username, comment, post);
     setComment("");
+  };
+
+  const handleFollow = () => {
+    followUser(post.userID);
+    setIsFriend(true);
+  };
+
+  const handleUnfollow = () => {
+    unfollowUser(post.userID);
+    setIsFriend(false);
   };
 
   return (
