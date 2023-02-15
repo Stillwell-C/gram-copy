@@ -20,7 +20,6 @@ import useGetUserInfoFunction from "../../hooks/useGetUserInfoFunction";
 const ImgFeedCard = React.forwardRef(
   ({ post, userLikedPosts, userSavedPosts }, ref) => {
     //TODO: Have infoID, so could streamline this later
-    // const { userImgURL } = useGetUserInfo(post.userName, "username");
     const getImageInfo = useGetUserInfoFunction();
 
     const [liked, setLiked] = useState(false);
@@ -58,6 +57,14 @@ const ImgFeedCard = React.forwardRef(
       }
       if (saved.length) setSaved(true);
     }, []);
+
+    useEffect(() => {
+      if (!currentUser) {
+        setLiked(false);
+        setInitialLike(false);
+        setSaved(false);
+      }
+    }, [currentUser]);
 
     const handleLike = () => {
       if (!currentUser) return;
