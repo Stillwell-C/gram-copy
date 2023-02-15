@@ -7,6 +7,7 @@ import filledBookmark from "../../assets/bookmark-filled.svg";
 import outlinedBookmark from "../../assets/bookmark-outline.svg";
 import outlinedHeart from "../../assets/heart-rounded-svgrepo-com.svg";
 import filledHeart from "../../assets/heart-svgrepo-com.svg";
+import defaultProfilePic from "../../assets/Default_pfp.svg";
 import Comment from "../comment/Comment";
 import moment from "moment";
 import { AuthContext } from "../../context/authContext";
@@ -14,17 +15,28 @@ import useLikePost from "../../hooks/useLikePost";
 import useSavePost from "../../hooks/useSavePost";
 import useGetUserInfo from "../../hooks/useGetUserInfo";
 import PhotoModal from "../photoModal/PhotoModal";
+import useGetUserInfoFunction from "../../hooks/useGetUserInfoFunction";
 
 const ImgFeedCard = React.forwardRef(
   ({ post, userLikedPosts, userSavedPosts }, ref) => {
     //TODO: Have infoID, so could streamline this later
-    const { userImgURL } = useGetUserInfo(post.userName, "username");
+    // const { userImgURL } = useGetUserInfo(post.userName, "username");
+    const getImageInfo = useGetUserInfoFunction();
 
     const [liked, setLiked] = useState(false);
     const [initialLike, setInitialLike] = useState(false);
     const [likesOffset, setLikesOffset] = useState(0);
     const [saved, setSaved] = useState(false);
     const [showPhotoModal, setShowPhotoModal] = useState(false);
+    const [pageImgURL, setPageImgURL] = useState(defaultProfilePic);
+
+    useEffect(() => {
+      const setImgURL = async () => {
+        const imageInfo = await getImageInfo(post.userName, "username");
+        setPageImgURL(imageInfo.userImgURL);
+      };
+      setImgURL();
+    }, []);
 
     const { currentUser } = useContext(AuthContext);
     const { likePost, unlikePost } = useLikePost();
@@ -70,7 +82,7 @@ const ImgFeedCard = React.forwardRef(
     const imgContent = (
       <>
         <div className='card-top'>
-          <img className='userImg' src={userImgURL} alt='user profile' />
+          <img className='userImg' src={pageImgURL} alt='user profile' />
           <div className='photoInfo'>
             <Link to={`/${post.userName}`}>
               <div className='userName'>{post.userName}</div>
@@ -172,7 +184,7 @@ const ImgFeedCard = React.forwardRef(
         {showPhotoModal && (
           <PhotoModal
             setShowPhotoModal={setShowPhotoModal}
-            userImgURL={userImgURL}
+            userImgURL={pageImgURL}
             post={post}
             liked={liked}
             saved={saved}
