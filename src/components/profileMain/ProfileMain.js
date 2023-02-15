@@ -11,11 +11,13 @@ import grid from "../../assets/grid-svgrepo-com.svg";
 import bookmark from "../../assets/bookmark-svgrepo-com.svg";
 import tagged from "../../assets/user-square-svgrepo-com.svg";
 import defaultProfilePic from "../../assets/Default_pfp.svg";
+import threeDots from "../../assets/three-dots-line-svgrepo-com.svg";
 import PostFeed from "../postFeed/PostFeed";
 import useUploadProfileImg from "../../hooks/useUploadProfileImg";
 import useGetLoggedInUserInfo from "../../hooks/useGetLoggedInUserInfo";
 import useGetUserInfoFunction from "../../hooks/useGetUserInfoFunction";
 import useGetLoggedInUserInfoFunction from "../../hooks/useGetLoggedInUserInfoFunction";
+import useFollowUnfollow from "../../hooks/useFollowUnfollow";
 
 const ProfileMain = () => {
   const { userParam } = useParams();
@@ -24,12 +26,18 @@ const ProfileMain = () => {
   const getUserInfo = useGetLoggedInUserInfoFunction();
 
   const uploadImg = useUploadProfileImg();
+  const { follow: followUser, unfollow: unfollowUser } = useFollowUnfollow();
 
   const imgInputRef = useRef(null);
 
   const [pageLoading, setPageLoading] = useState(true);
   const [displaySelector, setDisplaySelector] = useState("posts");
   const [pageInfo, setPageInfo] = useState({});
+  const [pageUserID, setPageUserID] = useState(null);
+  const [isFriend, setIsFriend] = useState(null);
+  const [initialFriend, setInitialFriend] = useState(false);
+  const [friendOffset, setFriendOffset] = useState(0);
+  const [friendButton, setFriendButton] = useState(null);
 
   useEffect(() => {
     setPageLoading(true);
@@ -71,7 +79,12 @@ const ProfileMain = () => {
         userSavedPosts: userInfo.savedPosts,
       };
       setPageInfo(dataObj);
-      console.log("info", dataObj);
+      if (userParam !== currentUser.username) {
+        const friendStatus = pageInfo.following.includes(pageInfo.id);
+        setPageUserID(pageInfo.id);
+        setIsFriend(friendStatus);
+        setInitialFriend(friendStatus);
+      }
     };
     getAllPageData();
   }, [userParam]);
@@ -84,6 +97,32 @@ const ProfileMain = () => {
     imgInputRef.current.click();
   };
 
+  useEffect(() => {
+    if (!isFriend) {
+      setFriendButton(
+        <button
+          className='follow-button'
+          aria-label={`click to follow user`}
+          type='button'
+          onClick={handleFollow}
+        >
+          Follow
+        </button>
+      );
+      return;
+    }
+    setFriendButton(
+      <button
+        className='follow-button'
+        aria-label={`click to follow user`}
+        type='button'
+        onClick={handleUnfollow}
+      >
+        Unfollow
+      </button>
+    );
+  }, [isFriend]);
+
   const handleImgUpload = (e) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
@@ -93,6 +132,18 @@ const ProfileMain = () => {
       });
       uploadImg(e.target.files[0]);
     }
+  };
+
+  const handleFollow = () => {
+    followUser(pageUserID);
+    setIsFriend(true);
+    initialFriend ? setFriendOffset(0) : setFriendOffset(1);
+  };
+
+  const handleUnfollow = () => {
+    unfollowUser(pageUserID);
+    setIsFriend(false);
+    initialFriend ? setFriendOffset(-1) : setFriendOffset(0);
   };
 
   return (
@@ -121,19 +172,46 @@ const ProfileMain = () => {
             <div className='user-info'>
               <div className='user-info-top'>
                 <div className='user-info-username'>{userParam}</div>
-                <div className='edit-profile'>
-                  <Link
-                    to='/accounts/edit'
-                    aria-label='click to edit profile information'
-                  >
-                    <button className='edit-profile-btn'>Edit profile</button>
-                  </Link>
-                </div>
-                <div className='user-settings'>
-                  <button className='user-settings-btn'>
-                    <img src={sprocket} alt='cog wheel' />
-                  </button>
-                </div>
+                {userParam === currentUser.username ? (
+                  <>
+                    <div className='edit-profile'>
+                      <Link
+                        to='/accounts/edit'
+                        aria-label='click to edit profile information'
+                      >
+                        <button className='edit-profile-btn'>
+                          Edit profile
+                        </button>
+                      </Link>
+                    </div>
+                    <div className='user-settings'>
+                      <button className='user-settings-btn'>
+                        <img src={sprocket} alt='cog wheel' />
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className='follow-div'>{friendButton}</div>
+                    <div className='message-div'>
+                      <button
+                        className='message-button'
+                        aria-label='click to message user'
+                        type='button'
+                      >
+                        Message
+                      </button>
+                    </div>
+                    <div className='options-div'>
+                      <button
+                        className='options-button'
+                        aria-label='click for more options'
+                      >
+                        <img src={threeDots} alt='icon of three dots' />
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
               <div className='user-info-middle'>
                 <div>
@@ -146,9 +224,9 @@ const ProfileMain = () => {
                 </div>
                 <div>
                   <span className='user-figure'>
-                    {pageInfo.pageFollowers.length}
+                    {pageInfo.pageFollowers.length + friendOffset}
                   </span>
-                  {pageInfo.pageFollowers.length === 1
+                  {pageInfo.pageFollowers.length + friendOffset === 1
                     ? "follower"
                     : "followers"}
                   <span className='category'></span>

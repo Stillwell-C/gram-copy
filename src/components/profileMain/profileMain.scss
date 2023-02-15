@@ -76,6 +76,45 @@
             background-color: transparent;
             border: none;
           }
+
+          .follow-button {
+            cursor: pointer;
+            background-color: #0095f6;
+            padding: 7px 16px;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            border-radius: 0.5rem;
+
+            &:hover {
+              background-color: #1877f2;
+            }
+          }
+
+          .message-button {
+            cursor: pointer;
+            background-color: #efefef;
+            color: #000;
+            font-weight: bold;
+            padding: 7px 16px;
+            border: none;
+            border-radius: 0.5rem;
+
+            &:hover {
+              background-color: #cccccc;
+            }
+          }
+
+          .options-button {
+            cursor: pointer;
+            padding: 8px;
+            border: none;
+            background-color: transparent;
+
+            img {
+              width: 24px;
+            }
+          }
         }
 
         .user-info-middle {
