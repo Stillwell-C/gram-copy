@@ -84,6 +84,13 @@
         border-radius: 0.5rem;
         cursor: pointer;
       }
+
+      .loading-spinner-div {
+        transform: scale(0.5);
+        height: 50px;
+        display: flex;
+        align-items: center;
+      }
     }
 
     .or-div {

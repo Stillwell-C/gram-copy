@@ -5,12 +5,14 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { AuthContext } from "../../context/authContext";
 import logo from "../../assets/Instagram_logo.png";
 import { Link, useNavigate } from "react-router-dom";
+import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 
 const LoginForm = () => {
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { dispatch } = useContext(AuthContext);
 
@@ -23,6 +25,7 @@ const LoginForm = () => {
 
   const signInUser = async () => {
     try {
+      setLoading(true);
       setError(false);
       setErrorMsg("");
       const userCredentials = await signInWithEmailAndPassword(
@@ -49,6 +52,7 @@ const LoginForm = () => {
       setError(true);
       setErrorMsg(err.code);
       console.log(err.code, err.message);
+      setLoading(false);
     }
   };
 
@@ -82,8 +86,13 @@ const LoginForm = () => {
               autoComplete='off'
             />
           </label>
-          <button type='submit'>Log in</button>
-          <span className='login-error-span'></span>
+          {loading ? (
+            <div className='loading-spinner-div'>
+              <LoadingSpinner />
+            </div>
+          ) : (
+            <button type='submit'>Log in</button>
+          )}
         </form>
         <div className='or-div'>
           <div className='line'> </div>

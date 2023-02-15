@@ -5,6 +5,7 @@ import { auth, db, getURL } from "../../firebase";
 import { AuthContext } from "../../context/authContext";
 import logo from "../../assets/Instagram_logo.png";
 import { Link, useNavigate } from "react-router-dom";
+import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 
 const SignupForm = () => {
   const [error, setError] = useState(false);
@@ -13,6 +14,7 @@ const SignupForm = () => {
   const [userName, setUserName] = useState("");
   const [fullName, setFullName] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { dispatch } = useContext(AuthContext);
 
@@ -26,19 +28,24 @@ const SignupForm = () => {
   const signUpUser = async () => {
     setError(false);
     setErrorMsg("");
+    setLoading(true);
     if (userName.length < 3 || userName.length > 30) {
       setError(true);
       setErrorMsg("Username must be 3-30 characters");
+      setLoading(false);
       return;
     }
     if (fullName.length < 3 || fullName.length > 30) {
       setError(true);
       setErrorMsg("Name must be 3-30 characters");
+      setLoading(false);
       return;
     }
     if (password.length < 6) {
       setError(true);
       setErrorMsg("Password must be at least 6 characters long");
+      setLoading(false);
+      return;
     }
     if (
       !email.length ||
@@ -48,6 +55,8 @@ const SignupForm = () => {
     ) {
       setError(true);
       setErrorMsg("Please complete all fields");
+      setLoading(false);
+      return;
     }
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -87,7 +96,8 @@ const SignupForm = () => {
       console.log("Error code: ", errorCode);
       console.log("error msg: ", err.message);
       setError(true);
-      setErrorMsg(err.message);
+      setErrorMsg(err.code);
+      setLoading(false);
     }
   };
 
@@ -150,7 +160,13 @@ const SignupForm = () => {
               autoComplete='off'
             />
           </label>
-          <button type='submit'>Sign up</button>
+          {loading ? (
+            <div className='loading-spinner-div'>
+              <LoadingSpinner />
+            </div>
+          ) : (
+            <button type='submit'>Log in</button>
+          )}
           <span className='signup-error-span'></span>
         </form>
       </div>
