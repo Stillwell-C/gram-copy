@@ -56,20 +56,32 @@ const LoginForm = () => {
     <>
       <div className='login-top'>
         <img src={logo} alt='instagram logo' className='login-logo' />
-        {error && <div className='error-div'>{errorMsg}</div>}
+        {error && (
+          <div className='error-div'>
+            <div className='error-msg'>{errorMsg}</div>
+          </div>
+        )}
         <form className='login-form' onSubmit={handleSignIn}>
-          <input
-            type='email'
-            placeholder='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type='password'
-            placeholder='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <label aria-label='email'>
+            <input
+              type='email'
+              placeholder='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete='off'
+            />
+          </label>
+          <label aria-label='password'>
+            <input
+              type='password'
+              placeholder='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete='off'
+            />
+          </label>
           <button type='submit'>Log in</button>
           <span className='login-error-span'></span>
         </form>
