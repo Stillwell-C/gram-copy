@@ -56,6 +56,7 @@ const LoginForm = () => {
     <>
       <div className='login-top'>
         <img src={logo} alt='instagram logo' className='login-logo' />
+        {error && <div className='error-div'>{errorMsg}</div>}
         <form className='login-form' onSubmit={handleSignIn}>
           <input
             type='email'
