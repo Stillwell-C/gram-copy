@@ -24,6 +24,8 @@ const SignupForm = () => {
   };
 
   const signUpUser = async () => {
+    setError(false);
+    setErrorMsg("");
     if (userName.length < 3 || userName.length > 30) {
       setError(true);
       setErrorMsg("Username must be 3-30 characters");
@@ -34,9 +36,20 @@ const SignupForm = () => {
       setErrorMsg("Name must be 3-30 characters");
       return;
     }
+    if (password.length < 6) {
+      setError(true);
+      setErrorMsg("Password must be at least 6 characters long");
+    }
+    if (
+      !email.length ||
+      !userName.length ||
+      !fullName.length ||
+      !password.length
+    ) {
+      setError(true);
+      setErrorMsg("Please complete all fields");
+    }
     try {
-      setError(false);
-      setErrorMsg("");
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
@@ -91,31 +104,52 @@ const SignupForm = () => {
           <div className='or-lettering'>or</div>
           <div className='line'> </div>
         </div>
+        {error && (
+          <div className='error-div'>
+            <div className='error-msg'>{errorMsg}</div>
+          </div>
+        )}
         <form className='sign-up-form' onSubmit={handleSignup}>
-          <input
-            type='email'
-            placeholder='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type='text'
-            placeholder='username'
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
-          />
-          <input
-            type='text'
-            placeholder='fullname'
-            value={fullName}
-            onChange={(e) => setFullName(e.target.value)}
-          />
-          <input
-            type='password'
-            placeholder='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <label aria-label='email'>
+            <input
+              type='email'
+              placeholder='email'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete='off'
+            />
+          </label>
+          <label aria-label='username'>
+            <input
+              type='text'
+              placeholder='username'
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              required
+              autoComplete='off'
+            />
+          </label>
+          <label aria-label='full name'>
+            <input
+              type='text'
+              placeholder='fullname'
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              required
+              autoComplete='off'
+            />
+          </label>
+          <label aria-label='password'>
+            <input
+              type='password'
+              placeholder='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete='off'
+            />
+          </label>
           <button type='submit'>Sign up</button>
           <span className='signup-error-span'></span>
         </form>
