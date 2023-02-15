@@ -12,9 +12,6 @@ const Login = () => {
 
   const { currentUser } = useContext(AuthContext);
 
-  useEffect(() => console.log(currentUser), [currentUser]);
-  useEffect(() => console.log("path === ", accountsPath), []);
-
   return (
     <div className='login-container'>
       {accountsPath === "login" && <LoginForm />}
