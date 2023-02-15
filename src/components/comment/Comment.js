@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import useGetUserInfo from "../../hooks/useGetUserInfo";
 import moment from "moment";
 import { Link } from "react-router-dom";
+
+import defaultProfilePic from "../../assets/Default_pfp.svg";
+import useGetUserInfoFunction from "../../hooks/useGetUserInfoFunction";
 
 const Comment = ({
   comment,
@@ -17,6 +19,17 @@ const Comment = ({
 
   const [dateCheck, setDateCheck] = useState(false);
   const [formatedDate, setFormatedDate] = useState("");
+  const [commentImgURL, setCommentImgURL] = useState(defaultProfilePic);
+
+  const getCommentInfo = useGetUserInfoFunction();
+
+  useEffect(() => {
+    const setImgURL = async () => {
+      const commentInfo = await getCommentInfo(comment.username, "username");
+      setCommentImgURL(commentInfo.userImgURL);
+    };
+    setImgURL();
+  }, []);
 
   useEffect(() => {
     if (comment.date) setDateCheck(true);
@@ -37,8 +50,6 @@ const Comment = ({
     }
   }, [comment.date]);
 
-  const { userImgURL } = useGetUserInfo(comment.username, "username");
-
   return (
     <div className='single-comment'>
       {showImage && (
@@ -47,7 +58,7 @@ const Comment = ({
             to={`/${comment.username}`}
             onClick={() => setShowPhotoModal(false)}
           >
-            <img src={userImgURL} alt='user profile' />
+            <img src={commentImgURL} alt='user profile' />
           </Link>
         </div>
       )}
