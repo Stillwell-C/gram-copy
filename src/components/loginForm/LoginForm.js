@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db, getURL } from "../../firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
@@ -11,10 +11,27 @@ const LoginForm = () => {
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [email, setEmail] = useState("");
+  const [emailClick, setEmailClick] = useState(false);
+  const [emailClass, setEmailClass] = useState("form-input-div");
   const [password, setPassword] = useState("");
+  const [passwordClick, setPasswordClick] = useState(false);
+  const [passwordClass, setPasswordClass] = useState("form-input-div");
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const { dispatch } = useContext(AuthContext);
+
+  useEffect(() => {
+    const active = email.length ? "active" : "";
+    const click = emailClick ? "clicked" : "";
+    setEmailClass(`form-input-div ${active} ${click}`);
+  }, [email, emailClick]);
+
+  useEffect(() => {
+    const active = password.length ? "active" : "";
+    const click = passwordClick ? "clicked" : "";
+    setPasswordClass(`form-input-div ${active} ${click}`);
+  }, [password, passwordClick]);
 
   const navigate = useNavigate();
 
@@ -66,26 +83,47 @@ const LoginForm = () => {
           </div>
         )}
         <form className='login-form' onSubmit={handleSignIn}>
-          <label aria-label='email'>
-            <input
-              type='email'
-              placeholder='email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              autoComplete='off'
-            />
-          </label>
-          <label aria-label='password'>
-            <input
-              type='password'
-              placeholder='password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              autoComplete='off'
-            />
-          </label>
+          <div className={emailClass}>
+            <label aria-label='email' htmlFor='email'>
+              <span className='label-text'>Email</span>
+              <input
+                type='email'
+                id='email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                autoComplete='off'
+                name='email'
+                onFocus={() => setEmailClick(true)}
+                onBlur={() => setEmailClick(false)}
+              />
+            </label>
+          </div>
+          <div className={passwordClass}>
+            <label aria-label='password' htmlFor='password'>
+              <span className='label-text'>Password</span>
+              <input
+                type={showPassword ? "text" : "password"}
+                id='password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                autoComplete='off'
+                name='password'
+                onFocus={() => setPasswordClick(true)}
+                onBlur={() => setPasswordClick(false)}
+              />
+            </label>
+            <div className='input-side-div'>
+              <button
+                className='input-side-button'
+                type='button'
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
+          </div>
           {loading ? (
             <div className='loading-spinner-div'>
               <LoadingSpinner />
