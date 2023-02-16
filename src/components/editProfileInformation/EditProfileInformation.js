@@ -1,5 +1,12 @@
 import { deleteUser, updateEmail } from "firebase/auth";
-import { doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import { auth, db } from "../../firebase";
@@ -111,6 +118,21 @@ const EditProfileInformation = () => {
       return;
     }
     try {
+      const existingUserNames = await getDocs(
+        query(
+          collection(db, "userInfo"),
+          where("username", "==", updatedInfo.username)
+        )
+      );
+      if (existingUserNames.docs.length) {
+        setError(true);
+        setErrorMsg([...errorMsg, "Please choose a different username"]);
+        return;
+      }
+    } catch (err) {
+      console.log(err.code);
+    }
+    try {
       await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
         fullname: updatedInfo.fullname,
         username: updatedInfo.username,
@@ -132,7 +154,7 @@ const EditProfileInformation = () => {
       console.log(err.message);
       console.log(err.code);
       setError(true);
-      setErrorMsg([...errorMsg, err.message]);
+      setErrorMsg([...errorMsg, err.code]);
     }
   };
 
