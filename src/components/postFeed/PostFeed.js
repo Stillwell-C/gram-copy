@@ -1,4 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { AuthContext } from "../../context/authContext";
 import useGetUserPosts from "../../hooks/useGetUserPosts";
 import CreatePostModal from "../createPostModal/CreatePostModal";
 import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
@@ -20,6 +27,8 @@ const PostFeed = ({
     pageNum,
     userQueryInput
   );
+
+  const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
     if (!loading && userPosts.length < 1 && userQueryInput === "posts") {
@@ -78,7 +87,7 @@ const PostFeed = ({
       <>
         {content}
         {loading && <LoadingSpinner />}
-        {!loading && displayNoImgFeed && (
+        {!loading && displayNoImgFeed && userParam === currentUser.username && (
           <NoUserImgProfileFeed handleAddPostModal={handleAddPostModal} />
         )}
         {error && errorInfo.message}
