@@ -51,6 +51,10 @@
       border: none;
       border-radius: 0.5rem;
       cursor: pointer;
+
+      &:hover {
+        background-color: #1877f2;
+      }
     }
 
     .sign-up-form {
@@ -168,6 +172,9 @@
         border: none;
         border-radius: 0.5rem;
         cursor: pointer;
+        &:hover {
+          background-color: #1877f2;
+        }
       }
 
       .loading-spinner-div {
