@@ -117,6 +117,7 @@ const EditProfileInformation = () => {
       setErrorMsg([...errorMsg, "Bio must be less than 150 characters"]);
       return;
     }
+    //Check profile name availability
     try {
       const existingUserNames = await getDocs(
         query(
@@ -178,7 +179,7 @@ const EditProfileInformation = () => {
       console.log(err.message);
       console.log(err.code);
       setError(true);
-      setErrorMsg([...errorMsg, err.message]);
+      setErrorMsg([...errorMsg, err.code]);
     }
   };
 
