@@ -76,7 +76,7 @@ export const EditProfilePassword = () => {
       console.log(err.message);
       console.log(err.code);
       setError(true);
-      setErrorMsg([err.message]);
+      setErrorMsg([err.code]);
     }
   };
 
