@@ -83,7 +83,9 @@ const Navbar = () => {
           </div>
           <div className='navbar-row'>
             <Link
-              to={currentUser ? `/${currentUser.username}` : "/accounts/login"}
+              to={
+                currentUser ? `/${currentUser.displayName}` : "/accounts/login"
+              }
             >
               <div className='navbar-line'>
                 <img src={profile} alt='profile icon' />
