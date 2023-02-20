@@ -39,7 +39,6 @@ const EditProfileInformation = () => {
     email: "",
     userImgURL: currentUser.photoURL,
   });
-  const [userUid, setUserUid] = useState("");
   const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState([]);
@@ -65,7 +64,6 @@ const EditProfileInformation = () => {
     };
     setInitialInfo(fetchedInfoObject);
     setUpdatedInfo(fetchedInfoObject);
-    setUserUid(fetchedUserInfo.uid);
   };
 
   const handleImgClick = () => {
@@ -138,13 +136,13 @@ const EditProfileInformation = () => {
       }
     }
     try {
-      await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
+      await updateDoc(doc(db, "userInfo", auth.currentUser.uid), {
         fullname: updatedInfo.fullname,
         username: updatedInfo.username,
         userBio: updatedInfo.userBio,
       });
       if (updatedInfo.username !== initialInfo.username) {
-        await updateProfile(userUid, {
+        await updateProfile(auth.currentUser, {
           displayName: updatedInfo.username,
         });
       }
@@ -171,7 +169,7 @@ const EditProfileInformation = () => {
   const editUserEmail = async () => {
     try {
       await updateEmail(auth.currentUser, updatedInfo.email);
-      await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
+      await updateDoc(doc(db, "userInfo", auth.currentUser.uid), {
         email: updatedInfo.email,
       });
       dispatch({
