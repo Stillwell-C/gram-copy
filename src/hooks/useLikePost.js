@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import { useContext } from "react";
 import { AuthContext } from "../context/authContext";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 
 const useLikePost = () => {
   const { currentUser } = useContext(AuthContext);
@@ -19,11 +19,11 @@ const useLikePost = () => {
   const likePost = async (ID) => {
     if (!currentUser) return;
     try {
-      await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
+      await updateDoc(doc(db, "userInfo", auth.currentUser.uid), {
         likedPosts: arrayUnion(ID),
       });
       await updateDoc(doc(db, "userImgs", ID), {
-        likedUsers: arrayUnion(currentUser.userInfoID),
+        likedUsers: arrayUnion(auth.currentUser.uid),
       });
     } catch (err) {
       console.log(err.message);
@@ -34,11 +34,11 @@ const useLikePost = () => {
   const unlikePost = async (ID) => {
     if (!currentUser) return;
     try {
-      await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
+      await updateDoc(doc(db, "userInfo", auth.currentUser.uid), {
         likedPosts: arrayRemove(ID),
       });
       await updateDoc(doc(db, "userImgs", ID), {
-        likedUsers: arrayRemove(currentUser.userInfoID),
+        likedUsers: arrayRemove(auth.currentUser.uid),
       });
     } catch (err) {
       console.log(err.message);

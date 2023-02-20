@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import { useContext } from "react";
 import { AuthContext } from "../context/authContext";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 
 const useSavePost = () => {
   const { currentUser } = useContext(AuthContext);
@@ -18,11 +18,11 @@ const useSavePost = () => {
   const savePost = async (ID) => {
     if (!currentUser) return;
     try {
-      await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
+      await updateDoc(doc(db, "userInfo", auth.currentUser.uid), {
         savedPosts: arrayUnion(ID),
       });
       await updateDoc(doc(db, "userImgs", ID), {
-        savedUsers: arrayUnion(currentUser.userInfoID),
+        savedUsers: arrayUnion(auth.currentUser.uid),
       });
     } catch (err) {
       console.log(err.message);
@@ -33,11 +33,11 @@ const useSavePost = () => {
   const unsavePost = async (ID) => {
     if (!currentUser) return;
     try {
-      await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
+      await updateDoc(doc(db, "userInfo", auth.currentUser.uid), {
         savedPosts: arrayRemove(ID),
       });
       await updateDoc(doc(db, "userImgs", ID), {
-        savedUsers: arrayRemove(currentUser.userInfoID),
+        savedUsers: arrayRemove(auth.currentUser.uid),
       });
     } catch (err) {
       console.log(err.message);
