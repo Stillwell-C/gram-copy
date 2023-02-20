@@ -2,8 +2,17 @@ import { useContext, useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
   fetchSignInMethodsForEmail,
+  updateProfile,
 } from "firebase/auth";
-import { collection, addDoc, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  setDoc,
+  doc,
+} from "firebase/firestore";
 import { auth, db, getURL } from "../../firebase";
 import { AuthContext } from "../../context/authContext";
 import logo from "../../assets/Instagram_logo.png";
@@ -156,6 +165,9 @@ const SignupForm = () => {
       );
       const user = userCredential.user;
       //Upload new user information to DB to be accessed at a later time
+      const blankUserImg =
+        "gs://driveproject-34ebb.appspot.com/Default_pfp.svg";
+      const userImgURL = await getURL(blankUserImg);
       const userData = {
         email: user.email,
         username: userName,
@@ -167,17 +179,24 @@ const SignupForm = () => {
         taggedPosts: [],
         userPosts: [],
         userBio: "",
-        userImg: "gs://driveproject-34ebb.appspot.com/Default_pfp.svg",
+        userImg: blankUserImg,
+        userImgURL: userImgURL,
+        uid: user.uid,
       };
-      const userInfoUpload = await addDoc(collection(db, "userInfo"), userData);
-      const userImgURL = await getURL(userData.userImg);
+      await updateProfile(userCredential.user, {
+        displayName: userName,
+        photoURL: userImgURL,
+      });
+      // const userInfoUpload = await addDoc(collection(db, "userInfo"), userData);
+      await setDoc(doc(db, "userInfo", user.uid), userData);
       dispatch({
         type: "LOGIN",
         payload: {
           ...user,
           ...userData,
           userImgURL: userImgURL,
-          userInfoID: userInfoUpload.id,
+          //remove later
+          userInfoID: user.uid,
         },
       });
       navigate("/");

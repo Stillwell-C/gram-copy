@@ -1,7 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db, getURL } from "../../firebase";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { AuthContext } from "../../context/authContext";
 import logo from "../../assets/Instagram_logo.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -50,18 +57,23 @@ const LoginForm = () => {
         email,
         password
       );
-      const userQuery = await getDocs(
-        query(collection(db, "userInfo"), where("email", "==", email))
+      // const userQuery = await getDocs(
+      //   query(collection(db, "userInfo"), where("email", "==", email))
+      // );
+      // const userInfo = userQuery.docs[0].data();
+      // const userImgURL = await getURL(userInfo.userImg);
+      const userQuery = await getDoc(
+        doc(db, "userInfo", userCredentials.user.uid)
       );
-      const userInfo = userQuery.docs[0].data();
-      const userImgURL = await getURL(userInfo.userImg);
+      const userInfo = userQuery.data();
       dispatch({
         type: "LOGIN",
         payload: {
           ...userCredentials.user,
           ...userInfo,
-          userImgURL: userImgURL,
-          userInfoID: userQuery.docs[0].id,
+          userImgURL: userInfo.userImgURL,
+          //remove later
+          userInfoID: userInfo.uid,
         },
       });
       navigate("/");
