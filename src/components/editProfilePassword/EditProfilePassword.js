@@ -25,8 +25,8 @@ export const EditProfilePassword = () => {
   const [errorMsg, setErrorMsg] = useState([]);
   const [confirmation, setConfirmation] = useState(false);
   const [confirmationMsg, setConfirmationMsg] = useState([]);
-  const [pageImgURL, setPageImgURL] = useState(currentUser.userImgURL);
-  const [pageUsername, setPageUsername] = useState(currentUser.username);
+  const [pageImgURL, setPageImgURL] = useState(currentUser.photoURL);
+  const [pageUsername, setPageUsername] = useState(currentUser.displayName);
 
   useEffect(() => {
     const getAllPageInfo = async () => {
