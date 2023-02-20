@@ -23,9 +23,9 @@ const FeedRightInfo = () => {
   useEffect(() => {
     if (!currentUser) return;
     setPageData({
-      username: currentUser.username,
-      userImgURL: currentUser.userImgURL,
-      fullname: currentUser.fullname,
+      username: currentUser.displayName,
+      userImgURL: currentUser.photoURL,
+      fullname: "",
     });
     const getAllPageData = async () => {
       const fetchedUserInfo = await getUserInfo();
