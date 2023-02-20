@@ -1,8 +1,16 @@
-import { doc, updateDoc } from "firebase/firestore";
+import { updateProfile } from "firebase/auth";
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../context/authContext";
-import { db, storage } from "../firebase";
+import { auth, db, storage } from "../firebase";
 
 const useUploadProfileImg = () => {
   const { currentUser, dispatch } = useContext(AuthContext);
@@ -11,51 +19,28 @@ const useUploadProfileImg = () => {
     const fileName =
       new Date().getTime() + currentUser.username + imgFileUpload.name;
     const storageRef = ref(storage, fileName);
-    const uploadTask = uploadBytesResumable(storageRef, imgFileUpload);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
-          default:
-            break;
-        }
-      },
-      (err) => {
-        console.log(err.code);
-      },
-      () => {
-        updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
-          userImg: uploadTask.snapshot.metadata.fullPath,
-        }).catch((err) => {
-          console.log(err.message);
-          console.log(err.code);
-        });
-        getDownloadURL(uploadTask.snapshot.ref)
-          .then((downloadURL) => {
-            dispatch({
-              type: "LOGIN",
-              payload: {
-                ...currentUser,
-                userImgURL: downloadURL,
-              },
-            });
-          })
-          .catch((err) => {
-            console.log(err.message);
-            console.log(err.code);
-          });
-      }
-    );
+    try {
+      const user = auth.currentUser;
+      const uploadTask = await uploadBytesResumable(storageRef, imgFileUpload);
+      const downloadURL = await getDownloadURL(storageRef);
+      console.log(uploadTask);
+      updateDoc(doc(db, "userInfo", user.uid), {
+        userImg: uploadTask.metadata.fullPath,
+        userImgURL: downloadURL,
+      });
+      await updateProfile(user, {
+        photoURL: downloadURL,
+      });
+      dispatch({
+        type: "LOGIN",
+        payload: {
+          ...currentUser,
+          userImgURL: downloadURL,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return uploadFile;
