@@ -1,4 +1,4 @@
-import { deleteUser, updateEmail } from "firebase/auth";
+import { deleteUser, updateEmail, updateProfile } from "firebase/auth";
 import {
   collection,
   doc,
@@ -24,21 +24,22 @@ const EditProfileInformation = () => {
   const uploadImg = useUploadProfileImg();
 
   const [updatedInfo, setUpdatedInfo] = useState({
-    username: currentUser.username,
-    fullname: currentUser.fullname,
-    userBio: currentUser.userBio,
+    username: currentUser.displayName,
+    fullname: "",
+    userBio: "",
     website: "Website",
-    email: currentUser.email,
-    userImgURL: currentUser.userImgURL,
+    email: "",
+    userImgURL: currentUser.photoURL,
   });
   const [initialInfo, setInitialInfo] = useState({
-    username: currentUser.username,
-    fullname: currentUser.fullname,
-    userBio: currentUser.userBio,
+    username: currentUser.displayName,
+    fullname: "",
+    userBio: "",
     website: "Website",
-    email: currentUser.email,
-    userImgURL: currentUser.userImgURL,
+    email: "",
+    userImgURL: currentUser.photoURL,
   });
+  const [userUid, setUserUid] = useState("");
   const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState([]);
@@ -64,6 +65,7 @@ const EditProfileInformation = () => {
     };
     setInitialInfo(fetchedInfoObject);
     setUpdatedInfo(fetchedInfoObject);
+    setUserUid(fetchedUserInfo.uid);
   };
 
   const handleImgClick = () => {
@@ -118,20 +120,22 @@ const EditProfileInformation = () => {
       return;
     }
     //Check profile name availability
-    try {
-      const existingUserNames = await getDocs(
-        query(
-          collection(db, "userInfo"),
-          where("username", "==", updatedInfo.username)
-        )
-      );
-      if (existingUserNames.docs.length) {
-        setError(true);
-        setErrorMsg([...errorMsg, "Please choose a different username"]);
-        return;
+    if (updatedInfo.username !== initialInfo.username) {
+      try {
+        const existingUserNames = await getDocs(
+          query(
+            collection(db, "userInfo"),
+            where("username", "==", updatedInfo.username)
+          )
+        );
+        if (existingUserNames.docs.length) {
+          setError(true);
+          setErrorMsg([...errorMsg, "Please choose a different username"]);
+          return;
+        }
+      } catch (err) {
+        console.log(err.code);
       }
-    } catch (err) {
-      console.log(err.code);
     }
     try {
       await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
@@ -139,6 +143,11 @@ const EditProfileInformation = () => {
         username: updatedInfo.username,
         userBio: updatedInfo.userBio,
       });
+      if (updatedInfo.username !== initialInfo.username) {
+        await updateProfile(userUid, {
+          displayName: updatedInfo.username,
+        });
+      }
       dispatch({
         type: "LOGIN",
         payload: {
