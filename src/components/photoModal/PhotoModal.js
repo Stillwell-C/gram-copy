@@ -113,7 +113,7 @@ const PhotoModal = ({
 
   const handleAddComment = (e) => {
     e.preventDefault();
-    addComment(currentUser.username, comment, post);
+    addComment(currentUser.displayName, comment, post);
     setComment("");
   };
 
@@ -149,7 +149,7 @@ const PhotoModal = ({
                   <Link to={`/${post.userName}`}>
                     <div className='userName'>{post.userName}</div>
                   </Link>
-                  {currentUser.username !== post.userName && (
+                  {currentUser.displayName !== post.userName && (
                     <>
                       <span>•</span>
                       {picInfoButton}
