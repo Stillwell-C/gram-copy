@@ -9,7 +9,7 @@ import {
 } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/authContext";
-import { db, getURL } from "../firebase";
+import { auth, db, getURL } from "../firebase";
 
 const useGetLoggedInUserInfoFunction = () => {
   const { currentUser, dispatch } = useContext(AuthContext);
@@ -21,9 +21,7 @@ const useGetLoggedInUserInfoFunction = () => {
   const getLoggedInUserInfo = async () => {
     if (!currentUser) return;
     try {
-      const userQuery = await getDoc(
-        doc(db, "userInfo", currentUser.userInfoID)
-      );
+      const userQuery = await getDoc(doc(db, "userInfo", auth.currentUser.uid));
       const userInfo = userQuery.data();
       const userImgURL = await getURL(userInfo.userImg);
       //Update user info in auth context to ensure up to date
