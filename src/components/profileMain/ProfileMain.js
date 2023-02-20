@@ -43,14 +43,14 @@ const ProfileMain = () => {
     setPageLoading(true);
     if (userParam === currentUser.username) {
       setPageInfo({
-        pageUserPosts: currentUser.userPosts,
-        pageFollowers: currentUser.followers,
-        pageFollowing: currentUser.following,
-        pageFullname: currentUser.fullname,
-        pageUserBio: currentUser.userBio,
-        pageUserImgURL: currentUser.userImgURL,
-        userLikedPosts: currentUser.likedPosts,
-        userSavedPosts: currentUser.savedPosts,
+        pageUserPosts: [],
+        pageFollowers: [],
+        pageFollowing: [],
+        pageFullname: [],
+        pageUserBio: [],
+        pageUserImgURL: currentUser.photoURL,
+        userLikedPosts: [],
+        userSavedPosts: [],
       });
     }
     if (userParam !== currentUser.username) {
