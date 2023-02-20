@@ -3,7 +3,7 @@ import "./createPostModal.scss";
 import photoImg from "../../assets/photo-svgrepo-com.svg";
 import locationImg from "../../assets/location-svgrepo-com.svg";
 import downArrow from "../../assets/down-arrow-backup-2-svgrepo-com.svg";
-import { storage, db } from "../../firebase";
+import { storage, db, auth } from "../../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {
   addDoc,
@@ -40,7 +40,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
     //upload file uploaded by user to storage
     const uploadFile = () => {
       const fileName =
-        new Date().getTime() + currentUser.username + imgFileUpload.name;
+        new Date().getTime() + currentUser.displayName + imgFileUpload.name;
       const storageRef = ref(storage, fileName);
       const uploadTask = uploadBytesResumable(storageRef, imgFileUpload);
 
@@ -130,8 +130,8 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
     }
     const uploadData = {
       ...formData,
-      userName: currentUser.username,
-      userID: currentUser.userInfoID,
+      userName: currentUser.displayName,
+      userID: auth.currentUser.uid,
       // date: serverTimestamp(),
       // Random date included to populate with uploads
       //TODO: remove later
@@ -141,7 +141,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
       savedUsers: [],
       comments: [
         {
-          username: currentUser.username,
+          username: currentUser.displayName,
           comment: formData.caption,
           date: new Date().toUTCString(),
         },
@@ -151,14 +151,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
       //upload post info to firestore
       const docRef = await addDoc(collection(db, "userImgs"), uploadData);
       //Add post to individual user's userInfo post array
-      const userQuery = await getDocs(
-        query(
-          collection(db, "userInfo"),
-          where("email", "==", currentUser.email)
-        )
-      );
-      console.log(userQuery.docs[0].id);
-      await updateDoc(doc(db, "userInfo", userQuery.docs[0].id), {
+      await updateDoc(doc(db, "userInfo", auth.currentUser.uid), {
         userPosts: arrayUnion(docRef.id),
       });
       setFormData({
@@ -267,10 +260,10 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
                 <div className='top-user-info'>
                   <img
                     className='userImg'
-                    src={currentUser.userImgURL}
+                    src={currentUser.photoURL}
                     alt='userProfileImg'
                   />
-                  <div>{currentUser.username}</div>
+                  <div>{currentUser.displayName}</div>
                 </div>
                 <div className='bottom-user-input'>
                   <textarea
