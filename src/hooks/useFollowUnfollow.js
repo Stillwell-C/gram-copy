@@ -10,7 +10,7 @@ import {
 } from "firebase/firestore";
 import React, { useContext } from "react";
 import { AuthContext } from "../context/authContext";
-import { db } from "../firebase";
+import { auth, db } from "../firebase";
 
 const useFollowUnfollow = () => {
   const { currentUser } = useContext(AuthContext);
@@ -18,18 +18,11 @@ const useFollowUnfollow = () => {
   const follow = async (secondUserID) => {
     if (!currentUser) return;
     try {
-      //   const userQuery = await getDocs(
-      //     query(
-      //       collection(db, "userInfo"),
-      //       where("username", "==", secondUsername)
-      //     )
-      //   );
-      //   const secondUserID = userQuery.docs[0].id;
-      await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
+      await updateDoc(doc(db, "userInfo", auth.currentUser.uid), {
         following: arrayUnion(secondUserID),
       });
       await updateDoc(doc(db, "userInfo", secondUserID), {
-        followers: arrayUnion(currentUser.userInfoID),
+        followers: arrayUnion(auth.currentUser.uid),
       });
     } catch (err) {
       console.log(err.message);
@@ -40,18 +33,11 @@ const useFollowUnfollow = () => {
   const unfollow = async (secondUserID) => {
     if (!currentUser) return;
     try {
-      //   const userQuery = await getDocs(
-      //     query(
-      //       collection(db, "userInfo"),
-      //       where("username", "==", secondUsername)
-      //     )
-      //   );
-      //   const secondUserID = userQuery.docs[0].id;
-      await updateDoc(doc(db, "userInfo", currentUser.userInfoID), {
+      await updateDoc(doc(db, "userInfo", auth.currentUser.uid), {
         following: arrayRemove(secondUserID),
       });
       await updateDoc(doc(db, "userInfo", secondUserID), {
-        followers: arrayRemove(currentUser.userInfoID),
+        followers: arrayRemove(auth.currentUser.uid),
       });
     } catch (err) {
       console.log(err.message);
