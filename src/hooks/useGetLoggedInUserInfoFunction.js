@@ -21,15 +21,22 @@ const useGetLoggedInUserInfoFunction = () => {
   const getLoggedInUserInfo = async () => {
     if (!currentUser) return;
     try {
-      const userQuery = await getDoc(doc(db, "userInfo", auth.currentUser.uid));
-      const userInfo = userQuery.data();
-      const userImgURL = await getURL(userInfo.userImg);
+      // const userQuery = await getDoc(doc(db, "userInfo", auth.currentUser.uid));
+      // const userInfo = userQuery.data();
+
+      const userQuery = await getDocs(
+        query(
+          collection(db, "userInfo"),
+          where("username", "==", currentUser.displayName)
+        )
+      );
+      const userInfo = userQuery.docs[0].data();
       //Update user info in auth context to ensure up to date
       dispatch({
         type: "LOGIN",
-        payload: { ...currentUser, ...userInfo, userImgURL: userImgURL },
+        payload: { ...currentUser, ...userInfo },
       });
-      return { ...userInfo, userImgURL: userImgURL, id: userQuery.id };
+      return userInfo;
     } catch (err) {
       console.log(err.message);
       console.log(err.code);
