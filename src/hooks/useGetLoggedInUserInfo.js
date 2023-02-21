@@ -56,10 +56,10 @@ const useGetLoggedInUserInfo = () => {
       setUserPosts(userInfo.userPosts);
       setUsername(userInfo.username);
       //Update user info in auth context to ensure up to date
-      dispatch({
-        type: "LOGIN",
-        payload: { ...currentUser, ...userInfo },
-      });
+      // dispatch({
+      //   type: "LOGIN",
+      //   payload: { ...currentUser, ...userInfo },
+      // });
     } catch (err) {
       console.log(err.message);
       console.log(err.code);

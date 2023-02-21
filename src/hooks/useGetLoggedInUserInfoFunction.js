@@ -14,14 +14,10 @@ import { auth, db, getURL } from "../firebase";
 const useGetLoggedInUserInfoFunction = () => {
   const { currentUser, dispatch } = useContext(AuthContext);
 
-  useEffect(() => {
-    getLoggedInUserInfo();
-  }, []);
-
   const getLoggedInUserInfo = async () => {
     if (!currentUser) return;
     try {
-      const userQuery = await getDoc(doc(db, "userInfo", currentUser.uid));
+      const userQuery = await getDoc(doc(db, "userInfo", auth.currentUser.uid));
       const userInfo = userQuery.data();
 
       // const userQuery = await getDocs(
@@ -32,10 +28,10 @@ const useGetLoggedInUserInfoFunction = () => {
       // );
       // const userInfo = userQuery.docs[0].data();
       //Update user info in auth context to ensure up to date
-      dispatch({
-        type: "LOGIN",
-        payload: { ...currentUser, ...userInfo },
-      });
+      // dispatch({
+      //   type: "LOGIN",
+      //   payload: { ...currentUser, ...userInfo },
+      // });
       return userInfo;
     } catch (err) {
       console.log(err.message);
