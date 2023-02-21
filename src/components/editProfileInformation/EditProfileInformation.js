@@ -239,7 +239,7 @@ const EditProfileInformation = () => {
           </form>
         </div>
         <div className='user-info-right'>
-          <div className='username'>{updatedInfo.username}</div>
+          <div className='username'>{initialInfo.username}</div>
           <button
             aria-label='click to change profile photo'
             onClick={handleBtnClick}
