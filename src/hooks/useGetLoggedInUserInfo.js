@@ -34,10 +34,17 @@ const useGetLoggedInUserInfo = () => {
   const getLoggedInUserInfo = async () => {
     if (!currentUser) return;
     try {
-      const userQuery = await getDoc(doc(db, "userInfo", auth.currentUser.uid));
-      const userInfo = userQuery.data();
-      const userImgURL = await getURL(userInfo.userImg);
-      setAllData({ ...userInfo, userImgURL: userImgURL });
+      // const userQuery = await getDoc(doc(db, "userInfo", auth.currentUser.uid));
+      // const userInfo = userQuery.data();
+      // const userImgURL = await getURL(userInfo.userImg);
+      const userQuery = await getDocs(
+        query(
+          collection(db, "userInfo"),
+          where("username", "==", currentUser.displayName)
+        )
+      );
+      const userInfo = userQuery.docs[0].data();
+      setAllData({ ...userInfo });
       setEmail(userInfo.email);
       setFollowers([...userInfo.followers]);
       setFollowing([...userInfo.following]);
@@ -46,13 +53,13 @@ const useGetLoggedInUserInfo = () => {
       setSavedPosts([...userInfo.savedPosts]);
       setUserBio(userInfo.userBio);
       setUserImg(userInfo.userImg);
-      setUserImgURL(userImgURL);
+      setUserImgURL(userImgURL.userImgURL);
       setUserPosts(userInfo.userPosts);
       setUsername(userInfo.username);
       //Update user info in auth context to ensure up to date
       dispatch({
         type: "LOGIN",
-        payload: { ...currentUser, ...userInfo, userImgURL: userImgURL },
+        payload: { ...currentUser, ...userInfo },
       });
     } catch (err) {
       console.log(err.message);
