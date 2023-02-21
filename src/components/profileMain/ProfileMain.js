@@ -18,6 +18,8 @@ import useGetLoggedInUserInfo from "../../hooks/useGetLoggedInUserInfo";
 import useGetUserInfoFunction from "../../hooks/useGetUserInfoFunction";
 import useGetLoggedInUserInfoFunction from "../../hooks/useGetLoggedInUserInfoFunction";
 import useFollowUnfollow from "../../hooks/useFollowUnfollow";
+import { doc, onSnapshot } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const ProfileMain = () => {
   const { userParam } = useParams();
@@ -49,6 +51,7 @@ const ProfileMain = () => {
         pageFullname: [],
         pageUserBio: [],
         pageUserImgURL: currentUser.photoURL,
+        pageUid: "",
         userLikedPosts: [],
         userSavedPosts: [],
       });
@@ -79,12 +82,7 @@ const ProfileMain = () => {
         userSavedPosts: userInfo.savedPosts,
       };
       setPageInfo(dataObj);
-      if (userParam !== currentUser.username) {
-        const friendStatus = userInfo.following.includes(pageInfo.uid);
-        setPageUserID(pageInfo.uid);
-        setIsFriend(friendStatus);
-        setInitialFriend(friendStatus);
-      }
+      setPageUserID(pageInfo.uid);
     };
     getAllPageData();
   }, [userParam]);
@@ -92,6 +90,25 @@ const ProfileMain = () => {
   useEffect(() => {
     setPageLoading(false);
   }, [pageInfo.pageUserImgURL]);
+
+  useEffect(() => {
+    const checkFriend = () => {
+      if (userParam === currentUser.displayName) return;
+      const unsub = onSnapshot(doc(db, "userInfo", currentUser.uid), (doc) => {
+        const snapShotData = doc.data();
+        const friendStatus = snapShotData.following.includes(pageUserID);
+        setIsFriend(friendStatus);
+        setInitialFriend(friendStatus);
+        console.log(snapShotData);
+      });
+
+      return () => {
+        unsub();
+      };
+    };
+
+    currentUser.uid && checkFriend();
+  }, [currentUser.uid]);
 
   const handleImgClick = () => {
     imgInputRef.current.click();
