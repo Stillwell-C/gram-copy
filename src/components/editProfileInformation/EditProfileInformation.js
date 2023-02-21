@@ -146,15 +146,15 @@ const EditProfileInformation = () => {
           displayName: updatedInfo.username,
         });
       }
-      dispatch({
-        type: "LOGIN",
-        payload: {
-          ...currentUser,
-          fullname: updatedInfo.fullname,
-          username: updatedInfo.username,
-          userBio: updatedInfo.userBio,
-        },
-      });
+      // dispatch({
+      //   type: "LOGIN",
+      //   payload: {
+      //     ...currentUser,
+      //     fullname: updatedInfo.fullname,
+      //     username: updatedInfo.username,
+      //     userBio: updatedInfo.userBio,
+      //   },
+      // });
       setConfirmation(true);
       setConfirmationMsg([...confirmationMsg, "Updated user information"]);
       getAllPageData();
@@ -172,13 +172,13 @@ const EditProfileInformation = () => {
       await updateDoc(doc(db, "userInfo", auth.currentUser.uid), {
         email: updatedInfo.email,
       });
-      dispatch({
-        type: "LOGIN",
-        payload: {
-          ...currentUser,
-          email: updatedInfo.email,
-        },
-      });
+      // dispatch({
+      //   type: "LOGIN",
+      //   payload: {
+      //     ...currentUser,
+      //     email: updatedInfo.email,
+      //   },
+      // });
       setConfirmation(true);
       setConfirmationMsg([...confirmationMsg, "Updated user email"]);
       getAllPageData();
