@@ -172,7 +172,7 @@ const ProfileMain = () => {
             <div className='user-info'>
               <div className='user-info-top'>
                 <div className='user-info-username'>{userParam}</div>
-                {userParam === currentUser.username ? (
+                {userParam === currentUser.displayName ? (
                   <>
                     <div className='edit-profile'>
                       <Link
