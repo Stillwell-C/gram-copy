@@ -93,13 +93,11 @@ const ProfileMain = () => {
 
   useEffect(() => {
     const checkFriend = () => {
-      if (userParam === currentUser.displayName) return;
       const unsub = onSnapshot(doc(db, "userInfo", currentUser.uid), (doc) => {
         const snapShotData = doc.data();
         const friendStatus = snapShotData.following.includes(pageUserID);
         setIsFriend(friendStatus);
         setInitialFriend(friendStatus);
-        console.log(snapShotData);
       });
 
       return () => {
@@ -107,8 +105,10 @@ const ProfileMain = () => {
       };
     };
 
+    if (userParam === currentUser.displayName) return;
     currentUser.uid && checkFriend();
-  }, [currentUser.uid]);
+    //see if there are better params for this
+  }, [pageInfo, isFriend]);
 
   const handleImgClick = () => {
     imgInputRef.current.click();
