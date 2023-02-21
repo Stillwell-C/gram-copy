@@ -66,16 +66,16 @@ const LoginForm = () => {
         doc(db, "userInfo", userCredentials.user.uid)
       );
       const userInfo = userQuery.data();
-      dispatch({
-        type: "LOGIN",
-        payload: {
-          ...userCredentials.user,
-          ...userInfo,
-          userImgURL: userInfo.userImgURL,
-          //remove later
-          userInfoID: userInfo.uid,
-        },
-      });
+      // dispatch({
+      //   type: "LOGIN",
+      //   payload: {
+      //     ...userCredentials.user,
+      //     ...userInfo,
+      //     userImgURL: userInfo.userImgURL,
+      //     //remove later
+      //     userInfoID: userInfo.uid,
+      //   },
+      // });
       navigate("/");
     } catch (err) {
       setError(true);
