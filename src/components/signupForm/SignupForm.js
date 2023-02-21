@@ -42,7 +42,7 @@ const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { dispatch } = useContext(AuthContext);
+  // const { dispatch } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -189,16 +189,16 @@ const SignupForm = () => {
       });
       // const userInfoUpload = await addDoc(collection(db, "userInfo"), userData);
       await setDoc(doc(db, "userInfo", user.uid), userData);
-      dispatch({
-        type: "LOGIN",
-        payload: {
-          ...user,
-          ...userData,
-          userImgURL: userImgURL,
-          //remove later
-          userInfoID: user.uid,
-        },
-      });
+      // dispatch({
+      //   type: "LOGIN",
+      //   payload: {
+      //     ...user,
+      //     ...userData,
+      //     userImgURL: userImgURL,
+      //     //remove later
+      //     userInfoID: user.uid,
+      //   },
+      // });
       navigate("/");
     } catch (err) {
       const errorCode = err.code;
