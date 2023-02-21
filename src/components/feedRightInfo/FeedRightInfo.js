@@ -17,6 +17,7 @@ const FeedRightInfo = () => {
   // const { userImgURL, username, fullname } = useGetLoggedInUserInfo();
   const getUserInfo = useGetLoggedInUserInfoFunction();
 
+  const [displayUser, setDisplayUser] = useState(false);
   const [pageData, setPageData] = useState({
     username: "",
     userImgURL: defaultProfilePic,
@@ -24,8 +25,14 @@ const FeedRightInfo = () => {
   });
 
   useEffect(() => {
-    if (!currentUser.displayName) return;
-    console.log(currentUser);
+    if (!currentUser) {
+      setDisplayUser(false);
+      return;
+    }
+    if (!currentUser.displayName) {
+      return;
+    }
+    setDisplayUser(true);
     setPageData({
       username: currentUser.displayName,
       userImgURL: currentUser.photoURL,
@@ -54,7 +61,7 @@ const FeedRightInfo = () => {
 
   return (
     <div className='right-info-container'>
-      {currentUser && (
+      {displayUser && (
         <div className='top-user-info'>
           <Link to={`/${pageData.username}`}>
             <img src={pageData.userImgURL} alt='user profile' />
@@ -72,7 +79,7 @@ const FeedRightInfo = () => {
           </div>
         </div>
       )}
-      {!currentUser && (
+      {!displayUser && (
         <div className='login-div'>
           <Link to='/accounts/login' aria-label='click to log in'>
             <button>Log In</button>
