@@ -80,8 +80,8 @@ const ProfileMain = () => {
       };
       setPageInfo(dataObj);
       if (userParam !== currentUser.username) {
-        const friendStatus = userInfo.following.includes(pageInfo.id);
-        setPageUserID(pageInfo.id);
+        const friendStatus = userInfo.following.includes(pageInfo.uid);
+        setPageUserID(pageInfo.uid);
         setIsFriend(friendStatus);
         setInitialFriend(friendStatus);
       }
