@@ -31,13 +31,13 @@ const useUploadProfileImg = () => {
       await updateProfile(user, {
         photoURL: downloadURL,
       });
-      dispatch({
-        type: "LOGIN",
-        payload: {
-          ...currentUser,
-          userImgURL: downloadURL,
-        },
-      });
+      // dispatch({
+      //   type: "LOGIN",
+      //   payload: {
+      //     ...currentUser,
+      //     userImgURL: downloadURL,
+      //   },
+      // });
     } catch (err) {
       console.log(err);
     }
