@@ -1,23 +1,31 @@
+import { signOut } from "firebase/auth";
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
+import { auth } from "../../firebase";
+import defaultProfilePic from "../../assets/Default_pfp.svg";
 import useGetLoggedInUserInfo from "../../hooks/useGetLoggedInUserInfo";
 import useGetLoggedInUserInfoFunction from "../../hooks/useGetLoggedInUserInfoFunction";
 import Footer from "../footer/Footer";
 import "./feedRightInfo.scss";
 
 const FeedRightInfo = () => {
-  const { currentUser, dispatch } = useContext(AuthContext);
+  const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   //TODO: combine this with same call in userFeed and send down through state
   // const { userImgURL, username, fullname } = useGetLoggedInUserInfo();
   const getUserInfo = useGetLoggedInUserInfoFunction();
 
-  const [pageData, setPageData] = useState({});
+  const [pageData, setPageData] = useState({
+    username: "",
+    userImgURL: defaultProfilePic,
+    fullname: "",
+  });
 
   useEffect(() => {
-    if (!currentUser) return;
+    if (!currentUser.displayName) return;
+    console.log(currentUser);
     setPageData({
       username: currentUser.displayName,
       userImgURL: currentUser.photoURL,
@@ -34,13 +42,14 @@ const FeedRightInfo = () => {
       });
     };
     getAllPageData();
-  }, []);
+  }, [currentUser]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await signOut(auth);
     navigate("/");
-    dispatch({
-      type: "LOGOUT",
-    });
+    // dispatch({
+    //   type: "LOGOUT",
+    // });
   };
 
   return (
