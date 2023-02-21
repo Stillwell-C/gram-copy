@@ -15,20 +15,17 @@ const FeedRightInfo = () => {
   const getUserInfo = useGetLoggedInUserInfoFunction();
 
   const [pageData, setPageData] = useState({
-    username: "",
-    userImgURL: "",
+    username: currentUser.displayName,
+    userImgURL: currentUser.photoURL,
     fullname: "",
   });
 
   useEffect(() => {
     if (!currentUser) return;
-    setPageData({
-      username: currentUser.displayName,
-      userImgURL: currentUser.photoURL,
-      fullname: "",
-    });
     const getAllPageData = async () => {
-      const fetchedUserInfo = await getUserInfo();
+      const fetchedUserInfo = await getUserInfo().catch((err) =>
+        console.log(err.code)
+      );
       setPageData({
         username: fetchedUserInfo.username,
         userImgURL: fetchedUserInfo.userImgURL,
