@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import threeDots from "../../assets/three-dots-line-svgrepo-com.svg";
-import comment from "../../assets/message-circle-01-svgrepo-com.svg";
+import commentBubble from "../../assets/message-circle-01-svgrepo-com.svg";
 import message from "../../assets/plane-svgrepo-com.svg";
 import filledBookmark from "../../assets/bookmark-filled.svg";
 import outlinedBookmark from "../../assets/bookmark-outline.svg";
@@ -16,11 +16,13 @@ import useSavePost from "../../hooks/useSavePost";
 import useGetUserInfo from "../../hooks/useGetUserInfo";
 import PhotoModal from "../photoModal/PhotoModal";
 import useGetUserInfoFunction from "../../hooks/useGetUserInfoFunction";
+import useAddComment from "../../hooks/useAddComment";
 
 const ImgFeedCard = React.forwardRef(
   ({ post, userLikedPosts, userSavedPosts }, ref) => {
     //TODO: Have infoID, so could streamline this later
     const getImageInfo = useGetUserInfoFunction();
+    const addComment = useAddComment();
 
     const [liked, setLiked] = useState(false);
     const [initialLike, setInitialLike] = useState(false);
@@ -28,6 +30,7 @@ const ImgFeedCard = React.forwardRef(
     const [saved, setSaved] = useState(false);
     const [showPhotoModal, setShowPhotoModal] = useState(false);
     const [pageImgURL, setPageImgURL] = useState(defaultProfilePic);
+    const [comment, setComment] = useState("");
 
     useEffect(() => {
       const setImgURL = async () => {
@@ -86,6 +89,12 @@ const ImgFeedCard = React.forwardRef(
       setSaved(!saved);
     };
 
+    const handleComment = (e) => {
+      e.preventDefault();
+      addComment(currentUser.displayName, comment, post);
+      setComment("");
+    };
+
     const imgContent = (
       <>
         <div className='card-top'>
@@ -122,7 +131,7 @@ const ImgFeedCard = React.forwardRef(
                 />
               </button>
               <button className='commentButton'>
-                <img src={comment} alt='comment bubble' />
+                <img src={commentBubble} alt='comment bubble' />
               </button>
               <button className='messageButton'>
                 <img src={message} alt='paper airplane' />
@@ -172,18 +181,20 @@ const ImgFeedCard = React.forwardRef(
             </div>
           </div>
           <div className='input-comment-div'>
-            <form>
+            <form onSubmit={handleComment}>
               <div className='input-left'>
                 <label>
                   <input
                     type='text'
                     maxLength={2200}
                     placeholder='Add a comment...'
+                    onChange={(e) => setComment(e.target.value)}
+                    value={comment}
                   />
                 </label>
               </div>
               <div className='input-right'>
-                <button>Post</button>
+                <button type='submit'>Post</button>
               </div>
             </form>
           </div>
