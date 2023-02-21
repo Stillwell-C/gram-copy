@@ -15,6 +15,9 @@ import "./photoModal.scss";
 import useAddComment from "../../hooks/useAddComment";
 import useFollowUnfollow from "../../hooks/useFollowUnfollow";
 import useGetLoggedInUserInfoFunction from "../../hooks/useGetLoggedInUserInfoFunction";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase";
+import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 
 const PhotoModal = ({
   setShowPhotoModal,
@@ -27,6 +30,7 @@ const PhotoModal = ({
   likesOffset,
 }) => {
   const { currentUser } = useContext(AuthContext);
+  const [commentsPool, setCommentsPool] = useState([]);
   const [commentsArr, setCommentsArr] = useState([]);
   const [commentsLoading, setCommentsLoading] = useState(true);
   const [picInfoButton, setPicInfoButton] = useState();
@@ -39,7 +43,11 @@ const PhotoModal = ({
   const { follow: followUser, unfollow: unfollowUser } = useFollowUnfollow();
 
   useEffect(() => {
-    loadComments();
+    const fetchComments = async () => {
+      const fetchedPost = await getDoc(doc(db, "userImgs", post.id));
+      const postInfo = fetchedPost.data();
+      setCommentsPool([...postInfo.comments]);
+    };
     const determineFriend = async () => {
       const fetchedUserInfo = await getUserInfo();
       const friendArr = fetchedUserInfo.following.filter(
@@ -48,8 +56,13 @@ const PhotoModal = ({
       // const friendStatus = fetchedUserInfo.following.includes(post.userID);
       setIsFriend(friendArr.length ? true : false);
     };
+    fetchComments();
     determineFriend();
   }, []);
+
+  useEffect(() => {
+    loadComments();
+  }, [commentsPool]);
 
   useEffect(() => {
     setCommentsLoading(false);
@@ -66,11 +79,11 @@ const PhotoModal = ({
   const loadComments = () => {
     const start = commentsArr.length;
     const end =
-      start + 10 > post.comments.length ? post.comments.length : start + 10;
+      start + 10 > commentsPool.length ? commentsPool.length : start + 10;
     const newArr = [];
 
     for (let i = start; i < end; i++) {
-      newArr.push(post.comments[i]);
+      newArr.push(commentsPool[i]);
     }
 
     setCommentsArr([...commentsArr, ...newArr]);
@@ -166,7 +179,8 @@ const PhotoModal = ({
             </div>
             <div className='photo-modal-right-middle'>
               {!commentsLoading && comments}
-              {commentsArr.length < post.comments.length && (
+              {commentsLoading && <LoadingSpinner />}
+              {commentsArr.length < commentsPool.length && (
                 <div className='add-comments-button-div'>
                   <button
                     type='button'
