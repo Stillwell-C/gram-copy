@@ -1,4 +1,4 @@
-import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, Timestamp, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 const useAddComment = () => {
@@ -7,7 +7,7 @@ const useAddComment = () => {
       comments: arrayUnion({
         username: username,
         comment: comment,
-        date: new Date().toUTCString(),
+        date: Timestamp.now(),
       }),
     });
   };
