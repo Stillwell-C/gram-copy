@@ -15,6 +15,8 @@ import moon from "../../assets/moon-02-svgrepo-com.svg";
 
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase";
 
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
@@ -27,11 +29,12 @@ const Navbar = () => {
     setDisplayPostModal(true);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await signOut(auth);
     navigate("/");
-    dispatch({
-      type: "LOGOUT",
-    });
+    // dispatch({
+    //   type: "LOGOUT",
+    // });
   };
 
   return (
