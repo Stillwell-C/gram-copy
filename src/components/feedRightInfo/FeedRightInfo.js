@@ -25,20 +25,15 @@ const FeedRightInfo = () => {
   });
 
   useEffect(() => {
-    if (!currentUser) {
-      setDisplayUser(false);
-      return;
-    }
-    if (!currentUser.displayName) {
-      return;
-    }
-    setDisplayUser(true);
-    setPageData({
-      username: currentUser.displayName,
-      userImgURL: currentUser.photoURL,
-      fullname: "",
-    });
-    const getAllPageData = async () => {
+    const setInitialData = () => {
+      setDisplayUser(true);
+      setPageData({
+        username: currentUser.displayName,
+        userImgURL: currentUser.photoURL,
+        fullname: "",
+      });
+    };
+    const fetchAllPageData = async () => {
       const fetchedUserInfo = await getUserInfo().catch((err) =>
         console.log(err.code)
       );
@@ -48,7 +43,9 @@ const FeedRightInfo = () => {
         fullname: fetchedUserInfo.fullname,
       });
     };
-    getAllPageData();
+    !currentUser && setDisplayUser(false);
+    currentUser.displayName && setInitialData();
+    currentUser.displayName && fetchAllPageData();
   }, [currentUser]);
 
   const handleLogout = async () => {
