@@ -51,7 +51,7 @@ const PhotoModal = ({
     const determineFriend = async () => {
       const fetchedUserInfo = await getUserInfo();
       const friendArr = fetchedUserInfo.following.filter(
-        (user) => user === post.userID
+        (user) => user === post.userUid
       );
       // const friendStatus = fetchedUserInfo.following.includes(post.userID);
       setIsFriend(friendArr.length ? true : false);
@@ -131,12 +131,12 @@ const PhotoModal = ({
   };
 
   const handleFollow = () => {
-    followUser(post.userID);
+    followUser(post.userUid);
     setIsFriend(true);
   };
 
   const handleUnfollow = () => {
-    unfollowUser(post.userID);
+    unfollowUser(post.userUid);
     setIsFriend(false);
   };
 

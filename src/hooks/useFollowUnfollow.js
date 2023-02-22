@@ -15,13 +15,13 @@ import { auth, db } from "../firebase";
 const useFollowUnfollow = () => {
   const { currentUser } = useContext(AuthContext);
 
-  const follow = async (secondUserID) => {
+  const follow = async (secondUserUid) => {
     if (!currentUser) return;
     try {
       await updateDoc(doc(db, "userInfo", auth.currentUser.uid), {
-        following: arrayUnion(secondUserID),
+        following: arrayUnion(secondUserUid),
       });
-      await updateDoc(doc(db, "userInfo", secondUserID), {
+      await updateDoc(doc(db, "userInfo", secondUserUid), {
         followers: arrayUnion(auth.currentUser.uid),
       });
     } catch (err) {
@@ -30,13 +30,13 @@ const useFollowUnfollow = () => {
     }
   };
 
-  const unfollow = async (secondUserID) => {
+  const unfollow = async (secondUserUid) => {
     if (!currentUser) return;
     try {
       await updateDoc(doc(db, "userInfo", auth.currentUser.uid), {
-        following: arrayRemove(secondUserID),
+        following: arrayRemove(secondUserUid),
       });
-      await updateDoc(doc(db, "userInfo", secondUserID), {
+      await updateDoc(doc(db, "userInfo", secondUserUid), {
         followers: arrayRemove(auth.currentUser.uid),
       });
     } catch (err) {

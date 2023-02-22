@@ -131,7 +131,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
     const uploadData = {
       ...formData,
       userName: currentUser.displayName,
-      userID: auth.currentUser.uid,
+      userUid: auth.currentUser.uid,
       // date: serverTimestamp(),
       // Random date included to populate with uploads
       //TODO: remove later

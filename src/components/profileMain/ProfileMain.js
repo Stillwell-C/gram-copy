@@ -35,7 +35,7 @@ const ProfileMain = () => {
   const [pageLoading, setPageLoading] = useState(true);
   const [displaySelector, setDisplaySelector] = useState("posts");
   const [pageInfo, setPageInfo] = useState({});
-  const [pageUserID, setPageUserID] = useState(null);
+  const [pageUserUid, setPageUserUid] = useState(null);
   const [isFriend, setIsFriend] = useState(null);
   const [initialFriend, setInitialFriend] = useState(false);
   const [friendOffset, setFriendOffset] = useState(0);
@@ -82,7 +82,7 @@ const ProfileMain = () => {
         userSavedPosts: userInfo.savedPosts,
       };
       setPageInfo(dataObj);
-      setPageUserID(pageInfo.uid);
+      setPageUserUid(pageInfo.uid);
     };
     getAllPageData();
   }, [userParam]);
@@ -95,7 +95,7 @@ const ProfileMain = () => {
     const checkFriend = () => {
       const unsub = onSnapshot(doc(db, "userInfo", currentUser.uid), (doc) => {
         const snapShotData = doc.data();
-        const friendStatus = snapShotData.following.includes(pageUserID);
+        const friendStatus = snapShotData.following.includes(pageUserUid);
         setIsFriend(friendStatus);
         setInitialFriend(friendStatus);
       });
@@ -152,13 +152,13 @@ const ProfileMain = () => {
   };
 
   const handleFollow = () => {
-    followUser(pageUserID);
+    followUser(pageUserUid);
     setIsFriend(true);
     initialFriend ? setFriendOffset(0) : setFriendOffset(1);
   };
 
   const handleUnfollow = () => {
-    unfollowUser(pageUserID);
+    unfollowUser(pageUserUid);
     setIsFriend(false);
     initialFriend ? setFriendOffset(-1) : setFriendOffset(0);
   };
