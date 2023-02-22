@@ -59,8 +59,8 @@ const ProfilePostCard = React.forwardRef(
       setSaved(!saved);
     };
 
-    return (
-      <div className='post-card-container'>
+    const cardContent = (
+      <>
         <img
           className='post-img'
           alt={post.altText ? post.altText : "user upload"}
@@ -94,8 +94,18 @@ const ProfilePostCard = React.forwardRef(
             likesOffset={likesOffset}
           />
         )}
-      </div>
+      </>
     );
+
+    const postCard = ref ? (
+      <div className='post-card-container' ref={ref}>
+        {cardContent}
+      </div>
+    ) : (
+      <div className='post-card-container'>{cardContent}</div>
+    );
+
+    return postCard;
   }
 );
 
