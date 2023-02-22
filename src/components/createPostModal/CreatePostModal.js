@@ -14,6 +14,7 @@ import {
   getDocs,
   query,
   serverTimestamp,
+  Timestamp,
   updateDoc,
   where,
 } from "firebase/firestore";
@@ -27,6 +28,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
   const [dragActive, setDragActive] = useState(false);
   const [imgFileUpload, setImgFileUpload] = useState(null);
   const [imgFileUploadName, setImgFileUploadName] = useState();
+  const [imgFileUploadURL, setImgFileUploadURL] = useState("");
   const [formData, setFormData] = useState({
     caption: "",
     location: "",
@@ -38,41 +40,52 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
 
   useEffect(() => {
     //upload file uploaded by user to storage
-    const uploadFile = () => {
+    const uploadFile = async () => {
       const fileName =
         new Date().getTime() + currentUser.displayName + imgFileUpload.name;
       const storageRef = ref(storage, fileName);
-      const uploadTask = uploadBytesResumable(storageRef, imgFileUpload);
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-            default:
-              break;
-          }
-        },
-        (err) => {
-          console.log(err.code);
-        },
-        () => {
-          // console.log("ref", uploadTask.snapshot);
-          // getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          //   console.log("File available at", downloadURL);
-          //   setImgFileUploadName(downloadURL);
-          // });
-          setImgFileUploadName(uploadTask.snapshot.metadata.fullPath);
-        }
-      );
+      try {
+        const uploadTask = await uploadBytesResumable(
+          storageRef,
+          imgFileUpload
+        );
+        const downloadURL = await getDownloadURL(storageRef);
+        setImgFileUploadName(uploadTask.metadata.fullPath);
+        setImgFileUploadURL(downloadURL);
+      } catch (err) {
+        console.log(err.code);
+      }
+
+      // uploadTask.on(
+      //   "state_changed",
+      //   (snapshot) => {
+      //     const progress =
+      //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      //     console.log("Upload is " + progress + "% done");
+      //     switch (snapshot.state) {
+      //       case "paused":
+      //         console.log("Upload is paused");
+      //         break;
+      //       case "running":
+      //         console.log("Upload is running");
+      //         break;
+      //       default:
+      //         break;
+      //     }
+      //   },
+      //   (err) => {
+      //     console.log(err.code);
+      //   },
+      //   () => {
+      //     // console.log("ref", uploadTask.snapshot);
+      //     // getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+      //     //   console.log("File available at", downloadURL);
+      //     //   setImgFileUploadName(downloadURL);
+      //     // });
+      //     setImgFileUploadName(uploadTask.snapshot.metadata.fullPath);
+      //   }
+      // );
     };
 
     if (imgFileUpload) uploadFile();
@@ -137,13 +150,14 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
       //TODO: remove later
       date: newRandomDate,
       imgName: imgFileUploadName,
+      imgURL: imgFileUploadURL,
       likedUsers: [],
       savedUsers: [],
       comments: [
         {
           username: currentUser.displayName,
           comment: formData.caption,
-          date: new Date().toUTCString(),
+          date: Timestamp.now(),
         },
       ],
     };
