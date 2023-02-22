@@ -43,7 +43,10 @@ const FeedRightInfo = () => {
         fullname: fetchedUserInfo.fullname,
       });
     };
-    !currentUser && setDisplayUser(false);
+    if (!currentUser) {
+      setDisplayUser(false);
+      return;
+    }
     currentUser.displayName && setInitialData();
     currentUser.displayName && fetchAllPageData();
   }, [currentUser]);
