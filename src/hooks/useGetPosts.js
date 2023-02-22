@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import {
   collection,
+  doc,
   query,
   orderBy,
   startAfter,
   limit,
   getDocs,
+  getDoc,
 } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
 import { db, storage, getURL } from "../firebase";
@@ -48,26 +50,27 @@ const useGetPosts = (pageNum) => {
         );
       }
 
+      console.log(newDocs);
+
       setLastDoc(newDocs.docs[newDocs.docs.length - 1]);
 
       const newDocData = [];
-      const pushToArr = async (doc) => {
+      const pushToArr = async (document) => {
         try {
-          const imgURL = await getURL(doc.data().imgName);
-          const userImgURL = await getURL(doc.data().userImg);
+          const docInfo = document.data();
+          const userInfo = await getDoc(doc(db, "userInfo", docInfo.userUid));
           newDocData.push({
-            ...doc.data(),
-            imgURL: imgURL,
-            userImgURL: userImgURL,
-            id: doc.id,
+            ...docInfo,
+            userImgURL: userInfo.userImgURL,
+            id: document.id,
           });
         } catch (err) {
           console.log(err.message);
         }
       };
 
-      for (let doc of newDocs.docs) {
-        await pushToArr(doc);
+      for (let document of newDocs.docs) {
+        await pushToArr(document);
       }
 
       if (pageNum === 1) setPosts(newDocData);

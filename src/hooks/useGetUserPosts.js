@@ -85,12 +85,12 @@ const useGetUserPosts = (username, pageNum, userQueryInput) => {
       const pushToArr = async (ID) => {
         try {
           const rawDoc = await getDoc(doc(db, "userImgs", ID));
-          const imgURL = await getURL(rawDoc.data().imgName);
-          const userImgURL = await getURL(rawDoc.data().userImg);
+          const docData = rawDoc.data();
+          const userInfo = await getDoc(doc(db, "userInfo", docData.userUid));
           newDocData.push({
             ...rawDoc.data(),
-            imgURL: imgURL,
-            userImgURL: userImgURL,
+            imgURL: docData.imgURL,
+            userImgURL: userInfo.userImgURL,
             id: ID,
           });
         } catch (err) {
