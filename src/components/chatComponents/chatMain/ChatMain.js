@@ -3,7 +3,7 @@ import { AuthContext } from "../../../context/authContext";
 import "./chatMain.scss";
 
 import sendNewMessage from "../../../assets/pencil-edit-svgrepo-com.svg";
-import SendMessageModal from "../sendMessageModal.js/SendMessageModal";
+import SendMessageModal from "../sendMessageModal/SendMessageModal";
 
 const ChatMain = () => {
   const { currentUser } = useContext(AuthContext);
