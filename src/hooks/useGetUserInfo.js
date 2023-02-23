@@ -33,8 +33,7 @@ const useGetUserInfo = (queryInput, queryParameter) => {
         )
       );
       const userInfo = userQuery.docs[0].data();
-      const userImgURL = await getURL(userInfo.userImg);
-      setAllData({ ...userInfo, userImgURL: userImgURL });
+      setAllData({ ...userInfo });
       setEmail(userInfo.email);
       setFollowers([...userInfo.followers]);
       setFollowing([...userInfo.following]);
@@ -43,7 +42,7 @@ const useGetUserInfo = (queryInput, queryParameter) => {
       setSavedPosts([...userInfo.savedPosts]);
       setUserBio(userInfo.userBio);
       setUserImg(userInfo.userImg);
-      setUserImgURL(userImgURL);
+      setUserImgURL(userInfo.userImgURL);
       setUserPosts(userInfo.userPosts);
       setUsername(userInfo.username);
     } catch (err) {
