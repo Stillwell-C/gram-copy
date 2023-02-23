@@ -67,10 +67,12 @@ const Navbar = () => {
             </div>
           </div>
           <div className='navbar-row'>
-            <div className='navbar-line'>
-              <img src={message} alt='message icon' />
-              <span>Messages</span>
-            </div>
+            <Link to='/direct/inbox'>
+              <div className='navbar-line'>
+                <img src={message} alt='message icon' />
+                <span>Messages</span>
+              </div>
+            </Link>
           </div>
           <div className='navbar-row'>
             <div className='navbar-line'>
