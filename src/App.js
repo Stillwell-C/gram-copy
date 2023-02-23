@@ -6,6 +6,7 @@ import Navbar from "./components/navbar/Navbar";
 import UserFeed from "./pages/userFeed/UserFeed";
 import ProfileMain from "./components/profileMain/ProfileMain";
 import Profile from "./pages/Profile/Profile";
+import Chats from "./pages/chats/Chats";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path='/' element={<UserFeed />} />
         <Route path='/:userParam' element={<Profile />} />
         <Route path='/accounts/:accountsPath' element={<Login />} />
+        <Route path='/direct/inbox' element={<Chats />} />
       </Routes>
     </div>
   );
