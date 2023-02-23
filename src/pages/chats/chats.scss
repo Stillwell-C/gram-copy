@@ -1,0 +1,14 @@
+.chats-page-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: space-between;
+
+  .navbar {
+    width: 245px;
+  }
+
+  .chats-main {
+    flex: 1;
+  }
+}
