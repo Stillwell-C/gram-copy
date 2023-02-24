@@ -128,6 +128,7 @@
             border: none;
             cursor: pointer;
             color: black;
+            font-weight: bold;
             &:hover {
               color: #262626;
               opacity: 0.5;
@@ -163,12 +164,13 @@
         }
       }
 
-      button {
+      .submit-button {
         margin: 10px 0;
         background-color: #0099ff;
         color: white;
         font-weight: bold;
-        padding: 7px 110px;
+        padding: 7px 16px;
+        width: 260px;
         border: none;
         border-radius: 0.5rem;
         cursor: pointer;

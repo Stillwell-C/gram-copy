@@ -141,7 +141,9 @@ const LoginForm = () => {
               <LoadingSpinner />
             </div>
           ) : (
-            <button type='submit'>Log in</button>
+            <button type='submit' className='submit-button'>
+              Log in
+            </button>
           )}
         </form>
         <div className='or-div'>

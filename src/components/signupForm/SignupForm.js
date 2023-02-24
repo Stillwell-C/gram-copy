@@ -328,7 +328,9 @@ const SignupForm = () => {
               <LoadingSpinner />
             </div>
           ) : (
-            <button type='submit'>Log in</button>
+            <button type='submit' className='submit-button'>
+              Sign up
+            </button>
           )}
           <span className='signup-error-span'></span>
         </form>
