@@ -3,13 +3,17 @@ import {
   EmailAuthProvider,
   reauthenticateWithCredential,
 } from "firebase/auth";
+import { deleteDoc, doc } from "firebase/firestore";
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
-import { auth } from "../../firebase";
+import { auth, db } from "../../firebase";
 import "./deleteAccountModal.scss";
 
 const DeleteAccountModal = ({ setDisplayDeleteModal }) => {
   const { currentUser } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const [checkbox, setCheckbox] = useState(false);
   const [password, setPassword] = useState("");
@@ -46,13 +50,15 @@ const DeleteAccountModal = ({ setDisplayDeleteModal }) => {
       );
       await reauthenticateWithCredential(user, credential);
       await deleteUser(user);
+      await deleteDoc(doc(db, "userInfo", currentUser.uid));
       setConfirmation(true);
       setConfirmationMsg("Your account has been deleted");
+      navigate("/");
     } catch (err) {
       console.log(err.message);
       console.log(err.code);
       setError(true);
-      setErrorMsg(err.message);
+      setErrorMsg(err.code);
     }
   };
 
