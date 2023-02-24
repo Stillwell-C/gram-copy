@@ -169,22 +169,28 @@ const ProfileMain = () => {
         <div className='profile-content-container'>
           <div className='profile-top'>
             <div className='profile-img-div'>
-              <button
-                title='Click to change profile picture'
-                aria-label='click to change profile photo'
-                onClick={handleImgClick}
-              >
+              {userParam === currentUser.displayName ? (
+                <button
+                  title='Click to change profile picture'
+                  aria-label='click to change profile photo'
+                  onClick={handleImgClick}
+                >
+                  <img src={pageInfo.pageUserImgURL} alt='user profile' />
+                </button>
+              ) : (
                 <img src={pageInfo.pageUserImgURL} alt='user profile' />
-              </button>
-              <form>
-                <input
-                  type='file'
-                  className='file-upload-input'
-                  accept='image/png, image/jpeg'
-                  ref={imgInputRef}
-                  onChange={handleImgUpload}
-                />
-              </form>
+              )}
+              {userParam === currentUser.displayName && (
+                <form>
+                  <input
+                    type='file'
+                    className='file-upload-input'
+                    accept='image/png, image/jpeg'
+                    ref={imgInputRef}
+                    onChange={handleImgUpload}
+                  />
+                </form>
+              )}
             </div>
             <div className='user-info'>
               <div className='user-info-top'>

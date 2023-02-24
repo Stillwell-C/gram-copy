@@ -27,13 +27,13 @@
         button {
           background-color: transparent;
           border: none;
-          img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            cursor: pointer;
-          }
+          cursor: pointer;
+        }
+        img {
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          object-fit: cover;
         }
 
         input {
