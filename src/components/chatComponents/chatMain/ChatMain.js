@@ -4,6 +4,7 @@ import "./chatMain.scss";
 
 import sendNewMessage from "../../../assets/pencil-edit-svgrepo-com.svg";
 import SendMessageModal from "../sendMessageModal/SendMessageModal";
+import ChatList from "../chatList/ChatList";
 
 const ChatMain = () => {
   const { currentUser } = useContext(AuthContext);
@@ -31,7 +32,9 @@ const ChatMain = () => {
                 <img src={sendNewMessage} alt='pencil writing message icon' />{" "}
               </button>
             </div>
-            <div className='chat-left-bottom'></div>
+          </div>
+          <div className='chat-left-bottom'>
+            <ChatList />
           </div>
         </div>
         <div className='chat-main-right'></div>
