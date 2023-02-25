@@ -27,7 +27,12 @@ const ChatListChat = ({ chat }) => {
     };
 
     if (chat[1].lastMessage) {
-      setLastMsg(chat[1].lastMessage.text.slice(0, 20) + "...");
+      if (chat[1].lastMessage.text.length > 20) {
+        setLastMsg(chat[1].lastMessage.text.slice(0, 20) + "...");
+      }
+      if (chat[1].lastMessage.text.length < 20) {
+        setLastMsg(chat[1].lastMessage.text);
+      }
     }
 
     currentUser.uid && getURL();
