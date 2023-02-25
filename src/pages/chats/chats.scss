@@ -1,6 +1,6 @@
 .chats-page-container {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   justify-content: space-between;
 
@@ -10,5 +10,6 @@
 
   .chats-main {
     flex: 1;
+    height: 100%;
   }
 }
