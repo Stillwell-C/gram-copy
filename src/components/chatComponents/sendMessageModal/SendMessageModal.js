@@ -113,8 +113,8 @@ const SendMessageModal = ({ setShowSendMessageModal }) => {
               displayName: currentUser.displayName,
               photoURL: currentUser.photoURL,
             },
+            date: serverTimestamp(),
           },
-          date: serverTimestamp(),
         });
       }
     } catch (err) {
