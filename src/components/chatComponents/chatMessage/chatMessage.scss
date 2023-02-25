@@ -19,13 +19,15 @@
     }
 
     .message-content {
-      border: 1px solid #efefef;
       max-width: 80%;
       margin-bottom: 0.5rem;
-      border-radius: 22px;
       overflow: hidden;
+      display: flex;
+      justify-content: flex-end;
 
       p {
+        border: 1px solid #efefef;
+        border-radius: 22px;
         padding: 16px;
         max-width: max-content;
         background-color: #efefef;
@@ -61,6 +63,8 @@
       }
 
       .message-content {
+        display: flex;
+        justify-content: flex-start;
         p {
           background-color: #fff;
         }

@@ -38,7 +38,7 @@ const ChatMessage = ({ message }) => {
           </div>
         )}
         <div className='message-content'>
-          <p>{message.text}</p>
+          {message.text && <p>{message.text}</p>}
           {message.img && (
             <img
               src={message.img}
