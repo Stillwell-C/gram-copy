@@ -1,13 +1,15 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/authContext";
 import { ChatContext } from "../../../context/chatContext";
 
 import "./chatMessage.scss";
 
-const ChatMessage = ({ message }) => {
+const ChatMessage = ({ message, time }) => {
   const { currentUser } = useContext(AuthContext);
   const { userData } = useContext(ChatContext);
+
+  const [timestamp, setTimestamp] = useState("");
 
   const ref = useRef();
 
@@ -15,13 +17,43 @@ const ChatMessage = ({ message }) => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
 
+  useEffect(() => {
+    if (!time) return;
+
+    const today = new Date();
+    if (message.date.toDate().toDateString() === today.toDateString()) {
+      setTimestamp(
+        message.date
+          .toDate()
+          .toLocaleTimeString("en-US", { timeStyle: "short" })
+      );
+      return;
+    }
+    if (message.date.toDate().getFullYear() !== today.getFullYear()) {
+      setTimestamp(
+        message.date.toDate().toLocaleTimeString("en-US", {
+          month: "long",
+          day: "numeric",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+      );
+      return;
+    }
+    setTimestamp(
+      message.date.toDate().toLocaleTimeString("en-US", {
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    );
+  }, []);
+
   return (
     <div className='message-container' ref={ref}>
-      <div className='time-display'>
-        {message.date
-          .toDate()
-          .toLocaleTimeString("en-US", { timeStyle: "short" })}
-      </div>
+      <div className='time-display'>{time && timestamp}</div>
       <div
         className={`message-lower ${
           message.senderId !== currentUser.uid && "recieved-message"
