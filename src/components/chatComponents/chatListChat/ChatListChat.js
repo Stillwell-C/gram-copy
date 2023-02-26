@@ -36,7 +36,7 @@ const ChatListChat = ({ chat }) => {
     }
 
     currentUser.uid && getURL();
-  }, [currentUser.uid]);
+  }, [currentUser.uid, chat]);
 
   const handleSelect = () => {
     dispatch({ type: "CHANGE_USER", payload: chat[1].userInfo });
