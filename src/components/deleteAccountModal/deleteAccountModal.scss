@@ -123,6 +123,22 @@
             }
           }
         }
+
+        .delete-loading-div {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          .loading-spinner-div {
+            transform: scale(0.5);
+            height: 50px;
+          }
+
+          p {
+            font-size: 0.9rem;
+            color: black;
+          }
+        }
       }
     }
   }
