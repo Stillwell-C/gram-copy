@@ -6,6 +6,7 @@ import React, {
   useState,
 } from "react";
 import { AuthContext } from "../../context/authContext";
+import useGetPostsCompound from "../../hooks/useGetPostsCompound";
 import useGetUserPosts from "../../hooks/useGetUserPosts";
 import CreatePostModal from "../createPostModal/CreatePostModal";
 import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
@@ -22,21 +23,34 @@ const PostFeed = ({
   const [displayNoImgFeed, setDisplayNoImgFeed] = useState(false);
   const [displayPostModal, setDisplayPostModal] = useState(false);
   const [pageNum, setPageNum] = useState(1);
-  const { loading, error, errorInfo, posts, hasMoreData } = useGetUserPosts(
-    userParam,
+  // const { loading, error, errorInfo, posts, hasMoreData } = useGetUserPosts(
+  //   userParam,
+  //   pageNum,
+  //   userQueryInput
+  // );
+  const { loading, error, errorInfo, posts, hasMoreData } = useGetPostsCompound(
     pageNum,
-    userQueryInput
+    userParam,
+    "==",
+    userQueryInput,
+    9,
+    6
   );
 
   const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
-    if (!loading && userPosts.length < 1 && userQueryInput === "posts") {
+    if (
+      !loading &&
+      userPosts.length < 1 &&
+      userQueryInput === "posts" &&
+      currentUser.displayName === userParam
+    ) {
       setDisplayNoImgFeed(true);
       return;
     }
     setDisplayNoImgFeed(false);
-  }, [userPosts]);
+  }, [userPosts, loading]);
 
   const observer = useRef();
   const lastPostRef = useCallback(
@@ -87,7 +101,7 @@ const PostFeed = ({
       <>
         {content}
         {loading && <LoadingSpinner />}
-        {!loading && displayNoImgFeed && userParam === currentUser.username && (
+        {!loading && displayNoImgFeed && (
           <NoUserImgProfileFeed handleAddPostModal={handleAddPostModal} />
         )}
         {error && errorInfo.message}
