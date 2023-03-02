@@ -12,6 +12,7 @@ import {
 import { ref, getDownloadURL } from "firebase/storage";
 import { db, storage, getURL } from "../firebase";
 import useGetUserInfo from "./useGetUserInfo";
+import useGetLoggedInUserInfoFunction from "./useGetLoggedInUserInfoFunction";
 
 const useGetUserPosts = (username, pageNum, userQueryInput) => {
   const [loading, setLoading] = useState(true);
@@ -21,44 +22,26 @@ const useGetUserPosts = (username, pageNum, userQueryInput) => {
   const [hasMoreData, setHasMoreData] = useState(false);
   const [lastDocIndex, setLastDocIndex] = useState();
   //TODO: possibly need some initial loading state for this if error
-  const { userPosts, savedPosts } = useGetUserInfo(username, "username");
-  const [userQuery, setUserQuery] = useState();
+  // const { userPosts, savedPosts } = useGetUserInfo(username, "username");
+  const [userQuery, setUserQuery] = useState([]);
+
+  const getUserInfo = useGetLoggedInUserInfoFunction();
 
   useEffect(() => {
     setLoading(true);
     setError(false);
     setErrorInfo({});
-    runQuery();
-  }, [pageNum, userPosts]);
-
-  const runQuery = () => {
-    if (userQueryInput === "saved") {
-      setUserQuery(savedPosts);
-      if (savedPosts.length < 1) {
-        setLoading(false);
-        return;
-      }
-      getNewDocs();
-      return;
-    }
-    if (userQuery === "tagged") {
-      //TODO: Set up this mechanism
-      setUserQuery(userPosts);
-      if (userPosts.length < 1) {
-        setLoading(false);
-        return;
-      }
-      getNewDocs();
-      return;
-    }
-    setUserQuery(userPosts);
-    if (userPosts.length < 1) {
-      setLoading(false);
-      return;
-    }
     getNewDocs();
-    return;
-  };
+  }, [pageNum, userQuery]);
+
+  useEffect(() => {
+    const setInfo = async () => {
+      const userInfo = await getUserInfo(username, "username");
+      if (userQueryInput === "saved") setUserQuery(userInfo.savedPosts);
+      if (userQueryInput === "tagged") setUserQuery(userInfo.taggedPosts);
+    };
+    setInfo();
+  }, []);
 
   const getNewDocs = async () => {
     try {
