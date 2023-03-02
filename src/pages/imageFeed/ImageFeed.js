@@ -48,7 +48,7 @@ const ImageFeed = () => {
       setUserSavedPosts(userInfo.savedPosts);
     };
 
-    currentUser.displayName && setInfo();
+    currentUser?.displayName && setInfo();
   }, [currentUser]);
 
   const content = posts.map((post, i) => {
