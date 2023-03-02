@@ -20,6 +20,7 @@ import useGetLoggedInUserInfoFunction from "../../hooks/useGetLoggedInUserInfoFu
 import useFollowUnfollow from "../../hooks/useFollowUnfollow";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
+import PostFeedFromArr from "../postFeedFromArr/PostFeedFromArr";
 
 const ProfileMain = () => {
   const { userParam } = useParams();
@@ -281,7 +282,7 @@ const ProfileMain = () => {
                 <img src={grid} alt='grid icon'></img>
                 <span>POSTS</span>
               </div>
-              {userParam === currentUser.username && (
+              {userParam === currentUser.displayName && (
                 <div
                   className={
                     displaySelector === "saved"
@@ -295,7 +296,7 @@ const ProfileMain = () => {
                   <span>SAVED</span>
                 </div>
               )}
-              {userParam !== currentUser.username && (
+              {userParam !== currentUser.displayName && (
                 <div
                   className={
                     displaySelector === "tagged"
@@ -321,7 +322,7 @@ const ProfileMain = () => {
                 />
               )}
               {displaySelector === "saved" && (
-                <PostFeed
+                <PostFeedFromArr
                   userParam={userParam}
                   userPosts={pageInfo.pageUserPosts}
                   userLikedPosts={pageInfo.userLikedPosts}
@@ -330,7 +331,7 @@ const ProfileMain = () => {
                 />
               )}
               {displaySelector === "tagged" && (
-                <PostFeed
+                <PostFeedFromArr
                   userParam={userParam}
                   userPosts={pageInfo.pageUserPosts}
                   userLikedPosts={pageInfo.userLikedPosts}
