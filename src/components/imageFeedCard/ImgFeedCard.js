@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import threeDots from "../../assets/three-dots-line-svgrepo-com.svg";
 import commentBubble from "../../assets/message-circle-01-svgrepo-com.svg";
 import message from "../../assets/plane-svgrepo-com.svg";
@@ -23,6 +23,7 @@ const ImgFeedCard = React.forwardRef(
     //TODO: Have infoID, so could streamline this later
     const getImageInfo = useGetUserInfoFunction();
     const addComment = useAddComment();
+    const navigate = useNavigate();
 
     const [liked, setLiked] = useState(false);
     const [initialLike, setInitialLike] = useState(false);
@@ -70,7 +71,10 @@ const ImgFeedCard = React.forwardRef(
     }, [currentUser]);
 
     const handleLike = () => {
-      if (!currentUser) return;
+      if (!currentUser) {
+        navigate("/accounts/login");
+        return;
+      }
       if (liked) {
         unlikePost(post.id);
         initialLike ? setLikesOffset(-1) : setLikesOffset(0);
@@ -83,7 +87,10 @@ const ImgFeedCard = React.forwardRef(
     };
 
     const handleSave = () => {
-      if (!currentUser) return;
+      if (!currentUser) {
+        navigate("/accounts/login");
+        return;
+      }
       if (saved) unsavePost(post.id);
       if (!saved) savePost(post.id);
       setSaved(!saved);
@@ -91,6 +98,10 @@ const ImgFeedCard = React.forwardRef(
 
     const handleComment = (e) => {
       e.preventDefault();
+      if (!currentUser) {
+        navigate("/accounts/login");
+        return;
+      }
       addComment(currentUser.displayName, comment, post);
       setComment("");
     };
