@@ -36,11 +36,11 @@ const PhotoModal = ({
   const [picInfoButton, setPicInfoButton] = useState();
   const [activateButton, setActivateButton] = useState(false);
   const [comment, setComment] = useState("");
-  const [isFriend, setIsFriend] = useState(null);
+  const [isFriend, setIsFriend] = useState(false);
 
   const getUserInfo = useGetLoggedInUserInfoFunction();
   const addComment = useAddComment();
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const { follow: followUser, unfollow: unfollowUser } = useFollowUnfollow();
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const PhotoModal = ({
       setIsFriend(friendArr.length ? true : false);
     };
     fetchComments();
-    determineFriend();
+    currentUser?.displayName && determineFriend();
   }, []);
 
   useEffect(() => {
