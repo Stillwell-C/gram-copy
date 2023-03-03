@@ -285,6 +285,7 @@
   background-color: rgba(0, 0, 0, 0.6);
   pointer-events: all;
   cursor: default;
+  z-index: 6;
 
   .modal-overlay-close {
     width: 100vw;
