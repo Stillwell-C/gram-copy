@@ -44,7 +44,7 @@ const ProfileMain = () => {
 
   useEffect(() => {
     setPageLoading(true);
-    if (userParam === currentUser.username) {
+    if (userParam === currentUser?.username) {
       setPageInfo({
         pageUserPosts: [],
         pageFollowers: [],
@@ -57,7 +57,7 @@ const ProfileMain = () => {
         userSavedPosts: [],
       });
     }
-    if (userParam !== currentUser.username) {
+    if (!currentUser?.displayName || userParam !== currentUser?.username) {
       setPageInfo({
         pageUserPosts: [],
         pageFollowers: [],
@@ -71,7 +71,13 @@ const ProfileMain = () => {
     }
     const getAllPageData = async () => {
       const pageInfo = await getPageInfo(userParam, "username");
-      const userInfo = await getUserInfo();
+      const noUserData = {
+        likedPosts: [],
+        savedPosts: [],
+      };
+      const userInfo = currentUser?.displayName
+        ? await getUserInfo()
+        : noUserData;
       const dataObj = {
         pageUserPosts: pageInfo.userPosts,
         pageFollowers: pageInfo.followers,
@@ -106,8 +112,8 @@ const ProfileMain = () => {
       };
     };
 
-    if (userParam === currentUser.displayName) return;
-    currentUser.uid && checkFriend();
+    if (userParam === currentUser?.displayName) return;
+    currentUser?.uid && checkFriend();
     //see if there are better params for this
   }, [pageInfo, isFriend]);
 
@@ -170,7 +176,7 @@ const ProfileMain = () => {
         <div className='profile-content-container'>
           <div className='profile-top'>
             <div className='profile-img-div'>
-              {userParam === currentUser.displayName ? (
+              {userParam === currentUser?.displayName ? (
                 <button
                   title='Click to change profile picture'
                   aria-label='click to change profile photo'
@@ -181,7 +187,7 @@ const ProfileMain = () => {
               ) : (
                 <img src={pageInfo.pageUserImgURL} alt='user profile' />
               )}
-              {userParam === currentUser.displayName && (
+              {userParam === currentUser?.displayName && (
                 <form>
                   <input
                     type='file'
@@ -196,7 +202,7 @@ const ProfileMain = () => {
             <div className='user-info'>
               <div className='user-info-top'>
                 <div className='user-info-username'>{userParam}</div>
-                {userParam === currentUser.displayName ? (
+                {userParam === currentUser?.displayName ? (
                   <>
                     <div className='edit-profile'>
                       <Link
@@ -282,7 +288,7 @@ const ProfileMain = () => {
                 <img src={grid} alt='grid icon'></img>
                 <span>POSTS</span>
               </div>
-              {userParam === currentUser.displayName && (
+              {userParam === currentUser?.displayName && (
                 <div
                   className={
                     displaySelector === "saved"
@@ -296,7 +302,7 @@ const ProfileMain = () => {
                   <span>SAVED</span>
                 </div>
               )}
-              {userParam !== currentUser.displayName && (
+              {userParam !== currentUser?.displayName && (
                 <div
                   className={
                     displaySelector === "tagged"
