@@ -49,8 +49,8 @@ const EditProfileInformation = () => {
   const btnInputRef = useRef(null);
 
   useEffect(() => {
-    getAllPageData();
-  }, []);
+    currentUser?.displayName && getAllPageData();
+  }, [currentUser]);
 
   const getAllPageData = async () => {
     const fetchedUserInfo = await getUserInfo();
