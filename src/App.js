@@ -7,6 +7,7 @@ import UserFeed from "./pages/userFeed/UserFeed";
 import ProfileMain from "./components/profileMain/ProfileMain";
 import Profile from "./pages/Profile/Profile";
 import Chats from "./pages/chats/Chats";
+import PrivateRoutes from "./utils/ProtectedRoutes";
 
 function App() {
   return (
@@ -15,7 +16,11 @@ function App() {
         <Route path='/' element={<UserFeed />} />
         <Route path='/:userParam' element={<Profile />} />
         <Route path='/accounts/:accountsPath' element={<Login />} />
-        <Route path='/direct/inbox' element={<Chats />} />
+        <Route element={<PrivateRoutes />}>
+          <Route path='/direct/inbox' element={<Chats />} />
+          <Route path='/accounts/edit' element={<Login />} />
+          <Route path='/accounts/password' element={<Login />} />
+        </Route>
       </Routes>
     </div>
   );
