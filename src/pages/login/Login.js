@@ -16,8 +16,6 @@ const Login = () => {
     <div className='login-container'>
       {accountsPath === "login" && <LoginForm />}
       {accountsPath === "emailsignup" && <SignupForm />}
-      {accountsPath === "edit" && <EditProfile />}
-      {accountsPath === "password" && <EditProfile />}
     </div>
   );
 };
