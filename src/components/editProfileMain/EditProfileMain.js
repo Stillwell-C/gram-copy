@@ -6,33 +6,41 @@ import Footer from "../footer/Footer";
 import "./editProfileMain.scss";
 
 const EditProfileMain = () => {
-  const { accountsPath } = useParams();
+  const [pageDisplay, setPageDisplay] = useState("edit");
 
-  const [sidebarActive, setSidebarActive] = useState("");
+  const handleSetEdit = () => {
+    if (pageDisplay === "edit") return;
+    setPageDisplay("edit");
+  };
 
-  useEffect(() => {
-    if (accountsPath === "edit") setSidebarActive("edit");
-    if (accountsPath === "password") setSidebarActive("password");
-  }, []);
+  const handleSetPassword = () => {
+    if (pageDisplay === "password") return;
+    setPageDisplay("password");
+  };
 
   return (
     <div className='edit-profile-container'>
       <div className='edit-profile-div'>
         <div className='edit-profile-sidebar'>
-          <Link to='/accounts/edit'>
-            <div className={sidebarActive === "edit" ? "active" : ""}>
-              Edit Profile
-            </div>
-          </Link>
-          <Link to='/accounts/password'>
-            <div className={sidebarActive === "password" ? "active" : ""}>
-              Change Password
-            </div>
-          </Link>
+          <div
+            aria-label='click to switch to edit profile page'
+            className={pageDisplay === "edit" ? "active" : ""}
+            onClick={handleSetEdit}
+          >
+            Edit Profile
+          </div>
+
+          <div
+            aria-label='click to switch to change password page'
+            className={pageDisplay === "password" ? "active" : ""}
+            onClick={handleSetPassword}
+          >
+            Change Password
+          </div>
         </div>
         <div className='edit-profile-body'>
-          {accountsPath === "edit" && <EditProfileInformation />}
-          {accountsPath === "password" && <EditProfilePassword />}
+          {pageDisplay === "edit" && <EditProfileInformation />}
+          {pageDisplay === "password" && <EditProfilePassword />}
         </div>
       </div>
       <Footer />

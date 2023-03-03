@@ -22,6 +22,7 @@
         font-size: 14px;
         width: 236px;
         border-left: 2px solid transparent;
+        cursor: pointer;
 
         &:hover {
           background-color: #fafafa;
@@ -32,11 +33,6 @@
           font-weight: bold;
           border-left-color: black;
         }
-      }
-
-      a {
-        text-decoration: none;
-        color: black;
       }
     }
   }
