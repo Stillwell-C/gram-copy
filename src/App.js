@@ -18,8 +18,6 @@ function App() {
         <Route path='/accounts/:accountsPath' element={<Login />} />
         <Route element={<PrivateRoutes />}>
           <Route path='/direct/inbox' element={<Chats />} />
-          <Route path='/accounts/edit' element={<Login />} />
-          <Route path='/accounts/password' element={<Login />} />
         </Route>
       </Routes>
     </div>
