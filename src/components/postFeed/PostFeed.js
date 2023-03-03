@@ -44,7 +44,7 @@ const PostFeed = ({
       !loading &&
       userPosts.length < 1 &&
       userQueryInput === "posts" &&
-      currentUser.displayName === userParam
+      currentUser?.displayName === userParam
     ) {
       setDisplayNoImgFeed(true);
       return;
