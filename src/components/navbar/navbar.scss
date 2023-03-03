@@ -3,13 +3,15 @@
   height: 100vh;
   border-right: 1px solid #cccccc;
   background-color: #fff;
-  z-index: 9;
+  z-index: 4;
 
   .search-body {
-    display: none;
+    width: 0;
+    transition: width 0.5s;
   }
 
   .navbar-body {
+    transition: width 0.5s;
     width: 245px !important;
     height: 100%;
     width: 100%;
@@ -101,7 +103,7 @@
         width: 98%;
         border-radius: 0.5rem;
         overflow: hidden;
-        z-index: 10;
+        z-index: 5;
 
         .menu-line {
           cursor: pointer;
@@ -164,7 +166,7 @@
     overflow: hidden;
 
     .navbar-body {
-      max-width: 73px;
+      width: 73px !important;
       border-right: 1px solid #cccccc;
 
       .navbar-header {
@@ -261,12 +263,11 @@
       .search-bottom {
         flex-grow: 1;
         height: 100%;
-        width: 105%;
-        overflow-y: scroll;
+        width: 100%;
+        overflow-y: auto;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        box-sizing: content-box;
 
         a {
           text-decoration: none;
