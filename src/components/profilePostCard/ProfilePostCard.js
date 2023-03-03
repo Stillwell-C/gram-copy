@@ -7,10 +7,13 @@ import { AuthContext } from "../../context/authContext";
 import useLikePost from "../../hooks/useLikePost";
 import useSavePost from "../../hooks/useSavePost";
 import PhotoModal from "../photoModal/PhotoModal";
+import { useNavigate } from "react-router-dom";
 
 const ProfilePostCard = React.forwardRef(
   ({ post, userLikedPosts, userSavedPosts }, ref) => {
     const { userImgURL } = useGetUserInfo(post.userName, "username");
+
+    const navigate = useNavigate();
 
     const [liked, setLiked] = useState(false);
     const [initialLike, setInitialLike] = useState(false);
@@ -40,7 +43,10 @@ const ProfilePostCard = React.forwardRef(
     }, []);
 
     const handleLike = () => {
-      if (!currentUser) return;
+      if (!currentUser) {
+        navigate("/accounts/login");
+        return;
+      }
       if (liked) {
         unlikePost(post.id);
         initialLike ? setLikesOffset(-1) : setLikesOffset(0);
@@ -53,7 +59,10 @@ const ProfilePostCard = React.forwardRef(
     };
 
     const handleSave = () => {
-      if (!currentUser) return;
+      if (!currentUser) {
+        navigate("/accounts/login");
+        return;
+      }
       if (saved) unsavePost(post.id);
       if (!saved) savePost(post.id);
       setSaved(!saved);
