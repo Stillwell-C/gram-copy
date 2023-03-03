@@ -26,6 +26,10 @@ const Navbar = () => {
   const { currentUser, dispatch } = useContext(AuthContext);
 
   const handleAddPostModal = () => {
+    if (!currentUser) {
+      navigate("/accounts/login");
+      return;
+    }
     setDisplayPostModal(true);
   };
 
