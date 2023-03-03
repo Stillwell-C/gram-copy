@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import threeDots from "../../assets/three-dots-line-svgrepo-com.svg";
 import addCommentIcon from "../../assets/add-circle-svgrepo-com.svg";
 import commentBubble from "../../assets/message-circle-01-svgrepo-com.svg";
@@ -40,6 +40,7 @@ const PhotoModal = ({
 
   const getUserInfo = useGetLoggedInUserInfoFunction();
   const addComment = useAddComment();
+  const navigate = useNavigate;
   const { follow: followUser, unfollow: unfollowUser } = useFollowUnfollow();
 
   useEffect(() => {
@@ -126,16 +127,28 @@ const PhotoModal = ({
 
   const handleAddComment = (e) => {
     e.preventDefault();
+    if (!currentUser) {
+      navigate("/accounts/login");
+      return;
+    }
     addComment(currentUser.displayName, comment, post);
     setComment("");
   };
 
   const handleFollow = () => {
+    if (!currentUser) {
+      navigate("/accounts/login");
+      return;
+    }
     followUser(post.userUid);
     setIsFriend(true);
   };
 
   const handleUnfollow = () => {
+    if (!currentUser) {
+      navigate("/accounts/login");
+      return;
+    }
     unfollowUser(post.userUid);
     setIsFriend(false);
   };
@@ -162,7 +175,7 @@ const PhotoModal = ({
                   <Link to={`/${post.userName}`}>
                     <div className='userName'>{post.userName}</div>
                   </Link>
-                  {currentUser.displayName !== post.userName && (
+                  {currentUser?.displayName !== post.userName && (
                     <>
                       <span>•</span>
                       {picInfoButton}
