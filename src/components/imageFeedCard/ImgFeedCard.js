@@ -131,7 +131,11 @@ const ImgFeedCard = React.forwardRef(
                 />
               </button>
               <button className='commentButton'>
-                <img src={commentBubble} alt='comment bubble' />
+                <img
+                  src={commentBubble}
+                  alt='comment bubble'
+                  onClick={() => setShowPhotoModal(true)}
+                />
               </button>
               <button className='messageButton'>
                 <img src={message} alt='paper airplane' />
