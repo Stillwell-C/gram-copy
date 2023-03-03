@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./navbar.scss";
 import home from "../../assets/home-2-svgrepo-com.svg";
@@ -28,6 +28,7 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
+  const navbarRef = useRef();
 
   const { currentUser } = useContext(AuthContext);
 
@@ -81,9 +82,27 @@ const Navbar = () => {
     }
   };
 
+  useEffect(() => {
+    let handler = (e) => {
+      if (navbarRef.current.contains(e.target)) {
+        return;
+      }
+      setSearchActive(false);
+    };
+
+    document.addEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
+  });
+
   return (
     <>
-      <nav className={`navbar-container ${searchActive && "searchActive"}`}>
+      <nav
+        className={`navbar-container ${searchActive && "searchActive"}`}
+        ref={navbarRef}
+      >
         <div className='navbar-body'>
           <div className='navbar-top'>
             <div className='navbar-header'>
