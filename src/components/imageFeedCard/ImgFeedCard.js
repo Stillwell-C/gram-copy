@@ -17,6 +17,8 @@ import useGetUserInfo from "../../hooks/useGetUserInfo";
 import PhotoModal from "../photoModal/PhotoModal";
 import useGetUserInfoFunction from "../../hooks/useGetUserInfoFunction";
 import useAddComment from "../../hooks/useAddComment";
+import ReportModal from "../reportModal/ReportModal";
+import AdditionalOptionsModal from "../additionalOptionsModal/AdditionalOptionsModal";
 
 const ImgFeedCard = React.forwardRef(
   ({ post, userLikedPosts, userSavedPosts }, ref) => {
@@ -30,6 +32,9 @@ const ImgFeedCard = React.forwardRef(
     const [likesOffset, setLikesOffset] = useState(0);
     const [saved, setSaved] = useState(false);
     const [showPhotoModal, setShowPhotoModal] = useState(false);
+    const [showAdditionalOptionsModal, setShowAdditionalOptionsModal] =
+      useState(false);
+    const [showReportModal, setShowReportModal] = useState(false);
     const [pageImgURL, setPageImgURL] = useState(defaultProfilePic);
     const [comment, setComment] = useState("");
 
@@ -118,7 +123,10 @@ const ImgFeedCard = React.forwardRef(
               {post.location && post.location}
             </div>
           </div>
-          <button className='optionButton'>
+          <button
+            className='optionButton'
+            onClick={() => setShowAdditionalOptionsModal(true)}
+          >
             <img src={threeDots} alt='three dots' />
           </button>
         </div>
@@ -224,6 +232,19 @@ const ImgFeedCard = React.forwardRef(
             handleLike={handleLike}
             handleSave={handleSave}
             likesOffset={likesOffset}
+          />
+        )}
+        {showAdditionalOptionsModal && (
+          <AdditionalOptionsModal
+            setShowAdditionalOptionsModal={setShowAdditionalOptionsModal}
+            setShowReportModal={setShowReportModal}
+          />
+        )}
+        {showReportModal && (
+          <ReportModal
+            setShowReportModal={setShowReportModal}
+            reportDistinction={"image"}
+            reportId={post.id}
           />
         )}
       </>
