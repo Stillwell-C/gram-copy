@@ -18,6 +18,8 @@ import useGetLoggedInUserInfoFunction from "../../hooks/useGetLoggedInUserInfoFu
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
+import AdditionalOptionsModal from "../additionalOptionsModal/AdditionalOptionsModal";
+import ReportModal from "../reportModal/ReportModal";
 
 const PhotoModal = ({
   setShowPhotoModal,
@@ -37,6 +39,9 @@ const PhotoModal = ({
   const [activateButton, setActivateButton] = useState(false);
   const [comment, setComment] = useState("");
   const [isFriend, setIsFriend] = useState(false);
+  const [showAdditionalOptionsModal, setShowAdditionalOptionsModal] =
+    useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
 
   const getUserInfo = useGetLoggedInUserInfoFunction();
   const addComment = useAddComment();
@@ -186,7 +191,10 @@ const PhotoModal = ({
                   {post.location ? post.location : ""}
                 </div>
               </div>
-              <button className='optionButton'>
+              <button
+                className='optionButton'
+                onClick={() => setShowAdditionalOptionsModal(true)}
+              >
                 <img src={threeDots} alt='three dots' />
               </button>
             </div>
@@ -292,6 +300,19 @@ const PhotoModal = ({
           </button>
         </div>
       </div>
+      {showAdditionalOptionsModal && (
+        <AdditionalOptionsModal
+          setShowAdditionalOptionsModal={setShowAdditionalOptionsModal}
+          setShowReportModal={setShowReportModal}
+        />
+      )}
+      {showReportModal && (
+        <ReportModal
+          setShowReportModal={setShowReportModal}
+          reportDistinction={"image"}
+          reportId={post.id}
+        />
+      )}
     </>
   );
 };
