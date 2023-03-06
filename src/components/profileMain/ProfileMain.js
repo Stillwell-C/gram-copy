@@ -21,6 +21,8 @@ import useFollowUnfollow from "../../hooks/useFollowUnfollow";
 import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase";
 import PostFeedFromArr from "../postFeedFromArr/PostFeedFromArr";
+import AdditionalOptionsModal from "../additionalOptionsModal/AdditionalOptionsModal";
+import ReportModal from "../reportModal/ReportModal";
 
 const ProfileMain = () => {
   const { userParam } = useParams();
@@ -41,6 +43,9 @@ const ProfileMain = () => {
   const [initialFriend, setInitialFriend] = useState(false);
   const [friendOffset, setFriendOffset] = useState(0);
   const [friendButton, setFriendButton] = useState(null);
+  const [showAdditionalOptionsModal, setShowAdditionalOptionsModal] =
+    useState(false);
+  const [showReportModal, setShowReportModal] = useState(false);
 
   useEffect(() => {
     setPageLoading(true);
@@ -236,6 +241,7 @@ const ProfileMain = () => {
                       <button
                         className='options-button'
                         aria-label='click for more options'
+                        onClick={() => setShowAdditionalOptionsModal(true)}
                       >
                         <img src={threeDots} alt='icon of three dots' />
                       </button>
@@ -352,6 +358,19 @@ const ProfileMain = () => {
       <div className='footer-container'>
         <Footer />
       </div>
+      {showAdditionalOptionsModal && (
+        <AdditionalOptionsModal
+          setShowAdditionalOptionsModal={setShowAdditionalOptionsModal}
+          setShowReportModal={setShowReportModal}
+        />
+      )}
+      {showReportModal && (
+        <ReportModal
+          setShowReportModal={setShowReportModal}
+          reportDistinction={"user"}
+          reportId={pageUserUid}
+        />
+      )}
     </div>
   );
 };
