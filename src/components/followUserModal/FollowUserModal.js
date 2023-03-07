@@ -27,14 +27,18 @@ const FollowUserModal = ({
   useEffect(() => {
     let userData = [];
     const getData = async () => {
-      const currentUserData = await getDoc(
-        doc(db, "userInfo", currentUser.uid)
-      );
+      let currentUserData = null;
+      if (currentUser?.uid) {
+        const currentUserDoc = await getDoc(
+          doc(db, "userInfo", currentUser.uid)
+        );
+        currentUserData = currentUserDoc.data();
+      }
       for (let userUid of userArr) {
         const singleUserData = await getDoc(doc(db, "userInfo", userUid));
-        const currentUserFollowing = currentUserData
-          .data()
-          .following.includes(userUid);
+        const currentUserFollowing = currentUser
+          ? currentUserData.following.includes(userUid)
+          : false;
         userData.push({ ...singleUserData.data(), currentUserFollowing });
       }
       setUserInfoArr(userData);
@@ -44,7 +48,7 @@ const FollowUserModal = ({
   }, [userArr]);
 
   const renderedUsers = userInfoArr.map((userDoc) => (
-    <FollowUserModalUser userDoc={userDoc} />
+    <FollowUserModalUser userDoc={userDoc} key={userDoc.uid} />
   ));
 
   return (
