@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/authContext";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import Footer from "../footer/Footer";
 
@@ -31,6 +31,7 @@ const ProfileMain = () => {
   const getPageInfo = useGetUserInfoFunction();
   const getUserInfo = useGetLoggedInUserInfoFunction();
 
+  const navigate = useNavigate();
   const uploadImg = useUploadProfileImg();
   const { follow: followUser, unfollow: unfollowUser } = useFollowUnfollow();
 
@@ -167,15 +168,31 @@ const ProfileMain = () => {
   };
 
   const handleFollow = () => {
+    if (!currentUser) {
+      navigate("/accounts/login");
+      return;
+    }
     followUser(pageUserUid);
     setIsFriend(true);
     initialFriend ? setFriendOffset(0) : setFriendOffset(1);
   };
 
   const handleUnfollow = () => {
+    if (!currentUser) {
+      navigate("/accounts/login");
+      return;
+    }
     unfollowUser(pageUserUid);
     setIsFriend(false);
     initialFriend ? setFriendOffset(-1) : setFriendOffset(0);
+  };
+
+  const handleMessage = () => {
+    if (!currentUser) {
+      navigate("/accounts/login");
+      return;
+    }
+    navigate("/direct/inbox");
   };
 
   const handleFollowerModal = () => {
@@ -246,6 +263,7 @@ const ProfileMain = () => {
                         className='message-button'
                         aria-label='click to message user'
                         type='button'
+                        onClick={handleMessage}
                       >
                         Message
                       </button>
