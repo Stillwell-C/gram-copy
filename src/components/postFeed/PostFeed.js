@@ -76,6 +76,7 @@ const PostFeed = ({
         <ProfilePostCard
           key={post.id}
           post={post}
+          postType={"post"}
           userLikedPosts={userLikedPosts}
           userSavedPosts={userSavedPosts}
           ref={lastPostRef}
@@ -86,6 +87,7 @@ const PostFeed = ({
       <ProfilePostCard
         key={post.id}
         post={post}
+        postType={"post"}
         userLikedPosts={userLikedPosts}
         userSavedPosts={userSavedPosts}
       />
