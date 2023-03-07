@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import message from "../../assets/message-bubble-svgrepo-com.svg";
 import heart from "../../assets/heart-svgrepo-com.svg";
+import trashIcon from "../../assets/trash-delete-svgrepo-com.svg";
 import "./profilePostCard.scss";
 import useGetUserInfo from "../../hooks/useGetUserInfo";
 import { AuthContext } from "../../context/authContext";
@@ -8,9 +9,11 @@ import useLikePost from "../../hooks/useLikePost";
 import useSavePost from "../../hooks/useSavePost";
 import PhotoModal from "../photoModal/PhotoModal";
 import { useNavigate } from "react-router-dom";
+import { deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const ProfilePostCard = React.forwardRef(
-  ({ post, userLikedPosts, userSavedPosts }, ref) => {
+  ({ post, userLikedPosts, userSavedPosts, postType }, ref) => {
     const { userImgURL } = useGetUserInfo(post.userName, "username");
 
     const navigate = useNavigate();
@@ -20,6 +23,7 @@ const ProfilePostCard = React.forwardRef(
     const [likesOffset, setLikesOffset] = useState(0);
     const [saved, setSaved] = useState(false);
     const [showPhotoModal, setShowPhotoModal] = useState(false);
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
     const { currentUser } = useContext(AuthContext);
     const { likePost, unlikePost } = useLikePost();
@@ -68,6 +72,11 @@ const ProfilePostCard = React.forwardRef(
       setSaved(!saved);
     };
 
+    const handleDelete = async () => {
+      await deleteDoc(doc(db, "userImgs", post.id));
+      showDeleteConfirmation(false);
+    };
+
     const cardContent = (
       <>
         <img
@@ -76,6 +85,17 @@ const ProfilePostCard = React.forwardRef(
           src={post.imgURL}
         />
         <div className='hover-div'>
+          {currentUser?.uid === post.userUid && postType === "post" && (
+            <div className='delete-btn-div'>
+              <button
+                className='delete-btn'
+                aria-label='click to delete this image'
+                onClick={() => setShowDeleteConfirmation(true)}
+              >
+                <img src={trashIcon} alt='trash can icon' />{" "}
+              </button>
+            </div>
+          )}
           <div className='icon-div'>
             <div className='icon-row'>
               <img src={heart} alt='heart icon' />
@@ -91,6 +111,34 @@ const ProfilePostCard = React.forwardRef(
             onClick={() => setShowPhotoModal(true)}
           ></div>
         </div>
+        {showDeleteConfirmation && (
+          <>
+            <div className='delete-confirmation-modal'>
+              <div className='delete-confirmation-body'>
+                <h4>Are you sure you want to delete this image?</h4>
+                <div className='button-div'>
+                  <button
+                    aria-label='click to cancel and not delete this image'
+                    onClick={() => setShowDeleteConfirmation(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    aria-label='click to delete this image'
+                    className='delete'
+                    onClick={handleDelete}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div
+              className='delete-confirmation-overlay'
+              onClick={() => setShowDeleteConfirmation(false)}
+            ></div>
+          </>
+        )}
         {showPhotoModal && (
           <PhotoModal
             setShowPhotoModal={setShowPhotoModal}
