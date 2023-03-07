@@ -13,6 +13,7 @@ import { ref, getDownloadURL } from "firebase/storage";
 import { db, storage, getURL } from "../firebase";
 import useGetUserInfo from "./useGetUserInfo";
 import useGetLoggedInUserInfoFunction from "./useGetLoggedInUserInfoFunction";
+import useGetUserInfoFunction from "./useGetUserInfoFunction";
 
 const useGetUserPosts = (username, pageNum, userQueryInput) => {
   const [loading, setLoading] = useState(true);
@@ -25,7 +26,7 @@ const useGetUserPosts = (username, pageNum, userQueryInput) => {
   // const { userPosts, savedPosts } = useGetUserInfo(username, "username");
   const [userQuery, setUserQuery] = useState([]);
 
-  const getUserInfo = useGetLoggedInUserInfoFunction();
+  const getUserInfo = useGetUserInfoFunction();
 
   useEffect(() => {
     setLoading(true);
