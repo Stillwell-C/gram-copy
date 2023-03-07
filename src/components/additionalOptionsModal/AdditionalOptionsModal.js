@@ -14,14 +14,6 @@ const AdditionalOptionsModal = ({
     <>
       <div className='options-modal-container'>
         <div className='options-modal-body'>
-          <div className='options-modal-header'>
-            <button
-              onClick={() => setShowAdditionalOptionsModal(false)}
-              aria-label='click to close'
-            >
-              &times;
-            </button>
-          </div>
           <div className='select-option-div'>
             <button
               className='report-button'
@@ -29,6 +21,15 @@ const AdditionalOptionsModal = ({
               onClick={handleShowReportModal}
             >
               Report
+            </button>
+          </div>
+          <div className='select-option-div'>
+            <button
+              className='cancel-button'
+              onClick={() => setShowAdditionalOptionsModal(false)}
+              aria-label='click to close'
+            >
+              Cancel
             </button>
           </div>
         </div>
