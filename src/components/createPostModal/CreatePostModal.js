@@ -153,6 +153,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
       imgURL: imgFileUploadURL,
       likedUsers: [],
       savedUsers: [],
+      taggedUsers: [],
       comments: [
         {
           username: currentUser.displayName,
