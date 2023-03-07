@@ -23,6 +23,7 @@ import { db } from "../../firebase";
 import PostFeedFromArr from "../postFeedFromArr/PostFeedFromArr";
 import AdditionalOptionsModal from "../additionalOptionsModal/AdditionalOptionsModal";
 import ReportModal from "../reportModal/ReportModal";
+import FollowUserModal from "../followUserModal/FollowUserModal";
 
 const ProfileMain = () => {
   const { userParam } = useParams();
@@ -46,6 +47,8 @@ const ProfileMain = () => {
   const [showAdditionalOptionsModal, setShowAdditionalOptionsModal] =
     useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
+  const [showFollowModal, setShowFollowModal] = useState(false);
+  const [followModalType, setFollowModalType] = useState(null);
 
   useEffect(() => {
     setPageLoading(true);
@@ -175,6 +178,16 @@ const ProfileMain = () => {
     initialFriend ? setFriendOffset(-1) : setFriendOffset(0);
   };
 
+  const handleFollowerModal = () => {
+    setFollowModalType("followers");
+    setShowFollowModal(true);
+  };
+
+  const handleFollowingModal = () => {
+    setFollowModalType("following");
+    setShowFollowModal(true);
+  };
+
   return (
     <div className='profile-main-container'>
       {!pageLoading && (
@@ -258,7 +271,7 @@ const ProfileMain = () => {
                     {pageInfo.pageUserPosts.length === 1 ? "post" : "posts"}
                   </span>
                 </div>
-                <div>
+                <div className='clickable' onClick={handleFollowerModal}>
                   <span className='user-figure'>
                     {pageInfo.pageFollowers.length + friendOffset}
                   </span>
@@ -267,7 +280,7 @@ const ProfileMain = () => {
                     : "followers"}
                   <span className='category'></span>
                 </div>
-                <div>
+                <div className='clickable' onClick={handleFollowingModal}>
                   <span className='user-figure'>
                     {pageInfo.pageFollowing.length}
                   </span>
@@ -369,6 +382,14 @@ const ProfileMain = () => {
           setShowReportModal={setShowReportModal}
           reportDistinction={"user"}
           reportId={pageUserUid}
+        />
+      )}
+      {showFollowModal && (
+        <FollowUserModal
+          setShowFollowModal={setShowFollowModal}
+          modalType={followModalType}
+          pageFollowers={pageInfo.pageFollowers}
+          pageFollowing={pageInfo.pageFollowing}
         />
       )}
     </div>
