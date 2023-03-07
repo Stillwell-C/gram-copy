@@ -52,7 +52,7 @@ const FollowUserModalUser = ({ userDoc }) => {
   return (
     <div className='individual-user'>
       <div className='individual-user-left'>
-        <Link key={userDoc.uid} to={`/${userDoc.username}`}>
+        <Link to={`/${userDoc.username}`}>
           <div className='profile-picture'>
             <img src={userDoc.userImgURL} alt='user profile' />
           </div>
