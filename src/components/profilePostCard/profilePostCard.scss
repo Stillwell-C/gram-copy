@@ -17,19 +17,29 @@
     display: none;
     background-color: rgba(0, 0, 0, 0.3);
 
-    .delete-btn-div {
-      .delete-btn {
+    .delete-btn-div,
+    .tag-user-btn-div {
+      .delete-btn,
+      .tag-user-btn {
         position: absolute;
-        top: 5px;
-        left: 5px;
         background-color: transparent;
         border: none;
         cursor: pointer;
-        z-index: 15;
+        z-index: 9;
 
         img {
           width: 24px;
         }
+      }
+
+      .delete-btn {
+        top: 5px;
+        left: 5px;
+      }
+
+      .tag-user-btn {
+        top: 5px;
+        right: 5px;
       }
     }
 

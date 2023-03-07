@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import message from "../../assets/message-bubble-svgrepo-com.svg";
 import heart from "../../assets/heart-svgrepo-com.svg";
 import trashIcon from "../../assets/trash-delete-svgrepo-com.svg";
+import tagUserIcon from "../../assets/user-add-svgrepo-com.svg";
 import "./profilePostCard.scss";
 import useGetUserInfo from "../../hooks/useGetUserInfo";
 import { AuthContext } from "../../context/authContext";
@@ -11,6 +12,7 @@ import PhotoModal from "../photoModal/PhotoModal";
 import { useNavigate } from "react-router-dom";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
+import TagUsersModal from "../tagUsersModal/TagUsersModal";
 
 const ProfilePostCard = React.forwardRef(
   ({ post, userLikedPosts, userSavedPosts, postType }, ref) => {
@@ -24,6 +26,7 @@ const ProfilePostCard = React.forwardRef(
     const [saved, setSaved] = useState(false);
     const [showPhotoModal, setShowPhotoModal] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [showTagUsersModal, setShowTagUsersModal] = useState(false);
 
     const { currentUser } = useContext(AuthContext);
     const { likePost, unlikePost } = useLikePost();
@@ -92,7 +95,18 @@ const ProfilePostCard = React.forwardRef(
                 aria-label='click to delete this image'
                 onClick={() => setShowDeleteConfirmation(true)}
               >
-                <img src={trashIcon} alt='trash can icon' />{" "}
+                <img src={trashIcon} alt='trash can icon' />
+              </button>
+            </div>
+          )}
+          {currentUser?.uid === post.userUid && postType === "post" && (
+            <div className='tag-user-btn-div'>
+              <button
+                className='tag-user-btn'
+                aria-label='click to tag a user in this image'
+                onClick={() => setShowTagUsersModal(true)}
+              >
+                <img src={tagUserIcon} alt='tag user icon' />
               </button>
             </div>
           )}
@@ -149,6 +163,12 @@ const ProfilePostCard = React.forwardRef(
             handleLike={handleLike}
             handleSave={handleSave}
             likesOffset={likesOffset}
+          />
+        )}
+        {showTagUsersModal && (
+          <TagUsersModal
+            post={post}
+            setShowTagUsersModal={setShowTagUsersModal}
           />
         )}
       </>
