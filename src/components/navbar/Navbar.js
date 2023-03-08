@@ -108,11 +108,6 @@ const Navbar = () => {
           </Link>
         </div>
         <div className='navbar-row'>
-          <div className='navbar-line'>
-            <img src={compass} alt='explore icon' />
-          </div>
-        </div>
-        <div className='navbar-row'>
           <Link to='/direct/inbox'>
             <div className='navbar-line'>
               <img src={message} alt='message icon' />
@@ -137,6 +132,41 @@ const Navbar = () => {
               <img src={profile} alt='profile icon' />
             </div>
           </Link>
+        </div>
+        <div className='navbar-menu-container'>
+          <div className={displayMenu ? "navbar-menu active" : "navbar-menu"}>
+            <div className='menu-line'>
+              <span>Change appearance</span>
+              <img src={moon} alt='moon icon' />
+            </div>
+            {currentUser ? (
+              <div className='menu-line' onClick={handleLogout}>
+                <span>Log out</span>
+              </div>
+            ) : (
+              <div className='menu-line'>
+                <Link to='/accounts/login'>
+                  <span>Log in</span>
+                </Link>
+              </div>
+            )}
+          </div>
+          <div
+            className={
+              displayMenu
+                ? "navbar-menu-close-field active"
+                : "navbar-menu-close-field"
+            }
+            onClick={() => setDisplayMenu(false)}
+          ></div>
+          <div className='navbar-row'>
+            <div
+              className='navbar-line'
+              onClick={() => setDisplayMenu(!displayMenu)}
+            >
+              <img src={menu} alt='menu icon' />
+            </div>
+          </div>
         </div>
       </nav>
       <nav
