@@ -149,7 +149,10 @@
           font-size: 0.9rem;
           img {
             width: 28px;
+            height: 28px;
             margin-right: 10px;
+            border-radius: 50%;
+            object-fit: cover;
           }
         }
 
@@ -175,7 +178,7 @@
           align-items: center;
           justify-content: flex-end;
           font-size: 12px;
-          color: #c7c7c7;
+          color: #cccccc;
           cursor: pointer;
           position: relative;
 
@@ -200,8 +203,8 @@
         }
 
         .segmented-div {
-          border-top: 1px solid #c7c7c7;
-          border-bottom: 1px solid #c7c7c7;
+          border-top: 1px solid #cccccc;
+          border-bottom: 1px solid #cccccc;
         }
 
         .location-input-div {
@@ -281,11 +284,15 @@
                 gap: 5px;
 
                 .accessibility-img-div {
-                  object-fit: cover;
                   display: flex;
                   align-items: center;
-                  height: 44px;
                   overflow: hidden;
+
+                  img {
+                    height: 44px;
+                    width: 44px;
+                    object-fit: cover;
+                  }
                 }
 
                 input {
@@ -294,7 +301,7 @@
                   margin-right: 15px;
                   border-radius: 0.25rem;
                   outline: none;
-                  border: 1px solid #c7c7c7;
+                  border: 1px solid #cccccc;
                 }
               }
             }
