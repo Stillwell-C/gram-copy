@@ -107,9 +107,11 @@ const Navbar = () => {
           <div className='navbar-top'>
             <div className='navbar-header'>
               <Link to='/'>
+                <img src={logo} alt='Instagram logo' className='text-logo' />
                 <img
-                  src={searchActive ? squareLogo : logo}
+                  src={squareLogo}
                   alt='Instagram logo'
+                  className='image-logo'
                 />
               </Link>
             </div>
