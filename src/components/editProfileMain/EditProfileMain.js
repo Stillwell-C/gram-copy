@@ -27,7 +27,7 @@ const EditProfileMain = () => {
             className={pageDisplay === "edit" ? "active" : ""}
             onClick={handleSetEdit}
           >
-            Edit Profile
+            <span>Edit Profile</span>
           </div>
 
           <div
@@ -35,7 +35,7 @@ const EditProfileMain = () => {
             className={pageDisplay === "password" ? "active" : ""}
             onClick={handleSetPassword}
           >
-            Change Password
+            <span>Change Password</span>
           </div>
         </div>
         <div className='edit-profile-body'>

@@ -1,3 +1,5 @@
+@import "../../breakpoints.scss";
+
 .edit-profile-container {
   width: 100%;
 
@@ -5,8 +7,7 @@
     margin: 30px auto 0;
     display: flex;
     background-color: #fff;
-    //remove later
-    width: 930px;
+    max-width: 930px;
     min-height: 790px;
     border: 1px solid #cccccc;
     border-radius: 0.25rem;
@@ -17,16 +18,49 @@
       display: flex;
       flex-direction: column;
 
+      &:hover {
+        div {
+          transition: width 0.3s ease-in;
+          width: 180px;
+          span {
+            display: block;
+          }
+        }
+      }
+
+      @include small {
+        &:hover {
+          div {
+            width: 236px;
+          }
+        }
+      }
+
       div {
+        transition: width 0.3s ease-in;
         padding: 16px 16px 16px 30px;
-        font-size: 14px;
-        width: 236px;
+        width: 25px;
+        min-height: 50px;
         border-left: 2px solid transparent;
         cursor: pointer;
+        position: relative;
 
         &:hover {
           background-color: #fafafa;
           border-left-color: #cccccc;
+        }
+
+        span {
+          display: none;
+          font-size: 0.9rem;
+
+          @include small {
+            display: block;
+          }
+        }
+
+        @include small {
+          width: 236px;
         }
 
         &.active {
@@ -38,8 +72,13 @@
   }
 
   .edit-profile-body {
-    width: 100%;
-    margin-right: 60px;
+    flex-grow: 1;
+    padding: 0 20px;
+
+    @include small {
+      margin-right: 60px;
+      padding: 0;
+    }
     .user-msg-div {
       display: none;
 
@@ -87,10 +126,13 @@
       .profile-img-div {
         overflow: hidden;
         margin-right: 32px;
-        margin-left: 124px;
         display: flex;
         align-items: center;
         justify-content: center;
+
+        @include small {
+          margin-left: 124px;
+        }
 
         button {
           background-color: transparent;
@@ -126,22 +168,35 @@
 
       .form-row {
         display: flex;
+        flex-direction: column;
         margin: 16px 0;
 
+        @include small {
+          flex-direction: row;
+        }
+
         .form-left {
-          flex: 0 0 194px;
-          padding-left: 32px;
-          padding-right: 32px;
-          text-align: right;
           font-weight: bold;
           font-size: 15px;
           margin-top: 5px;
+          margin-bottom: 5px;
+
+          @include small {
+            flex: 0 0 194px;
+            padding-left: 32px;
+            padding-right: 32px;
+            text-align: right;
+            margin-bottom: 0;
+          }
         }
 
         .form-right {
-          flex-basis: 355px;
           display: flex;
           flex-direction: column;
+
+          @include small {
+            flex-basis: 355px;
+          }
 
           input {
             border: 1px solid #cccccc;
@@ -181,8 +236,11 @@
       }
       .button-div {
         .button-div-right {
-          margin-left: 194px;
           display: flex;
+
+          @include small {
+            margin-left: 194px;
+          }
 
           .submit-button {
             cursor: pointer;
