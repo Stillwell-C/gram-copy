@@ -2,9 +2,15 @@
 
 .chats-page-container {
   width: 100%;
-  height: 100vh;
+  height: calc(100vh - 50px);
   display: flex;
   justify-content: space-between;
+  margin-bottom: 50px;
+
+  @include small {
+    height: 100vh;
+    margin-bottom: 0;
+  }
 
   .chats-main {
     flex: 1;
