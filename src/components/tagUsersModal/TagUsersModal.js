@@ -1,19 +1,24 @@
 import {
+  arrayRemove,
   arrayUnion,
   collection,
   doc,
+  getDoc,
   getDocs,
   query,
   updateDoc,
   where,
 } from "firebase/firestore";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { db } from "../../firebase";
 import "./tagUsersModal.scss";
 
 const TagUsersModal = ({ post, setShowTagUsersModal }) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [showTaggedUsersModal, setShowTaggedUsersModal] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
+  const [taggedUsersArr, setTaggedUsersArr] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
 
   const handleSearch = async (searchInput) => {
@@ -46,6 +51,30 @@ const TagUsersModal = ({ post, setShowTagUsersModal }) => {
     setShowTagUsersModal(false);
   };
 
+  const handleGetTaggedUsers = async () => {
+    setShowTaggedUsersModal(true);
+    const postDoc = await getDoc(doc(db, "userImgs", post.id));
+    const postData = postDoc.data();
+    const userArr = [];
+    for (let user of postData.taggedUsers) {
+      const userDoc = await getDoc(doc(db, "userInfo", user));
+      userArr.push(userDoc.data());
+    }
+    setTaggedUsersArr(userArr);
+  };
+
+  const handleUntagUser = async (userUid) => {
+    await updateDoc(doc(db, "userImgs", post.id), {
+      taggedUsers: arrayRemove(userUid),
+    });
+    await updateDoc(doc(db, "userInfo", userUid), {
+      taggedPosts: arrayRemove(post.id),
+    });
+    setTaggedUsersArr((prevState) =>
+      prevState.filter((user) => user.uid !== userUid)
+    );
+  };
+
   const handleSelectUser = (userData) => {
     setSelectedUser(userData);
   };
@@ -53,12 +82,25 @@ const TagUsersModal = ({ post, setShowTagUsersModal }) => {
   return (
     <>
       <div className='tag-users-modal-container'>
-        <div className='tag-users-modal-body'>
+        <div
+          className='tag-users-modal-body'
+          style={{ display: showTaggedUsersModal ? "none" : "flex" }}
+        >
           <div className='modal-header'>
-            <div style={{ display: selectedUser ? "none" : "flex" }}></div>
+            <div
+              style={{ display: selectedUser ? "none" : "flex" }}
+              className='header-btn-div left'
+            >
+              <button
+                aria-label={`click to see currently tagged users`}
+                onClick={handleGetTaggedUsers}
+              >
+                Tagged users
+              </button>
+            </div>
             <div
               style={{ display: selectedUser ? "flex" : "none" }}
-              className='cancel-div'
+              className='header-btn-div left'
             >
               <button
                 aria-label={`click to close and not tag the user ${selectedUser?.username} in this image`}
@@ -71,7 +113,7 @@ const TagUsersModal = ({ post, setShowTagUsersModal }) => {
               <h2>Tag Users</h2>
             </div>
             <div
-              className='close-div'
+              className='header-btn-div close-div'
               style={{ display: selectedUser ? "none" : "flex" }}
             >
               <button
@@ -83,13 +125,13 @@ const TagUsersModal = ({ post, setShowTagUsersModal }) => {
             </div>
             <div
               style={{ display: selectedUser ? "flex" : "none" }}
-              className='next-div'
+              className='next-div header-btn-div'
             >
               <button
                 aria-label={`click to tag the user ${selectedUser?.username} in this image`}
                 onClick={handleTagUser}
               >
-                Next
+                Tag
               </button>
             </div>
           </div>
@@ -132,6 +174,59 @@ const TagUsersModal = ({ post, setShowTagUsersModal }) => {
                     </div>
                   </div>
                 ))}
+            </div>
+          </div>
+        </div>
+        <div className='check-tagged-users-body'>
+          <div className='modal-header'>
+            <div className='header-btn-div left'>
+              {" "}
+              <button
+                aria-label={`click to close and not tag the user ${selectedUser?.username} in this image`}
+                onClick={() => setShowTaggedUsersModal(false)}
+              >
+                Back
+              </button>
+            </div>
+            <div className='header-text-div'>
+              <h2>Tagged Users</h2>
+            </div>
+            <div className='header-btn-div close-div'>
+              <button
+                onClick={() => setShowTagUsersModal(false)}
+                aria-label='click to close'
+              >
+                &times;
+              </button>
+            </div>
+          </div>
+          <div className='modal-content'>
+            <div className='user-list'>
+              {taggedUsersArr.map((user) => (
+                <div className='individual-user'>
+                  <div className='individual-user-left'>
+                    <Link to={`/${user.username}`}>
+                      <div className='profile-picture'>
+                        <img src={user.userImgURL} alt='user profile' />
+                      </div>
+                    </Link>
+                    <div className='userinfo-div'>
+                      <Link key={user.uid} to={`/${user.username}`}>
+                        <div className='username'>{user.username}</div>
+                      </Link>
+                      <div className='fullname'>{user.fullname}</div>
+                    </div>
+                  </div>
+                  <div className='button-div'>
+                    <button
+                      aria-label={`click to unfollow user ${user.username}`}
+                      onClick={() => handleUntagUser(user.uid)}
+                    >
+                      Untag
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
