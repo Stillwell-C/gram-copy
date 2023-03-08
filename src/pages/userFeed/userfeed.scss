@@ -1,7 +1,14 @@
+@import "../../breakpoints.scss";
+
 .userfeed-container {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 50px;
+
+  @include small {
+    margin-bottom: 0;
+  }
 
   & > * {
     flex: 1;
