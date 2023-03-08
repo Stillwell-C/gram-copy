@@ -1,15 +1,21 @@
+@import "../../breakpoints.scss";
+
 .chats-page-container {
   width: 100%;
   height: 100vh;
   display: flex;
   justify-content: space-between;
 
-  .navbar {
-    width: 245px;
-  }
-
   .chats-main {
     flex: 1;
     height: 100%;
+
+    @include small {
+      margin-left: 75px;
+    }
+
+    @include large {
+      margin-left: 245px;
+    }
   }
 }
