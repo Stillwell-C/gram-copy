@@ -1,14 +1,26 @@
+@import "../../breakpoints.scss";
+
 .edit-profile-page-container {
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 50px);
   display: flex;
   justify-content: space-between;
+  margin-bottom: 50px;
 
-  .navbar {
-    width: 245px;
+  @include small {
+    height: 100vh;
+    margin-bottom: 0;
   }
 
   .edit-main {
     flex: 1;
+
+    @include small {
+      margin-left: 75px;
+    }
+
+    @include large {
+      margin-left: 245px;
+    }
   }
 }
