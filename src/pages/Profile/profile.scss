@@ -1,13 +1,19 @@
+@import "../../breakpoints.scss";
+
 .profile-page-container {
   width: 100%;
   display: flex;
   justify-content: space-between;
 
-  .navbar {
-    width: 245px;
-  }
-
   .profile-main {
     flex: 1;
+
+    @include small {
+      margin-left: 75px;
+    }
+
+    @include large {
+      margin-left: 245px;
+    }
   }
 }
