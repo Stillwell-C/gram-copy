@@ -1,24 +1,92 @@
 @import "../../breakpoints.scss";
 
-.navbar-container {
+.navbar-container-bottom {
+  position: fixed;
+  width: 100vw;
+  height: 50px;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff;
+  z-index: 10;
+  border-top: 1px solid #cccccc;
+
+  @include small {
+    display: none;
+  }
+
+  .navbar-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 4px 0;
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+
+    .navbar-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    a {
+      width: 100%;
+      height: 100%;
+      text-decoration: none;
+      color: black;
+    }
+
+    img {
+      height: 24px;
+      max-width: 24px;
+      transform: scale(1);
+    }
+
+    span {
+      padding-left: 16px;
+    }
+
+    &:hover {
+      background-color: #fafafa;
+      img {
+        transform: scale(1.1);
+        transition: transform 200ms ease-in;
+      }
+    }
+  }
+}
+
+.navbar-container-side {
+  display: none;
   position: fixed;
   height: 100vh;
   border-right: 1px solid #cccccc;
   background-color: #fff;
   z-index: 4;
 
+  @include small {
+    display: block;
+  }
+
   .search-body {
+    display: none;
     width: 0;
     transition: width 0.5s;
+
+    @include small {
+      display: block;
+    }
   }
 
   .navbar-body {
-    // transition: width 0.5s;
-    // width: 245px !important;
     width: 73px !important;
     height: 100%;
     width: 100%;
-    display: flex;
+    // display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
@@ -47,7 +115,7 @@
         a {
           margin: 4px 0;
           padding: 12px;
-          border-radius: 2rem;
+          border-radius: 50%;
           img {
             width: 24px;
           }
@@ -68,6 +136,7 @@
           display: block;
           padding: 25px 12px;
           margin-bottom: 10px;
+          border-radius: 2rem;
 
           a {
             margin: 0;
@@ -100,8 +169,12 @@
         padding: 12px;
         width: 100%;
         height: 100%;
-        border-radius: 2rem;
+        border-radius: 50%;
         cursor: pointer;
+
+        @include large {
+          border-radius: 2rem;
+        }
 
         .navbar-line {
           display: flex;

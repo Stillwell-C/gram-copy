@@ -99,8 +99,48 @@ const Navbar = () => {
 
   return (
     <>
+      <nav className='navbar-container-bottom'>
+        <div className='navbar-row'>
+          <Link to='/'>
+            <div className='navbar-line'>
+              <img src={home} alt='home icon' />
+            </div>
+          </Link>
+        </div>
+        <div className='navbar-row'>
+          <div className='navbar-line'>
+            <img src={compass} alt='explore icon' />
+          </div>
+        </div>
+        <div className='navbar-row'>
+          <Link to='/direct/inbox'>
+            <div className='navbar-line'>
+              <img src={message} alt='message icon' />
+            </div>
+          </Link>
+        </div>
+        <div className='navbar-row'>
+          <div className='navbar-line'>
+            <img src={heart} alt='notifications icon' />
+          </div>
+        </div>
+        <div className='navbar-row' onClick={handleAddPostModal}>
+          <div className='navbar-line'>
+            <img src={add} alt='add post icon' />
+          </div>
+        </div>
+        <div className='navbar-row'>
+          <Link
+            to={currentUser ? `/${currentUser.displayName}` : "/accounts/login"}
+          >
+            <div className='navbar-line'>
+              <img src={profile} alt='profile icon' />
+            </div>
+          </Link>
+        </div>
+      </nav>
       <nav
-        className={`navbar-container ${searchActive && "searchActive"}`}
+        className={`navbar-container-side ${searchActive && "searchActive"}`}
         ref={navbarRef}
       >
         <div className='navbar-body'>
