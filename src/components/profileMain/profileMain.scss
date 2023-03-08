@@ -218,7 +218,11 @@
   .footer-container {
     .footer {
       align-items: center;
-      margin-bottom: 50px;
+      margin-bottom: 75px;
+
+      @include small {
+        margin-bottom: 50px;
+      }
     }
   }
 }
