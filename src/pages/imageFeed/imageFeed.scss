@@ -1,9 +1,16 @@
+@import "../../breakpoints.scss";
+
 .feedContainer {
   min-height: 100vh;
+  margin-top: 60px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-direction: column;
+
+  @include small {
+    margin-top: none;
+  }
 
   .card {
     width: 470px;
