@@ -2,6 +2,11 @@
 
 .edit-profile-container {
   width: 100%;
+  margin-top: 60px;
+
+  @include small {
+    margin-top: none;
+  }
 
   .edit-profile-div {
     margin: 30px auto 0;

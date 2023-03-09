@@ -1,5 +1,6 @@
 import React from "react";
 import EditProfileMain from "../../components/editProfileMain/EditProfileMain";
+import HeaderBar from "../../components/headerBar/HeaderBar";
 import Navbar from "../../components/navbar/Navbar";
 import "./editProfile.scss";
 
@@ -9,6 +10,7 @@ const EditProfile = () => {
     <div className='edit-profile-page-container'>
       <div className='navbar'>
         <Navbar />
+        <HeaderBar />
       </div>
       <div className='edit-main'>
         <EditProfileMain />
