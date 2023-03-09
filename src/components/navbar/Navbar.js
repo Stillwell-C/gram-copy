@@ -20,6 +20,7 @@ import { AuthContext } from "../../context/authContext";
 import { signOut } from "firebase/auth";
 import { auth, db } from "../../firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
+import useSearchForUser from "../../hooks/useSearchForUser";
 
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
@@ -28,6 +29,7 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
+  const userSearch = useSearchForUser();
   const navbarRef = useRef();
 
   const { currentUser } = useContext(AuthContext);
@@ -50,36 +52,12 @@ const Navbar = () => {
 
   const handleSearch = async (searchInput) => {
     setSearchQuery(searchInput);
-    console.log(searchInput);
     if (searchInput > 1) {
       setSearchResults([]);
       return;
     }
-    try {
-      const usernameQuery = await getDocs(
-        query(collection(db, "userInfo"), where("username", "==", searchInput))
-      );
-      const fullnameQuery = await getDocs(
-        query(collection(db, "userInfo"), where("fullname", "==", searchInput))
-      );
-      const usernameArr = usernameQuery.docs;
-      const fullnameArr = fullnameQuery.docs;
-      const combinedArr = [];
-      for (let result of usernameArr) {
-        combinedArr.push(result.data());
-      }
-      for (let result of fullnameArr) {
-        combinedArr.push(result.data());
-      }
-      const uniqueArrFilter = (combinedArr, track = new Set()) =>
-        combinedArr.filter(({ uid }) =>
-          track.has(uid) ? false : track.add(uid)
-        );
-      setSearchResults(uniqueArrFilter(combinedArr));
-      console.log(uniqueArrFilter(combinedArr));
-    } catch (err) {
-      console.log(err.code);
-    }
+    const searchResults = await userSearch(searchInput);
+    setSearchResults(searchResults);
   };
 
   useEffect(() => {
