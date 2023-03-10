@@ -162,6 +162,37 @@ const PhotoModal = ({
     <>
       <div className='photo-modal-container'>
         <div className='photo-modal-body'>
+          <div className='photo-modal-header'>
+            <div className='header-left'>
+              <div className='user-img-div'>
+                <img src={userImgURL} alt='user profile' />
+              </div>
+              <div className='photo-info-div'>
+                <div className='photo-info-top'>
+                  <Link to={`/${post.userName}`}>
+                    <div className='userName'>{post.userName}</div>
+                  </Link>
+                  {currentUser?.displayName !== post.userName && (
+                    <>
+                      <span>•</span>
+                      {picInfoButton}
+                    </>
+                  )}
+                </div>
+                <div className='photo-location'>
+                  {post.location ? post.location : ""}
+                </div>
+              </div>
+              <div className='header-right'>
+                <button
+                  className='optionButton'
+                  onClick={() => setShowAdditionalOptionsModal(true)}
+                >
+                  <img src={threeDots} alt='three dots' />
+                </button>
+              </div>
+            </div>
+          </div>
           <div className='photo-modal-left'>
             <div className='img-container'>
               <img

@@ -1,35 +1,128 @@
+@import "../../breakpoints.scss";
+
 .photo-modal-container {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 15;
-  border-radius: 0 0.25rem 0.25rem 0;
+  border-radius: 0.5rem;
   background-color: #fff;
   min-width: 300px;
   width: 80%;
-  height: 80%;
+  height: auto;
   min-height: 300px;
   overflow: hidden;
   cursor: default;
 
+  @include small {
+    border-radius: 0 0.5rem 0.5rem 0;
+    height: 80%;
+  }
+
   .photo-modal-body {
     display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
+
+    @include small {
+      flex-direction: row;
+    }
+
+    .photo-modal-header {
+      width: 100%;
+      display: flex;
+      .header-left {
+        padding: 14px 4px 14px 16px;
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        .user-img-div {
+          display: flex;
+          align-items: center;
+          margin-right: 1rem;
+          img {
+            height: 32px;
+            width: 32px;
+            border-radius: 50%;
+          }
+        }
+
+        .photo-info-div {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+
+          .photo-info-top {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            a {
+              text-decoration: none;
+              color: black;
+              font-weight: bold;
+              font-size: 0.9rem;
+            }
+
+            button {
+              padding: 0;
+              color: #0095f6;
+              font-weight: bold;
+              font-size: 0.85rem;
+              &:hover {
+                color: #003366;
+              }
+            }
+          }
+
+          .photo-location {
+            font-size: 0.85rem;
+          }
+        }
+
+        .header-right {
+          padding-right: 8px;
+          .optionButton {
+            background-color: transparent;
+            border: none;
+            padding: 8px;
+
+            img {
+              width: 24px;
+              height: 24px;
+            }
+          }
+        }
+      }
+
+      @include small {
+        display: none;
+      }
+    }
 
     .photo-modal-left {
       // overflow: hidden;
       flex: 1.25;
+      background-color: #000;
 
       .img-container {
         overflow: hidden;
         height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         img {
           object-fit: cover;
-          width: 100%;
-          height: 100%;
+          max-width: 100%;
+          max-height: 100%;
+          width: auto;
+          height: auto;
         }
       }
     }
@@ -54,10 +147,14 @@
 
       .photo-modal-right-top {
         padding: 14px 8px 14px 16px;
-        display: flex;
+        display: none;
         align-items: center;
         justify-content: space-between;
         border-bottom: 1px solid #cccccc;
+
+        @include small {
+          display: flex;
+        }
 
         .user-img-div {
           display: flex;
@@ -109,13 +206,17 @@
         flex: 1;
         height: 100%;
         width: 100%;
-        display: flex;
+        display: none;
         flex-direction: column;
         align-items: flex-start;
         justify-content: flex-start;
         padding: 1rem;
         box-sizing: content-box;
         overflow-y: scroll;
+
+        @include small {
+          display: flex;
+        }
 
         .single-comment {
           display: flex;
