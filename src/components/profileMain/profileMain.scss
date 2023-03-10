@@ -11,7 +11,7 @@
   justify-content: space-between;
 
   @include small {
-    margin-top: none;
+    margin-top: 0px;
   }
 
   .profile-content-container {
