@@ -63,6 +63,12 @@ const Navbar = () => {
     setSearchResults(searchResults);
   };
 
+  const handleClearSearch = () => {
+    setSearchQuery("");
+    setSearchResults([]);
+    console.log("called");
+  };
+
   useEffect(() => {
     let handler = (e) => {
       if (
@@ -301,7 +307,7 @@ const Navbar = () => {
               <div className='input-btn-div'>
                 <button
                   aria-label='clear the search box'
-                  onClick={() => setSearchQuery("")}
+                  onClick={handleClearSearch}
                 >
                   <img src={closeCircle} alt='X icon' />
                 </button>
