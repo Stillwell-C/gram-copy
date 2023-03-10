@@ -5,13 +5,15 @@ import { Link } from "react-router-dom";
 import useSearchForUser from "../../hooks/useSearchForUser";
 import closeCircle from "../../assets/close-circle-svgrepo-com.svg";
 
-const HeaderBar = () => {
-  const userSearch = useSearchForUser();
-
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [searchActive, setSearchActive] = useState(false);
-
+const HeaderBar = ({
+  handleSearch,
+  searchActive,
+  setSearchActive,
+  searchQuery,
+  setSearchQuery,
+  setSearchResults,
+  searchResults,
+}) => {
   const headerbarSearchRef = useRef();
   const headerbarResultsRef = useRef();
 
@@ -19,16 +21,6 @@ const HeaderBar = () => {
     setSearchQuery("");
     setSearchResults([]);
     setSearchActive(false);
-  };
-
-  const handleSearch = async (searchInput) => {
-    setSearchQuery(searchInput);
-    if (searchInput > 1) {
-      setSearchResults([]);
-      return;
-    }
-    const searchResults = await userSearch(searchInput);
-    setSearchResults(searchResults);
   };
 
   useEffect(() => {
@@ -87,7 +79,7 @@ const HeaderBar = () => {
             className={`search-results-container ${searchActive && "active"}`}
             ref={headerbarResultsRef}
           >
-            {searchResults.length > 0 &&
+            {searchResults?.length > 0 &&
               searchResults.map((doc) => (
                 <Link key={doc.uid} to={`/${doc.username}`}>
                   <div className='search-result'>
