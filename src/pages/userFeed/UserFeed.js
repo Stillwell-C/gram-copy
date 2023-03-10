@@ -8,7 +8,6 @@ const UserFeed = () => {
   return (
     <div className='userfeed-container'>
       <div>
-        <HeaderBar />
         <Navbar />
       </div>
       <div>

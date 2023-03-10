@@ -10,7 +10,6 @@ const EditProfile = () => {
     <div className='edit-profile-page-container'>
       <div className='navbar'>
         <Navbar />
-        <HeaderBar />
       </div>
       <div className='edit-main'>
         <EditProfileMain />

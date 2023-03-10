@@ -8,7 +8,6 @@ const Chats = () => {
   return (
     <div className='chats-page-container'>
       <div className='navbar'>
-        <HeaderBar />
         <Navbar />
       </div>
       <div className='chats-main'>
