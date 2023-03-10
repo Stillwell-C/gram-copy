@@ -1,6 +1,6 @@
 .post-card-container {
   aspect-ratio: 1 / 1;
-  max-width: 293px;
+  max-width: min(293px, 30%);
   // min-width: 196px;
   // height: 293px;
   flex: 1 1 30%;
