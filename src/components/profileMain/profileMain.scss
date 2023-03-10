@@ -22,13 +22,20 @@
 
     .profile-top {
       display: flex;
-      padding: 30px 20px 0;
-      margin-bottom: 40px;
+      margin: 16px;
+
+      @include small {
+        padding: 30px 20px 0;
+        margin-bottom: 40px;
+      }
 
       .profile-img-div {
-        flex-grow: 1;
         overflow: hidden;
         margin-right: 30px;
+
+        @include small {
+          flex-grow: 1;
+        }
 
         button {
           background-color: transparent;
@@ -36,10 +43,15 @@
           cursor: pointer;
         }
         img {
-          width: 150px;
-          height: 150px;
+          width: 77px;
+          height: 77px;
           border-radius: 50%;
           object-fit: cover;
+
+          @include small {
+            width: 150px;
+            height: 150px;
+          }
         }
 
         input {
@@ -52,84 +64,101 @@
 
         .user-info-top {
           display: flex;
-          align-items: center;
-          justify-content: flex-start;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
           gap: 15px;
-          margin-bottom: 20px;
+          margin-bottom: 24px;
+
+          @include small {
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 20px;
+          }
 
           .user-info-username {
             font-size: 20px;
             font-weight: 400;
           }
 
-          .edit-profile-btn {
-            padding: 7px 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 0.5rem;
-            background-color: #efefef;
-            cursor: pointer;
-
-            &:hover {
-              background-color: #cccccc;
-            }
-          }
-
-          .user-settings-btn {
-            cursor: pointer;
+          .user-info-buttons {
             display: flex;
             align-items: center;
-            background-color: transparent;
-            border: none;
-          }
+            justify-content: flex-start;
+            gap: 15px;
+            .edit-profile-btn {
+              padding: 7px 16px;
+              font-weight: bold;
+              border: none;
+              border-radius: 0.5rem;
+              background-color: #efefef;
+              cursor: pointer;
 
-          .follow-button {
-            cursor: pointer;
-            background-color: #0095f6;
-            padding: 7px 16px;
-            color: #fff;
-            font-weight: bold;
-            border: none;
-            border-radius: 0.5rem;
-
-            &:hover {
-              background-color: #1877f2;
+              &:hover {
+                background-color: #cccccc;
+              }
             }
-          }
 
-          .message-button {
-            cursor: pointer;
-            background-color: #efefef;
-            color: #000;
-            font-weight: bold;
-            padding: 7px 16px;
-            border: none;
-            border-radius: 0.5rem;
-
-            &:hover {
-              background-color: #cccccc;
+            .user-settings-btn {
+              cursor: pointer;
+              display: flex;
+              align-items: center;
+              background-color: transparent;
+              border: none;
             }
-          }
 
-          .options-button {
-            cursor: pointer;
-            padding: 8px;
-            border: none;
-            background-color: transparent;
+            .follow-button {
+              cursor: pointer;
+              background-color: #0095f6;
+              padding: 7px 16px;
+              color: #fff;
+              font-weight: bold;
+              border: none;
+              border-radius: 0.5rem;
 
-            img {
-              width: 24px;
+              &:hover {
+                background-color: #1877f2;
+              }
+            }
+
+            .message-button {
+              cursor: pointer;
+              background-color: #efefef;
+              color: #000;
+              font-weight: bold;
+              padding: 7px 16px;
+              border: none;
+              border-radius: 0.5rem;
+
+              &:hover {
+                background-color: #cccccc;
+              }
+            }
+
+            .options-button {
+              cursor: pointer;
+              padding: 8px;
+              border: none;
+              background-color: transparent;
+
+              img {
+                width: 24px;
+              }
             }
           }
         }
 
         .user-info-middle {
-          display: flex;
+          display: none;
           align-items: center;
           justify-content: flex-start;
           gap: 40px;
           margin-bottom: 20px;
 
+          @include small {
+            display: flex;
+          }
           .user-figure {
             font-weight: bold;
             margin-right: 5px;
@@ -142,6 +171,8 @@
 
         .user-info-bottom {
           font-size: 14px;
+          padding: 0 16px 21px;
+          margin-left: -120px;
           .user-fullname {
             font-weight: bold;
           }
