@@ -373,9 +373,12 @@
   }
 
   &.searchActive {
-    display: flex;
+    display: none;
     border-radius: 0 16px 16px 0;
     overflow: hidden;
+    @include small {
+      display: flex;
+    }
 
     .navbar-body {
       width: 73px !important;

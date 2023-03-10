@@ -22,6 +22,8 @@ import { auth, db } from "../../firebase";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import useSearchForUser from "../../hooks/useSearchForUser";
 
+import HeaderBar from "./../headerBar/HeaderBar";
+
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
   const [displayMenu, setDisplayMenu] = useState(false);
@@ -77,6 +79,15 @@ const Navbar = () => {
 
   return (
     <>
+      <HeaderBar
+        handleSearch={handleSearch}
+        searchActive={searchActive}
+        setSearchActive={setSearchActive}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        setSearchResults={setSearchResults}
+        searchResults={searchResults}
+      />
       <nav className='navbar-container-bottom'>
         <div className='navbar-row'>
           <Link to='/'>
