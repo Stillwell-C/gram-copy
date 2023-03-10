@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import threeDots from "../../assets/three-dots-line-svgrepo-com.svg";
 import addCommentIcon from "../../assets/add-circle-svgrepo-com.svg";
@@ -46,6 +46,7 @@ const PhotoModal = ({
   const getUserInfo = useGetLoggedInUserInfoFunction();
   const addComment = useAddComment();
   const navigate = useNavigate();
+  const commentRef = useRef(null);
   const { follow: followUser, unfollow: unfollowUser } = useFollowUnfollow();
 
   useEffect(() => {
@@ -158,6 +159,10 @@ const PhotoModal = ({
     setIsFriend(false);
   };
 
+  const handleCommentClick = () => {
+    commentRef.current.focus();
+  };
+
   return (
     <>
       <div className='photo-modal-container'>
@@ -259,7 +264,10 @@ const PhotoModal = ({
                       alt='heart'
                     />
                   </button>
-                  <button className='commentButton'>
+                  <button
+                    className='commentButton'
+                    onClick={() => commentRef.current.focus()}
+                  >
                     <img src={commentBubble} alt='comment bubble' />
                   </button>
                   <button className='messageButton'>
@@ -301,6 +309,7 @@ const PhotoModal = ({
                         placeholder='Add a comment...'
                         onChange={(e) => setComment(e.target.value)}
                         value={comment}
+                        ref={commentRef}
                       />
                     </label>
                   </div>
