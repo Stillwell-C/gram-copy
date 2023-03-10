@@ -238,7 +238,7 @@ const ProfileMain = () => {
               <div className='user-info-top'>
                 <div className='user-info-username'>{userParam}</div>
                 {userParam === currentUser?.displayName ? (
-                  <>
+                  <div className='user-info-buttons'>
                     <div className='edit-profile'>
                       <Link
                         to='/accounts/edit'
@@ -254,9 +254,9 @@ const ProfileMain = () => {
                         <img src={sprocket} alt='cog wheel' />
                       </button>
                     </div>
-                  </>
+                  </div>
                 ) : (
-                  <>
+                  <div className='user-info-buttons'>
                     <div className='follow-div'>{friendButton}</div>
                     <div className='message-div'>
                       <button
@@ -277,7 +277,7 @@ const ProfileMain = () => {
                         <img src={threeDots} alt='icon of three dots' />
                       </button>
                     </div>
-                  </>
+                  </div>
                 )}
               </div>
               <div className='user-info-middle'>
