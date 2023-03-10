@@ -33,6 +33,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const userSearch = useSearchForUser();
   const navbarRef = useRef();
+  const headerbarRef = useRef();
 
   const { currentUser } = useContext(AuthContext);
 
@@ -64,7 +65,10 @@ const Navbar = () => {
 
   useEffect(() => {
     let handler = (e) => {
-      if (navbarRef.current.contains(e.target)) {
+      if (
+        navbarRef.current.contains(e.target) ||
+        headerbarRef.current.contains(e.target)
+      ) {
         return;
       }
       setSearchActive(false);
@@ -87,6 +91,7 @@ const Navbar = () => {
         setSearchQuery={setSearchQuery}
         setSearchResults={setSearchResults}
         searchResults={searchResults}
+        ref={headerbarRef}
       />
       <nav className='navbar-container-bottom'>
         <div className='navbar-row'>
