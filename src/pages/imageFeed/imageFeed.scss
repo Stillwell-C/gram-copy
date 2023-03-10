@@ -9,7 +9,7 @@
   flex-direction: column;
 
   @include small {
-    margin-top: none;
+    margin-top: 0px;
   }
 
   .card {
