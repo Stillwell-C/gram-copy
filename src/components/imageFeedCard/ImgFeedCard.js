@@ -112,7 +112,7 @@ const ImgFeedCard = React.forwardRef(
     };
 
     const imgContent = (
-      <>
+      <article>
         <div className='card-top'>
           <Link to={`/${post.userName}`} className='photo-link'>
             <img className='userImg' src={pageImgURL} alt='user profile' />
@@ -219,7 +219,14 @@ const ImgFeedCard = React.forwardRef(
                 </label>
               </div>
               <div className='input-right'>
-                <button type='submit'>Post</button>
+                <button
+                  type='submit'
+                  className={`${comment.length < 1 && "disabled"}`}
+                  disabled={comment.length < 1 ? true : false}
+                  aria-disabled={comment.length < 1 ? "true" : "false"}
+                >
+                  Post
+                </button>
               </div>
             </form>
           </div>
@@ -249,7 +256,7 @@ const ImgFeedCard = React.forwardRef(
             reportId={post.id}
           />
         )}
-      </>
+      </article>
     );
 
     const imgCard = ref ? (
