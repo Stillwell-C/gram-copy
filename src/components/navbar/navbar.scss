@@ -81,19 +81,30 @@
       z-index: 5;
 
       .menu-line {
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
         padding: 10px;
         border-bottom: 1px solid #dbdbdb;
         background-color: #fff;
 
+        button {
+          cursor: pointer;
+          background-color: transparent;
+          width: 100%;
+          height: 100%;
+          border: none;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
         a {
+          cursor: pointer;
           width: 100%;
           height: 100%;
           text-decoration: none;
           color: black;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
         }
 
         img {
@@ -318,19 +329,30 @@
         z-index: 5;
 
         .menu-line {
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
           padding: 10px;
           border-bottom: 1px solid #dbdbdb;
           background-color: #fff;
 
+          button {
+            cursor: pointer;
+            background-color: transparent;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+
           a {
+            cursor: pointer;
             width: 100%;
             height: 100%;
             text-decoration: none;
             color: black;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
           }
 
           img {

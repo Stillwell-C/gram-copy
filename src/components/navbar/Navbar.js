@@ -115,14 +115,18 @@ const Navbar = () => {
           </Link>
         </div>
         <div className='navbar-row'>
-          <div className='navbar-line'>
-            <img src={heart} alt='notifications icon' />
-          </div>
+          <Link to='#'>
+            <div className='navbar-line'>
+              <img src={heart} alt='notifications icon' />
+            </div>
+          </Link>
         </div>
         <div className='navbar-row' onClick={handleAddPostModal}>
-          <div className='navbar-line'>
-            <img src={add} alt='add post icon' />
-          </div>
+          <Link to='#'>
+            <div className='navbar-line'>
+              <img src={add} alt='add post icon' />
+            </div>
+          </Link>
         </div>
         <div className='navbar-row'>
           <Link
@@ -136,20 +140,18 @@ const Navbar = () => {
         <div className='navbar-menu-container'>
           <div className={displayMenu ? "navbar-menu active" : "navbar-menu"}>
             <div className='menu-line'>
-              <span>Change appearance</span>
-              <img src={moon} alt='moon icon' />
+              <button aria-label='click to change to dark mode'>
+                <span>Change appearance</span>
+                <img src={moon} alt='' aria-hidden='true' />
+              </button>
             </div>
-            {currentUser ? (
-              <div className='menu-line' onClick={handleLogout}>
-                <span>Log out</span>
-              </div>
-            ) : (
-              <div className='menu-line'>
-                <Link to='/accounts/login'>
-                  <span>Log in</span>
-                </Link>
-              </div>
-            )}
+            <div className='menu-line'>
+              {currentUser ? (
+                <button onClick={handleLogout}>Log out</button>
+              ) : (
+                <Link to='/accounts/login'>Log in</Link>
+              )}
+            </div>
           </div>
           <div
             className={
@@ -194,21 +196,25 @@ const Navbar = () => {
               </Link>
             </div>
             <div className='navbar-row'>
-              <div
-                className='navbar-line'
-                onClick={() => {
-                  setSearchActive(!searchActive);
-                }}
-              >
-                <img src={search} alt='search icon' />
-                <span>Search</span>
-              </div>
+              <Link to='#'>
+                <div
+                  className='navbar-line'
+                  onClick={() => {
+                    setSearchActive(!searchActive);
+                  }}
+                >
+                  <img src={search} alt='search icon' />
+                  <span>Search</span>
+                </div>
+              </Link>
             </div>
             <div className='navbar-row'>
-              <div className='navbar-line'>
-                <img src={compass} alt='explore icon' />
-                <span>Explore</span>
-              </div>
+              <Link to='#'>
+                <div className='navbar-line'>
+                  <img src={compass} alt='explore icon' />
+                  <span>Explore</span>
+                </div>
+              </Link>
             </div>
             <div className='navbar-row'>
               <Link to='/direct/inbox'>
@@ -219,16 +225,20 @@ const Navbar = () => {
               </Link>
             </div>
             <div className='navbar-row'>
-              <div className='navbar-line'>
-                <img src={heart} alt='notifications icon' />
-                <span>Notifications</span>
-              </div>
+              <Link to='#'>
+                <div className='navbar-line'>
+                  <img src={heart} alt='notifications icon' />
+                  <span>Notifications</span>
+                </div>
+              </Link>
             </div>
             <div className='navbar-row' onClick={handleAddPostModal}>
-              <div className='navbar-line'>
-                <img src={add} alt='add post icon' />
-                <span>Create</span>
-              </div>
+              <Link to='#'>
+                <div className='navbar-line'>
+                  <img src={add} alt='add post icon' />
+                  <span>Create</span>
+                </div>
+              </Link>
             </div>
             <div className='navbar-row'>
               <Link
@@ -248,20 +258,18 @@ const Navbar = () => {
           <div className='navbar-bottom'>
             <div className={displayMenu ? "navbar-menu active" : "navbar-menu"}>
               <div className='menu-line'>
-                <span>Change appearance</span>
-                <img src={moon} alt='moon icon' />
+                <button aria-label='click to change to dark mode'>
+                  <span>Change appearance</span>
+                  <img src={moon} alt='' aria-hidden='true' />
+                </button>
               </div>
-              {currentUser ? (
-                <div className='menu-line' onClick={handleLogout}>
-                  <span>Log out</span>
-                </div>
-              ) : (
-                <div className='menu-line'>
-                  <Link to='/accounts/login'>
-                    <span>Log in</span>
-                  </Link>
-                </div>
-              )}
+              <div className='menu-line'>
+                {currentUser ? (
+                  <button onClick={handleLogout}>Log out</button>
+                ) : (
+                  <Link to='/accounts/login'>Log in</Link>
+                )}
+              </div>
             </div>
             <div
               className={
@@ -277,7 +285,7 @@ const Navbar = () => {
                 onClick={() => setDisplayMenu(!displayMenu)}
               >
                 <img src={menu} alt='menu icon' />
-                <span>Menu</span>
+                <span>More</span>
               </div>
             </div>
           </div>
