@@ -94,6 +94,7 @@ const TagUsersModal = ({ post, setShowTagUsersModal }) => {
               <button
                 aria-label={`click to see currently tagged users`}
                 onClick={handleGetTaggedUsers}
+                type='button'
               >
                 Tagged users
               </button>
@@ -182,7 +183,7 @@ const TagUsersModal = ({ post, setShowTagUsersModal }) => {
             <div className='header-btn-div left'>
               {" "}
               <button
-                aria-label={`click to close and not tag the user ${selectedUser?.username} in this image`}
+                aria-label={`click to return to previous screen`}
                 onClick={() => setShowTaggedUsersModal(false)}
               >
                 Back
@@ -205,13 +206,20 @@ const TagUsersModal = ({ post, setShowTagUsersModal }) => {
               {taggedUsersArr.map((user) => (
                 <div className='individual-user'>
                   <div className='individual-user-left'>
-                    <Link to={`/${user.username}`}>
+                    <Link
+                      to={`/${user.username}`}
+                      aria-label={`click to move to ${user.username}'s profile`}
+                    >
                       <div className='profile-picture'>
                         <img src={user.userImgURL} alt='user profile' />
                       </div>
                     </Link>
                     <div className='userinfo-div'>
-                      <Link key={user.uid} to={`/${user.username}`}>
+                      <Link
+                        key={user.uid}
+                        to={`/${user.username}`}
+                        aria-label={`click to move to ${user.username}'s profile`}
+                      >
                         <div className='username'>{user.username}</div>
                       </Link>
                       <div className='fullname'>{user.fullname}</div>
@@ -219,10 +227,10 @@ const TagUsersModal = ({ post, setShowTagUsersModal }) => {
                   </div>
                   <div className='button-div'>
                     <button
-                      aria-label={`click to unfollow user ${user.username}`}
+                      aria-label={`click to remove ${user.username} tag from image`}
                       onClick={() => handleUntagUser(user.uid)}
                     >
-                      Untag
+                      Remove
                     </button>
                   </div>
                 </div>
