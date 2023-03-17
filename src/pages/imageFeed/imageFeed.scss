@@ -193,6 +193,11 @@
             button {
               color: #0095f6;
               font-weight: bold;
+
+              &.disabled {
+                color: #b3d7ff;
+                cursor: default;
+              }
             }
           }
         }
