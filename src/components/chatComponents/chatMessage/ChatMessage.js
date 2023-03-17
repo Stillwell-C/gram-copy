@@ -63,9 +63,13 @@ const ChatMessage = ({ message, time }) => {
           <div className='user-img-div'>
             <Link
               to={`/${userData.user.displayName}`}
-              aria-label="click to go to user's profile"
+              aria-label="move to user's profile"
             >
-              <img src={userData.user.photoURL} alt='user profile' />
+              <img
+                src={userData.user.photoURL}
+                alt='user profile'
+                aria-hidden='true'
+              />
             </Link>
           </div>
         )}
