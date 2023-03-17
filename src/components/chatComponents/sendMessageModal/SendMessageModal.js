@@ -158,7 +158,7 @@ const SendMessageModal = ({ setShowSendMessageModal }) => {
           <div className='header-left'>
             <button
               onClick={() => setShowSendMessageModal(false)}
-              aria-label='click to close new message modal'
+              aria-label='click to close'
             >
               &times;
             </button>
@@ -168,8 +168,9 @@ const SendMessageModal = ({ setShowSendMessageModal }) => {
           </div>
           <div className='header-right'>
             <button
-              aria-label='click to create a new chat with your selected user'
+              aria-label='click to create a new chat with the selected user'
               disabled={selectedResult === null}
+              aria-disabled={selectedResult === null}
               className={`${selectedResult !== null && "active"}`}
               onClick={handleStartNewChat}
             >
