@@ -98,46 +98,72 @@ const Navbar = () => {
         setSearchResults={setSearchResults}
         searchResults={searchResults}
         ref={headerbarRef}
+        aria-label='top navigation bar'
       />
-      <nav className='navbar-container-bottom'>
+      <nav
+        className='navbar-container-bottom'
+        aria-label='bottom navigation bar'
+      >
         <div className='navbar-row'>
-          <Link to='/'>
+          <Link to='/' aria-label='move to home screen'>
             <div className='navbar-line'>
-              <img src={home} alt='home icon' />
+              <img src={home} alt='' aria-hidden='true' />
             </div>
           </Link>
         </div>
         <div className='navbar-row'>
-          <Link to='/direct/inbox'>
+          <Link to='/direct/inbox' aria-label='move to home screen'>
             <div className='navbar-line'>
-              <img src={message} alt='message icon' />
+              <img src={message} alt='' aria-hidden='true' />
             </div>
           </Link>
         </div>
         <div className='navbar-row'>
-          <Link to='#'>
+          <Link to='#' aria-label='see notifications'>
             <div className='navbar-line'>
-              <img src={heart} alt='notifications icon' />
+              <img src={heart} alt='' aria-hidden='true' />
             </div>
           </Link>
         </div>
         <div className='navbar-row' onClick={handleAddPostModal}>
-          <Link to='#'>
+          <Link to='#' aria-label='create new post'>
             <div className='navbar-line'>
-              <img src={add} alt='add post icon' />
+              <img src={add} alt='' aria-hidden='true' />
             </div>
           </Link>
         </div>
         <div className='navbar-row'>
           <Link
             to={currentUser ? `/${currentUser.displayName}` : "/accounts/login"}
+            aria-label={`${
+              currentUser ? "move to profile" : "move to login page"
+            }`}
           >
             <div className='navbar-line'>
-              <img src={profile} alt='profile icon' />
+              <img src={profile} alt='' aria-hidden='true' />
             </div>
           </Link>
         </div>
-        <div className='navbar-menu-container'>
+        <div className='navbar-row'>
+          <Link
+            to='#'
+            aria-label='click to see more options'
+            aria-expanded={displayMenu ? "true" : "false"}
+            aria-controls='small-navbar-menu-content'
+          >
+            <div
+              className='navbar-line'
+              onClick={() => setDisplayMenu(!displayMenu)}
+            >
+              <img src={menu} alt='' aria-hidden='true' />
+            </div>
+          </Link>
+        </div>
+        <div
+          className='navbar-menu-container'
+          id='small-navbar-menu-content'
+          aria-hidden={!displayMenu ? "true" : "false"}
+        >
           <div className={displayMenu ? "navbar-menu active" : "navbar-menu"}>
             <div className='menu-line'>
               <button aria-label='click to change to dark mode'>
@@ -161,25 +187,23 @@ const Navbar = () => {
             }
             onClick={() => setDisplayMenu(false)}
           ></div>
-          <div className='navbar-row'>
-            <div
-              className='navbar-line'
-              onClick={() => setDisplayMenu(!displayMenu)}
-            >
-              <img src={menu} alt='menu icon' />
-            </div>
-          </div>
         </div>
       </nav>
       <nav
         className={`navbar-container-side ${searchActive && "searchActive"}`}
         ref={navbarRef}
+        aria-label='main navigation bar'
       >
         <div className='navbar-body'>
           <div className='navbar-top'>
             <div className='navbar-header'>
               <Link to='/'>
-                <img src={logo} alt='Instagram logo' className='text-logo' />
+                <img
+                  src={logo}
+                  alt=''
+                  aria-hidden='true'
+                  className='text-logo'
+                />
                 <img
                   src={squareLogo}
                   alt='Instagram logo'
@@ -190,7 +214,7 @@ const Navbar = () => {
             <div className='navbar-row'>
               <Link to='/'>
                 <div className='navbar-line'>
-                  <img src={home} alt='home icon' />
+                  <img src={home} alt='' aria-hidden='true' />
                   <span>Home</span>
                 </div>
               </Link>
@@ -203,7 +227,7 @@ const Navbar = () => {
                     setSearchActive(!searchActive);
                   }}
                 >
-                  <img src={search} alt='search icon' />
+                  <img src={search} alt='' aria-hidden='true' />
                   <span>Search</span>
                 </div>
               </Link>
@@ -211,7 +235,7 @@ const Navbar = () => {
             <div className='navbar-row'>
               <Link to='#'>
                 <div className='navbar-line'>
-                  <img src={compass} alt='explore icon' />
+                  <img src={compass} alt='' aria-hidden='true' />
                   <span>Explore</span>
                 </div>
               </Link>
@@ -219,7 +243,7 @@ const Navbar = () => {
             <div className='navbar-row'>
               <Link to='/direct/inbox'>
                 <div className='navbar-line'>
-                  <img src={message} alt='message icon' />
+                  <img src={message} alt='' aria-hidden='true' />
                   <span>Messages</span>
                 </div>
               </Link>
@@ -227,7 +251,7 @@ const Navbar = () => {
             <div className='navbar-row'>
               <Link to='#'>
                 <div className='navbar-line'>
-                  <img src={heart} alt='notifications icon' />
+                  <img src={heart} alt='' aria-hidden='true' />
                   <span>Notifications</span>
                 </div>
               </Link>
@@ -235,7 +259,7 @@ const Navbar = () => {
             <div className='navbar-row' onClick={handleAddPostModal}>
               <Link to='#'>
                 <div className='navbar-line'>
-                  <img src={add} alt='add post icon' />
+                  <img src={add} alt='' aria-hidden='true' />
                   <span>Create</span>
                 </div>
               </Link>
@@ -249,14 +273,34 @@ const Navbar = () => {
                 }
               >
                 <div className='navbar-line'>
-                  <img src={profile} alt='profile icon' />
+                  <img src={profile} alt='' aria-hidden='true' />
                   <span>Profile</span>
                 </div>
               </Link>
             </div>
           </div>
           <div className='navbar-bottom'>
-            <div className={displayMenu ? "navbar-menu active" : "navbar-menu"}>
+            <div className='navbar-row'>
+              <Link
+                to='#'
+                aria-label='click to see more options'
+                aria-expanded={displayMenu ? "true" : "false"}
+                aria-controls='large-navbar-menu-content'
+              >
+                <div
+                  className='navbar-line'
+                  onClick={() => setDisplayMenu(!displayMenu)}
+                >
+                  <img src={menu} alt='menu icon' />
+                  <span>More</span>
+                </div>
+              </Link>
+            </div>
+            <div
+              id='large-navbar-menu-content'
+              className={displayMenu ? "navbar-menu active" : "navbar-menu"}
+              aria-hidden={!displayMenu ? "true" : "false"}
+            >
               <div className='menu-line'>
                 <button aria-label='click to change to dark mode'>
                   <span>Change appearance</span>
@@ -279,15 +323,6 @@ const Navbar = () => {
               }
               onClick={() => setDisplayMenu(false)}
             ></div>
-            <div className='navbar-row'>
-              <div
-                className='navbar-line'
-                onClick={() => setDisplayMenu(!displayMenu)}
-              >
-                <img src={menu} alt='menu icon' />
-                <span>More</span>
-              </div>
-            </div>
           </div>
         </div>
         <div className='search-body'>
@@ -317,7 +352,7 @@ const Navbar = () => {
                   aria-label='clear the search box'
                   onClick={handleClearSearch}
                 >
-                  <img src={closeCircle} alt='X icon' />
+                  <img src={closeCircle} alt='' aria-hidden='true' />
                 </button>
               </div>
             </div>
@@ -325,7 +360,11 @@ const Navbar = () => {
           <div className='search-bottom'>
             {searchResults.length > 0 &&
               searchResults.map((doc) => (
-                <Link key={doc.uid} to={`/${doc.username}`}>
+                <Link
+                  key={doc.uid}
+                  to={`/${doc.username}`}
+                  aria-label={`move to ${doc.username}'s profile`}
+                >
                   <div className='search-result'>
                     <div className='profile-picture'>
                       <img src={doc.userImgURL} alt='user profile' />
