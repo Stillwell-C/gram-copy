@@ -30,7 +30,7 @@ const FollowUserModalUser = ({ userDoc }) => {
     setFollowingButton(
       <button
         className='modal-follow-button unfollow'
-        aria-label={`click to follow user`}
+        aria-label={`click to unfollow user`}
         type='button'
         onClick={handleUnfollow}
       >
