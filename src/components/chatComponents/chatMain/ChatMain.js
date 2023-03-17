@@ -29,7 +29,7 @@ const ChatMain = () => {
   }, [userData]);
 
   return (
-    <div className='chat-main-container'>
+    <section className='chat-main-container'>
       <div className='chat-main-body'>
         <div className='chat-main-left'>
           <div className='chat-left-top'>
@@ -56,7 +56,7 @@ const ChatMain = () => {
       {showSendMessageModal && (
         <SendMessageModal setShowSendMessageModal={setShowSendMessageModal} />
       )}
-    </div>
+    </section>
   );
 };
 
