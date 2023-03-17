@@ -43,18 +43,19 @@ const ChatListChat = ({ chat }) => {
   };
 
   return (
-    <div
+    <button
       className={`individual-chat ${
         userData.user.uid === chat[1].userInfo.uid && "active"
       }`}
       onClick={handleSelect}
+      aria-label={`click to open chat with ${chat[1].userInfo.displayName}`}
     >
       <img src={imgURL} alt='user profile' />
       <div className='chat-info'>
         <span className='username'>{chat[1].userInfo.displayName}</span>
         <span className='last-message'>{lastMsg}</span>
       </div>
-    </div>
+    </button>
   );
 };
 
