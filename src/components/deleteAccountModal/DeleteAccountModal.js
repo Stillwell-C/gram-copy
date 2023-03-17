@@ -100,7 +100,7 @@ const DeleteAccountModal = ({ setDisplayDeleteModal }) => {
       <div className='delete-account-modal-container'>
         <div className='delete-account-modal'>
           <div className='modal-header'>
-            <h1>Delete your account</h1>
+            <h2>Delete your account</h2>
           </div>
           <div className='modal-body'>
             <div
@@ -113,9 +113,9 @@ const DeleteAccountModal = ({ setDisplayDeleteModal }) => {
               <div className='error-msg'>{errorMsg}</div>
               <div className='confirmation-msg'>{confirmationMsg}</div>
             </div>
-            <h2 className='modal-body-header'>
+            <h3 className='modal-body-header'>
               Are you sure you want to delete your account?
-            </h2>
+            </h3>
             <div className='modal-confirmation'>
               <form onSubmit={deleteAccount}>
                 <span className='larger-text'>We're sad to see you go.</span>
