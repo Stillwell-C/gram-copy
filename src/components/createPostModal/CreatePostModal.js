@@ -189,12 +189,14 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
         <div className='modal-container initial'>
           <div className='modal-header'>
             <div className={imgFileUpload ? "" : "hidden"}></div>
-            <div>Create new post</div>
+            <h2>Create new post</h2>
             <div
               className={imgFileUpload ? "button-div" : "button-div hidden"}
               onClick={() => setInitial(false)}
             >
-              <button>Next</button>
+              <button aria-label='select image and proceed to next step'>
+                Next
+              </button>
             </div>
           </div>
           <div className='modal-body droparea'>
@@ -216,6 +218,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
                   id='initial-file-upload-label'
                   className={dragActive ? "drag-active" : ""}
                   htmlFor='intial-file-upload'
+                  aria-label='drop an image here or click the select from computer button below to upload image'
                 >
                   <div>
                     <img
@@ -229,6 +232,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
                     <button
                       className='initial-upload-button'
                       onClick={onInitialButtonClick}
+                      aria-label='click here to select an image from your computer to upload'
                     >
                       Select from computer
                     </button>
@@ -258,9 +262,14 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
           <form onSubmit={uploadPost}>
             <div className='modal-header'>
               <div></div>
-              <div>Create new post</div>
+              <h2>Create new post</h2>
               <div className='button-div'>
-                <button type='submit'>Share</button>
+                <button
+                  type='submit'
+                  aria-label='click to make post with image and input information'
+                >
+                  Share
+                </button>
               </div>
             </div>
             <div className='modal-body'>
@@ -276,22 +285,24 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
                   <img
                     className='userImg'
                     src={currentUser.photoURL}
-                    alt='userProfileImg'
+                    alt='user profile'
                   />
                   <div>{currentUser.displayName}</div>
                 </div>
                 <div className='bottom-user-input'>
-                  <textarea
-                    id='caption'
-                    name='caption'
-                    className='caption-textarea'
-                    value={formData.caption}
-                    onChange={(e) => {
-                      setFormData({ ...formData, caption: e.target.value });
-                    }}
-                    maxLength='2200'
-                    placeholder='Write a caption...'
-                  />
+                  <label aria-label='Enter a caption for your image. Maximum length is 2200 characters.'>
+                    <textarea
+                      id='caption'
+                      name='caption'
+                      className='caption-textarea'
+                      value={formData.caption}
+                      onChange={(e) => {
+                        setFormData({ ...formData, caption: e.target.value });
+                      }}
+                      maxLength='2200'
+                      placeholder='Write a caption...'
+                    />
+                  </label>
                   <div className='textarea-info'>
                     <div onClick={() => setShowCaptionInfo(!showCaptionInfo)}>
                       {formData.caption ? formData.caption.length : 0}/2,200
@@ -308,20 +319,22 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
                     </span>
                   </div>
                   <div className='location-input-div segmented-div'>
-                    <input
-                      type='text'
-                      name='photoLocation'
-                      id='photoLocation'
-                      value={formData.location}
-                      onChange={(e) => {
-                        setFormData({
-                          ...formData,
-                          location: e.target.value,
-                        });
-                      }}
-                      placeholder='Add location'
-                      maxLength='50'
-                    />
+                    <label aria-label='enter the image location'>
+                      <input
+                        type='text'
+                        name='photoLocation'
+                        id='photoLocation'
+                        value={formData.location}
+                        onChange={(e) => {
+                          setFormData({
+                            ...formData,
+                            location: e.target.value,
+                          });
+                        }}
+                        placeholder='Add location'
+                        maxLength='50'
+                      />
+                    </label>
                     <img src={locationImg} alt='map location pinpoint icon' />
                   </div>
                   <div
@@ -333,15 +346,23 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
                   >
                     <div className='accessibility-top' onClick={handleExpand}>
                       <div>Accessibility</div>
-                      <button>
+                      <button
+                        aria-label='open menu to add image description to assist users with visual impairments'
+                        aria-controls='accessibility-input-container'
+                        aria-expanded={expandAccessibility ? "true" : "false"}
+                      >
                         <img
                           className='down-arrow-img'
                           src={downArrow}
-                          alt='down arrow'
+                          alt=''
+                          aria-hidden='true'
                         />
                       </button>
                     </div>
-                    <div className='accessibility-body'>
+                    <div
+                      className='accessibility-body'
+                      id='accessibility-input-container'
+                    >
                       <div className='accessibility-info-text'>
                         Alt text describes your photos for people with visual
                         impairments. Alt text will be automatically created for
@@ -351,25 +372,27 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
                         <div className='accessibility-img-div'>
                           <img
                             className='upload-image-accessibility-mini'
-                            alt='User upload preview'
+                            alt='preview of uploaded file'
                             src={URL.createObjectURL(imgFileUpload)}
                             width='44px'
                           />
                         </div>
-                        <input
-                          type='text'
-                          name='userAltText'
-                          id='userAltText'
-                          placeholder='Write alt text...'
-                          maxLength='140'
-                          value={formData.altText}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              altText: e.target.value,
-                            })
-                          }
-                        />
+                        <label aria-label='Add a description of the image. Maximum 140 characters.'>
+                          <input
+                            type='text'
+                            name='userAltText'
+                            id='userAltText'
+                            placeholder='Write alt text...'
+                            maxLength='140'
+                            value={formData.altText}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                altText: e.target.value,
+                              })
+                            }
+                          />
+                        </label>
                       </div>
                     </div>
                   </div>
@@ -381,7 +404,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
       )}
       <div className='modal-overlay' onClick={handleClose}>
         <div className='modal-overlay-close'>
-          <button>&times;</button>
+          <button aria-label='click to close image upload menu'>&times;</button>
         </div>
       </div>
     </>

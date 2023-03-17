@@ -32,6 +32,10 @@
     padding: 10px;
     font-weight: bold;
 
+    h2 {
+      font-size: 1rem;
+    }
+
     div {
       flex: 1;
     }
@@ -250,12 +254,15 @@
             align-items: center;
             justify-content: space-between;
 
-            input {
+            label {
               flex: 1;
-              padding: 5px 0px;
-              border: none;
-              outline: none;
-              font-size: 1rem;
+              input {
+                width: 100%;
+                padding: 5px 0px;
+                border: none;
+                outline: none;
+                font-size: 1rem;
+              }
             }
 
             img {
@@ -331,13 +338,16 @@
                     }
                   }
 
-                  input {
-                    padding: 12px 5px;
+                  label {
                     flex: 1;
-                    margin-right: 15px;
-                    border-radius: 0.25rem;
-                    outline: none;
-                    border: 1px solid #cccccc;
+                    input {
+                      padding: 12px 5px;
+                      width: 100%;
+                      margin-right: 15px;
+                      border-radius: 0.25rem;
+                      outline: none;
+                      border: 1px solid #cccccc;
+                    }
                   }
                 }
               }
