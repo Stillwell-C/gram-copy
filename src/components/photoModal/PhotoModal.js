@@ -174,7 +174,10 @@ const PhotoModal = ({
               </div>
               <div className='photo-info-div'>
                 <div className='photo-info-top'>
-                  <Link to={`/${post.userName}`}>
+                  <Link
+                    to={`/${post.userName}`}
+                    aria-label={`move to ${post.userName}'s profile`}
+                  >
                     <div className='userName'>{post.userName}</div>
                   </Link>
                   {currentUser?.displayName !== post.userName && (
@@ -192,8 +195,9 @@ const PhotoModal = ({
                 <button
                   className='optionButton'
                   onClick={() => setShowAdditionalOptionsModal(true)}
+                  aria-label='click for additional options'
                 >
-                  <img src={threeDots} alt='three dots' />
+                  <img src={threeDots} alt='' aria-hidden='true' />
                 </button>
               </div>
             </div>
@@ -213,7 +217,10 @@ const PhotoModal = ({
               </div>
               <div className='photo-info-div'>
                 <div className='photo-info-top'>
-                  <Link to={`/${post.userName}`}>
+                  <Link
+                    to={`/${post.userName}`}
+                    aria-label={`move to ${post.userName}'s profile`}
+                  >
                     <div className='userName'>{post.userName}</div>
                   </Link>
                   {currentUser?.displayName !== post.userName && (
@@ -245,7 +252,7 @@ const PhotoModal = ({
                     title='click to show more comments'
                     onClick={loadComments}
                   >
-                    <img src={addCommentIcon} alt='plus sign icon' />
+                    <img src={addCommentIcon} alt='' aria-hidden='true' />
                   </button>
                 </div>
               )}
@@ -255,20 +262,22 @@ const PhotoModal = ({
                 <div className='buttons-left'>
                   <button
                     className='likeButton'
-                    aria-label='click to like post'
+                    aria-label={`click to ${liked ? "unlike" : "like"} post`}
                     onClick={handleLike}
                   >
                     <img
                       src={liked ? filledHeart : outlinedHeart}
                       className={liked ? "filled heart" : "heart"}
-                      alt='heart'
+                      alt=''
+                      aria-hidden='true'
                     />
                   </button>
                   <button
                     className='commentButton'
                     onClick={() => commentRef.current.focus()}
+                    aria-label='click to write a comment'
                   >
-                    <img src={commentBubble} alt='comment bubble' />
+                    <img src={commentBubble} alt='' aria-hidden='true' />
                   </button>
                   <button className='messageButton'>
                     <img src={message} alt='paper airplane' />
@@ -277,12 +286,13 @@ const PhotoModal = ({
                 <div className='buttons-right'>
                   <button
                     className='bookmarkButton'
-                    aria-label='click to save post'
+                    aria-label={`click to ${saved ? "save" : "unsave"} post`}
                     onClick={handleSave}
                   >
                     <img
                       src={saved ? filledBookmark : outlinedBookmark}
-                      alt='bookmark'
+                      alt=''
+                      aria-hidden='true'
                       className={saved ? "filled" : ""}
                     />
                   </button>
@@ -320,6 +330,7 @@ const PhotoModal = ({
                       className={activateButton ? "active" : "deactivated"}
                       disabled={!activateButton}
                       onClick={handleAddComment}
+                      aria-disabled={!activateButton}
                     >
                       Post
                     </button>
