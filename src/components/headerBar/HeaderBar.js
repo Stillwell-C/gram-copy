@@ -40,13 +40,13 @@ const HeaderBar = React.forwardRef(
           <div className='search-input-div' ref={ref}>
             <label
               aria-label='input username to search users'
-              htmlFor='username-search-input'
+              htmlFor='username-search-input-header'
             >
               <input
                 type='text'
                 autoComplete='off'
-                name='username-search-input'
-                id='username-search-input'
+                name='username-search-input-header'
+                id='username-search-input-header'
                 placeholder='User Search'
                 spellCheck='false'
                 maxLength='30'
