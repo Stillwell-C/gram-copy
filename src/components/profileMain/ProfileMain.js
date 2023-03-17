@@ -147,7 +147,7 @@ const ProfileMain = () => {
     setFriendButton(
       <button
         className='follow-button'
-        aria-label={`click to follow user`}
+        aria-label={`click to unfollow user`}
         type='button'
         onClick={handleUnfollow}
       >
@@ -242,7 +242,7 @@ const ProfileMain = () => {
                     <div className='edit-profile'>
                       <Link
                         to='/accounts/edit'
-                        aria-label='click to edit profile information'
+                        aria-label='edit profile information'
                       >
                         <button className='edit-profile-btn'>
                           Edit profile
@@ -250,8 +250,11 @@ const ProfileMain = () => {
                       </Link>
                     </div>
                     <div className='user-settings'>
-                      <button className='user-settings-btn'>
-                        <img src={sprocket} alt='cog wheel' />
+                      <button
+                        className='user-settings-btn'
+                        aria-label='user settings'
+                      >
+                        <img src={sprocket} alt='' aria-hidden='true' />
                       </button>
                     </div>
                   </div>
@@ -274,7 +277,7 @@ const ProfileMain = () => {
                         aria-label='click for more options'
                         onClick={() => setShowAdditionalOptionsModal(true)}
                       >
-                        <img src={threeDots} alt='icon of three dots' />
+                        <img src={threeDots} alt='' aria-hidden='true' />
                       </button>
                     </div>
                   </div>
