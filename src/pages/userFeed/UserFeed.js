@@ -10,12 +10,10 @@ const UserFeed = () => {
       <div>
         <Navbar />
       </div>
-      <div>
+      <section className='userfeed-main'>
         <ImageFeed />
-      </div>
-      <div>
         <FeedRightInfo />
-      </div>
+      </section>
     </div>
   );
 };
