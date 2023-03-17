@@ -9,7 +9,7 @@ import { AuthContext } from "../../context/authContext";
 import useLikePost from "../../hooks/useLikePost";
 import useSavePost from "../../hooks/useSavePost";
 import PhotoModal from "../photoModal/PhotoModal";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
 import TagUsersModal from "../tagUsersModal/TagUsersModal";
@@ -175,11 +175,22 @@ const ProfilePostCard = React.forwardRef(
     );
 
     const postCard = ref ? (
-      <div className='post-card-container' ref={ref}>
+      <Link
+        to='#'
+        aria-label='click to see image and comments'
+        className='post-card-container'
+        ref={ref}
+      >
         {cardContent}
-      </div>
+      </Link>
     ) : (
-      <div className='post-card-container'>{cardContent}</div>
+      <Link
+        to='#'
+        aria-label='click to see image and comments'
+        className='post-card-container'
+      >
+        {cardContent}
+      </Link>
     );
 
     return postCard;
