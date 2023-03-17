@@ -222,10 +222,14 @@ const EditProfileInformation = () => {
         <div className='profile-img-div'>
           <button
             title='Click to change profile picture'
-            aria-label='click to change profile photo'
+            aria-label='change profile photo'
             onClick={handleImgClick}
           >
-            <img src={updatedInfo.userImgURL} alt='user profile upload' />
+            <img
+              src={updatedInfo.userImgURL}
+              alt='user profile upload'
+              aria-hidden='true'
+            />
           </button>
           <form>
             <input
@@ -240,10 +244,7 @@ const EditProfileInformation = () => {
         </div>
         <div className='user-info-right'>
           <div className='username'>{initialInfo.username}</div>
-          <button
-            aria-label='click to change profile photo'
-            onClick={handleBtnClick}
-          >
+          <button aria-label='change profile photo' onClick={handleBtnClick}>
             Change profile photo
           </button>
           <form>
@@ -275,9 +276,10 @@ const EditProfileInformation = () => {
               onChange={(e) =>
                 setUpdatedInfo({ ...updatedInfo, fullname: e.target.value })
               }
+              aria-describedby='name-information-text'
             />
             <div className='form-information'>
-              <span>
+              <span id='name-information-text'>
                 Help people discover your account by using the name you're known
                 by: either your full name, nickname, or business name.
               </span>
@@ -299,9 +301,10 @@ const EditProfileInformation = () => {
               onChange={(e) =>
                 setUpdatedInfo({ ...updatedInfo, username: e.target.value })
               }
+              aria-describedby='username-information-text'
             />
             <div className='form-information'>
-              <span>
+              <span id='username-information-text'>
                 In most cases, you'll be able to change your username back to
                 hodgethecatt for another 14 days.
               </span>
@@ -324,9 +327,10 @@ const EditProfileInformation = () => {
                 setUpdatedInfo({ ...updatedInfo, website: e.target.value })
               }
               disabled
+              aria-describedby='website-information-text'
             />
             <div className='form-information'>
-              <span>
+              <span id='website-information-text'>
                 Editing your links is only available on mobile. Visit the
                 Instagram app and edit your profile to change the websites in
                 your bio.
