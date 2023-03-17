@@ -63,11 +63,17 @@ const FeedRightInfo = () => {
     <div className='right-info-container'>
       {displayUser && (
         <div className='top-user-info'>
-          <Link to={`/${pageData.username}`}>
+          <Link
+            to={`/${pageData.username}`}
+            aria-label={`move to ${pageData.username}'s profile`}
+          >
             <img src={pageData.userImgURL} alt='user profile' />
           </Link>
           <div className='user-name-div'>
-            <Link to={`/${pageData.username}`}>
+            <Link
+              to={`/${pageData.username}`}
+              aria-label={`move to ${pageData.username}'s profile`}
+            >
               <div className='user-name-top'>{pageData.username}</div>
             </Link>
             <div className='user-name-bottom'>{pageData.fullname}</div>
