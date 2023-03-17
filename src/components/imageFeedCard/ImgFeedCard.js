@@ -114,7 +114,9 @@ const ImgFeedCard = React.forwardRef(
     const imgContent = (
       <>
         <div className='card-top'>
-          <img className='userImg' src={pageImgURL} alt='user profile' />
+          <Link to={`/${post.userName}`} className='photo-link'>
+            <img className='userImg' src={pageImgURL} alt='user profile' />
+          </Link>
           <div className='photoInfo'>
             <Link to={`/${post.userName}`}>
               <div className='userName'>{post.userName}</div>
