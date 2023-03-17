@@ -112,6 +112,7 @@ const ReportModal = ({ setShowReportModal, reportDistinction, reportId }) => {
                 }}
                 maxLength='2200'
                 placeholder='Write additional comments...'
+                aria-label='Add additional comments. Max length 2200 characters.'
               ></textarea>
               <button className='submit-button' type='submit'>
                 Submit Report
