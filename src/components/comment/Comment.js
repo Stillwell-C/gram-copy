@@ -45,16 +45,18 @@ const Comment = ({
       {showImage && (
         <div className='comment-image'>
           <Link
+            aria-label={`move to ${comment.username}'s profile`}
             to={`/${comment.username}`}
             onClick={() => setShowPhotoModal(false)}
           >
-            <img src={commentImgURL} alt='user profile' />
+            <img src={commentImgURL} alt='user profile' aria-hidden='true' />
           </Link>
         </div>
       )}
       <div className='comment-main'>
         <div className='comment-main-top'>
           <Link
+            aria-label={`move to ${comment.username}'s profile`}
             to={`/${comment.username}`}
             onClick={() => setShowPhotoModal(false)}
           >
