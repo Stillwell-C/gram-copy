@@ -9,19 +9,19 @@ const NoUserImgProfileFeed = ({ handleAddPostModal }) => {
         <button
           type='button'
           className='camera-icon-button'
-          aria-label='upload your image'
+          aria-label='upload an image from your computer'
           onClick={handleAddPostModal}
         >
           <img src={camera} alt='camera' />
         </button>
-        <h1 className='header-text'>Share Photos</h1>
+        <h3 className='header-text'>Share Photos</h3>
         <div className='sub-text'>
           When you share photos, they will appear on your profile
         </div>
         <button
           type='button'
           className='bottom-upload-button'
-          aria-label='upload your image'
+          aria-label='upload an image from your computer'
           onClick={handleAddPostModal}
         >
           Share your first photo
