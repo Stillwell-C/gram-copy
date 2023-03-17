@@ -114,11 +114,23 @@ const ImgFeedCard = React.forwardRef(
     const imgContent = (
       <article>
         <div className='card-top'>
-          <Link to={`/${post.userName}`} className='photo-link'>
-            <img className='userImg' src={pageImgURL} alt='user profile' />
+          <Link
+            to={`/${post.userName}`}
+            className='photo-link'
+            aria-label={`move to ${post.userName}'s profile`}
+          >
+            <img
+              className='userImg'
+              src={pageImgURL}
+              alt=''
+              aria-hidden='true'
+            />
           </Link>
           <div className='photoInfo'>
-            <Link to={`/${post.userName}`}>
+            <Link
+              to={`/${post.userName}`}
+              aria-label={`move to ${post.userName}'s profile`}
+            >
               <div className='userName'>{post.userName}</div>
             </Link>
             <div className='photoLocation'>
@@ -128,6 +140,7 @@ const ImgFeedCard = React.forwardRef(
           <button
             className='optionButton'
             onClick={() => setShowAdditionalOptionsModal(true)}
+            aria-label='click for additional options'
           >
             <img src={threeDots} alt='three dots' />
           </button>
@@ -148,18 +161,26 @@ const ImgFeedCard = React.forwardRef(
                 <img
                   src={liked ? filledHeart : outlinedHeart}
                   className={liked ? "filled heart" : "heart"}
-                  alt='heart'
+                  alt=''
+                  aria-hidden='true'
                 />
               </button>
-              <button className='commentButton'>
+              <button
+                className='commentButton'
+                aria-label='open post to view and make comments'
+              >
                 <img
                   src={commentBubble}
-                  alt='comment bubble'
+                  alt=''
                   onClick={() => setShowPhotoModal(true)}
+                  aria-hidden='true'
                 />
               </button>
-              <button className='messageButton'>
-                <img src={message} alt='paper airplane' />
+              <button
+                className='messageButton'
+                aria-label='click to share post'
+              >
+                <img src={message} alt='' aria-hidden='true' />
               </button>
             </div>
             <div className='buttons-right'>
@@ -170,7 +191,8 @@ const ImgFeedCard = React.forwardRef(
               >
                 <img
                   src={saved ? filledBookmark : outlinedBookmark}
-                  alt='bookmark'
+                  alt=''
+                  aria-hidden='true'
                   className={saved ? "filled" : ""}
                 />
               </button>
@@ -193,7 +215,7 @@ const ImgFeedCard = React.forwardRef(
               <button
                 type='button'
                 className='view-comments-button'
-                aria-label='click to view more comments'
+                aria-label='click to view all comments'
                 onClick={() => setShowPhotoModal(true)}
               >
                 {post.comments[1]
