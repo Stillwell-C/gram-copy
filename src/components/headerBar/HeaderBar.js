@@ -28,7 +28,12 @@ const HeaderBar = React.forwardRef(
       <div className='header-bar-container'>
         <div className='header-bar-left'>
           <Link to='/'>
-            <img src={logo} alt='Instagram logo' />
+            <img
+              src={logo}
+              alt=''
+              aria-hidden='true'
+              aria-label='move to home screen'
+            />
           </Link>
         </div>
         <div className='header-bar-right'>
@@ -55,7 +60,7 @@ const HeaderBar = React.forwardRef(
                 aria-label='clear the search box'
                 onClick={handleCloseAndClear}
               >
-                <img src={closeCircle} alt='X icon' />
+                <img src={closeCircle} alt='' aria-hidden='true' />
               </button>
             </div>
             <div
@@ -64,7 +69,11 @@ const HeaderBar = React.forwardRef(
             >
               {searchResults?.length > 0 &&
                 searchResults.map((doc) => (
-                  <Link key={doc.uid} to={`/${doc.username}`}>
+                  <Link
+                    key={doc.uid}
+                    to={`/${doc.username}`}
+                    aria-label={`move to ${doc.username}'s profile`}
+                  >
                     <div className='search-result'>
                       <div className='profile-picture'>
                         <img src={doc.userImgURL} alt='user profile' />
