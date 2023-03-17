@@ -3,6 +3,7 @@
 .feedContainer {
   min-height: 100vh;
   margin-top: 60px;
+  margin-right: 32px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -47,15 +48,19 @@
         }
       }
 
-      .userImg {
-        max-width: 32px;
-        height: 32px;
-        flex: 1;
-        object-fit: cover;
-        border-radius: 50%;
-        margin: 0 15px;
+      .photo-link {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        .userImg {
+          max-width: 32px;
+          height: 32px;
+          flex: 1;
+          object-fit: cover;
+          border-radius: 50%;
+          margin: 0 15px;
+        }
       }
-
       .optionButton {
         flex: 1;
       }
