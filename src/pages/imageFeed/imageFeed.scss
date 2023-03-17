@@ -1,7 +1,8 @@
 @import "../../breakpoints.scss";
 
 .feedContainer {
-  min-height: 100vh;
+  min-height: 100%;
+  min-width: 470px;
   margin-top: 60px;
   margin-right: 32px;
   display: flex;
