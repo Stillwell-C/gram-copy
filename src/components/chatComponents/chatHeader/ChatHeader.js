@@ -14,7 +14,7 @@ const ChatHeader = () => {
       <div className='user-img-div'>
         <Link
           to={`/${userData.user.displayName}`}
-          aria-label="click to go to user's profile"
+          aria-label="move to user's profile"
         >
           <img src={userData.user.photoURL} alt='user profile' />
         </Link>
@@ -22,14 +22,14 @@ const ChatHeader = () => {
       <div className='user-info-div'>
         <Link
           to={`/${userData.user.displayName}`}
-          aria-label="click to go to user's profile"
+          aria-label="move to user's profile"
         >
           <span className='username-text'>{userData.user.displayName}</span>
         </Link>
       </div>
       <div className='button-div'>
         <button>
-          <img src={infoSvg} alt='information icon' />
+          <img src={infoSvg} alt='' aria-hidden='true' />
         </button>
       </div>
     </div>
