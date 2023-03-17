@@ -93,7 +93,7 @@ const ChatInput = () => {
       <div className='chat-input-div'>
         <div className='message-input-div'>
           <form className='message-form' onSubmit={sendText}>
-            <label aria-label='write your message here' htmlFor='message-input'>
+            <label aria-label='chat message input' htmlFor='message-input'>
               <input
                 type='text'
                 id='message-input'
