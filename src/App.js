@@ -9,7 +9,7 @@ import Profile from "./pages/Profile/Profile";
 import Chats from "./pages/chats/Chats";
 import EditProfile from "./pages/editProfile/EditProfile";
 import PrivateRoutes from "./utils/ProtectedRoutes";
-import Layout from "./components/layout";
+import Layout from "./components/Layout";
 
 function App() {
   return (
