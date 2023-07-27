@@ -1,8 +1,13 @@
 .layout {
   background-color: #fafafa;
-  min-height: 100vh;
-  min-height: 100svh;
+  height: 100vh;
+  height: 100svh;
   /* width: 100%; */
   display: flex;
+  flex-grow: 1;
+}
+
+.outlet {
+  overflow-y: auto;
   flex-grow: 1;
 }
