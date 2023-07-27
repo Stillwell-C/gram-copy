@@ -9,12 +9,13 @@ import Profile from "./pages/Profile/Profile";
 import Chats from "./pages/chats/Chats";
 import EditProfile from "./pages/editProfile/EditProfile";
 import PrivateRoutes from "./utils/ProtectedRoutes";
+import Layout from "./components/layout";
 
 function App() {
   return (
-    <div className='app-container'>
-      <Routes>
-        <Route path='/' element={<UserFeed />} />
+    <Routes>
+      <Route path='/' element={<Layout />}>
+        <Route index element={<UserFeed />} />
         <Route path='/:userParam' element={<Profile />} />
         <Route path='/accounts/:accountsPath' element={<Login />} />
         <Route element={<PrivateRoutes />}>
@@ -22,8 +23,8 @@ function App() {
           <Route path='/accounts/edit' element={<EditProfile />} />
           <Route path='/accounts/password' element={<EditProfile />} />
         </Route>
-      </Routes>
-    </div>
+      </Route>
+    </Routes>
   );
 }
 
