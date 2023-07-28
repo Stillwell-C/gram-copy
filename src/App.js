@@ -5,7 +5,6 @@ import Login from "./pages/login/Login";
 import Navbar from "./components/navbar/Navbar";
 import UserFeed from "./pages/userFeed/UserFeed";
 import ProfileMain from "./components/profileMain/ProfileMain";
-import Profile from "./pages/Profile/Profile";
 import Chats from "./pages/chats/Chats";
 import EditProfile from "./pages/editProfile/EditProfile";
 import PrivateRoutes from "./utils/ProtectedRoutes";
@@ -16,7 +15,7 @@ function App() {
     <Routes>
       <Route path='/' element={<Layout />}>
         <Route index element={<UserFeed />} />
-        <Route path='/:userParam' element={<Profile />} />
+        <Route path='/:userParam' element={<ProfileMain />} />
         <Route path='/accounts/:accountsPath' element={<Login />} />
         <Route element={<PrivateRoutes />}>
           <Route path='/direct/inbox' element={<Chats />} />
