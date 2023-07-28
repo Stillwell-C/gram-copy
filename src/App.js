@@ -17,11 +17,9 @@ function App() {
         <Route index element={<UserFeed />} />
         <Route path='/:userParam' element={<ProfileMain />} />
         <Route path='/accounts/:accountsPath' element={<Login />} />
-        <Route element={<PrivateRoutes />}>
-          <Route path='/direct/inbox' element={<Chats />} />
-          <Route path='/accounts/edit' element={<EditProfile />} />
-          <Route path='/accounts/password' element={<EditProfile />} />
-        </Route>
+        <Route path='/direct/inbox' element={<Chats />} />
+        <Route path='/accounts/edit' element={<EditProfile />} />
+        <Route path='/accounts/password' element={<EditProfile />} />
       </Route>
     </Routes>
   );
