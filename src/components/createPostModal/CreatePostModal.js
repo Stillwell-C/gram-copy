@@ -21,6 +21,7 @@ import {
 import { AuthContext } from "../../context/authContext";
 import useGetRandomDate from "../../hooks/useGetRandomDate";
 import axios from "axios";
+import { useAddNewPostMutation } from "../../features/posts/postsApiSlice";
 
 const api_key = "419818228346469";
 const cloud_name = "danscxcd2";
@@ -31,8 +32,6 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
   const [initial, setInitial] = useState(true);
   const [dragActive, setDragActive] = useState(false);
   const [imgFileUpload, setImgFileUpload] = useState(null);
-  const [imgFileUploadName, setImgFileUploadName] = useState();
-  const [imgFileUploadURL, setImgFileUploadURL] = useState("");
   const [imgUploadData, setImgUploadData] = useState({});
   const [formData, setFormData] = useState({
     caption: "",
@@ -41,7 +40,9 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
   });
   const [showCaptionInfo, setShowCaptionInfo] = useState(false);
   const [expandAccessibility, setExpandAccessibility] = useState(false);
-  const newRandomDate = useGetRandomDate();
+
+  const [addNewPost, { isLoading, isSuccess, isError, error }] =
+    useAddNewPostMutation();
 
   useEffect(() => {
     //upload file uploaded by user to Cloudinary
@@ -126,51 +127,30 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
 
   const uploadPost = async (e) => {
     e.preventDefault();
-    if (!imgFileUploadName) {
-      console.log("Error. No Image Ref found.");
+    if (!imgUploadData) {
+      console.log("Error. No image data found.");
       return;
     }
     const uploadData = {
       ...formData,
-      userName: currentUser.displayName,
-      userUid: auth.currentUser.uid,
-      // date: serverTimestamp(),
-      // Random date included to populate with uploads
-      //TODO: remove later
-      date: newRandomDate,
-      imgName: imgFileUploadName,
-      imgURL: imgFileUploadURL,
-      likedUsers: [],
-      savedUsers: [],
-      taggedUsers: [],
-      comments: [
-        {
-          username: currentUser.displayName,
-          comment: formData.caption,
-          date: Timestamp.now(),
-        },
-      ],
+      user: "64c1dff6ba375748febb3853",
+      imgData: imgUploadData,
     };
-    try {
-      //upload post info to firestore
-      const docRef = await addDoc(collection(db, "userImgs"), uploadData);
-      //Add post to individual user's userInfo post array
-      await updateDoc(doc(db, "userInfo", auth.currentUser.uid), {
-        userPosts: arrayUnion(docRef.id),
-      });
-      setFormData({
-        caption: "",
-        location: "",
-        altText: "",
-      });
-      setImgFileUpload(null);
-      setImgFileUploadName("");
-      setDisplayPostModal(false);
-    } catch (err) {
-      console.log(err.code);
-      console.log(err.message);
-    }
+    console.log(uploadData);
+    addNewPost({ ...uploadData });
   };
+
+  useEffect(() => {
+    if (isError) {
+    }
+    console.log(error);
+  }, [isError]);
+
+  useEffect(() => {
+    if (isSuccess) {
+    }
+    console.log("success");
+  }, [isSuccess]);
 
   return (
     <>
