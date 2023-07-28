@@ -23,7 +23,7 @@ import AdditionalOptionsModal from "../additionalOptionsModal/AdditionalOptionsM
 const ImgFeedCard = React.forwardRef(
   ({ post, userLikedPosts, userSavedPosts }, ref) => {
     //TODO: Have infoID, so could streamline this later
-    const getImageInfo = useGetUserInfoFunction();
+    // const getImageInfo = useGetUserInfoFunction();
     const addComment = useAddComment();
     const navigate = useNavigate();
 
@@ -38,34 +38,38 @@ const ImgFeedCard = React.forwardRef(
     const [pageImgURL, setPageImgURL] = useState(defaultProfilePic);
     const [comment, setComment] = useState("");
 
-    useEffect(() => {
-      const setImgURL = async () => {
-        const imageInfo = await getImageInfo(post.userName, "username");
-        setPageImgURL(imageInfo.userImgURL);
-      };
-      setImgURL();
-    }, []);
+    // useEffect(() => {
+    //   const setImgURL = async () => {
+    //     const imageInfo = await getImageInfo(post.userName, "username");
+    //     setPageImgURL(imageInfo.userImgURL);
+    //   };
+    //   setImgURL();
+    // }, []);
+
+    const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/${post?.user?.userImgKey}`;
+    const imgURL = `https://res.cloudinary.com/danscxcd2/image/upload/${post?.imgKey}`;
+    // `https://res.cloudinary.com/danscxcd2/image/upload/w_200,h_100,c_fill,q_100/${post?.imgKey}.jpg`;
 
     const { currentUser } = useContext(AuthContext);
     const { likePost, unlikePost } = useLikePost();
     const { savePost, unsavePost } = useSavePost();
 
-    useEffect(() => {
-      if (!currentUser) return;
-      //TODO: get updated info
-      //Figure out best way to do this
-      const liked = userLikedPosts.filter(
-        (singleLikedPost) => singleLikedPost === post.id
-      );
-      const saved = userSavedPosts.filter(
-        (singleSavedPost) => singleSavedPost === post.id
-      );
-      if (liked.length) {
-        setLiked(true);
-        setInitialLike(true);
-      }
-      if (saved.length) setSaved(true);
-    }, []);
+    // useEffect(() => {
+    //   if (!currentUser) return;
+    //   //TODO: get updated info
+    //   //Figure out best way to do this
+    //   const liked = userLikedPosts.filter(
+    //     (singleLikedPost) => singleLikedPost === post.id
+    //   );
+    //   const saved = userSavedPosts.filter(
+    //     (singleSavedPost) => singleSavedPost === post.id
+    //   );
+    //   if (liked.length) {
+    //     setLiked(true);
+    //     setInitialLike(true);
+    //   }
+    //   if (saved.length) setSaved(true);
+    // }, []);
 
     useEffect(() => {
       if (!currentUser) {
@@ -115,23 +119,23 @@ const ImgFeedCard = React.forwardRef(
       <article>
         <div className='card-top'>
           <Link
-            to={`/${post.userName}`}
+            to={`/${post.user.username}`}
             className='photo-link'
-            aria-label={`move to ${post.userName}'s profile`}
+            aria-label={`move to ${post.user.username}'s profile`}
           >
             <img
               className='userImg'
-              src={pageImgURL}
+              src={userImgURL}
               alt=''
               aria-hidden='true'
             />
           </Link>
           <div className='photoInfo'>
             <Link
-              to={`/${post.userName}`}
-              aria-label={`move to ${post.userName}'s profile`}
+              to={`/${post.user.username}`}
+              aria-label={`move to ${post.user.username}'s profile`}
             >
-              <div className='userName'>{post.userName}</div>
+              <div className='userName'>{post.user.username}</div>
             </Link>
             <div className='photoLocation'>
               {post.location && post.location}
@@ -148,7 +152,7 @@ const ImgFeedCard = React.forwardRef(
         <img
           className='mainImg'
           alt={post.altText ? post.altText : "user upload"}
-          src={post.imgURL}
+          src={imgURL}
         />
         <div className='card-bottom'>
           <div className='buttons'>
@@ -200,16 +204,16 @@ const ImgFeedCard = React.forwardRef(
           </div>
           <div className='card-bottom-text'>
             <div className='likes-counter'>
-              {post.likedUsers.length + likesOffset}{" "}
-              {post.likedUsers.length + likesOffset === 1 ? "Like" : "Likes"}
+              {post?.likes + likesOffset}{" "}
+              {post?.likes + likesOffset === 1 ? "Like" : "Likes"}
             </div>
             <div className='comments'>
-              {post.comments[0] && (
+              {/* {post?.comments[0] && (
                 <Comment comment={post.comments[0]} abbreviate={true} />
               )}
-              {post.comments[1] && (
+              {post?.comments[1] && (
                 <Comment comment={post.comments[1]} abbreviate={true} />
-              )}
+              )} */}
             </div>
             <div className='view-more-div'>
               <button
@@ -218,13 +222,13 @@ const ImgFeedCard = React.forwardRef(
                 aria-label='click to view all comments'
                 onClick={() => setShowPhotoModal(true)}
               >
-                {post.comments[1]
+                {/* {post.comments[1]
                   ? `View all ${post.comments.length} comments`
-                  : `View all comments`}
+                  : `View all comments`} */}
               </button>
             </div>
             <div className='time-ago'>
-              {moment(post.date.toDate()).fromNow().toUpperCase()}
+              {/* {moment(post.date.toDate()).fromNow().toUpperCase()} */}
             </div>
           </div>
           <div className='input-comment-div'>
