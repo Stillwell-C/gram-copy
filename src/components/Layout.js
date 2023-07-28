@@ -14,7 +14,6 @@ const Layout = () => {
   ) {
     displayNav = false;
   }
-  console.log("pathname: ", pathname);
 
   return (
     <div className={styles.layout}>
