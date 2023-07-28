@@ -6,9 +6,8 @@ import Navbar from "./components/navbar/Navbar";
 import UserFeed from "./pages/userFeed/UserFeed";
 import ProfileMain from "./components/profileMain/ProfileMain";
 import Chats from "./pages/chats/Chats";
-import EditProfile from "./pages/editProfile/EditProfile";
-import PrivateRoutes from "./utils/ProtectedRoutes";
 import Layout from "./components/Layout";
+import EditProfileMain from "./components/editProfileMain/EditProfileMain";
 
 function App() {
   return (
@@ -18,8 +17,8 @@ function App() {
         <Route path='/:userParam' element={<ProfileMain />} />
         <Route path='/accounts/:accountsPath' element={<Login />} />
         <Route path='/direct/inbox' element={<Chats />} />
-        <Route path='/accounts/edit' element={<EditProfile />} />
-        <Route path='/accounts/password' element={<EditProfile />} />
+        <Route path='/accounts/edit' element={<EditProfileMain />} />
+        <Route path='/accounts/password' element={<EditProfileMain />} />
       </Route>
     </Routes>
   );
