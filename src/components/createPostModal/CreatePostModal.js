@@ -55,10 +55,13 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
         }
       );
 
+      console.log(cloudinaryRes);
+
       setImgUploadData({
         public_id: cloudinaryRes.data.public_id,
         version: cloudinaryRes.data.version,
         signature: cloudinaryRes.data.signature,
+        format: cloudinaryRes.data.format,
       });
     };
 
@@ -126,14 +129,24 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
 
   useEffect(() => {
     if (isError) {
+      console.log(error);
     }
-    console.log(error);
   }, [isError]);
 
   useEffect(() => {
     if (isSuccess) {
+      console.log("success");
+      setFormData({
+        caption: "",
+        location: "",
+        altText: "",
+      });
+      setImgFileUpload(null);
+      setImgUploadData({});
+      setShowCaptionInfo(false);
+      setExpandAccessibility(false);
+      setDisplayPostModal(false);
     }
-    console.log("success");
   }, [isSuccess]);
 
   return (
