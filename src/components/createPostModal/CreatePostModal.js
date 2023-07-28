@@ -3,23 +3,7 @@ import "./createPostModal.scss";
 import photoImg from "../../assets/photo-svgrepo-com.svg";
 import locationImg from "../../assets/location-svgrepo-com.svg";
 import downArrow from "../../assets/down-arrow-backup-2-svgrepo-com.svg";
-import { storage, db, auth } from "../../firebase";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import {
-  addDoc,
-  arrayUnion,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  serverTimestamp,
-  Timestamp,
-  updateDoc,
-  where,
-} from "firebase/firestore";
 import { AuthContext } from "../../context/authContext";
-import useGetRandomDate from "../../hooks/useGetRandomDate";
 import axios from "axios";
 import { useAddNewPostMutation } from "../../features/posts/postsApiSlice";
 
