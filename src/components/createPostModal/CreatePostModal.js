@@ -20,6 +20,10 @@ import {
 } from "firebase/firestore";
 import { AuthContext } from "../../context/authContext";
 import useGetRandomDate from "../../hooks/useGetRandomDate";
+import axios from "axios";
+
+const api_key = "419818228346469";
+const cloud_name = "danscxcd2";
 
 const CreatePostModal = ({ setDisplayPostModal }) => {
   const { currentUser } = useContext(AuthContext);
@@ -29,6 +33,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
   const [imgFileUpload, setImgFileUpload] = useState(null);
   const [imgFileUploadName, setImgFileUploadName] = useState();
   const [imgFileUploadURL, setImgFileUploadURL] = useState("");
+  const [imgUploadData, setImgUploadData] = useState({});
   const [formData, setFormData] = useState({
     caption: "",
     location: "",
@@ -39,53 +44,37 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
   const newRandomDate = useGetRandomDate();
 
   useEffect(() => {
-    //upload file uploaded by user to storage
+    //upload file uploaded by user to Cloudinary
     const uploadFile = async () => {
-      const fileName =
-        new Date().getTime() + currentUser.displayName + imgFileUpload.name;
-      const storageRef = ref(storage, fileName);
+      const signatureResponse = await axios.get(
+        "http://localhost:3500/auth/cloud-signature"
+      );
 
-      try {
-        const uploadTask = await uploadBytesResumable(
-          storageRef,
-          imgFileUpload
-        );
-        const downloadURL = await getDownloadURL(storageRef);
-        setImgFileUploadName(uploadTask.metadata.fullPath);
-        setImgFileUploadURL(downloadURL);
-      } catch (err) {
-        console.log(err.code);
-      }
+      const imgData = new FormData();
+      imgData.append("file", imgFileUpload);
+      imgData.append("api_key", api_key);
+      imgData.append("signature", signatureResponse.data.signature);
+      imgData.append("timestamp", signatureResponse.data.timestamp);
 
-      // uploadTask.on(
-      //   "state_changed",
-      //   (snapshot) => {
-      //     const progress =
-      //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      //     console.log("Upload is " + progress + "% done");
-      //     switch (snapshot.state) {
-      //       case "paused":
-      //         console.log("Upload is paused");
-      //         break;
-      //       case "running":
-      //         console.log("Upload is running");
-      //         break;
-      //       default:
-      //         break;
-      //     }
-      //   },
-      //   (err) => {
-      //     console.log(err.code);
-      //   },
-      //   () => {
-      //     // console.log("ref", uploadTask.snapshot);
-      //     // getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-      //     //   console.log("File available at", downloadURL);
-      //     //   setImgFileUploadName(downloadURL);
-      //     // });
-      //     setImgFileUploadName(uploadTask.snapshot.metadata.fullPath);
-      //   }
-      // );
+      console.log(imgData);
+
+      const cloudinaryRes = await axios.post(
+        `https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`,
+        imgData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+          //Remove for production
+          onUploadProgress: function (e) {
+            console.log(e.loaded / e.total);
+          },
+        }
+      );
+
+      setImgUploadData({
+        public_id: cloudinaryRes.data.public_id,
+        version: cloudinaryRes.data.version,
+        signature: cloudinaryRes.data.signature,
+      });
     };
 
     if (imgFileUpload) uploadFile();
