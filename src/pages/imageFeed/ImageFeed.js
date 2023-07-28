@@ -7,6 +7,7 @@ import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import useGetLoggedInUserInfo from "../../hooks/useGetLoggedInUserInfo";
 import useGetLoggedInUserInfoFunction from "../../hooks/useGetLoggedInUserInfoFunction";
 import { AuthContext } from "../../context/authContext";
+import { useGetMultiplePostsQuery } from "../../features/posts/postsApiSlice";
 
 const ImageFeed = () => {
   const { currentUser } = useContext(AuthContext);
@@ -17,6 +18,21 @@ const ImageFeed = () => {
   const { loading, error, errorInfo, posts, hasMoreData } =
     useGetPosts(pageNum);
   const getUserInfo = useGetLoggedInUserInfoFunction();
+  const [feedData, setFeedData] = useState([]);
+
+  const {
+    data: postData,
+    isLoading,
+    isError,
+    error: postError,
+  } = useGetMultiplePostsQuery({ page: pageNum, limit: 5 });
+
+  useEffect(() => {
+    if (postData) {
+      console.log(postData);
+      setFeedData((prev) => [...prev, ...postData.posts]);
+    }
+  }, [postData]);
 
   const observer = useRef();
   const lastPostRef = useCallback(
@@ -51,11 +67,11 @@ const ImageFeed = () => {
     currentUser?.displayName && setInfo();
   }, [currentUser]);
 
-  const content = posts.map((post, i) => {
+  const content = feedData.map((post, i) => {
     if (posts.length === i + 1) {
       return (
         <ImgFeedCard
-          key={post.id}
+          key={post._id}
           post={post}
           userLikedPosts={userLikedPosts}
           userSavedPosts={userSavedPosts}
@@ -65,7 +81,7 @@ const ImageFeed = () => {
     }
     return (
       <ImgFeedCard
-        key={post.id}
+        key={post._id}
         post={post}
         userLikedPosts={userLikedPosts}
         userSavedPosts={userSavedPosts}
