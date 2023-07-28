@@ -4,9 +4,4 @@
   display: flex;
   justify-content: center;
   flex: 1;
-
-  @include small {
-    margin-left: 75px;
-    margin-bottom: 0;
-  }
 }
