@@ -34,7 +34,7 @@ const PersistentLogin = () => {
     }
 
     return () => (runEffect.current = true);
-  });
+  }, []);
 
   let pageContent;
 
