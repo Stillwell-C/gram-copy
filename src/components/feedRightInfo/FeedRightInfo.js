@@ -8,10 +8,14 @@ import useGetLoggedInUserInfo from "../../hooks/useGetLoggedInUserInfo";
 import useGetLoggedInUserInfoFunction from "../../hooks/useGetLoggedInUserInfoFunction";
 import Footer from "../footer/Footer";
 import "./feedRightInfo.scss";
+import useAuth from "../../hooks/useAuth";
 
 const FeedRightInfo = () => {
+  const { authenticatedUser, username, fullname, img } = useAuth();
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
 
   //TODO: combine this with same call in userFeed and send down through state
   // const { userImgURL, username, fullname } = useGetLoggedInUserInfo();
@@ -61,22 +65,16 @@ const FeedRightInfo = () => {
 
   return (
     <div className='right-info-container'>
-      {displayUser && (
+      {authenticatedUser && (
         <div className='top-user-info'>
-          <Link
-            to={`/${pageData.username}`}
-            aria-label={`move to ${pageData.username}'s profile`}
-          >
-            <img src={pageData.userImgURL} alt='user profile' />
+          <Link to={`/${username}`}>
+            <img src={userImgURL} alt='user profile' />
           </Link>
           <div className='user-name-div'>
-            <Link
-              to={`/${pageData.username}`}
-              aria-label={`move to ${pageData.username}'s profile`}
-            >
-              <div className='user-name-top'>{pageData.username}</div>
+            <Link to={`/${username}`}>
+              <div className='user-name-top'>{username}</div>
             </Link>
-            <div className='user-name-bottom'>{pageData.fullname}</div>
+            <div className='user-name-bottom'>{fullname}</div>
           </div>
           <div className='button-div'>
             <button aria-label='click to log out' onClick={handleLogout}>
@@ -85,7 +83,7 @@ const FeedRightInfo = () => {
           </div>
         </div>
       )}
-      {!displayUser && (
+      {!authenticatedUser && (
         <div className='login-div'>
           <Link to='/accounts/login' aria-label='click to log in'>
             <button>Log In</button>
