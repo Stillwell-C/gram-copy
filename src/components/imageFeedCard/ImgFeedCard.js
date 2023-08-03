@@ -46,7 +46,7 @@ const ImgFeedCard = React.forwardRef(
     //   setImgURL();
     // }, []);
 
-    const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/${post?.user?.userImgKey}`;
+    const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${post?.user?.userImgKey}`;
     const imgURL = `https://res.cloudinary.com/danscxcd2/image/upload/${post?.imgKey}`;
     // `https://res.cloudinary.com/danscxcd2/image/upload/w_200,h_100,c_fill,q_100/${post?.imgKey}.jpg`;
 
