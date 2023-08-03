@@ -1,47 +1,40 @@
-import { useState, useRef, useCallback, useEffect, useContext } from "react";
-import useGetPosts from "../../hooks/useGetPosts";
+import { useState, useRef, useCallback, useEffect } from "react";
 import "./imageFeed.scss";
 import ImgFeedCard from "../../components/imageFeedCard/ImgFeedCard";
-import { getURL } from "../../firebase";
 import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
-import useGetLoggedInUserInfo from "../../hooks/useGetLoggedInUserInfo";
-import useGetLoggedInUserInfoFunction from "../../hooks/useGetLoggedInUserInfoFunction";
-import { AuthContext } from "../../context/authContext";
 import { useGetMultiplePostsQuery } from "../../features/posts/postsApiSlice";
 
 const ImageFeed = () => {
-  const { currentUser } = useContext(AuthContext);
-
   const [pageNum, setPageNum] = useState(1);
-  const [userLikedPosts, setUserLikedPosts] = useState([]);
-  const [userSavedPosts, setUserSavedPosts] = useState([]);
-  const { loading, error, errorInfo, posts, hasMoreData } =
-    useGetPosts(pageNum);
-  const getUserInfo = useGetLoggedInUserInfoFunction();
+  const [totalPages, setTotalPages] = useState(1);
   const [feedData, setFeedData] = useState([]);
+
+  const postLoadLimit = 5;
 
   const {
     data: postData,
+    isFetching,
     isLoading,
     isError,
     error: postError,
-  } = useGetMultiplePostsQuery({ page: pageNum, limit: 5 });
+  } = useGetMultiplePostsQuery({ page: pageNum, limit: postLoadLimit });
 
   useEffect(() => {
     if (postData) {
       console.log(postData);
-      setFeedData((prev) => [...prev, ...postData.posts]);
+      setTotalPages(Math.ceil(postData?.totalPosts / postLoadLimit) || 1);
+      setFeedData((prev) => [...prev, ...postData?.posts]);
     }
   }, [postData]);
 
   const observer = useRef();
   const lastPostRef = useCallback(
     (post) => {
-      if (loading) return;
+      if (isFetching || isLoading) return;
       if (observer.current) observer.current.disconnect();
 
-      observer.current = new IntersectionObserver((posts) => {
-        if (posts[0].isIntersecting && hasMoreData) {
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && pageNum < totalPages) {
           setPageNum((prev) => prev + 1);
           console.log("near last post");
         }
@@ -49,52 +42,26 @@ const ImageFeed = () => {
 
       if (post) observer.current.observe(post);
     },
-    [loading, hasMoreData]
+    [isFetching, isLoading, totalPages]
   );
 
   useEffect(() => {
-    console.log("useEffect", posts);
-    console.log("more data", hasMoreData);
-  }, [posts]);
-
-  useEffect(() => {
-    const setInfo = async () => {
-      const userInfo = await getUserInfo();
-      setUserLikedPosts(userInfo.likedPosts);
-      setUserSavedPosts(userInfo.savedPosts);
-    };
-
-    currentUser?.displayName && setInfo();
-  }, [currentUser]);
+    console.log("feedData", feedData);
+  }, [feedData]);
 
   const content = feedData.map((post, i) => {
-    if (posts.length === i + 1) {
-      return (
-        <ImgFeedCard
-          key={post._id}
-          post={post}
-          userLikedPosts={userLikedPosts}
-          userSavedPosts={userSavedPosts}
-          ref={lastPostRef}
-        />
-      );
+    if (feedData.length === i + 1) {
+      return <ImgFeedCard key={post._id} post={post} ref={lastPostRef} />;
     }
-    return (
-      <ImgFeedCard
-        key={post._id}
-        post={post}
-        userLikedPosts={userLikedPosts}
-        userSavedPosts={userSavedPosts}
-      />
-    );
+    return <ImgFeedCard key={post._id} post={post} />;
   });
 
   return (
     <div className='feedContainer'>
       <>
         {content}
-        {loading && <LoadingSpinner />}
-        {error && errorInfo.message}
+        {(isFetching || isLoading) && <LoadingSpinner />}
+        {isError && postError?.data?.message}
       </>
     </div>
   );
