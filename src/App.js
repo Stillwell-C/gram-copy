@@ -8,17 +8,20 @@ import ProfileMain from "./components/profileMain/ProfileMain";
 import Layout from "./components/Layout";
 import EditProfileMain from "./components/editProfileMain/EditProfileMain";
 import ChatMain from "./components/chatComponents/chatMain/ChatMain";
+import PersistentLogin from "./features/auth/PersistentLogin";
 
 function App() {
   return (
     <Routes>
-      <Route path='/' element={<Layout />}>
-        <Route index element={<UserFeed />} />
-        <Route path='/:userParam' element={<ProfileMain />} />
-        <Route path='/accounts/:accountsPath' element={<Login />} />
-        <Route path='/direct/inbox' element={<ChatMain />} />
-        <Route path='/accounts/edit' element={<EditProfileMain />} />
-        <Route path='/accounts/password' element={<EditProfileMain />} />
+      <Route element={<PersistentLogin />}>
+        <Route path='/' element={<Layout />}>
+          <Route index element={<UserFeed />} />
+          <Route path='/:userParam' element={<ProfileMain />} />
+          <Route path='/accounts/:accountsPath' element={<Login />} />
+          <Route path='/direct/inbox' element={<ChatMain />} />
+          <Route path='/accounts/edit' element={<EditProfileMain />} />
+          <Route path='/accounts/password' element={<EditProfileMain />} />
+        </Route>
       </Route>
     </Routes>
   );
