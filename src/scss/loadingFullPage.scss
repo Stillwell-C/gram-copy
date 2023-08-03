@@ -1,6 +1,8 @@
-img {
-  width: clamp(250px, 80vw, 500px);
-  animation: colorShift 20s infinite alternate;
+.loadingFullPage {
+  img {
+    width: clamp(250px, 80vw, 500px);
+    animation: colorShift 20s infinite alternate;
+  }
 }
 
 @keyframes colorShift {
