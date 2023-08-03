@@ -49,13 +49,13 @@ const LoginForm = () => {
   const signInUser = async () => {
     setLoading(true);
     setErrorMsg("");
-    setPersistentLogin(true);
     const loginResponse = await login({ userIdentifier: email, password });
     dispatch(setCredentials({ accessToken: loginResponse.data.accessToken }));
   };
 
   useEffect(() => {
     if (isSuccess) {
+      localStorage.setItem("persistLogin", JSON.stringify(true));
       setEmail("");
       setPassword("");
       navigate("/");
