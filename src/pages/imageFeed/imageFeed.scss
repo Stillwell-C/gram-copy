@@ -4,11 +4,12 @@
   min-height: 100%;
   min-width: 470px;
   margin-top: 60px;
+  //needs to be disabled for mobile
   margin-right: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
+  // display: flex;
+  // align-items: center;
+  // justify-content: flex-start;
+  // flex-direction: column;
 
   @include small {
     margin-top: 0px;
