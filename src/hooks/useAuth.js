@@ -12,10 +12,10 @@ const useAuth = () => {
     const { username, id, img, roles } = decodedToken.UserInfo;
     isAdmin = roles?.some((role) => role.match(/admin/i));
 
-    return { username, id, img, isAdmin, loggedIn: true };
+    return { username, id, img, isAdmin, authenticatedUser: true };
   }
 
-  return { username: "", id: "", img: "", isAdmin, loggedIn: false };
+  return { username: "", id: "", img: "", isAdmin, authenticatedUser: false };
 };
 
 export default useAuth;
