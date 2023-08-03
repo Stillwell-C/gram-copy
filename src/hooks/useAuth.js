@@ -9,13 +9,20 @@ const useAuth = () => {
   if (token) {
     const decodedToken = jwtDecode(token);
     console.log(decodedToken);
-    const { username, id, img, roles } = decodedToken.UserInfo;
+    const { username, id, img, roles, fullname } = decodedToken.UserInfo;
     isAdmin = roles?.some((role) => role.match(/admin/i));
 
-    return { username, id, img, isAdmin, authenticatedUser: true };
+    return { username, id, img, isAdmin, fullname, authenticatedUser: true };
   }
 
-  return { username: "", id: "", img: "", isAdmin, authenticatedUser: false };
+  return {
+    username: "",
+    id: "",
+    img: "",
+    fullname: "",
+    isAdmin,
+    authenticatedUser: false,
+  };
 };
 
 export default useAuth;
