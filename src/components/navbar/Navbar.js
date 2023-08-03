@@ -24,6 +24,7 @@ import useSearchForUser from "../../hooks/useSearchForUser";
 
 import HeaderBar from "./../headerBar/HeaderBar";
 import useAuth from "../../hooks/useAuth";
+import { useSendLogoutMutation } from "../../features/auth/authApiSlice";
 
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
@@ -39,6 +40,17 @@ const Navbar = () => {
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
 
+  const [sendLogout, { isLoading, isSuccess, isError, error }] =
+    useSendLogoutMutation();
+
+  useEffect(() => {
+    if (isSuccess) window.location.reload();
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) window.location.reload();
+  }, [isError]);
+
   const handleAddPostModal = () => {
     if (!authenticatedUser) {
       navigate("/accounts/login");
@@ -48,11 +60,9 @@ const Navbar = () => {
   };
 
   const handleLogout = async () => {
-    await signOut(auth);
-    navigate("/");
-    // dispatch({
-    //   type: "LOGOUT",
-    // });
+    if (authenticatedUser) {
+      sendLogout();
+    }
   };
 
   const handleSearch = async (searchInput) => {
