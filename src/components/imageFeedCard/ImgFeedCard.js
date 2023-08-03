@@ -116,7 +116,7 @@ const ImgFeedCard = React.forwardRef(
     };
 
     const imgContent = (
-      <article>
+      <>
         <div className='card-top'>
           <Link
             to={`/${post.user.username}`}
@@ -282,15 +282,15 @@ const ImgFeedCard = React.forwardRef(
             reportId={post.id}
           />
         )}
-      </article>
+      </>
     );
 
     const imgCard = ref ? (
-      <div className='card' ref={ref}>
+      <article className='card' ref={ref}>
         {imgContent}
-      </div>
+      </article>
     ) : (
-      <div className='card'>{imgContent}</div>
+      <article className='card'>{imgContent}</article>
     );
 
     return imgCard;
