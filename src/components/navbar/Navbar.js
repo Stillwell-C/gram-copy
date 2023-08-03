@@ -23,6 +23,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import useSearchForUser from "../../hooks/useSearchForUser";
 
 import HeaderBar from "./../headerBar/HeaderBar";
+import useAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
@@ -32,13 +33,12 @@ const Navbar = () => {
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
   const userSearch = useSearchForUser();
+  const { authenticatedUser, username } = useAuth();
   const navbarRef = useRef();
   const headerbarRef = useRef();
 
-  const { currentUser } = useContext(AuthContext);
-
   const handleAddPostModal = () => {
-    if (!currentUser) {
+    if (!authenticatedUser) {
       navigate("/accounts/login");
       return;
     }
@@ -134,9 +134,9 @@ const Navbar = () => {
         </div>
         <div className='navbar-row'>
           <Link
-            to={currentUser ? `/${currentUser.displayName}` : "/accounts/login"}
+            to={authenticatedUser ? `/${username}` : "/accounts/login"}
             aria-label={`${
-              currentUser ? "move to profile" : "move to login page"
+              authenticatedUser ? "move to profile" : "move to login page"
             }`}
           >
             <div className='navbar-line'>
@@ -172,7 +172,7 @@ const Navbar = () => {
               </button>
             </div>
             <div className='menu-line'>
-              {currentUser ? (
+              {authenticatedUser ? (
                 <button onClick={handleLogout}>Log out</button>
               ) : (
                 <Link to='/accounts/login'>Log in</Link>
@@ -265,13 +265,7 @@ const Navbar = () => {
               </Link>
             </div>
             <div className='navbar-row'>
-              <Link
-                to={
-                  currentUser
-                    ? `/${currentUser.displayName}`
-                    : "/accounts/login"
-                }
-              >
+              <Link to={authenticatedUser ? `/${username}` : "/accounts/login"}>
                 <div className='navbar-line'>
                   <img src={profile} alt='' aria-hidden='true' />
                   <span>Profile</span>
@@ -308,7 +302,7 @@ const Navbar = () => {
                 </button>
               </div>
               <div className='menu-line'>
-                {currentUser ? (
+                {authenticatedUser ? (
                   <button onClick={handleLogout}>Log out</button>
                 ) : (
                   <Link to='/accounts/login'>Log in</Link>
