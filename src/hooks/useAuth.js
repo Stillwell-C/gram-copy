@@ -8,7 +8,6 @@ const useAuth = () => {
 
   if (token) {
     const decodedToken = jwtDecode(token);
-    console.log(decodedToken);
     const { username, id, img, roles, fullname } = decodedToken.UserInfo;
     isAdmin = roles?.some((role) => role.match(/admin/i));
 
