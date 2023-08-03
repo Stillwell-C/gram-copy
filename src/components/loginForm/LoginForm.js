@@ -1,21 +1,16 @@
-import { useContext, useEffect, useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db, getURL } from "../../firebase";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import logo from "../../assets/Instagram_logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
+import { useLoginMutation } from "../../features/auth/authApiSlice";
+import usePersistentLogin from "../../hooks/usePersistentLogin";
+import { setCredentials } from "../../features/auth/authSlice";
 
 const LoginForm = () => {
-  const [error, setError] = useState(false);
+  const errRef = useRef();
+
+  // const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [email, setEmail] = useState("");
   const [emailClick, setEmailClick] = useState(false);
@@ -25,6 +20,10 @@ const LoginForm = () => {
   const [passwordClass, setPasswordClass] = useState("form-input-div");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [persistentLogin, setPersistentLogin] = usePersistentLogin();
+
+  const [login, { isLoading, error, isSuccess, isError }] = useLoginMutation();
 
   const { dispatch } = useContext(AuthContext);
 
@@ -48,50 +47,36 @@ const LoginForm = () => {
   };
 
   const signInUser = async () => {
-    try {
-      setLoading(true);
-      setError(false);
-      setErrorMsg("");
-      const userCredentials = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      // const userQuery = await getDocs(
-      //   query(collection(db, "userInfo"), where("email", "==", email))
-      // );
-      // const userInfo = userQuery.docs[0].data();
-      // const userImgURL = await getURL(userInfo.userImg);
-      const userQuery = await getDoc(
-        doc(db, "userInfo", userCredentials.user.uid)
-      );
-      const userInfo = userQuery.data();
-      // dispatch({
-      //   type: "LOGIN",
-      //   payload: {
-      //     ...userCredentials.user,
-      //     ...userInfo,
-      //     userImgURL: userInfo.userImgURL,
-      //     //remove later
-      //     userInfoID: userInfo.uid,
-      //   },
-      // });
-      navigate("/");
-    } catch (err) {
-      setError(true);
-      setErrorMsg(err.code);
-      console.log(err.code, err.message);
-      setLoading(false);
-    }
+    setLoading(true);
+    setErrorMsg("");
+    setPersistentLogin(true);
+    const loginResponse = await login({ userIdentifier: email, password });
+    dispatch(setCredentials({ accessToken: loginResponse.data.accessToken }));
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      setEmail("");
+      setPassword("");
+      navigate("/");
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (isError) {
+      errRef.current.focus();
+    }
+  }, [isError]);
 
   return (
     <>
       <div className='login-top'>
         <img src={logo} alt='instagram logo' className='login-logo' />
-        {error && (
+        {isError && (
           <div className='error-div'>
-            <div className='error-msg'>{errorMsg}</div>
+            <div className='error-msg' aria-live='assertive' ref={errRef}>
+              {error?.data?.message}
+            </div>
           </div>
         )}
         <form className='login-form' onSubmit={handleSignIn}>
@@ -136,7 +121,7 @@ const LoginForm = () => {
               </button>
             </div>
           </div>
-          {loading ? (
+          {isLoading ? (
             <div className='loading-spinner-div'>
               <LoadingSpinner />
             </div>
