@@ -33,9 +33,11 @@ const Navbar = () => {
   const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
   const userSearch = useSearchForUser();
-  const { authenticatedUser, username } = useAuth();
+  const { authenticatedUser, username, img } = useAuth();
   const navbarRef = useRef();
   const headerbarRef = useRef();
+
+  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
 
   const handleAddPostModal = () => {
     if (!authenticatedUser) {
@@ -140,7 +142,11 @@ const Navbar = () => {
             }`}
           >
             <div className='navbar-line'>
-              <img src={profile} alt='' aria-hidden='true' />
+              <img
+                src={authenticatedUser ? userImgURL : profile}
+                alt=''
+                aria-hidden='true'
+              />
             </div>
           </Link>
         </div>
@@ -267,7 +273,12 @@ const Navbar = () => {
             <div className='navbar-row'>
               <Link to={authenticatedUser ? `/${username}` : "/accounts/login"}>
                 <div className='navbar-line'>
-                  <img src={profile} alt='' aria-hidden='true' />
+                  <img
+                    src={authenticatedUser ? userImgURL : profile}
+                    className={authenticatedUser ? "userProfileImg" : ""}
+                    alt=''
+                    aria-hidden='true'
+                  />
                   <span>Profile</span>
                 </div>
               </Link>
