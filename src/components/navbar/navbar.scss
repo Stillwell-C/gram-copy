@@ -46,6 +46,13 @@
       transform: scale(1);
     }
 
+    .userProfileImg {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
     span {
       padding-left: 16px;
     }
@@ -197,6 +204,7 @@
         padding: 13px 0;
         cursor: pointer;
         min-height: 87px;
+        margin-bottom: 10px;
 
         a {
           margin: 4px 0;
@@ -221,7 +229,6 @@
         @include large {
           display: block;
           padding: 25px 12px;
-          margin-bottom: 10px;
           border-radius: 2rem;
 
           a {
@@ -293,6 +300,13 @@
           height: 24px;
           max-width: 24px;
           transform: scale(1);
+        }
+
+        .userProfileImg {
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+          object-fit: cover;
         }
 
         span {

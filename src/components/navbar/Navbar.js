@@ -144,6 +144,7 @@ const Navbar = () => {
             <div className='navbar-line'>
               <img
                 src={authenticatedUser ? userImgURL : profile}
+                className={authenticatedUser ? "userProfileImg" : ""}
                 alt=''
                 aria-hidden='true'
               />
