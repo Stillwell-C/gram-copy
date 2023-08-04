@@ -16,7 +16,9 @@ import TagUsersModal from "../tagUsersModal/TagUsersModal";
 
 const ProfilePostCard = React.forwardRef(
   ({ post, userLikedPosts, userSavedPosts, postType }, ref) => {
-    const { userImgURL } = useGetUserInfo(post.userName, "username");
+    // const { userImgURL } = useGetUserInfo(post.userName, "username");
+
+    const imgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_300,c_fill/${post?.imgKey}`;
 
     const navigate = useNavigate();
 
@@ -36,17 +38,17 @@ const ProfilePostCard = React.forwardRef(
       if (!currentUser) return;
       //TODO: get updated info
       //Figure out best way to do this
-      const liked = userLikedPosts.filter(
-        (singleLikedPost) => singleLikedPost === post.id
-      );
-      const saved = userSavedPosts.filter(
-        (singleSavedPost) => singleSavedPost === post.id
-      );
-      if (liked.length) {
-        setLiked(true);
-        setInitialLike(true);
-      }
-      if (saved.length) setSaved(true);
+      // const liked = userLikedPosts.filter(
+      //   (singleLikedPost) => singleLikedPost === post.id
+      // );
+      // const saved = userSavedPosts.filter(
+      //   (singleSavedPost) => singleSavedPost === post.id
+      // );
+      // if (liked.length) {
+      //   setLiked(true);
+      //   setInitialLike(true);
+      // }
+      // if (saved.length) setSaved(true);
     }, []);
 
     const handleLike = () => {
@@ -85,7 +87,7 @@ const ProfilePostCard = React.forwardRef(
         <img
           className='post-img'
           alt={post.altText ? post.altText : "user upload"}
-          src={post.imgURL}
+          src={imgURL}
         />
         <div className='hover-div'>
           {currentUser?.uid === post.userUid && postType === "post" && (
@@ -113,11 +115,11 @@ const ProfilePostCard = React.forwardRef(
           <div className='icon-div'>
             <div className='icon-row'>
               <img src={heart} alt='heart icon' />
-              <span>{post.likedUsers.length}</span>
+              <span>{post.likes}</span>
             </div>
             <div className='icon-row'>
               <img src={message} alt='message bubble icon' />
-              <span>{post.comments.length}</span>
+              <span>{post?.comments?.length || 0}</span>
             </div>
           </div>
           <div
@@ -156,7 +158,7 @@ const ProfilePostCard = React.forwardRef(
         {showPhotoModal && (
           <PhotoModal
             setShowPhotoModal={setShowPhotoModal}
-            userImgURL={userImgURL}
+            // userImgURL={userImgURL}
             post={post}
             liked={liked}
             saved={saved}
