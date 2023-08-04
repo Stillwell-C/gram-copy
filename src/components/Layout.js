@@ -3,12 +3,13 @@ import Navbar from "./navbar/Navbar";
 import styles from "../scss/layout.module.scss";
 import "../scss/global.scss";
 import { useSelector } from "react-redux";
-import { selectCredentialsLoading } from "../features/auth/authSlice";
+import { selectLoadingState } from "../features/display/displaySlice";
+import LoadingFullPage from "./LoadingFullPage";
 
 const Layout = () => {
   //Use this to not display navbar on pages
   const { pathname } = useLocation();
-  const authLoading = useSelector(selectCredentialsLoading);
+  const loadingState = useSelector(selectLoadingState);
 
   let displayNav = true;
   if (
@@ -16,11 +17,9 @@ const Layout = () => {
     pathname.match(/\/accounts\/emailsignup/i)
   ) {
     displayNav = false;
-  } else if (authLoading) {
-    displayNav = false;
   }
 
-  return (
+  const loadedPageDisplay = (
     <div className={styles.layout}>
       {displayNav && <Navbar />}
       <div className={styles.outlet}>
@@ -28,6 +27,8 @@ const Layout = () => {
       </div>
     </div>
   );
+
+  return !loadingState ? loadedPageDisplay : <LoadingFullPage />;
 };
 
 export default Layout;
