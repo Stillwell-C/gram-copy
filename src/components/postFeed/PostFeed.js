@@ -3,6 +3,8 @@ import CreatePostModal from "../createPostModal/CreatePostModal";
 import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 import NoUserImgProfileFeed from "../noUserImgProfileFeed/NoUserImgProfileFeed";
 import ProfilePostCard from "../profilePostCard/ProfilePostCard";
+import useAuth from "../../hooks/useAuth";
+import { useParams } from "react-router-dom";
 
 const PostFeed = ({
   posts,
@@ -13,6 +15,11 @@ const PostFeed = ({
   userPostsFeed = false,
 }) => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
+
+  const { userID } = useParams();
+
+  const { username } = useAuth();
+  const userCheck = userID === username;
 
   const content = posts.map((post, i) => {
     if (posts.length === i + 1) {
@@ -37,7 +44,7 @@ const PostFeed = ({
       <>
         {content}
         {isFetching && <LoadingSpinner />}
-        {posts.length <= 0 && userPostsFeed && (
+        {posts.length <= 0 && userPostsFeed && userCheck && (
           <NoUserImgProfileFeed handleAddPostModal={handleAddPostModal} />
         )}
         {isError && error?.data?.message}
