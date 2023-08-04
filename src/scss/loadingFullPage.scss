@@ -1,7 +1,16 @@
 .loadingFullPage {
+  background-color: #ffffff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 999;
+  pointer-events: none;
+
   img {
-    width: clamp(250px, 80vw, 500px);
-    animation: colorShift 20s infinite alternate;
+    width: clamp(75px, 20vw, 250px);
+    animation: colorShift 5s infinite alternate;
   }
 }
 
