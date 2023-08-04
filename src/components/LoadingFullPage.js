@@ -4,13 +4,18 @@ import Styles from "../scss/globalStyles.module.scss";
 import LayoutStyles from "../scss/layout.module.scss";
 import "../scss/loadingFullPage.scss";
 
-const LoadingFullPage = () => {
+const LoadingFullPage = ({ loadingState }) => {
   return (
-    <div
-      className={`${LayoutStyles.layout} ${Styles.flexAlignCenter} ${Styles.flexJustifyCenter} loadingFullPage`}
+    <main
+      className={`loadingFullPage`}
+      style={{ display: loadingState ? "block" : "none" }}
     >
-      <img src={gramImg} alt='Gram Copy Logo' />
-    </div>
+      <div
+        className={`${LayoutStyles.layout} ${Styles.flexAlignCenter} ${Styles.flexJustifyCenter}`}
+      >
+        <img src={gramImg} alt='Gram Copy Logo' />
+      </div>
+    </main>
   );
 };
 
