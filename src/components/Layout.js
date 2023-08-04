@@ -19,16 +19,17 @@ const Layout = () => {
     displayNav = false;
   }
 
-  const loadedPageDisplay = (
-    <div className={styles.layout}>
-      {displayNav && <Navbar />}
-      <div className={styles.outlet}>
-        <Outlet />
+  return (
+    <>
+      <LoadingFullPage loadingState={loadingState} />;
+      <div className={styles.layout}>
+        {displayNav && <Navbar />}
+        <div className={styles.outlet}>
+          <Outlet />
+        </div>
       </div>
-    </div>
+    </>
   );
-
-  return !loadingState ? loadedPageDisplay : <LoadingFullPage />;
 };
 
 export default Layout;
