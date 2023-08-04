@@ -16,7 +16,7 @@ function App() {
       <Route element={<PersistentLogin />}>
         <Route path='/' element={<Layout />}>
           <Route index element={<UserFeed />} />
-          <Route path='/:userParam' element={<ProfileMain />} />
+          <Route path='/:userID' element={<ProfileMain />} />
           <Route path='/accounts/:accountsPath' element={<Login />} />
           <Route path='/direct/inbox' element={<ChatMain />} />
           <Route path='/accounts/edit' element={<EditProfileMain />} />
