@@ -1,10 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
-
 import Footer from "../footer/Footer";
-
-import useGetUserInfo from "../../hooks/useGetUserInfo";
 import "./profileMain.scss";
 import sprocket from "../../assets/gear-wide-svgrepo-com.svg";
 import grid from "../../assets/grid-svgrepo-com.svg";
@@ -12,23 +9,72 @@ import bookmark from "../../assets/bookmark-svgrepo-com.svg";
 import tagged from "../../assets/user-square-svgrepo-com.svg";
 import defaultProfilePic from "../../assets/Default_pfp.svg";
 import threeDots from "../../assets/three-dots-line-svgrepo-com.svg";
-import PostFeed from "../postFeed/PostFeed";
 import useUploadProfileImg from "../../hooks/useUploadProfileImg";
-import useGetLoggedInUserInfo from "../../hooks/useGetLoggedInUserInfo";
-import useGetUserInfoFunction from "../../hooks/useGetUserInfoFunction";
 import useGetLoggedInUserInfoFunction from "../../hooks/useGetLoggedInUserInfoFunction";
 import useFollowUnfollow from "../../hooks/useFollowUnfollow";
-import { doc, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebase";
-import PostFeedFromArr from "../postFeedFromArr/PostFeedFromArr";
 import AdditionalOptionsModal from "../additionalOptionsModal/AdditionalOptionsModal";
 import ReportModal from "../reportModal/ReportModal";
 import FollowUserModal from "../followUserModal/FollowUserModal";
+import useAuth from "../../hooks/useAuth";
+import { useGetUserQuery } from "../../features/users/usersApiSlice";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../../features/display/displaySlice";
+import ProfilePosts from "../ProfilePosts";
 
 const ProfileMain = () => {
-  const { userParam } = useParams();
+  const { userID } = useParams();
+  const { authenticatedUser, username } = useAuth();
+  const dispatch = useDispatch();
+
+  // const url = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${imgURL}`;
+
+  const [pageInfo, setPageInfo] = useState({
+    followers: 0,
+    following: 0,
+    posts: 0,
+    fullname: "",
+    userBio: "",
+    id: "",
+    banned: false,
+    userImgURL: defaultProfilePic,
+  });
+  const [displayOwnPage, setDisplayOwnPage] = useState(false);
+
+  const { data: userData, isLoading, isError, error } = useGetUserQuery(userID);
+
+  useEffect(() => {
+    if (isLoading) {
+      dispatch(setLoading(true));
+      return;
+    }
+    dispatch(setLoading(false));
+    setPageInfo({
+      followers: userData?.followerNo,
+      following: userData?.followingNo,
+      posts: userData?.postNo,
+      fullname: userData?.fullname,
+      userBio: userData?.userBio,
+      id: userData?._id,
+      banned: userData?.false,
+      userImgURL: `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${userData?.userImgKey}`,
+    });
+    console.log(userData);
+  }, [isLoading]);
+
+  // useEffect(() => {
+  //   console.log("success ", isSuccess);
+  //   if (!isSuccess) return;
+
+  // }, [isSuccess]);
+
+  useEffect(() => {
+    if (authenticatedUser && username === userID) {
+      setDisplayOwnPage(true);
+    }
+  }, []);
+
   const { currentUser } = useContext(AuthContext);
-  const getPageInfo = useGetUserInfoFunction();
+  // const getPageInfo = useGetUserInfoFunction();
   const getUserInfo = useGetLoggedInUserInfoFunction();
 
   const navigate = useNavigate();
@@ -37,10 +83,7 @@ const ProfileMain = () => {
 
   const imgInputRef = useRef(null);
 
-  const [pageLoading, setPageLoading] = useState(true);
   const [displaySelector, setDisplaySelector] = useState("posts");
-  const [pageInfo, setPageInfo] = useState({});
-  const [pageUserUid, setPageUserUid] = useState(null);
   const [isFriend, setIsFriend] = useState(null);
   const [initialFriend, setInitialFriend] = useState(false);
   const [friendOffset, setFriendOffset] = useState(0);
@@ -50,81 +93,6 @@ const ProfileMain = () => {
   const [showReportModal, setShowReportModal] = useState(false);
   const [showFollowModal, setShowFollowModal] = useState(false);
   const [followModalType, setFollowModalType] = useState(null);
-
-  useEffect(() => {
-    setPageLoading(true);
-    if (userParam === currentUser?.username) {
-      setPageInfo({
-        pageUserPosts: [],
-        pageFollowers: [],
-        pageFollowing: [],
-        pageFullname: [],
-        pageUserBio: [],
-        pageUserImgURL: currentUser.photoURL,
-        pageUid: "",
-        userLikedPosts: [],
-        userSavedPosts: [],
-      });
-    }
-    if (!currentUser?.displayName || userParam !== currentUser?.username) {
-      setPageInfo({
-        pageUserPosts: [],
-        pageFollowers: [],
-        pageFollowing: [],
-        pageFullname: [],
-        pageUserBio: [],
-        pageUserImgURL: defaultProfilePic,
-        userLikedPosts: [],
-        userSavedPosts: [],
-      });
-    }
-    const getAllPageData = async () => {
-      const pageInfo = await getPageInfo(userParam, "username");
-      const noUserData = {
-        likedPosts: [],
-        savedPosts: [],
-      };
-      const userInfo = currentUser?.displayName
-        ? await getUserInfo()
-        : noUserData;
-      const dataObj = {
-        pageUserPosts: pageInfo.userPosts,
-        pageFollowers: pageInfo.followers,
-        pageFollowing: pageInfo.following,
-        pageFullname: pageInfo.fullname,
-        pageUserBio: pageInfo.userBio,
-        pageUserImgURL: pageInfo.userImgURL,
-        userLikedPosts: userInfo.likedPosts,
-        userSavedPosts: userInfo.savedPosts,
-      };
-      setPageInfo(dataObj);
-      setPageUserUid(pageInfo.uid);
-    };
-    getAllPageData();
-  }, [userParam]);
-
-  useEffect(() => {
-    setPageLoading(false);
-  }, [pageInfo.pageUserImgURL]);
-
-  useEffect(() => {
-    const checkFriend = () => {
-      const unsub = onSnapshot(doc(db, "userInfo", currentUser.uid), (doc) => {
-        const snapShotData = doc.data();
-        const friendStatus = snapShotData.following.includes(pageUserUid);
-        setIsFriend(friendStatus);
-        setInitialFriend(friendStatus);
-      });
-
-      return () => {
-        unsub();
-      };
-    };
-
-    if (userParam === currentUser?.displayName) return;
-    currentUser?.uid && checkFriend();
-    //see if there are better params for this
-  }, [pageInfo, isFriend]);
 
   const handleImgClick = () => {
     imgInputRef.current.click();
@@ -172,7 +140,7 @@ const ProfileMain = () => {
       navigate("/accounts/login");
       return;
     }
-    followUser(pageUserUid);
+    followUser(pageInfo.id);
     setIsFriend(true);
     initialFriend ? setFriendOffset(0) : setFriendOffset(1);
   };
@@ -182,7 +150,7 @@ const ProfileMain = () => {
       navigate("/accounts/login");
       return;
     }
-    unfollowUser(pageUserUid);
+    unfollowUser(pageInfo.id);
     setIsFriend(false);
     initialFriend ? setFriendOffset(-1) : setFriendOffset(0);
   };
@@ -205,190 +173,168 @@ const ProfileMain = () => {
     setShowFollowModal(true);
   };
 
+  const profileImg = displayOwnPage ? (
+    <>
+      <button
+        title='Click to change profile picture'
+        aria-label='click to change profile photo'
+        onClick={handleImgClick}
+      >
+        <img src={pageInfo.userImgURL} alt='user profile' />
+      </button>
+      <form>
+        <input
+          type='file'
+          className='file-upload-input'
+          accept='image/png, image/jpeg'
+          ref={imgInputRef}
+          onChange={handleImgUpload}
+        />
+      </form>
+    </>
+  ) : (
+    <img src={pageInfo.userImgURL} alt='user profile' />
+  );
+
+  const userInfoButtons = displayOwnPage ? (
+    <div className='user-info-buttons'>
+      <div className='edit-profile'>
+        <Link to='/accounts/edit' aria-label='edit profile information'>
+          <button className='edit-profile-btn'>Edit profile</button>
+        </Link>
+      </div>
+      <div className='user-settings'>
+        <button className='user-settings-btn' aria-label='user settings'>
+          <img src={sprocket} alt='' aria-hidden='true' />
+        </button>
+      </div>
+    </div>
+  ) : (
+    <div className='user-info-buttons'>
+      <div className='follow-div'>{friendButton}</div>
+      <div className='message-div'>
+        <button
+          className='message-button'
+          aria-label='click to message user'
+          type='button'
+          onClick={handleMessage}
+        >
+          Message
+        </button>
+      </div>
+      <div className='options-div'>
+        <button
+          className='options-button'
+          aria-label='click for more options'
+          onClick={() => setShowAdditionalOptionsModal(true)}
+        >
+          <img src={threeDots} alt='' aria-hidden='true' />
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <div className='profile-main-container'>
-      {!pageLoading && (
-        <div className='profile-content-container'>
-          <div className='profile-top'>
-            <div className='profile-img-div'>
-              {userParam === currentUser?.displayName ? (
-                <button
-                  title='Click to change profile picture'
-                  aria-label='click to change profile photo'
-                  onClick={handleImgClick}
-                >
-                  <img src={pageInfo.pageUserImgURL} alt='user profile' />
-                </button>
-              ) : (
-                <img src={pageInfo.pageUserImgURL} alt='user profile' />
-              )}
-              {userParam === currentUser?.displayName && (
-                <form>
-                  <input
-                    type='file'
-                    className='file-upload-input'
-                    accept='image/png, image/jpeg'
-                    ref={imgInputRef}
-                    onChange={handleImgUpload}
-                  />
-                </form>
-              )}
+      <div className='profile-content-container'>
+        <div className='profile-top'>
+          <div className='profile-img-div'>{profileImg}</div>
+          <div className='user-info'>
+            <div className='user-info-top'>
+              <div className='user-info-username'>{userID}</div>
+              {userInfoButtons}
             </div>
-            <div className='user-info'>
-              <div className='user-info-top'>
-                <div className='user-info-username'>{userParam}</div>
-                {userParam === currentUser?.displayName ? (
-                  <div className='user-info-buttons'>
-                    <div className='edit-profile'>
-                      <Link
-                        to='/accounts/edit'
-                        aria-label='edit profile information'
-                      >
-                        <button className='edit-profile-btn'>
-                          Edit profile
-                        </button>
-                      </Link>
-                    </div>
-                    <div className='user-settings'>
-                      <button
-                        className='user-settings-btn'
-                        aria-label='user settings'
-                      >
-                        <img src={sprocket} alt='' aria-hidden='true' />
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className='user-info-buttons'>
-                    <div className='follow-div'>{friendButton}</div>
-                    <div className='message-div'>
-                      <button
-                        className='message-button'
-                        aria-label='click to message user'
-                        type='button'
-                        onClick={handleMessage}
-                      >
-                        Message
-                      </button>
-                    </div>
-                    <div className='options-div'>
-                      <button
-                        className='options-button'
-                        aria-label='click for more options'
-                        onClick={() => setShowAdditionalOptionsModal(true)}
-                      >
-                        <img src={threeDots} alt='' aria-hidden='true' />
-                      </button>
-                    </div>
-                  </div>
-                )}
+            <div className='user-info-middle'>
+              <div>
+                <span className='user-figure'>{pageInfo.posts}</span>
+                <span className='category'>
+                  {pageInfo.posts === 1 ? "post" : "posts"}
+                </span>
               </div>
-              <div className='user-info-middle'>
-                <div>
-                  <span className='user-figure'>
-                    {pageInfo.pageUserPosts.length}
-                  </span>
-                  <span className='category'>
-                    {pageInfo.pageUserPosts.length === 1 ? "post" : "posts"}
-                  </span>
-                </div>
-                <div className='clickable' onClick={handleFollowerModal}>
-                  <span className='user-figure'>
-                    {pageInfo.pageFollowers.length + friendOffset}
-                  </span>
-                  {pageInfo.pageFollowers.length + friendOffset === 1
-                    ? "follower"
-                    : "followers"}
-                  <span className='category'></span>
-                </div>
-                <div className='clickable' onClick={handleFollowingModal}>
-                  <span className='user-figure'>
-                    {pageInfo.pageFollowing.length}
-                  </span>
-                  following<span className='category'></span>
-                </div>
+              <div className='clickable' onClick={handleFollowerModal}>
+                <span className='user-figure'>
+                  {pageInfo.followers + friendOffset}
+                </span>
+                {pageInfo.followers + friendOffset === 1
+                  ? "follower"
+                  : "followers"}
+                <span className='category'></span>
               </div>
-              <div className='user-info-bottom'>
-                <div className='user-fullname'>{pageInfo.pageFullname}</div>
-                <div className='user-bio'>{pageInfo.pageUserBio}</div>
+              <div className='clickable' onClick={handleFollowingModal}>
+                <span className='user-figure'>{pageInfo.following}</span>
+                following<span className='category'></span>
               </div>
             </div>
-          </div>
-          <div className='profile-bottom'>
-            <div className='display-selector'>
-              <div
-                className={
-                  displaySelector === "posts"
-                    ? "display-selector-individual active"
-                    : "display-selector-individual"
-                }
-                aria-label='click to see user posts'
-                onClick={() => setDisplaySelector("posts")}
-              >
-                <img src={grid} alt='grid icon'></img>
-                <span>POSTS</span>
-              </div>
-              {userParam === currentUser?.displayName && (
-                <div
-                  className={
-                    displaySelector === "saved"
-                      ? "display-selector-individual active"
-                      : "display-selector-individual"
-                  }
-                  aria-label='click to see saved posts'
-                  onClick={() => setDisplaySelector("saved")}
-                >
-                  <img src={bookmark} alt='bookmark icon'></img>
-                  <span>SAVED</span>
-                </div>
-              )}
-              {userParam !== currentUser?.displayName && (
-                <div
-                  className={
-                    displaySelector === "tagged"
-                      ? "display-selector-individual active"
-                      : "display-selector-individual"
-                  }
-                  aria-label='click to see posts where user was tagged'
-                  onClick={() => setDisplaySelector("tagged")}
-                >
-                  <img src={tagged} alt='tagged user icon'></img>
-                  <span>TAGGED</span>
-                </div>
-              )}
-            </div>
-            <div className='img-feed-container'>
-              {displaySelector === "posts" && (
-                <PostFeed
-                  userParam={userParam}
-                  userPosts={pageInfo.pageUserPosts}
-                  userLikedPosts={pageInfo.userLikedPosts}
-                  userSavedPosts={pageInfo.userSavedPosts}
-                  userQueryInput={"posts"}
-                />
-              )}
-              {displaySelector === "saved" && (
-                <PostFeedFromArr
-                  userParam={userParam}
-                  userPosts={pageInfo.pageUserPosts}
-                  userLikedPosts={pageInfo.userLikedPosts}
-                  userSavedPosts={pageInfo.userSavedPosts}
-                  userQueryInput={"saved"}
-                />
-              )}
-              {displaySelector === "tagged" && (
-                <PostFeedFromArr
-                  userParam={userParam}
-                  userPosts={pageInfo.pageUserPosts}
-                  userLikedPosts={pageInfo.userLikedPosts}
-                  userSavedPosts={pageInfo.userSavedPosts}
-                  userQueryInput={"tagged"}
-                />
-              )}
+            <div className='user-info-bottom'>
+              <div className='user-fullname'>{pageInfo.fullname}</div>
+              <div className='user-bio'>{pageInfo.bio}</div>
             </div>
           </div>
         </div>
-      )}
+        <div className='profile-bottom'>
+          <div className='display-selector'>
+            <div
+              className={
+                displaySelector === "posts"
+                  ? "display-selector-individual active"
+                  : "display-selector-individual"
+              }
+              aria-label='click to see user posts'
+              onClick={() => setDisplaySelector("posts")}
+            >
+              <img src={grid} alt='grid icon'></img>
+              <span>POSTS</span>
+            </div>
+            {displayOwnPage && (
+              <div
+                className={
+                  displaySelector === "saved"
+                    ? "display-selector-individual active"
+                    : "display-selector-individual"
+                }
+                aria-label='click to see saved posts'
+                onClick={() => setDisplaySelector("saved")}
+              >
+                <img src={bookmark} alt='bookmark icon'></img>
+                <span>SAVED</span>
+              </div>
+            )}
+            <div
+              className={
+                displaySelector === "tagged"
+                  ? "display-selector-individual active"
+                  : "display-selector-individual"
+              }
+              aria-label='click to see posts where user was tagged'
+              onClick={() => setDisplaySelector("tagged")}
+            >
+              <img src={tagged} alt='tagged user icon'></img>
+              <span>TAGGED</span>
+            </div>
+          </div>
+          <div className='img-feed-container'>
+            {displaySelector === "posts" && <ProfilePosts userID={userID} />}
+            {/* {displaySelector === "saved" && (
+              <PostFeedFromArr
+                userParam={userID}
+                userPosts={pageInfo.pageUserPosts}
+                userLikedPosts={pageInfo.userLikedPosts}
+                userSavedPosts={pageInfo.userSavedPosts}
+                userQueryInput={"saved"}
+              />
+            )}
+            {displaySelector === "tagged" && (
+              <PostFeedFromArr
+                userParam={userID}
+                userPosts={pageInfo.pageUserPosts}
+                userLikedPosts={pageInfo.userLikedPosts}
+                userSavedPosts={pageInfo.userSavedPosts}
+                userQueryInput={"tagged"}
+              />
+            )} */}
+          </div>
+        </div>
+      </div>
       <div className='footer-container'>
         <Footer />
       </div>
@@ -402,15 +348,15 @@ const ProfileMain = () => {
         <ReportModal
           setShowReportModal={setShowReportModal}
           reportDistinction={"user"}
-          reportId={pageUserUid}
+          reportId={pageInfo.id}
         />
       )}
       {showFollowModal && (
         <FollowUserModal
           setShowFollowModal={setShowFollowModal}
           modalType={followModalType}
-          pageFollowers={pageInfo.pageFollowers}
-          pageFollowing={pageInfo.pageFollowing}
+          // pageFollowers={pageInfo.pageFollowers}
+          // pageFollowing={pageInfo.pageFollowing}
         />
       )}
     </div>
