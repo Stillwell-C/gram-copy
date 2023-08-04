@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRefreshMutation } from "./authApiSlice";
 import LoadingFullPage from "../../components/LoadingFullPage";
 import { Outlet } from "react-router-dom";
+import { setLoading } from "../display/displaySlice";
 
 const PersistentLogin = () => {
   const [persistentLogin, setPersistentLogin] = usePersistentLogin();
@@ -39,15 +40,17 @@ const PersistentLogin = () => {
   let pageContent;
 
   if (persistentLogin && isLoading) {
-    pageContent = <LoadingFullPage />;
+    dispatch(setLoading(true));
   } else if (
     !persistentLogin ||
     (isSuccess && loginSuccess) ||
     (accessToken && isUninitialized)
   ) {
+    dispatch(setLoading(false));
     pageContent = <Outlet />;
   } else if (isError) {
     setPersistentLogin(false);
+    dispatch(setLoading(false));
     //Make an error div or page
     console.log("An error occurred. Please login again.");
   }
