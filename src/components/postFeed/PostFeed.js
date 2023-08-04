@@ -4,7 +4,14 @@ import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 import NoUserImgProfileFeed from "../noUserImgProfileFeed/NoUserImgProfileFeed";
 import ProfilePostCard from "../profilePostCard/ProfilePostCard";
 
-const PostFeed = ({ posts, lastPostRef, isFetching, isError, error }) => {
+const PostFeed = ({
+  posts,
+  lastPostRef,
+  isFetching,
+  isError,
+  error,
+  userPostsFeed = false,
+}) => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
 
   const content = posts.map((post, i) => {
@@ -30,7 +37,7 @@ const PostFeed = ({ posts, lastPostRef, isFetching, isError, error }) => {
       <>
         {content}
         {isFetching && <LoadingSpinner />}
-        {posts.length <= 0 && (
+        {posts.length <= 0 && userPostsFeed && (
           <NoUserImgProfileFeed handleAddPostModal={handleAddPostModal} />
         )}
         {isError && error?.data?.message}

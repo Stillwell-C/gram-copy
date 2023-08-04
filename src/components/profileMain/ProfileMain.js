@@ -20,6 +20,7 @@ import { useGetUserQuery } from "../../features/users/usersApiSlice";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../features/display/displaySlice";
 import ProfilePosts from "../ProfilePosts";
+import ProfileSaved from "../ProfileSaved";
 
 const ProfileMain = () => {
   const { userID } = useParams();
@@ -313,7 +314,12 @@ const ProfileMain = () => {
             </div>
           </div>
           <div className='img-feed-container'>
-            {displaySelector === "posts" && <ProfilePosts userID={userID} />}
+            {displaySelector === "posts" && (
+              <ProfilePosts userID={pageInfo.id} />
+            )}
+            {displaySelector === "saved" && (
+              <ProfileSaved userID={pageInfo.id} />
+            )}
             {/* {displaySelector === "saved" && (
               <PostFeedFromArr
                 userParam={userID}
