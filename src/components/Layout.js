@@ -21,7 +21,7 @@ const Layout = () => {
 
   return (
     <>
-      <LoadingFullPage loadingState={loadingState} />;
+      <LoadingFullPage loadingState={loadingState} />
       <div className={styles.layout}>
         {displayNav && <Navbar />}
         <div className={styles.outlet}>
