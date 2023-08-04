@@ -6,6 +6,7 @@ import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 import { useLoginMutation } from "../../features/auth/authApiSlice";
 import usePersistentLogin from "../../hooks/usePersistentLogin";
 import { setCredentials } from "../../features/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 const LoginForm = () => {
   const errRef = useRef();
@@ -25,7 +26,7 @@ const LoginForm = () => {
 
   const [login, { isLoading, error, isSuccess, isError }] = useLoginMutation();
 
-  const { dispatch } = useContext(AuthContext);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const active = email.length ? "active" : "";
@@ -47,15 +48,14 @@ const LoginForm = () => {
   };
 
   const signInUser = async () => {
-    setLoading(true);
-    setErrorMsg("");
     const loginResponse = await login({ userIdentifier: email, password });
     dispatch(setCredentials({ accessToken: loginResponse.data.accessToken }));
+    localStorage.setItem("persistLogin", JSON.stringify(true));
+    // setLoginComplete(true);
   };
 
   useEffect(() => {
     if (isSuccess) {
-      localStorage.setItem("persistLogin", JSON.stringify(true));
       setEmail("");
       setPassword("");
       navigate("/");
