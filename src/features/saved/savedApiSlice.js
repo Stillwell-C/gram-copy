@@ -18,7 +18,6 @@ export const savedApiSlice = apiSlice.injectEndpoints({
     }),
     getSavedPosts: builder.query({
       query: ({ page, limit, userID }) => {
-        console.log(userID);
         return {
           url: `/postsave/user/${userID}?page=${page}&limit=${limit}`,
           validateStatus: (response, result) => {
