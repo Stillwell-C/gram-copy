@@ -24,21 +24,25 @@ const ProfileSaved = ({ userID }) => {
 
   useEffect(() => {
     if (postData?.posts?.length > 0) {
-      console.log(postData);
       setHasMorePosts(
         (Math.ceil(postData?.totalPosts / postLoadLimit) || 1) > pageNum
       );
       if (
         feedData.length &&
-        feedData.filter(({ _id }) => _id === postData?.posts[0]?._id).length > 0
+        feedData.filter(({ _id }) => _id === postData?.posts[0]?.post._id)
+          .length > 0
       ) {
-        const filteredPostData = postData?.posts?.filter(
-          (postData) =>
-            !feedData.some((feedData) => postData._id === feedData._id)
-        );
+        const filteredPostData = postData.posts
+          .map((singlePost) => singlePost.post)
+          .filter(
+            (postData) =>
+              !feedData.some((feedData) => postData._id === feedData._id)
+          );
         setFeedData((prev) => [...prev, ...filteredPostData]);
         return;
       }
+      const newPostData = postData.posts.map((singlePost) => singlePost.post);
+      setFeedData((prev) => [...prev, ...newPostData]);
     }
     return () => setFeedData([]);
   }, [postData]);
