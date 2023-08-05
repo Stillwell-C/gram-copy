@@ -186,6 +186,8 @@
     align-items: flex-start;
     justify-content: space-between;
     position: relative;
+    //maybe remove later
+    overflow-y: hidden;
 
     .navbar-top,
     .navbar-bottom {
