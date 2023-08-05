@@ -36,6 +36,26 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    getTaggedPosts: builder.query({
+      query: ({ page, limit, userID }) => {
+        return {
+          url: `/posts/tagged/${userID}?page=${page}&limit=${limit}`,
+          validateStatus: (response, result) => {
+            return response.status === 200 && !result.isError;
+          },
+        };
+      },
+      providesTags: (result, error, arg) => {
+        if (result?.posts) {
+          return [
+            { type: "Post", id: "LIST" },
+            ...result.posts.map(({ _id }) => ({ type: "Post", id: _id })),
+          ];
+        } else {
+          return [{ type: "Post", id: "LIST" }];
+        }
+      },
+    }),
     addNewPost: builder.mutation({
       query: (postData) => ({
         url: "/posts",
@@ -44,7 +64,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
           ...postData,
         },
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Post", id: arg._id }],
+      invalidatesTags: (result, error, arg) => ["Post"],
     }),
     updatePost: builder.mutation({
       query: (postData) => ({
@@ -70,6 +90,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetPostQuery,
   useGetMultiplePostsQuery,
+  useGetTaggedPostsQuery,
   useAddNewPostMutation,
   useUpdatePostMutation,
   useDeletePostMutation,
