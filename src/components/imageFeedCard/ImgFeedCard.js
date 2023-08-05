@@ -19,6 +19,7 @@ import useGetUserInfoFunction from "../../hooks/useGetUserInfoFunction";
 import useAddComment from "../../hooks/useAddComment";
 import ReportModal from "../reportModal/ReportModal";
 import AdditionalOptionsModal from "../additionalOptionsModal/AdditionalOptionsModal";
+import SaveButton from "../SaveButton";
 
 const ImgFeedCard = React.forwardRef(
   ({ post, userLikedPosts, userSavedPosts }, ref) => {
@@ -95,15 +96,15 @@ const ImgFeedCard = React.forwardRef(
       setLiked(!liked);
     };
 
-    const handleSave = () => {
-      if (!currentUser) {
-        navigate("/accounts/login");
-        return;
-      }
-      if (saved) unsavePost(post.id);
-      if (!saved) savePost(post.id);
-      setSaved(!saved);
-    };
+    // const handleSave = () => {
+    //   if (!currentUser) {
+    //     navigate("/accounts/login");
+    //     return;
+    //   }
+    //   if (saved) unsavePost(post.id);
+    //   if (!saved) savePost(post.id);
+    //   setSaved(!saved);
+    // };
 
     const handleComment = (e) => {
       e.preventDefault();
@@ -188,7 +189,7 @@ const ImgFeedCard = React.forwardRef(
               </button>
             </div>
             <div className='buttons-right'>
-              <button
+              {/* <button
                 className='bookmarkButton'
                 aria-label='click to save post'
                 onClick={handleSave}
@@ -199,7 +200,8 @@ const ImgFeedCard = React.forwardRef(
                   aria-hidden='true'
                   className={saved ? "filled" : ""}
                 />
-              </button>
+              </button> */}
+              <SaveButton save={post?.isSaved} postID={post._id} />
             </div>
           </div>
           <div className='card-bottom-text'>
@@ -265,7 +267,7 @@ const ImgFeedCard = React.forwardRef(
             liked={liked}
             saved={saved}
             handleLike={handleLike}
-            handleSave={handleSave}
+            // handleSave={handleSave}
             likesOffset={likesOffset}
           />
         )}
