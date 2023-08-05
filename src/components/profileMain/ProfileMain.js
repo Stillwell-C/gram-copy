@@ -21,6 +21,7 @@ import { useDispatch } from "react-redux";
 import { setLoading } from "../../features/display/displaySlice";
 import ProfilePosts from "../ProfilePosts";
 import ProfileSaved from "../ProfileSaved";
+import ProfileTagged from "../ProfileTagged";
 
 const ProfileMain = () => {
   const { userID } = useParams();
@@ -320,24 +321,9 @@ const ProfileMain = () => {
             {displaySelector === "saved" && (
               <ProfileSaved userID={pageInfo.id} />
             )}
-            {/* {displaySelector === "saved" && (
-              <PostFeedFromArr
-                userParam={userID}
-                userPosts={pageInfo.pageUserPosts}
-                userLikedPosts={pageInfo.userLikedPosts}
-                userSavedPosts={pageInfo.userSavedPosts}
-                userQueryInput={"saved"}
-              />
-            )}
             {displaySelector === "tagged" && (
-              <PostFeedFromArr
-                userParam={userID}
-                userPosts={pageInfo.pageUserPosts}
-                userLikedPosts={pageInfo.userLikedPosts}
-                userSavedPosts={pageInfo.userSavedPosts}
-                userQueryInput={"tagged"}
-              />
-            )} */}
+              <ProfileTagged userID={pageInfo.id} />
+            )}
           </div>
         </div>
       </div>
