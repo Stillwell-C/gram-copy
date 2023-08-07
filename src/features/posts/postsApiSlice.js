@@ -3,7 +3,15 @@ import { apiSlice } from "../../app/api/apiSlice";
 export const postsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPost: builder.query({
-      query: ({ postID }) => {
+      query: ({ postID, userID }) => {
+        if (userID) {
+          return {
+            url: `/posts/${postID}?userID=${userID}`,
+            validateStatus: (response, result) => {
+              return response.status === 200 && !result.isError;
+            },
+          };
+        }
         return {
           url: `/posts/${postID}`,
           validateStatus: (response, result) => {
