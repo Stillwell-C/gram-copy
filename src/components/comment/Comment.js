@@ -19,7 +19,8 @@ const Comment = ({
 
   const [dateCheck, setDateCheck] = useState(false);
   const [formatedDate, setFormatedDate] = useState("");
-  const [commentImgURL, setCommentImgURL] = useState(defaultProfilePic);
+
+  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${comment?.author?.userImgKey}`;
 
   // const getCommentInfo = useGetUserInfoFunction();
 
@@ -32,39 +33,35 @@ const Comment = ({
   // }, []);
 
   useEffect(() => {
-    if (comment.date) setDateCheck(true);
-    let fromNow = moment(comment.date).fromNow(true);
+    if (comment.updatedAt) setDateCheck(true);
+    let fromNow = moment(comment.updatedAt).fromNow(true);
     // let numArr = fromNow.match(/^\d{1,2}/);
     // let charArr = fromNow.match(/([a-z])/);
     // setFormatedDate(`${numArr[0]}${charArr[0]}`);
     setFormatedDate(fromNow);
-  }, [comment.date]);
+  }, [comment.updatedAt]);
 
   return (
     <div className='single-comment'>
       {showImage && (
         <div className='comment-image'>
           <Link
-            aria-label={`move to ${comment.username}'s profile`}
-            to={`/${comment.username}`}
+            aria-label={`move to ${comment.author.username}'s profile`}
+            to={`/${comment.author.username}`}
             onClick={() => setShowPhotoModal(false)}
           >
-            <img
-              src={comment.userImgURL}
-              alt='user profile'
-              aria-hidden='true'
-            />
+            <img src={userImgURL} alt='user profile' aria-hidden='true' />
           </Link>
         </div>
       )}
       <div className='comment-main'>
         <div className='comment-main-top'>
           <Link
-            aria-label={`move to ${comment.username}'s profile`}
-            to={`/${comment.username}`}
+            aria-label={`move to ${comment.author.username}'s profile`}
+            to={`/${comment.author.username}`}
             onClick={() => setShowPhotoModal(false)}
           >
-            <span className='comment-username'>{comment.username}</span>
+            <span className='comment-username'>{comment.author.username}</span>
           </Link>
           <span className='comment-body'>{commentBody}</span>
         </div>
