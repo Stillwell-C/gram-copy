@@ -12,8 +12,8 @@ const Comment = ({
   showTime,
   setShowPhotoModal,
 }) => {
-  let commentBody = comment.comment;
-  if (abbreviate && commentBody.length > 150) {
+  let commentBody = comment.commentBody;
+  if (abbreviate && commentBody?.length > 150) {
     commentBody = `${commentBody.slice(0, 150)}...`;
   }
 
@@ -21,19 +21,19 @@ const Comment = ({
   const [formatedDate, setFormatedDate] = useState("");
   const [commentImgURL, setCommentImgURL] = useState(defaultProfilePic);
 
-  const getCommentInfo = useGetUserInfoFunction();
+  // const getCommentInfo = useGetUserInfoFunction();
 
-  useEffect(() => {
-    const setImgURL = async () => {
-      const commentInfo = await getCommentInfo(comment.username, "username");
-      setCommentImgURL(commentInfo.userImgURL);
-    };
-    setImgURL();
-  }, []);
+  // useEffect(() => {
+  //   const setImgURL = async () => {
+  //     const commentInfo = await getCommentInfo(comment.username, "username");
+  //     setCommentImgURL(commentInfo.userImgURL);
+  //   };
+  //   setImgURL();
+  // }, []);
 
   useEffect(() => {
     if (comment.date) setDateCheck(true);
-    let fromNow = moment(comment.date.toDate()).fromNow(true);
+    let fromNow = moment(comment.date).fromNow(true);
     // let numArr = fromNow.match(/^\d{1,2}/);
     // let charArr = fromNow.match(/([a-z])/);
     // setFormatedDate(`${numArr[0]}${charArr[0]}`);
@@ -49,7 +49,11 @@ const Comment = ({
             to={`/${comment.username}`}
             onClick={() => setShowPhotoModal(false)}
           >
-            <img src={commentImgURL} alt='user profile' aria-hidden='true' />
+            <img
+              src={comment.userImgURL}
+              alt='user profile'
+              aria-hidden='true'
+            />
           </Link>
         </div>
       )}
