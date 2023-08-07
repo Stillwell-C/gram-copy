@@ -15,6 +15,7 @@ import AdditionalOptionsModal from "../additionalOptionsModal/AdditionalOptionsM
 import ReportModal from "../reportModal/ReportModal";
 import useAuth from "../../hooks/useAuth";
 import PhotoModalComments from "../PhotoModalComments";
+import AddCommentForm from "../AddCommentForm";
 
 const PhotoModal = ({ setShowPhotoModal, post, handleLike, handleSave }) => {
   const { authenticatedUser, id } = useAuth();
@@ -230,34 +231,7 @@ const PhotoModal = ({ setShowPhotoModal, post, handleLike, handleSave }) => {
                   {moment(post.updatedAt).fromNow().toUpperCase()}
                 </div>
               </div>
-              <div className='input-comment-div'>
-                <form>
-                  <div className='input-left'>
-                    <label aria-label='Type to input a comment'>
-                      <input
-                        type='text'
-                        maxLength={2200}
-                        placeholder='Add a comment...'
-                        onChange={(e) => setComment(e.target.value)}
-                        value={comment}
-                        ref={commentRef}
-                      />
-                    </label>
-                  </div>
-                  <div className='input-right'>
-                    <button
-                      type='submit'
-                      aria-label='click to submit comment'
-                      className={activateButton ? "active" : "deactivated"}
-                      disabled={!activateButton}
-                      // onClick={handleAddComment}
-                      aria-disabled={!activateButton}
-                    >
-                      Post
-                    </button>
-                  </div>
-                </form>
-              </div>
+              <AddCommentForm post={post} />
             </div>
           </div>
         </div>
