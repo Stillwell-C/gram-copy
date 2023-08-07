@@ -5,8 +5,11 @@ import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import { useGetMultiplePostsQuery } from "../../features/posts/postsApiSlice";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../features/display/displaySlice";
+import useAuth from "../../hooks/useAuth";
 
 const ImageFeed = () => {
+  const { id } = useAuth();
+
   const [pageNum, setPageNum] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [feedData, setFeedData] = useState([]);
@@ -14,6 +17,7 @@ const ImageFeed = () => {
   const dispatch = useDispatch();
 
   const postLoadLimit = 5;
+  const reqID = id || "";
 
   const {
     data: postData,
@@ -22,7 +26,7 @@ const ImageFeed = () => {
     isError,
     isSuccess,
     error: postError,
-  } = useGetMultiplePostsQuery({ page: pageNum, limit: postLoadLimit });
+  } = useGetMultiplePostsQuery({ page: pageNum, limit: postLoadLimit, reqID });
 
   useEffect(() => {
     if (isLoading) {
