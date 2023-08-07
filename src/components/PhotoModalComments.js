@@ -61,8 +61,6 @@ const PhotoModalComments = ({ post, setShowPhotoModal }) => {
     setCommentDataArr((prev) => [...prev, ...commentData?.comments]);
   }, [commentData]);
 
-  useEffect(() => console.log(commentDataArr), [commentDataArr]);
-
   const comments = commentDataArr?.map((comment) => (
     <Comment
       comment={comment}
