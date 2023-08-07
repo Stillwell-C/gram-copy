@@ -21,6 +21,7 @@ import ReportModal from "../reportModal/ReportModal";
 import AdditionalOptionsModal from "../additionalOptionsModal/AdditionalOptionsModal";
 import SaveButton from "../SaveButton";
 import LikeButton from "../LikeButton";
+import AddCommentForm from "../AddCommentForm";
 
 const ImgFeedCard = React.forwardRef(
   ({ post, userLikedPosts, userSavedPosts }, ref) => {
@@ -244,31 +245,7 @@ const ImgFeedCard = React.forwardRef(
               {/* {moment(post.date.toDate()).fromNow().toUpperCase()} */}
             </div>
           </div>
-          <div className='input-comment-div'>
-            <form onSubmit={handleComment}>
-              <div className='input-left'>
-                <label>
-                  <input
-                    type='text'
-                    maxLength={2200}
-                    placeholder='Add a comment...'
-                    onChange={(e) => setComment(e.target.value)}
-                    value={comment}
-                  />
-                </label>
-              </div>
-              <div className='input-right'>
-                <button
-                  type='submit'
-                  className={`${comment.length < 1 && "disabled"}`}
-                  disabled={comment.length < 1 ? true : false}
-                  aria-disabled={comment.length < 1 ? "true" : "false"}
-                >
-                  Post
-                </button>
-              </div>
-            </form>
-          </div>
+          <AddCommentForm post={post} />
         </div>
         {showPhotoModal && (
           <PhotoModal
