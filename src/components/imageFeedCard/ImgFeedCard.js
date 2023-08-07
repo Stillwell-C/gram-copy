@@ -20,6 +20,7 @@ import useAddComment from "../../hooks/useAddComment";
 import ReportModal from "../reportModal/ReportModal";
 import AdditionalOptionsModal from "../additionalOptionsModal/AdditionalOptionsModal";
 import SaveButton from "../SaveButton";
+import LikeButton from "../LikeButton";
 
 const ImgFeedCard = React.forwardRef(
   ({ post, userLikedPosts, userSavedPosts }, ref) => {
@@ -80,21 +81,21 @@ const ImgFeedCard = React.forwardRef(
       }
     }, [currentUser]);
 
-    const handleLike = () => {
-      if (!currentUser) {
-        navigate("/accounts/login");
-        return;
-      }
-      if (liked) {
-        unlikePost(post.id);
-        initialLike ? setLikesOffset(-1) : setLikesOffset(0);
-      }
-      if (!liked) {
-        likePost(post.id);
-        initialLike ? setLikesOffset(0) : setLikesOffset(1);
-      }
-      setLiked(!liked);
-    };
+    // const handleLike = () => {
+    //   if (!currentUser) {
+    //     navigate("/accounts/login");
+    //     return;
+    //   }
+    //   if (liked) {
+    //     unlikePost(post.id);
+    //     initialLike ? setLikesOffset(-1) : setLikesOffset(0);
+    //   }
+    //   if (!liked) {
+    //     likePost(post.id);
+    //     initialLike ? setLikesOffset(0) : setLikesOffset(1);
+    //   }
+    //   setLiked(!liked);
+    // };
 
     // const handleSave = () => {
     //   if (!currentUser) {
@@ -158,7 +159,8 @@ const ImgFeedCard = React.forwardRef(
         <div className='card-bottom'>
           <div className='buttons'>
             <div className='buttons-left'>
-              <button
+              <LikeButton like={post?.isLiked} postID={post?._id} />
+              {/* <button
                 className='likeButton'
                 aria-label='click to like post'
                 onClick={handleLike}
@@ -169,7 +171,7 @@ const ImgFeedCard = React.forwardRef(
                   alt=''
                   aria-hidden='true'
                 />
-              </button>
+              </button> */}
               <button
                 className='commentButton'
                 aria-label='open post to view and make comments'
@@ -201,7 +203,7 @@ const ImgFeedCard = React.forwardRef(
                   className={saved ? "filled" : ""}
                 />
               </button> */}
-              <SaveButton save={post?.isSaved} postID={post._id} />
+              <SaveButton save={post?.isSaved} postID={post?._id} />
             </div>
           </div>
           <div className='card-bottom-text'>
@@ -266,7 +268,7 @@ const ImgFeedCard = React.forwardRef(
             post={post}
             liked={liked}
             saved={saved}
-            handleLike={handleLike}
+            // handleLike={handleLike}
             // handleSave={handleSave}
             likesOffset={likesOffset}
           />
