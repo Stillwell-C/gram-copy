@@ -208,16 +208,23 @@ const ImgFeedCard = React.forwardRef(
           </div>
           <div className='card-bottom-text'>
             <div className='likes-counter'>
-              {post?.likes + likesOffset}{" "}
-              {post?.likes + likesOffset === 1 ? "Like" : "Likes"}
+              {/* {post?.likes + likesOffset}{" "}
+              {post?.likes + likesOffset === 1 ? "Like" : "Likes"} */}
+              {post?.likes}
+              {post?.likes === 1 ? " Like" : " Likes"}
             </div>
             <div className='comments'>
-              {/* {post?.comments[0] && (
-                <Comment comment={post.comments[0]} abbreviate={true} />
+              {post?.caption && (
+                <Comment
+                  comment={{
+                    commentBody: post.caption,
+                    date: post.updatedAt,
+                    userImgURL,
+                    username: post.user.username,
+                  }}
+                  abbreviate={true}
+                />
               )}
-              {post?.comments[1] && (
-                <Comment comment={post.comments[1]} abbreviate={true} />
-              )} */}
             </div>
             <div className='view-more-div'>
               <button
@@ -226,9 +233,9 @@ const ImgFeedCard = React.forwardRef(
                 aria-label='click to view all comments'
                 onClick={() => setShowPhotoModal(true)}
               >
-                {/* {post.comments[1]
+                {post?.totalComments > 0
                   ? `View all ${post.comments.length} comments`
-                  : `View all comments`} */}
+                  : `View all comments`}
               </button>
             </div>
             <div className='time-ago'>
