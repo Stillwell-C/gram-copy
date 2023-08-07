@@ -25,9 +25,22 @@ export const postsApiSlice = apiSlice.injectEndpoints({
       },
     }),
     getMultiplePosts: builder.query({
-      query: ({ page, limit, feedID = "", userID = "", reqID = "" }) => {
+      query: ({ ...args }) => {
+        const queryArr = [];
+        for (const [key, value] of Object.entries(args)) {
+          queryArr.push(`${key}=${value}`);
+        }
+        const queryString = queryArr.join("&");
+        if (queryString.length) {
+          return {
+            url: `/posts?${queryString}`,
+            validateStatus: (response, result) => {
+              return response.status === 200 && !result.isError;
+            },
+          };
+        }
         return {
-          url: `/posts?page=${page}&limit=${limit}&feedID=${feedID}&userID=${userID}&reqID=${reqID}`,
+          url: `/posts`,
           validateStatus: (response, result) => {
             return response.status === 200 && !result.isError;
           },
