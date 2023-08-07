@@ -218,9 +218,11 @@ const ImgFeedCard = React.forwardRef(
                 <Comment
                   comment={{
                     commentBody: post.caption,
-                    date: post.updatedAt,
-                    userImgURL,
-                    username: post.user.username,
+                    updatedAt: post.updatedAt,
+                    author: {
+                      username: post.user.username,
+                      userImgKey: post.user.userImgKey,
+                    },
                   }}
                   abbreviate={true}
                 />
