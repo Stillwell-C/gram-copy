@@ -235,8 +235,8 @@ const ImgFeedCard = React.forwardRef(
                 aria-label='click to view all comments'
                 onClick={() => setShowPhotoModal(true)}
               >
-                {post?.totalComments > 0
-                  ? `View all ${post.comments.length} comments`
+                {post?.totalComments > 3
+                  ? `View all ${post.totalComments} comments`
                   : `View all comments`}
               </button>
             </div>
