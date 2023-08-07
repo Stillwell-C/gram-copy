@@ -40,24 +40,28 @@ const PhotoModalComments = ({ post, setShowPhotoModal }) => {
   });
 
   useEffect(() => {
+    if (isError) console.log(error);
+  }, [isError]);
+
+  useEffect(() => {
     if (isLoading || isFetching || !commentData) return;
     setHasMoreComments(
       (Math.ceil(commentData?.totalComments / commentLoadLimit) || 1) > pageNum
     );
-    if (
-      commentDataArr.length &&
-      commentDataArr.filter(({ _id }) => _id === commentData?.comments[0]?._id)
-        .length > 0
-    ) {
-      const filteredCommentData = commentData?.comments?.filter(
-        (commentData) =>
-          !commentDataArr.some(
-            (commentDataArr) => commentData._id === commentDataArr._id
-          )
-      );
-      setCommentDataArr((prev) => [...prev, ...filteredCommentData]);
-      return;
-    }
+    // if (
+    //   commentDataArr.length &&
+    //   commentDataArr.filter(({ _id }) => _id === commentData?.comments[0]?._id)
+    //     .length > 0
+    // ) {
+    //   const filteredCommentData = commentData?.comments?.filter(
+    //     (commentData) =>
+    //       !commentDataArr.some(
+    //         (commentDataArr) => commentData._id === commentDataArr._id
+    //       )
+    //   );
+    //   setCommentDataArr((prev) => [...prev, ...filteredCommentData]);
+    //   return;
+    // }
     setCommentDataArr((prev) => [...prev, ...commentData?.comments]);
   }, [commentData]);
 
@@ -82,7 +86,7 @@ const PhotoModalComments = ({ post, setShowPhotoModal }) => {
             type='button'
             aria-label='click to show more comments'
             title='click to show more comments'
-            onClick={setPageNum((prev) => prev + 1)}
+            onClick={() => setPageNum((prev) => prev + 1)}
           >
             <img src={addCommentIcon} alt='' aria-hidden='true' />
           </button>
