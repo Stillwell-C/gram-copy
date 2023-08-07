@@ -17,9 +17,9 @@ export const postsApiSlice = apiSlice.injectEndpoints({
       },
     }),
     getMultiplePosts: builder.query({
-      query: ({ page, limit, feedID = "", userID = "" }) => {
+      query: ({ page, limit, feedID = "", userID = "", reqID = "" }) => {
         return {
-          url: `/posts?page=${page}&limit=${limit}&feedID=${feedID}&userID=${userID}`,
+          url: `/posts?page=${page}&limit=${limit}&feedID=${feedID}&userID=${userID}&reqID=${reqID}`,
           validateStatus: (response, result) => {
             return response.status === 200 && !result.isError;
           },
