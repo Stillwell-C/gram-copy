@@ -14,7 +14,7 @@ const PhotoModalComments = ({ post, setShowPhotoModal }) => {
     if (post.caption.length) {
       const caption = {
         commentBody: post.caption,
-        date: post.updatedAt,
+        updatedAt: post.updatedAt,
         author: {
           username: post.user.username,
           userImgKey: post.user.userImgKey,
