@@ -74,13 +74,15 @@ const ImgFeedCard = React.forwardRef(
     //   if (saved.length) setSaved(true);
     // }, []);
 
-    useEffect(() => {
-      if (!currentUser) {
-        setLiked(false);
-        setInitialLike(false);
-        setSaved(false);
-      }
-    }, [currentUser]);
+    // useEffect(() => {
+    //   if (!currentUser) {
+    //     setLiked(false);
+    //     setInitialLike(false);
+    //     setSaved(false);
+    //   }
+    // }, [currentUser]);
+
+    useEffect(() => {});
 
     // const handleLike = () => {
     //   if (!currentUser) {
@@ -242,7 +244,7 @@ const ImgFeedCard = React.forwardRef(
               </button>
             </div>
             <div className='time-ago'>
-              {/* {moment(post.date.toDate()).fromNow().toUpperCase()} */}
+              {moment(post.updatedAt).fromNow().toUpperCase()}
             </div>
           </div>
           <AddCommentForm post={post} />
