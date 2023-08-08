@@ -43,7 +43,10 @@ const AddCommentForm = ({ post }) => {
 
   return (
     <div className='input-comment-div'>
-      <form onSubmit={handleAddComment}>
+      <form
+        onSubmit={handleAddComment}
+        className={`input-left ${isLoading ? "disabled" : ""}`}
+      >
         <div className='input-left'>
           <label>
             <input
