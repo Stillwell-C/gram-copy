@@ -6,11 +6,13 @@ import { useGetMultiplePostsQuery } from "../../features/posts/postsApiSlice";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../features/display/displaySlice";
 import useAuth from "../../hooks/useAuth";
-import { useInfiniteQuery } from "react-query";
+import { useInfiniteQuery, useQueryClient } from "react-query";
 import { getMultiplePosts } from "../../features/posts/postApiRoutes";
 
 const ImageFeed = () => {
   const { id } = useAuth();
+
+  const queryClient = useQueryClient();
 
   const [pageNum, setPageNum] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -37,28 +39,37 @@ const ImageFeed = () => {
     isFetching,
     hasNextPage,
     fetchNextPage,
-  } = useInfiniteQuery(
-    "posts",
-    () => getMultiplePosts({ limit: postLoadLimit, reqID }),
-    {
-      refetchOnWindowFocus: false,
-      getNextPageParam: (lastPage, pages) => {
-        const pageLimit = Math.ceil(lastPage.totalPosts / postLoadLimit);
-        if (lastPage.page < pageLimit) return lastPage.page + 1;
-        return false;
-      },
-    }
-  );
+  } = useInfiniteQuery({
+    queryKey: "posts",
+    queryFn: ({ pageParam = 1 }) =>
+      getMultiplePosts({ pageParam, limit: postLoadLimit, reqID }),
+    refetchOnWindowFocus: false,
+    getNextPageParam: (lastPage, pages) => {
+      const pageLimit = Math.ceil(lastPage.totalPosts / postLoadLimit);
+      if (lastPage.page < pageLimit) return lastPage.page + 1;
+      return false;
+    },
+  });
 
   useEffect(() => {
-    console.log("-------------------query info-------------------");
-    console.log("data ", postData);
-    console.log("loading ", isLoading);
-    console.log("error ", error);
-    console.log("fetching ", isFetching);
-    console.log("has next", hasNextPage);
-    console.log("-------------------query info-------------------");
-  }, [postData]);
+    if (!isLoading) {
+      // queryClient.setQueryData("posts", (oldData) => {
+      //   console.log("olddata ", oldData);
+      //   return oldData;
+      // });
+      console.log("data ", queryClient.getQueryData());
+    }
+  }, [isLoading]);
+
+  // useEffect(() => {
+  //   console.log("-------------------query info-------------------");
+  //   console.log("data ", postData);
+  //   console.log("loading ", isLoading);
+  //   console.log("error ", error);
+  //   console.log("fetching ", isFetching);
+  //   console.log("has next", hasNextPage);
+  //   console.log("-------------------query info-------------------");
+  // }, [postData]);
 
   useEffect(() => {
     if (isLoading) {
