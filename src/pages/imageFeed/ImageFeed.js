@@ -35,6 +35,7 @@ const ImageFeed = () => {
   const {
     data: postData,
     isLoading,
+    isError,
     error,
     isFetching,
     hasNextPage,
@@ -158,8 +159,7 @@ const ImageFeed = () => {
       <>
         {content}
         {(isFetching || isLoading) && <LoadingSpinner />}
-        {/* {isError && postError?.data?.message} */}
-        {error && error}
+        {isError && error.message}
       </>
     </div>
   );
