@@ -46,18 +46,27 @@ const ImageFeed = () => {
       console.log(postData);
       console.log(feedData);
       setTotalPages(Math.ceil(postData?.totalPosts / postLoadLimit) || 1);
-      if (
-        feedData.length
-        // && feedData.filter(({ _id }) => _id === postData?.posts[0]?._id).length > 0
-      ) {
-        const filteredPostData = postData?.posts?.filter(
-          (postData) =>
-            !feedData.some((feedData) => postData._id === feedData._id)
-        );
-        setFeedData((prev) => [...prev, ...filteredPostData]);
-        return;
-      }
-      setFeedData((prev) => [...prev, ...postData?.posts]);
+      // if (
+      //   feedData.length
+      //   // && feedData.filter(({ _id }) => _id === postData?.posts[0]?._id).length > 0
+      // ) {
+      //   const filteredPostData = postData?.posts?.filter(
+      //     (postData) =>
+      //       !feedData.some((feedData) => postData._id === feedData._id)
+      //   );
+      //   const filteredPrevData = feedData.filter(
+      //     (feedData) =>
+      //       !postData.posts.some((newPost) => newPost._id === feedData._id)
+      //   );
+      //   setFeedData((prev) => [...filteredPrevData, ...postData?.posts]);
+      //   return;
+      // }
+      // setFeedData((prev) => [...prev, ...postData?.posts]);
+      const filteredPrevData = feedData.filter(
+        (feedData) =>
+          !postData.posts.some((newPost) => newPost._id === feedData._id)
+      );
+      setFeedData((prev) => [...filteredPrevData, ...postData?.posts]);
     }
   }, [postData]);
 
