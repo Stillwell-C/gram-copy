@@ -37,7 +37,7 @@ export const likesApiSlice = apiSlice.injectEndpoints({
         body: { userID },
       }),
       invalidatesTags: (result, error, arg) => [
-        { type: "PostLike", id: arg._id },
+        { type: "Post", id: arg.parentPostID },
       ],
     }),
     deleteLike: builder.mutation({
@@ -47,7 +47,7 @@ export const likesApiSlice = apiSlice.injectEndpoints({
         body: { userID },
       }),
       invalidatesTags: (result, error, arg) => [
-        { type: "PostLike", id: arg._id },
+        { type: "Post", id: arg.parentPostID },
       ],
     }),
   }),
