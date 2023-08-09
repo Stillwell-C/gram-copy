@@ -30,10 +30,7 @@ const ImgFeedCard = React.forwardRef(
     const addComment = useAddComment();
     const navigate = useNavigate();
 
-    const [liked, setLiked] = useState(false);
-    const [initialLike, setInitialLike] = useState(false);
     const [likesOffset, setLikesOffset] = useState(0);
-    const [saved, setSaved] = useState(false);
     const [showPhotoModal, setShowPhotoModal] = useState(false);
     const [showAdditionalOptionsModal, setShowAdditionalOptionsModal] =
       useState(false);
@@ -42,47 +39,23 @@ const ImgFeedCard = React.forwardRef(
     const [comment, setComment] = useState("");
 
     // useEffect(() => {
-    //   const setImgURL = async () => {
-    //     const imageInfo = await getImageInfo(post.userName, "username");
-    //     setPageImgURL(imageInfo.userImgURL);
-    //   };
-    //   setImgURL();
-    // }, []);
+    //   setLiked(post.isLiked);
+    //   setSaved(post.isSaved);
+    // }, [post]);
 
     const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${post?.user?.userImgKey}`;
     const imgURL = `https://res.cloudinary.com/danscxcd2/image/upload/${post?.imgKey}`;
     // `https://res.cloudinary.com/danscxcd2/image/upload/w_200,h_100,c_fill,q_100/${post?.imgKey}.jpg`;
 
-    const { currentUser } = useContext(AuthContext);
-    const { likePost, unlikePost } = useLikePost();
-    const { savePost, unsavePost } = useSavePost();
+    // const { currentUser } = useContext(AuthContext);
 
     // useEffect(() => {
-    //   if (!currentUser) return;
-    //   //TODO: get updated info
-    //   //Figure out best way to do this
-    //   const liked = userLikedPosts.filter(
-    //     (singleLikedPost) => singleLikedPost === post.id
-    //   );
-    //   const saved = userSavedPosts.filter(
-    //     (singleSavedPost) => singleSavedPost === post.id
-    //   );
-    //   if (liked.length) {
-    //     setLiked(true);
-    //     setInitialLike(true);
+    //   if (liked) {
+    //     post.isLiked ? setLikesOffset(-1) : setLikesOffset(0);
+    //   } else {
+    //     post.isLiked ? setLikesOffset(0) : setLikesOffset(1);
     //   }
-    //   if (saved.length) setSaved(true);
-    // }, []);
-
-    // useEffect(() => {
-    //   if (!currentUser) {
-    //     setLiked(false);
-    //     setInitialLike(false);
-    //     setSaved(false);
-    //   }
-    // }, [currentUser]);
-
-    useEffect(() => {});
+    // }, [liked]);
 
     // const handleLike = () => {
     //   if (!currentUser) {
@@ -110,15 +83,15 @@ const ImgFeedCard = React.forwardRef(
     //   setSaved(!saved);
     // };
 
-    const handleComment = (e) => {
-      e.preventDefault();
-      if (!currentUser) {
-        navigate("/accounts/login");
-        return;
-      }
-      addComment(currentUser.displayName, comment, post);
-      setComment("");
-    };
+    // const handleComment = (e) => {
+    //   e.preventDefault();
+    //   if (!currentUser) {
+    //     navigate("/accounts/login");
+    //     return;
+    //   }
+    //   addComment(currentUser.displayName, comment, post);
+    //   setComment("");
+    // };
 
     const imgContent = (
       <>
@@ -162,7 +135,11 @@ const ImgFeedCard = React.forwardRef(
         <div className='card-bottom'>
           <div className='buttons'>
             <div className='buttons-left'>
-              <LikeButton like={post?.isLiked} postID={post?._id} />
+              <LikeButton
+                like={post.isLiked}
+                setLikesOffset={setLikesOffset}
+                postID={post?._id}
+              />
               {/* <button
                 className='likeButton'
                 aria-label='click to like post'
@@ -206,7 +183,7 @@ const ImgFeedCard = React.forwardRef(
                   className={saved ? "filled" : ""}
                 />
               </button> */}
-              <SaveButton save={post?.isSaved} postID={post?._id} />
+              <SaveButton save={post.isSaved} postID={post?._id} />
             </div>
           </div>
           <div className='card-bottom-text'>
@@ -254,8 +231,6 @@ const ImgFeedCard = React.forwardRef(
             setShowPhotoModal={setShowPhotoModal}
             userImgURL={pageImgURL}
             post={post}
-            liked={liked}
-            saved={saved}
             // handleLike={handleLike}
             // handleSave={handleSave}
             likesOffset={likesOffset}
