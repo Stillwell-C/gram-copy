@@ -6,6 +6,8 @@ import { useGetMultiplePostsQuery } from "../../features/posts/postsApiSlice";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../features/display/displaySlice";
 import useAuth from "../../hooks/useAuth";
+import { useInfiniteQuery } from "react-query";
+import { getMultiplePosts } from "../../features/posts/postApiRoutes";
 
 const ImageFeed = () => {
   const { id } = useAuth();
@@ -19,14 +21,44 @@ const ImageFeed = () => {
   const postLoadLimit = 5;
   const reqID = id || "";
 
+  // const {
+  //   data: postData,
+  //   isFetching,
+  //   isLoading,
+  //   isError,
+  //   isSuccess,
+  //   error: postError,
+  // } = useGetMultiplePostsQuery({ page: pageNum, limit: postLoadLimit, reqID });
+
   const {
     data: postData,
-    isFetching,
     isLoading,
-    isError,
-    isSuccess,
-    error: postError,
-  } = useGetMultiplePostsQuery({ page: pageNum, limit: postLoadLimit, reqID });
+    error,
+    isFetching,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery(
+    "posts",
+    () => getMultiplePosts({ limit: postLoadLimit, reqID }),
+    {
+      refetchOnWindowFocus: false,
+      getNextPageParam: (lastPage, pages) => {
+        const pageLimit = Math.ceil(lastPage.totalPosts / postLoadLimit);
+        if (lastPage.page < pageLimit) return lastPage.page + 1;
+        return false;
+      },
+    }
+  );
+
+  useEffect(() => {
+    console.log("-------------------query info-------------------");
+    console.log("data ", postData);
+    console.log("loading ", isLoading);
+    console.log("error ", error);
+    console.log("fetching ", isFetching);
+    console.log("has next", hasNextPage);
+    console.log("-------------------query info-------------------");
+  }, [postData]);
 
   useEffect(() => {
     if (isLoading) {
@@ -41,34 +73,34 @@ const ImageFeed = () => {
     return () => setFeedData([]);
   }, []);
 
-  useEffect(() => {
-    if (postData?.posts?.length) {
-      console.log(postData);
-      console.log(feedData);
-      setTotalPages(Math.ceil(postData?.totalPosts / postLoadLimit) || 1);
-      // if (
-      //   feedData.length
-      //   // && feedData.filter(({ _id }) => _id === postData?.posts[0]?._id).length > 0
-      // ) {
-      //   const filteredPostData = postData?.posts?.filter(
-      //     (postData) =>
-      //       !feedData.some((feedData) => postData._id === feedData._id)
-      //   );
-      //   const filteredPrevData = feedData.filter(
-      //     (feedData) =>
-      //       !postData.posts.some((newPost) => newPost._id === feedData._id)
-      //   );
-      //   setFeedData((prev) => [...filteredPrevData, ...postData?.posts]);
-      //   return;
-      // }
-      // setFeedData((prev) => [...prev, ...postData?.posts]);
-      const filteredPrevData = feedData.filter(
-        (feedData) =>
-          !postData.posts.some((newPost) => newPost._id === feedData._id)
-      );
-      setFeedData((prev) => [...filteredPrevData, ...postData?.posts]);
-    }
-  }, [postData]);
+  // useEffect(() => {
+  //   if (postData?.posts?.length) {
+  //     console.log(postData);
+  //     console.log(feedData);
+  //     setTotalPages(Math.ceil(postData?.totalPosts / postLoadLimit) || 1);
+  //     // if (
+  //     //   feedData.length
+  //     //   // && feedData.filter(({ _id }) => _id === postData?.posts[0]?._id).length > 0
+  //     // ) {
+  //     //   const filteredPostData = postData?.posts?.filter(
+  //     //     (postData) =>
+  //     //       !feedData.some((feedData) => postData._id === feedData._id)
+  //     //   );
+  //     //   const filteredPrevData = feedData.filter(
+  //     //     (feedData) =>
+  //     //       !postData.posts.some((newPost) => newPost._id === feedData._id)
+  //     //   );
+  //     //   setFeedData((prev) => [...filteredPrevData, ...postData?.posts]);
+  //     //   return;
+  //     // }
+  //     // setFeedData((prev) => [...prev, ...postData?.posts]);
+  //     const filteredPrevData = feedData.filter(
+  //       (feedData) =>
+  //         !postData.posts.some((newPost) => newPost._id === feedData._id)
+  //     );
+  //     setFeedData((prev) => [...filteredPrevData, ...postData?.posts]);
+  //   }
+  // }, [postData]);
 
   const observer = useRef();
   const lastPostRef = useCallback(
@@ -77,29 +109,34 @@ const ImageFeed = () => {
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && pageNum < totalPages) {
+        if (entries[0].isIntersecting && hasNextPage) {
           console.log(
-            "has more pages: ",
-            pageNum,
-            totalPages,
-            pageNum < totalPages
+            "has more pages: "
+            // pageNum,
+            // totalPages,
+            // pageNum < totalPages
           );
-          setPageNum((prev) => prev + 1);
+          // setPageNum((prev) => prev + 1);
+          fetchNextPage();
           console.log("near last post");
         }
       });
 
       if (post) observer.current.observe(post);
     },
-    [isFetching, isLoading, totalPages]
+    [isFetching, isLoading, hasNextPage]
   );
 
   // useEffect(() => {
   //   console.log("feedData", feedData);
   // }, [feedData]);
 
-  const content = feedData.map((post, i) => {
-    if (feedData.length === i + 1) {
+  const flattenedFeedData = postData?.pages?.reduce((acc, page) => {
+    return [...acc, ...page.posts];
+  }, []);
+
+  const content = flattenedFeedData?.map((post, i) => {
+    if (flattenedFeedData.length === i + 1) {
       return <ImgFeedCard key={post._id} post={post} ref={lastPostRef} />;
     }
     return <ImgFeedCard key={post._id} post={post} />;
@@ -110,7 +147,8 @@ const ImageFeed = () => {
       <>
         {content}
         {(isFetching || isLoading) && <LoadingSpinner />}
-        {isError && postError?.data?.message}
+        {/* {isError && postError?.data?.message} */}
+        {error && error}
       </>
     </div>
   );
