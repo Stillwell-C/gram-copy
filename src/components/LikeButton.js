@@ -18,7 +18,6 @@ const LikeButton = ({ like = false, postID, postPage }) => {
   const addNewLikeMutation = useMutation({
     mutationFn: addNewLike,
     onSuccess: () => {
-      console.log(" add success");
       queryClient.setQueryData("posts", (oldData) => {
         const data = oldData;
         //Increment like
@@ -40,7 +39,6 @@ const LikeButton = ({ like = false, postID, postPage }) => {
   const deleteLikeMutation = useMutation({
     mutationFn: deleteLike,
     onSuccess: () => {
-      console.log("delete like success");
       queryClient.setQueryData("posts", (oldData) => {
         const data = oldData;
         //Decrement like
