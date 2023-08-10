@@ -58,7 +58,7 @@ const SaveButton = ({ save = false, postID, postPage }) => {
 
   useEffect(() => {
     setSaved(save);
-  }, []);
+  }, [save]);
 
   const handleSave = () => {
     if (!authenticatedUser) {
