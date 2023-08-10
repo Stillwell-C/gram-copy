@@ -6,8 +6,7 @@ export const addNewLike = async ({ parentPostID, userID }) => {
     method: "POST",
     data: { userID },
   });
-  console.log(response);
-  console.log(response.data);
+  return response.data;
 };
 
 export const deleteLike = async ({ parentPostID, userID }) => {
@@ -16,6 +15,5 @@ export const deleteLike = async ({ parentPostID, userID }) => {
     method: "DELETE",
     data: { userID },
   });
-  console.log(response);
-  console.log(response.data);
+  return response.data;
 };
