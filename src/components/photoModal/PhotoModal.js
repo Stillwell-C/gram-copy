@@ -3,21 +3,18 @@ import { Link, useNavigate } from "react-router-dom";
 import threeDots from "../../assets/three-dots-line-svgrepo-com.svg";
 import commentBubble from "../../assets/message-circle-01-svgrepo-com.svg";
 import message from "../../assets/plane-svgrepo-com.svg";
-import filledBookmark from "../../assets/bookmark-filled.svg";
-import outlinedBookmark from "../../assets/bookmark-outline.svg";
-import outlinedHeart from "../../assets/heart-rounded-svgrepo-com.svg";
-import filledHeart from "../../assets/heart-svgrepo-com.svg";
 import moment from "moment";
 import "./photoModal.scss";
 import useFollowUnfollow from "../../hooks/useFollowUnfollow";
-import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 import AdditionalOptionsModal from "../additionalOptionsModal/AdditionalOptionsModal";
 import ReportModal from "../reportModal/ReportModal";
 import useAuth from "../../hooks/useAuth";
 import PhotoModalComments from "../PhotoModalComments";
 import AddCommentForm from "../AddCommentForm";
+import LikeButton from "../LikeButton";
+import SaveButton from "../SaveButton";
 
-const PhotoModal = ({ setShowPhotoModal, post, handleLike, handleSave }) => {
+const PhotoModal = ({ setShowPhotoModal, post }) => {
   const { authenticatedUser, id } = useAuth();
 
   const [picInfoButton, setPicInfoButton] = useState();
@@ -176,20 +173,11 @@ const PhotoModal = ({ setShowPhotoModal, post, handleLike, handleSave }) => {
             <div className='photo-modal-right-bottom'>
               <div className='buttons'>
                 <div className='buttons-left'>
-                  <button
-                    className='likeButton'
-                    aria-label={`click to ${
-                      post.isLiked ? "unlike" : "like"
-                    } post`}
-                    onClick={handleLike}
-                  >
-                    <img
-                      src={post.isLiked ? filledHeart : outlinedHeart}
-                      className={post.isLiked ? "filled heart" : "heart"}
-                      alt=''
-                      aria-hidden='true'
-                    />
-                  </button>
+                  <LikeButton
+                    like={post?.isLiked}
+                    postID={post?._id}
+                    postPage={post?.pageNo}
+                  />
                   <button
                     className='commentButton'
                     onClick={() => commentRef.current.focus()}
@@ -202,28 +190,15 @@ const PhotoModal = ({ setShowPhotoModal, post, handleLike, handleSave }) => {
                   </button>
                 </div>
                 <div className='buttons-right'>
-                  <button
-                    className='bookmarkButton'
-                    aria-label={`click to ${
-                      post.isSave ? "save" : "unsave"
-                    } post`}
-                    onClick={handleSave}
-                  >
-                    <img
-                      src={post.isSaved ? filledBookmark : outlinedBookmark}
-                      alt=''
-                      aria-hidden='true'
-                      className={post.isSaved ? "filled" : ""}
-                    />
-                  </button>
+                  <SaveButton
+                    save={post?.isSaved}
+                    postID={post?._id}
+                    postPage={post?.pageNo}
+                  />
                 </div>
               </div>
               <div className='photo-bottom-text'>
                 <div className='likes-counter'>
-                  {/* {post.likedUsers.length + likesOffset}{" "}
-                  {post.likedUsers.length + likesOffset === 1
-                    ? "Like"
-                    : "Likes"} */}
                   {post?.likes}
                   {post?.likes === 1 ? " Like" : " Likes"}
                 </div>
