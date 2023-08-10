@@ -25,7 +25,7 @@ const ImageFeed = () => {
     hasNextPage,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: "posts",
+    queryKey: ["posts"],
     queryFn: ({ pageParam = 1 }) =>
       getMultiplePosts({ pageParam, limit: postLoadLimit, reqID }),
     refetchOnWindowFocus: false,
