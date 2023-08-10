@@ -180,7 +180,7 @@ const PhotoModal = ({ setShowPhotoModal, post }) => {
                   />
                   <button
                     className='commentButton'
-                    onClick={() => commentRef.current.focus()}
+                    onClick={handleCommentClick}
                     aria-label='click to write a comment'
                   >
                     <img src={commentBubble} alt='' aria-hidden='true' />
@@ -206,7 +206,7 @@ const PhotoModal = ({ setShowPhotoModal, post }) => {
                   {moment(post.updatedAt).fromNow().toUpperCase()}
                 </div>
               </div>
-              <AddCommentForm post={post} />
+              <AddCommentForm post={post} ref={commentRef} />
             </div>
           </div>
         </div>
