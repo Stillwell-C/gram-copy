@@ -1,28 +1,30 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import { useAddNewCommentMutation } from "../features/comments/commentsApiSlice";
+import { useMutation, useQueryClient } from "react-query";
+import { addNewComment } from "../features/comments/commentsApiRoutes";
 
 const AddCommentForm = React.forwardRef(({ post }, ref) => {
   const { authenticatedUser, id } = useAuth();
 
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [comment, setComment] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
-  const [addComment, { isLoading, isError, error, isSuccess }] =
-    useAddNewCommentMutation();
-
-  useEffect(() => {
-    if (isError) console.log(error);
-  }, [isError]);
-
-  useEffect(() => {
-    if (isSuccess) {
+  const addNewCommentMutation = useMutation({
+    mutationFn: addNewComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["comments", post._id],
+        refetchPage: (page, index, allPages) => {
+          return index === page.totalPages - 1;
+        },
+      });
       setComment("");
-    }
-  }, [isSuccess]);
+    },
+  });
 
   const handleAddComment = (e) => {
     e.preventDefault();
@@ -30,22 +32,26 @@ const AddCommentForm = React.forwardRef(({ post }, ref) => {
       navigate("/accounts/login");
       return;
     }
-    addComment({ author: id, parentPostId: post._id, commentBody: comment });
+    addNewCommentMutation.mutate({
+      author: id,
+      parentPostId: post._id,
+      commentBody: comment,
+    });
   };
 
   useEffect(() => {
-    if (isLoading || comment.length < 1) {
+    if (addNewComment.isLoading || comment.length < 1) {
       setButtonDisabled(true);
       return;
     }
     setButtonDisabled(false);
-  }, [comment.length, isLoading]);
+  }, [comment.length, addNewComment.isLoading]);
 
   return (
     <div className='input-comment-div'>
       <form
         onSubmit={handleAddComment}
-        className={`input-left ${isLoading ? "disabled" : ""}`}
+        className={`input-left ${addNewComment.isLoading ? "disabled" : ""}`}
       >
         <div className='input-left'>
           <label>
@@ -55,7 +61,7 @@ const AddCommentForm = React.forwardRef(({ post }, ref) => {
               placeholder='Add a comment...'
               onChange={(e) => setComment(e.target.value)}
               value={comment}
-              disabled={isLoading}
+              disabled={addNewComment.isLoading}
               ref={ref}
             />
           </label>
