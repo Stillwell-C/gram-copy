@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useAddNewCommentMutation } from "../features/comments/commentsApiSlice";
 
-const AddCommentForm = ({ post }) => {
+const AddCommentForm = React.forwardRef(({ post }, ref) => {
   const { authenticatedUser, id } = useAuth();
 
   const navigate = useNavigate();
@@ -56,6 +56,7 @@ const AddCommentForm = ({ post }) => {
               onChange={(e) => setComment(e.target.value)}
               value={comment}
               disabled={isLoading}
+              ref={ref}
             />
           </label>
         </div>
@@ -72,6 +73,6 @@ const AddCommentForm = ({ post }) => {
       </form>
     </div>
   );
-};
+});
 
 export default AddCommentForm;
