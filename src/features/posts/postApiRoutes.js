@@ -10,12 +10,12 @@ export const getMultiplePosts = async ({ pageParam, ...args }) => {
   }));
   console.log({
     posts: postDataWithPage,
-    totalPosts: response.data.totalPosts,
     page: pageParam,
+    ...response.data,
   });
   return {
     posts: postDataWithPage,
-    totalPosts: response.data.totalPosts,
     page: pageParam,
+    ...response.data,
   };
 };
