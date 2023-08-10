@@ -2,35 +2,19 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import "./imageFeed.scss";
 import ImgFeedCard from "../../components/imageFeedCard/ImgFeedCard";
 import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
-import { useGetMultiplePostsQuery } from "../../features/posts/postsApiSlice";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../features/display/displaySlice";
 import useAuth from "../../hooks/useAuth";
-import { useInfiniteQuery, useQueryClient } from "react-query";
+import { useInfiniteQuery } from "react-query";
 import { getMultiplePosts } from "../../features/posts/postApiRoutes";
 
 const ImageFeed = () => {
   const { id } = useAuth();
 
-  const queryClient = useQueryClient();
-
-  const [pageNum, setPageNum] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [feedData, setFeedData] = useState([]);
-
   const dispatch = useDispatch();
 
   const postLoadLimit = 5;
   const reqID = id || "";
-
-  // const {
-  //   data: postData,
-  //   isFetching,
-  //   isLoading,
-  //   isError,
-  //   isSuccess,
-  //   error: postError,
-  // } = useGetMultiplePostsQuery({ page: pageNum, limit: postLoadLimit, reqID });
 
   const {
     data: postData,
@@ -53,66 +37,12 @@ const ImageFeed = () => {
   });
 
   useEffect(() => {
-    if (!isLoading) {
-      // queryClient.setQueryData("posts", (oldData) => {
-      //   console.log("olddata ", oldData);
-      //   return oldData;
-      // });
-      console.log("data ", queryClient.getQueryData());
-    }
-  }, [isLoading]);
-
-  // useEffect(() => {
-  //   console.log("-------------------query info-------------------");
-  //   console.log("data ", postData);
-  //   console.log("loading ", isLoading);
-  //   console.log("error ", error);
-  //   console.log("fetching ", isFetching);
-  //   console.log("has next", hasNextPage);
-  //   console.log("-------------------query info-------------------");
-  // }, [postData]);
-
-  useEffect(() => {
     if (isLoading) {
       dispatch(setLoading(true));
       return;
     }
     dispatch(setLoading(false));
   }, [isLoading]);
-
-  useEffect(() => {
-    setFeedData([]);
-    return () => setFeedData([]);
-  }, []);
-
-  // useEffect(() => {
-  //   if (postData?.posts?.length) {
-  //     console.log(postData);
-  //     console.log(feedData);
-  //     setTotalPages(Math.ceil(postData?.totalPosts / postLoadLimit) || 1);
-  //     // if (
-  //     //   feedData.length
-  //     //   // && feedData.filter(({ _id }) => _id === postData?.posts[0]?._id).length > 0
-  //     // ) {
-  //     //   const filteredPostData = postData?.posts?.filter(
-  //     //     (postData) =>
-  //     //       !feedData.some((feedData) => postData._id === feedData._id)
-  //     //   );
-  //     //   const filteredPrevData = feedData.filter(
-  //     //     (feedData) =>
-  //     //       !postData.posts.some((newPost) => newPost._id === feedData._id)
-  //     //   );
-  //     //   setFeedData((prev) => [...filteredPrevData, ...postData?.posts]);
-  //     //   return;
-  //     // }
-  //     // setFeedData((prev) => [...prev, ...postData?.posts]);
-  //     const filteredPrevData = feedData.filter(
-  //       (feedData) =>
-  //         !postData.posts.some((newPost) => newPost._id === feedData._id)
-  //     );
-  //     setFeedData((prev) => [...filteredPrevData, ...postData?.posts]);
-  //   }
-  // }, [postData]);
 
   const observer = useRef();
   const lastPostRef = useCallback(
@@ -122,13 +52,7 @@ const ImageFeed = () => {
 
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasNextPage) {
-          console.log(
-            "has more pages: "
-            // pageNum,
-            // totalPages,
-            // pageNum < totalPages
-          );
-          // setPageNum((prev) => prev + 1);
+          console.log("has more pages: ");
           fetchNextPage();
           console.log("near last post");
         }
@@ -138,10 +62,6 @@ const ImageFeed = () => {
     },
     [isFetching, isLoading, hasNextPage]
   );
-
-  // useEffect(() => {
-  //   console.log("feedData", feedData);
-  // }, [feedData]);
 
   const flattenedFeedData = postData?.pages?.reduce((acc, page) => {
     return [...acc, ...page.posts];
