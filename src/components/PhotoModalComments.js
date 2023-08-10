@@ -26,8 +26,7 @@ const PhotoModalComments = ({ post, setShowPhotoModal }) => {
       }),
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, pages) => {
-      const pageLimit = Math.ceil(lastPage.totalComments / commentLoadLimit);
-      if (lastPage.page < pageLimit) return lastPage.page + 1;
+      if (lastPage.page < lastPage.totalPages) return lastPage.page + 1;
       return false;
     },
   });
