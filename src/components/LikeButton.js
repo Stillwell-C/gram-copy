@@ -20,10 +20,13 @@ const LikeButton = ({ like = false, postID, postPage }) => {
     onSuccess: () => {
       queryClient.setQueryData("posts", (oldData) => {
         const data = oldData;
-        //Increment like
+        // Increment like
         data.pages[postPage].posts.find(
           (post) => post._id === postID
         ).likes += 1;
+        data.pages[postPage].posts.find(
+          (post) => post._id === postID
+        ).isLiked = true;
         return data;
       });
       //Maybe just stop here
@@ -45,6 +48,9 @@ const LikeButton = ({ like = false, postID, postPage }) => {
         data.pages[postPage].posts.find(
           (post) => post._id === postID
         ).likes -= 1;
+        data.pages[postPage].posts.find(
+          (post) => post._id === postID
+        ).isLiked = false;
         return data;
       });
       //Maybe just stop here
