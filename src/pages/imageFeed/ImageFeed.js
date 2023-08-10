@@ -30,8 +30,7 @@ const ImageFeed = () => {
       getMultiplePosts({ pageParam, limit: postLoadLimit, reqID }),
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, pages) => {
-      const pageLimit = Math.ceil(lastPage.totalPosts / postLoadLimit);
-      if (lastPage.page < pageLimit) return lastPage.page + 1;
+      if (lastPage.page < lastPage.totalPages) return lastPage.page + 1;
       return false;
     },
   });
