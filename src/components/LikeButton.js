@@ -65,7 +65,7 @@ const LikeButton = ({ like = false, postID, postPage }) => {
 
   useEffect(() => {
     setLiked(like);
-  }, []);
+  }, [like]);
 
   const handleLike = () => {
     if (!authenticatedUser) {
