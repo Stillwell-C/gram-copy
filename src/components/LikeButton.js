@@ -3,36 +3,61 @@ import outlinedHeart from "../assets/heart-rounded-svgrepo-com.svg";
 import filledHeart from "../assets/heart-svgrepo-com.svg";
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import {
-  useAddNewLikeMutation,
-  useDeleteLikeMutation,
-} from "../features/likes/likesApiSlice";
+import { useMutation, useQueryClient } from "react-query";
+import { addNewLike, deleteLike } from "../features/likes/likesApiRoutes";
 
-const LikeButton = ({ like = false, postID }) => {
+const LikeButton = ({ like = false, postID, postPage }) => {
   const { authenticatedUser, id } = useAuth();
+
+  const queryClient = useQueryClient();
 
   const navigate = useNavigate();
 
   const [liked, setLiked] = useState(false);
 
-  const [
-    addNewLike,
-    {
-      isLoading: isAddLoading,
-      isSuccess: isAddSuccess,
-      isError: isAddError,
-      error: addError,
+  const addNewLikeMutation = useMutation({
+    mutationFn: addNewLike,
+    onSuccess: () => {
+      console.log(" add success");
+      queryClient.setQueryData("posts", (oldData) => {
+        const data = oldData;
+        //Increment like
+        data.pages[postPage].posts.find(
+          (post) => post._id === postID
+        ).likes += 1;
+        return data;
+      });
+      //Maybe just stop here
+      queryClient.invalidateQueries({
+        queryKey: ["posts"],
+        refetchPage: (page, index, allPages) => {
+          return index === postPage;
+        },
+      });
     },
-  ] = useAddNewLikeMutation();
-  const [
-    deleteLike,
-    {
-      isLoading: isDeleteLoading,
-      isSuccess: isDeleteSuccess,
-      isError: isDeleteError,
-      error: deleteError,
+  });
+
+  const deleteLikeMutation = useMutation({
+    mutationFn: deleteLike,
+    onSuccess: () => {
+      console.log("delete like success");
+      queryClient.setQueryData("posts", (oldData) => {
+        const data = oldData;
+        //Decrement like
+        data.pages[postPage].posts.find(
+          (post) => post._id === postID
+        ).likes -= 1;
+        return data;
+      });
+      //Maybe just stop here
+      queryClient.invalidateQueries({
+        queryKey: ["posts"],
+        refetchPage: (page, index, allPages) => {
+          return index === postPage;
+        },
+      });
     },
-  ] = useDeleteLikeMutation();
+  });
 
   useEffect(() => {
     setLiked(like);
@@ -44,12 +69,10 @@ const LikeButton = ({ like = false, postID }) => {
       return;
     }
     if (liked) {
-      deleteLike({ userID: id, parentPostID: postID });
-      //   initialLike ? setLikesOffset(-1) : setLikesOffset(0);
+      deleteLikeMutation.mutate({ userID: id, parentPostID: postID });
     }
     if (!liked) {
-      addNewLike({ userID: id, parentPostID: postID });
-      //   initialLike ? setLikesOffset(0) : setLikesOffset(1);
+      addNewLikeMutation.mutate({ userID: id, parentPostID: postID });
     }
     setLiked(!liked);
   };
