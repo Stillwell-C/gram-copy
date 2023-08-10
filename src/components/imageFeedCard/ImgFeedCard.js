@@ -57,7 +57,7 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
         <div className='buttons'>
           <div className='buttons-left'>
             <LikeButton
-              like={post.isLiked}
+              like={post?.isLiked}
               postID={post?._id}
               postPage={post?.pageNo}
             />
@@ -77,7 +77,11 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
             </button>
           </div>
           <div className='buttons-right'>
-            <SaveButton save={post.isSaved} postID={post?._id} />
+            <SaveButton
+              save={post?.isSaved}
+              postID={post?._id}
+              postPage={post?.pageNo}
+            />
           </div>
         </div>
         <div className='card-bottom-text'>
