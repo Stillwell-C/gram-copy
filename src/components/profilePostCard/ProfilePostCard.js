@@ -5,11 +5,9 @@ import trashIcon from "../../assets/trash-delete-svgrepo-com.svg";
 import tagUserIcon from "../../assets/user-add-svgrepo-com.svg";
 import "./profilePostCard.scss";
 import PhotoModal from "../photoModal/PhotoModal";
-import { Link } from "react-router-dom";
-import { deleteDoc, doc } from "firebase/firestore";
-import { db } from "../../firebase";
 import TagUsersModal from "../tagUsersModal/TagUsersModal";
 import useAuth from "../../hooks/useAuth";
+import DeletePostConfirmationModal from "../DeletePostConfirmationModal";
 
 const ProfilePostCard = React.forwardRef(({ post, profilePosts }, ref) => {
   const { id } = useAuth();
@@ -19,11 +17,6 @@ const ProfilePostCard = React.forwardRef(({ post, profilePosts }, ref) => {
   const [showPhotoModal, setShowPhotoModal] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showTagUsersModal, setShowTagUsersModal] = useState(false);
-
-  const handleDelete = async () => {
-    await deleteDoc(doc(db, "userImgs", post.id));
-    showDeleteConfirmation(false);
-  };
 
   const cardContent = (
     <>
@@ -71,32 +64,10 @@ const ProfilePostCard = React.forwardRef(({ post, profilePosts }, ref) => {
         ></div>
       </div>
       {showDeleteConfirmation && (
-        <>
-          <div className='delete-confirmation-modal'>
-            <div className='delete-confirmation-body'>
-              <h4>Are you sure you want to delete this image?</h4>
-              <div className='button-div'>
-                <button
-                  aria-label='click to cancel and not delete this image'
-                  onClick={() => setShowDeleteConfirmation(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  aria-label='click to delete this image'
-                  className='delete'
-                  onClick={handleDelete}
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-          <div
-            className='delete-confirmation-overlay'
-            onClick={() => setShowDeleteConfirmation(false)}
-          ></div>
-        </>
+        <DeletePostConfirmationModal
+          setShowDeleteConfirmation={setShowDeleteConfirmation}
+          post={post}
+        />
       )}
       {showPhotoModal && (
         <PhotoModal setShowPhotoModal={setShowPhotoModal} post={post} />
@@ -111,22 +82,20 @@ const ProfilePostCard = React.forwardRef(({ post, profilePosts }, ref) => {
   );
 
   const postCard = ref ? (
-    <Link
-      to='#'
+    <article
       aria-label='click to see image and comments'
       className='post-card-container'
       ref={ref}
     >
       {cardContent}
-    </Link>
+    </article>
   ) : (
-    <Link
-      to='#'
+    <article
       aria-label='click to see image and comments'
       className='post-card-container'
     >
       {cardContent}
-    </Link>
+    </article>
   );
 
   return postCard;
