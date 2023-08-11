@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import CreatePostModal from "../createPostModal/CreatePostModal";
-import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 import NoUserImgProfileFeed from "../noUserImgProfileFeed/NoUserImgProfileFeed";
 import ProfilePostCard from "../profilePostCard/ProfilePostCard";
 import useAuth from "../../hooks/useAuth";
 import { useParams } from "react-router-dom";
+import { FadeLoader } from "react-spinners";
 
 const PostFeed = ({
   posts,
@@ -53,7 +53,9 @@ const PostFeed = ({
     <div className='user-posts-container'>
       <>
         {content}
-        {isFetching && <LoadingSpinner />}
+        {isFetching && (
+          <FadeLoader cssOverride={{ scale: "0.7" }} color='#333' />
+        )}
         {posts.length <= 0 && userPostsFeed && userCheck && (
           <NoUserImgProfileFeed handleAddPostModal={handleAddPostModal} />
         )}

@@ -1,12 +1,12 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import "./imageFeed.scss";
 import ImgFeedCard from "../../components/imageFeedCard/ImgFeedCard";
-import LoadingSpinner from "../../components/loadingSpinner/LoadingSpinner";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../features/display/displaySlice";
 import useAuth from "../../hooks/useAuth";
 import { useInfiniteQuery } from "react-query";
 import { getMultiplePosts } from "../../features/posts/postApiRoutes";
+import { FadeLoader } from "react-spinners";
 
 const ImageFeed = () => {
   const { id } = useAuth();
@@ -77,7 +77,9 @@ const ImageFeed = () => {
     <div className='feedContainer'>
       <>
         {content}
-        {(isFetching || isLoading) && <LoadingSpinner />}
+        {(isFetching || isLoading) && (
+          <FadeLoader cssOverride={{ scale: "0.7" }} color='#333' />
+        )}
         {isError && error.message}
       </>
     </div>
