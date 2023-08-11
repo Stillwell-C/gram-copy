@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useGetMultiplePostsQuery } from "../features/posts/postsApiSlice";
+import { useCallback, useRef } from "react";
 import PostFeed from "./postFeed/PostFeed";
 import LoadingSpinner from "./loadingSpinner/LoadingSpinner";
 import { useInfiniteQuery } from "react-query";
@@ -63,6 +62,7 @@ const ProfilePosts = ({ userID }) => {
       isFetching={isFetching}
       isError={isError}
       error={error}
+      profilePosts={true}
       userPostsFeed={true}
     />
   );
