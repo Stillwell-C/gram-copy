@@ -1,5 +1,22 @@
 import gramCopyApi from "../../app/api/gramCopyApi";
 
+export const getSavedPosts = async ({ userID, pageParam, ...args }) => {
+  const response = await gramCopyApi.get(`/postsave/user/${userID}`, {
+    params: { page: pageParam, ...args },
+  });
+  const postDataWithPage = response?.data?.posts.map((post) => ({
+    ...post.post,
+    isLiked: post.isLiked,
+    isSaved: post.isSaved,
+    pageNo: pageParam - 1,
+  }));
+  return {
+    ...response.data,
+    posts: postDataWithPage,
+    page: pageParam,
+  };
+};
+
 export const addNewSave = async ({ parentPostID, userID }) => {
   const response = await gramCopyApi.request({
     url: `/postsave/${parentPostID}`,
