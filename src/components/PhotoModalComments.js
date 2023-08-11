@@ -4,6 +4,7 @@ import Comment from "./comment/Comment";
 import LoadingSpinner from "./loadingSpinner/LoadingSpinner";
 import { useInfiniteQuery } from "react-query";
 import { getPostComments } from "../features/comments/commentsApiRoutes";
+import { FadeLoader } from "react-spinners";
 
 const PhotoModalComments = ({ post, setShowPhotoModal }) => {
   const commentLoadLimit = 10;
@@ -71,8 +72,13 @@ const PhotoModalComments = ({ post, setShowPhotoModal }) => {
   return (
     <>
       {comments}
-      {(isLoading || isFetching) && <LoadingSpinner />}
-      {hasNextPage && (
+      {(isLoading || isFetching) && (
+        <FadeLoader
+          cssOverride={{ alignSelf: "center", scale: "0.7" }}
+          color='#333'
+        />
+      )}
+      {hasNextPage && !isLoading && !isFetching && (
         <div className='add-comments-button-div'>
           <button
             type='button'
