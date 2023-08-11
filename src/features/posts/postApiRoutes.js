@@ -34,3 +34,30 @@ export const getTaggedPosts = async ({ pageParam, userID, ...args }) => {
     ...response.data,
   };
 };
+
+export const addNewPost = async (postData) => {
+  const response = await gramCopyApi.request({
+    url: `/posts/`,
+    method: "POST",
+    data: { ...postData },
+  });
+  return response.data;
+};
+
+export const updatePost = async (postData) => {
+  const response = await gramCopyApi.request({
+    url: `/posts/`,
+    method: "PATCH",
+    data: { ...postData },
+  });
+  return response.data;
+};
+
+export const deletePost = async ({ id, imgKey }) => {
+  const response = await gramCopyApi.request({
+    url: `/posts/`,
+    method: "DELETE",
+    data: { id, imgKey },
+  });
+  return response.data;
+};
