@@ -4,10 +4,8 @@ export const getSavedPosts = async ({ userID, pageParam, ...args }) => {
   const response = await gramCopyApi.get(`/postsave/user/${userID}`, {
     params: { page: pageParam, ...args },
   });
-  const postDataWithPage = response?.data?.posts.map((post) => ({
-    ...post.post,
-    isLiked: post.isLiked,
-    isSaved: post.isSaved,
+  const postDataWithPage = response.data.posts.map((post) => ({
+    ...post,
     pageNo: pageParam - 1,
   }));
   return {
