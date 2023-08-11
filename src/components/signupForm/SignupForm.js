@@ -17,9 +17,9 @@ import { auth, db, getURL } from "../../firebase";
 import { AuthContext } from "../../context/authContext";
 import logo from "../../assets/Instagram_logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 import errorIcon from "../../assets/error-warning-danger-problem-attention-svgrepo-com.svg";
 import successIcon from "../../assets/check-circle-svgrepo-com.svg";
+import { FadeLoader } from "react-spinners";
 
 const SignupForm = () => {
   const [error, setError] = useState(false);
@@ -325,7 +325,7 @@ const SignupForm = () => {
           </div>
           {loading ? (
             <div className='loading-spinner-div'>
-              <LoadingSpinner />
+              <FadeLoader cssOverride={{ scale: "0.7" }} color='#333' />
             </div>
           ) : (
             <button type='submit' className='submit-button'>

@@ -2,11 +2,11 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import logo from "../../assets/Instagram_logo.png";
 import { Link, useNavigate } from "react-router-dom";
-import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 import { useLoginMutation } from "../../features/auth/authApiSlice";
 import usePersistentLogin from "../../hooks/usePersistentLogin";
 import { setCredentials } from "../../features/auth/authSlice";
 import { useDispatch } from "react-redux";
+import { FadeLoader } from "react-spinners";
 
 const LoginForm = () => {
   const errRef = useRef();
@@ -123,7 +123,7 @@ const LoginForm = () => {
           </div>
           {isLoading ? (
             <div className='loading-spinner-div'>
-              <LoadingSpinner />
+              <FadeLoader cssOverride={{ scale: "0.7" }} color='#333' />
             </div>
           ) : (
             <button type='submit' className='submit-button'>
