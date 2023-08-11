@@ -6,18 +6,19 @@ import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { addNewSave, deleteSave } from "../features/saved/savedApiRoutes";
 
-const SaveButton = ({ save = false, postID, postPage }) => {
+const SaveButton = ({ save = false, postID, postPage, queryKey }) => {
   const [saved, setSaved] = useState(false);
   const { authenticatedUser, id } = useAuth();
 
   const queryClient = useQueryClient();
-
   const navigate = useNavigate();
+
+  const queryKeyInvalidationKey = queryKey ? queryKey : ["posts"];
 
   const addNewSaveMutation = useMutation({
     mutationFn: addNewSave,
     onSuccess: () => {
-      queryClient.setQueryData("posts", (oldData) => {
+      queryClient.setQueryData(queryKeyInvalidationKey, (oldData) => {
         const data = oldData;
         //Increment like
         data.pages[postPage].posts.find(
@@ -27,7 +28,7 @@ const SaveButton = ({ save = false, postID, postPage }) => {
       });
       //Maybe just stop here
       queryClient.invalidateQueries({
-        queryKey: ["posts"],
+        queryKey: queryKeyInvalidationKey,
         refetchPage: (page, index, allPages) => {
           return index === postPage;
         },
@@ -38,7 +39,7 @@ const SaveButton = ({ save = false, postID, postPage }) => {
   const deleteSaveMutation = useMutation({
     mutationFn: deleteSave,
     onSuccess: () => {
-      queryClient.setQueryData("posts", (oldData) => {
+      queryClient.setQueryData(queryKeyInvalidationKey, (oldData) => {
         const data = oldData;
         //Increment like
         data.pages[postPage].posts.find(
@@ -48,7 +49,7 @@ const SaveButton = ({ save = false, postID, postPage }) => {
       });
       //Maybe just stop here
       queryClient.invalidateQueries({
-        queryKey: ["posts"],
+        queryKey: queryKeyInvalidationKey,
         refetchPage: (page, index, allPages) => {
           return index === postPage;
         },

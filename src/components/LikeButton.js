@@ -6,19 +6,20 @@ import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "react-query";
 import { addNewLike, deleteLike } from "../features/likes/likesApiRoutes";
 
-const LikeButton = ({ like = false, postID, postPage }) => {
+const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
   const { authenticatedUser, id } = useAuth();
 
   const queryClient = useQueryClient();
-
   const navigate = useNavigate();
 
   const [liked, setLiked] = useState(false);
 
+  const queryKeyInvalidationKey = queryKey ? queryKey : ["posts"];
+
   const addNewLikeMutation = useMutation({
     mutationFn: addNewLike,
     onSuccess: () => {
-      queryClient.setQueryData("posts", (oldData) => {
+      queryClient.setQueryData(queryKeyInvalidationKey, (oldData) => {
         const data = oldData;
         // Increment like
         data.pages[postPage].posts.find(
@@ -31,7 +32,7 @@ const LikeButton = ({ like = false, postID, postPage }) => {
       });
       //Maybe just stop here
       queryClient.invalidateQueries({
-        queryKey: ["posts"],
+        queryKey: queryKeyInvalidationKey,
         refetchPage: (page, index, allPages) => {
           return index === postPage;
         },
@@ -42,7 +43,7 @@ const LikeButton = ({ like = false, postID, postPage }) => {
   const deleteLikeMutation = useMutation({
     mutationFn: deleteLike,
     onSuccess: () => {
-      queryClient.setQueryData("posts", (oldData) => {
+      queryClient.setQueryData(queryKeyInvalidationKey, (oldData) => {
         const data = oldData;
         //Decrement like
         data.pages[postPage].posts.find(
@@ -55,7 +56,7 @@ const LikeButton = ({ like = false, postID, postPage }) => {
       });
       //Maybe just stop here
       queryClient.invalidateQueries({
-        queryKey: ["posts"],
+        queryKey: queryKeyInvalidationKey,
         refetchPage: (page, index, allPages) => {
           return index === postPage;
         },
