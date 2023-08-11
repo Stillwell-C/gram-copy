@@ -123,11 +123,7 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
         <AddCommentForm post={post} />
       </div>
       {showPhotoModal && (
-        <PhotoModal
-          setShowPhotoModal={setShowPhotoModal}
-          userImgURL={userImgURL}
-          post={post}
-        />
+        <PhotoModal setShowPhotoModal={setShowPhotoModal} post={post} />
       )}
       {showAdditionalOptionsModal && (
         <AdditionalOptionsModal

@@ -156,16 +156,7 @@ const ProfilePostCard = React.forwardRef(
           </>
         )}
         {showPhotoModal && (
-          <PhotoModal
-            setShowPhotoModal={setShowPhotoModal}
-            // userImgURL={userImgURL}
-            post={post}
-            liked={liked}
-            saved={saved}
-            handleLike={handleLike}
-            handleSave={handleSave}
-            likesOffset={likesOffset}
-          />
+          <PhotoModal setShowPhotoModal={setShowPhotoModal} post={post} />
         )}
         {showTagUsersModal && (
           <TagUsersModal
