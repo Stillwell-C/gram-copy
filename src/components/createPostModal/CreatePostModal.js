@@ -3,19 +3,26 @@ import "./createPostModal.scss";
 import photoImg from "../../assets/photo-svgrepo-com.svg";
 import locationImg from "../../assets/location-svgrepo-com.svg";
 import downArrow from "../../assets/down-arrow-backup-2-svgrepo-com.svg";
-import { AuthContext } from "../../context/authContext";
 import axios from "axios";
-import { useAddNewPostMutation } from "../../features/posts/postsApiSlice";
+import { useMutation, useQueryClient } from "react-query";
+import { addNewPost } from "../../features/posts/postApiRoutes";
+import useAuth from "../../hooks/useAuth";
 
 const api_key = "419818228346469";
 const cloud_name = "danscxcd2";
 
 const CreatePostModal = ({ setDisplayPostModal }) => {
-  const { currentUser } = useContext(AuthContext);
+  // const { currentUser } = useContext(AuthContext);
+
+  const queryClient = useQueryClient();
+  const { id, username, img } = useAuth();
+
+  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
 
   const [initial, setInitial] = useState(true);
   const [dragActive, setDragActive] = useState(false);
   const [imgFileUpload, setImgFileUpload] = useState(null);
+  const [imgUploadLoading, setImgUploadLoading] = useState(false);
   const [imgUploadData, setImgUploadData] = useState({});
   const [formData, setFormData] = useState({
     caption: "",
@@ -25,10 +32,28 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
   const [showCaptionInfo, setShowCaptionInfo] = useState(false);
   const [expandAccessibility, setExpandAccessibility] = useState(false);
 
-  const [addNewPost, { isLoading, isSuccess, isError, error }] =
-    useAddNewPostMutation();
+  const addNewPostMutation = useMutation({
+    mutationFn: addNewPost,
+    onSuccess: () => {
+      queryClient.invalidateQueries("posts");
+      queryClient.invalidateQueries(["profilePosts", id]);
+
+      console.log("success");
+      setFormData({
+        caption: "",
+        location: "",
+        altText: "",
+      });
+      setImgFileUpload(null);
+      setImgUploadData({});
+      setShowCaptionInfo(false);
+      setExpandAccessibility(false);
+      setDisplayPostModal(false);
+    },
+  });
 
   useEffect(() => {
+    setImgUploadLoading(true);
     //upload file uploaded by user to Cloudinary
     const uploadFile = async () => {
       const signatureResponse = await axios.get(
@@ -43,26 +68,31 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
 
       console.log(imgData);
 
-      const cloudinaryRes = await axios.post(
-        `https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`,
-        imgData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-          //Remove for production
-          onUploadProgress: function (e) {
-            console.log(e.loaded / e.total);
-          },
-        }
-      );
+      try {
+        const cloudinaryRes = await axios.post(
+          `https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`,
+          imgData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+            //Remove for production
+            onUploadProgress: function (e) {
+              console.log(e.loaded / e.total);
+            },
+          }
+        );
 
-      console.log(cloudinaryRes);
+        console.log(cloudinaryRes);
 
-      setImgUploadData({
-        public_id: cloudinaryRes.data.public_id,
-        version: cloudinaryRes.data.version,
-        signature: cloudinaryRes.data.signature,
-        format: cloudinaryRes.data.format,
-      });
+        setImgUploadData({
+          public_id: cloudinaryRes.data.public_id,
+          version: cloudinaryRes.data.version,
+          signature: cloudinaryRes.data.signature,
+          format: cloudinaryRes.data.format,
+        });
+        setImgUploadLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     if (imgFileUpload) uploadFile();
@@ -124,30 +154,14 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
       imgData: imgUploadData,
     };
     console.log(uploadData);
-    addNewPost({ ...uploadData });
+    addNewPostMutation.mutate({ ...uploadData });
   };
 
   useEffect(() => {
-    if (isError) {
-      console.log(error);
+    if (addNewPost.isError) {
+      console.log(addNewPost.error);
     }
-  }, [isError]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      console.log("success");
-      setFormData({
-        caption: "",
-        location: "",
-        altText: "",
-      });
-      setImgFileUpload(null);
-      setImgUploadData({});
-      setShowCaptionInfo(false);
-      setExpandAccessibility(false);
-      setDisplayPostModal(false);
-    }
-  }, [isSuccess]);
+  }, [addNewPost.isError]);
 
   return (
     <>
@@ -233,6 +247,8 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
                 <button
                   type='submit'
                   aria-label='click to make post with image and input information'
+                  disabled={imgUploadLoading}
+                  className='disabled'
                 >
                   Share
                 </button>
@@ -250,10 +266,10 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
                 <div className='top-user-info'>
                   <img
                     className='userImg'
-                    src={currentUser.photoURL}
+                    src={userImgURL}
                     alt='user profile'
                   />
-                  <div>{currentUser.displayName}</div>
+                  <div>{username}</div>
                 </div>
                 <div className='bottom-user-input'>
                   <label aria-label='Enter a caption for your image. Maximum length is 2200 characters.'>
