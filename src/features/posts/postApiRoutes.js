@@ -9,14 +9,14 @@ export const getMultiplePosts = async ({ pageParam, ...args }) => {
     pageNo: pageParam - 1,
   }));
   console.log({
+    ...response.data,
     posts: postDataWithPage,
     page: pageParam,
-    ...response.data,
   });
   return {
+    ...response.data,
     posts: postDataWithPage,
     page: pageParam,
-    ...response.data,
   };
 };
 
@@ -29,9 +29,9 @@ export const getTaggedPosts = async ({ pageParam, userID, ...args }) => {
     pageNo: pageParam - 1,
   }));
   return {
+    ...response.data,
     posts: postDataWithPage,
     page: pageParam,
-    ...response.data,
   };
 };
 
