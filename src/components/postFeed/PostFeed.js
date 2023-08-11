@@ -12,6 +12,7 @@ const PostFeed = ({
   isFetching,
   isError,
   error,
+  queryKey,
   userPostsFeed = false,
   profilePosts = false,
 }) => {
@@ -30,11 +31,17 @@ const PostFeed = ({
           post={post}
           profilePosts={profilePosts}
           ref={lastPostRef}
+          queryKey={queryKey}
         />
       );
     }
     return (
-      <ProfilePostCard key={post._id} post={post} profilePosts={profilePosts} />
+      <ProfilePostCard
+        key={post._id}
+        post={post}
+        profilePosts={profilePosts}
+        queryKey={queryKey}
+      />
     );
   });
 
