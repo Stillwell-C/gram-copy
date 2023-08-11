@@ -19,3 +19,18 @@ export const getMultiplePosts = async ({ pageParam, ...args }) => {
     ...response.data,
   };
 };
+
+export const getTaggedPosts = async ({ pageParam, userID, ...args }) => {
+  const response = await gramCopyApi.get(`/posts/tagged/${userID}`, {
+    params: { page: pageParam, ...args },
+  });
+  const postDataWithPage = response.data.posts.map((post) => ({
+    ...post,
+    pageNo: pageParam - 1,
+  }));
+  return {
+    posts: postDataWithPage,
+    page: pageParam,
+    ...response.data,
+  };
+};
