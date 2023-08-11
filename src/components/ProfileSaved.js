@@ -1,51 +1,36 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef } from "react";
 import PostFeed from "./postFeed/PostFeed";
 import LoadingSpinner from "./loadingSpinner/LoadingSpinner";
-import { useGetSavedPostsQuery } from "../features/saved/savedApiSlice";
+import { useInfiniteQuery } from "react-query";
+import { getSavedPosts } from "../features/saved/savedApiRoutes";
 
 const ProfileSaved = ({ userID }) => {
-  const [pageNum, setPageNum] = useState(1);
-  const [feedData, setFeedData] = useState([]);
-  const [hasMorePosts, setHasMorePosts] = useState(false);
-
-  const postLoadLimit = 12;
+  const postLoadLimit = 9;
 
   const {
     data: postData,
-    isFetching,
     isLoading,
     isError,
     error,
-  } = useGetSavedPostsQuery({
-    userID,
-    page: pageNum,
-    limit: postLoadLimit,
+    isFetching,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["savedPosts", userID],
+    queryFn: ({ pageParam = 1 }) =>
+      getSavedPosts({ pageParam, limit: postLoadLimit, userID }),
+    refetchOnWindowFocus: false,
+    getNextPageParam: (lastPage, pages) => {
+      if (lastPage.page < lastPage.totalPages) return lastPage.page + 1;
+      return false;
+    },
   });
 
-  useEffect(() => {
-    if (postData?.posts?.length > 0) {
-      setHasMorePosts(
-        (Math.ceil(postData?.totalPosts / postLoadLimit) || 1) > pageNum
-      );
-      if (
-        feedData.length &&
-        feedData.filter(({ _id }) => _id === postData?.posts[0]?.post._id)
-          .length > 0
-      ) {
-        const filteredPostData = postData.posts
-          .map((singlePost) => singlePost.post)
-          .filter(
-            (postData) =>
-              !feedData.some((feedData) => postData._id === feedData._id)
-          );
-        setFeedData((prev) => [...prev, ...filteredPostData]);
-        return;
-      }
-      const newPostData = postData.posts.map((singlePost) => singlePost.post);
-      setFeedData((prev) => [...prev, ...newPostData]);
-    }
-    return () => setFeedData([]);
-  }, [postData]);
+  const flattenedFeedData = postData?.pages?.reduce((acc, page) => {
+    return [...acc, ...page.posts];
+  }, []);
+
+  console.log(flattenedFeedData);
 
   const observer = useRef();
   const lastPostRef = useCallback(
@@ -54,22 +39,22 @@ const ProfileSaved = ({ userID }) => {
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMorePosts) {
-          setPageNum((prev) => prev + 1);
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
           console.log("near last post");
         }
       });
 
       if (post) observer.current.observe(post);
     },
-    [isFetching, isLoading, hasMorePosts]
+    [isFetching, isLoading, hasNextPage]
   );
 
   return isLoading ? (
     <LoadingSpinner />
   ) : (
     <PostFeed
-      posts={feedData}
+      posts={flattenedFeedData}
       lastPostRef={lastPostRef}
       isFetching={isFetching}
       isError={isError}
