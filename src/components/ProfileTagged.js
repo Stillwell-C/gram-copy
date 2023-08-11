@@ -1,51 +1,39 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef } from "react";
 import PostFeed from "./postFeed/PostFeed";
 import LoadingSpinner from "./loadingSpinner/LoadingSpinner";
-import { useGetTaggedPostsQuery } from "../features/posts/postsApiSlice";
+import { useInfiniteQuery } from "react-query";
+import useAuth from "../hooks/useAuth";
+import { getTaggedPosts } from "../features/posts/postApiRoutes";
 
 const ProfileTagged = ({ userID }) => {
-  const [pageNum, setPageNum] = useState(1);
-  const [feedData, setFeedData] = useState([]);
-  const [hasMorePosts, setHasMorePosts] = useState(false);
+  const { id } = useAuth();
 
-  // console.log(userID);
-  // console.log("page ", pageNum);
-  // console.log("data ", feedData);
+  const reqID = id || "";
 
-  const postLoadLimit = 12;
+  const postLoadLimit = 9;
 
   const {
     data: postData,
-    isFetching,
     isLoading,
     isError,
     error,
-  } = useGetTaggedPostsQuery({ page: pageNum, limit: postLoadLimit, userID });
+    isFetching,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["taggedPosts", userID],
+    queryFn: ({ pageParam = 1 }) =>
+      getTaggedPosts({ pageParam, limit: postLoadLimit, userID, reqID }),
+    refetchOnWindowFocus: false,
+    getNextPageParam: (lastPage, pages) => {
+      if (lastPage.page < lastPage.totalPages) return lastPage.page + 1;
+      return false;
+    },
+  });
 
-  useEffect(() => {
-    return () => setFeedData([]);
+  const flattenedFeedData = postData?.pages?.reduce((acc, page) => {
+    return [...acc, ...page.posts];
   }, []);
-
-  useEffect(() => {
-    if (postData?.posts?.length > 0) {
-      console.log(postData);
-      setHasMorePosts(
-        (Math.ceil(postData?.totalPosts / postLoadLimit) || 1) > pageNum
-      );
-      if (
-        feedData.length &&
-        feedData.filter(({ _id }) => _id === postData?.posts[0]?._id).length > 0
-      ) {
-        const filteredPostData = postData?.posts?.filter(
-          (postData) =>
-            !feedData.some((feedData) => postData._id === feedData._id)
-        );
-        setFeedData((prev) => [...prev, ...filteredPostData]);
-        return;
-      }
-      setFeedData((prev) => [...prev, ...postData?.posts]);
-    }
-  }, [postData]);
 
   const observer = useRef();
   const lastPostRef = useCallback(
@@ -54,22 +42,22 @@ const ProfileTagged = ({ userID }) => {
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMorePosts) {
-          setPageNum((prev) => prev + 1);
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
           console.log("near last post");
         }
       });
 
       if (post) observer.current.observe(post);
     },
-    [isFetching, isLoading, hasMorePosts]
+    [isFetching, isLoading, hasNextPage]
   );
 
   return isLoading ? (
     <LoadingSpinner />
   ) : (
     <PostFeed
-      posts={feedData}
+      posts={flattenedFeedData}
       lastPostRef={lastPostRef}
       isFetching={isFetching}
       isError={isError}
