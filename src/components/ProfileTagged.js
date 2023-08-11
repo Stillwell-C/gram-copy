@@ -12,6 +12,8 @@ const ProfileTagged = ({ userID }) => {
 
   const postLoadLimit = 9;
 
+  const queryKey = ["taggedPosts", userID];
+
   const {
     data: postData,
     isLoading,
@@ -21,7 +23,7 @@ const ProfileTagged = ({ userID }) => {
     hasNextPage,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ["taggedPosts", userID],
+    queryKey,
     queryFn: ({ pageParam = 1 }) =>
       getTaggedPosts({ pageParam, limit: postLoadLimit, userID, reqID }),
     refetchOnWindowFocus: false,
@@ -62,6 +64,7 @@ const ProfileTagged = ({ userID }) => {
       isFetching={isFetching}
       isError={isError}
       error={error}
+      queryKey={queryKey}
     />
   );
 };

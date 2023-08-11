@@ -7,6 +7,8 @@ import { getSavedPosts } from "../features/saved/savedApiRoutes";
 const ProfileSaved = ({ userID }) => {
   const postLoadLimit = 9;
 
+  const queryKey = ["savedPosts", userID];
+
   const {
     data: postData,
     isLoading,
@@ -16,7 +18,7 @@ const ProfileSaved = ({ userID }) => {
     hasNextPage,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ["savedPosts", userID],
+    queryKey,
     queryFn: ({ pageParam = 1 }) =>
       getSavedPosts({ pageParam, limit: postLoadLimit, userID }),
     refetchOnWindowFocus: false,
@@ -59,6 +61,7 @@ const ProfileSaved = ({ userID }) => {
       isFetching={isFetching}
       isError={isError}
       error={error}
+      queryKey={queryKey}
     />
   );
 };

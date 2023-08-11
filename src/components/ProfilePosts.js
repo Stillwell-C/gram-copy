@@ -12,6 +12,8 @@ const ProfilePosts = ({ userID }) => {
 
   const postLoadLimit = 9;
 
+  const queryKey = ["profilePosts", userID];
+
   const {
     data: postData,
     isLoading,
@@ -21,7 +23,7 @@ const ProfilePosts = ({ userID }) => {
     hasNextPage,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ["profilePosts", userID],
+    queryKey,
     queryFn: ({ pageParam = 1 }) =>
       getMultiplePosts({ pageParam, limit: postLoadLimit, reqID }),
     refetchOnWindowFocus: false,
@@ -64,6 +66,7 @@ const ProfilePosts = ({ userID }) => {
       error={error}
       profilePosts={true}
       userPostsFeed={true}
+      queryKey={queryKey}
     />
   );
 };
