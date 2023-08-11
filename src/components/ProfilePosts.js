@@ -1,9 +1,9 @@
 import { useCallback, useRef } from "react";
 import PostFeed from "./postFeed/PostFeed";
-import LoadingSpinner from "./loadingSpinner/LoadingSpinner";
 import { useInfiniteQuery } from "react-query";
 import { getMultiplePosts } from "../features/posts/postApiRoutes";
 import useAuth from "../hooks/useAuth";
+import { FadeLoader } from "react-spinners";
 
 const ProfilePosts = ({ userID }) => {
   const { id } = useAuth();
@@ -56,7 +56,7 @@ const ProfilePosts = ({ userID }) => {
   );
 
   return isLoading ? (
-    <LoadingSpinner />
+    <FadeLoader cssOverride={{ scale: "0.7" }} color='#333' />
   ) : (
     <PostFeed
       posts={flattenedFeedData}
