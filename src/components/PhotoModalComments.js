@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import addCommentIcon from "../assets/add-circle-svgrepo-com.svg";
 import Comment from "./comment/Comment";
-import LoadingSpinner from "./loadingSpinner/LoadingSpinner";
 import { useInfiniteQuery } from "react-query";
 import { getPostComments } from "../features/comments/commentsApiRoutes";
 import { FadeLoader } from "react-spinners";
