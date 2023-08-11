@@ -14,7 +14,7 @@ import AddCommentForm from "../AddCommentForm";
 import LikeButton from "../LikeButton";
 import SaveButton from "../SaveButton";
 
-const PhotoModal = ({ setShowPhotoModal, post }) => {
+const PhotoModal = ({ setShowPhotoModal, post, queryKey }) => {
   const { authenticatedUser, id } = useAuth();
 
   const [picInfoButton, setPicInfoButton] = useState();
@@ -177,6 +177,7 @@ const PhotoModal = ({ setShowPhotoModal, post }) => {
                     like={post?.isLiked}
                     postID={post?._id}
                     postPage={post?.pageNo}
+                    queryKey={queryKey}
                   />
                   <button
                     className='commentButton'
@@ -194,6 +195,7 @@ const PhotoModal = ({ setShowPhotoModal, post }) => {
                     save={post?.isSaved}
                     postID={post?._id}
                     postPage={post?.pageNo}
+                    queryKey={queryKey}
                   />
                 </div>
               </div>
