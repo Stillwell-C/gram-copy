@@ -13,6 +13,7 @@ const PostFeed = ({
   isError,
   error,
   userPostsFeed = false,
+  profilePosts = false,
 }) => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
 
@@ -27,12 +28,14 @@ const PostFeed = ({
         <ProfilePostCard
           key={post._id}
           post={post}
-          postType={"post"}
+          profilePosts={profilePosts}
           ref={lastPostRef}
         />
       );
     }
-    return <ProfilePostCard key={post._id} post={post} postType={"post"} />;
+    return (
+      <ProfilePostCard key={post._id} post={post} profilePosts={profilePosts} />
+    );
   });
 
   const handleAddPostModal = () => {
