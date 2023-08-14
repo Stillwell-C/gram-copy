@@ -25,23 +25,45 @@ import useSearchForUser from "../../hooks/useSearchForUser";
 import HeaderBar from "./../headerBar/HeaderBar";
 import useAuth from "../../hooks/useAuth";
 import { useSendLogoutMutation } from "../../features/auth/authApiSlice";
+import { getUserSearch } from "../../features/users/usersApiRoutes";
+import { useInfiniteQuery } from "react-query";
+import { FadeLoader } from "react-spinners";
 
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
   const [displayMenu, setDisplayMenu] = useState(false);
   const [searchActive, setSearchActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
+  // const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
   const userSearch = useSearchForUser();
   const { authenticatedUser, username, img } = useAuth();
   const navbarRef = useRef();
   const headerbarRef = useRef();
 
-  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
+  // const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
 
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
     useSendLogoutMutation();
+
+  const {
+    data: searchData,
+    isLoading: searchIsLoading,
+    isError: searchIsError,
+    error: searchError,
+    isFetching: searchIsFetching,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["searchData", searchQuery],
+    queryFn: ({ pageParam = 1 }) =>
+      getUserSearch({ pageParam, limit: 10, searchQuery }),
+    refetchOnWindowFocus: false,
+    getNextPageParam: (lastPage, pages) => {
+      if (lastPage.page < lastPage.totalPages) return lastPage.page + 1;
+      return false;
+    },
+  });
 
   useEffect(() => {
     if (isSuccess) window.location.reload();
@@ -66,19 +88,14 @@ const Navbar = () => {
   };
 
   const handleSearch = async (searchInput) => {
-    setSearchQuery(searchInput);
     if (searchInput > 1) {
-      setSearchResults([]);
       return;
     }
-    const searchResults = await userSearch(searchInput);
-    setSearchResults(searchResults);
+    setSearchQuery(searchInput);
   };
 
   const handleClearSearch = () => {
     setSearchQuery("");
-    setSearchResults([]);
-    console.log("called");
   };
 
   useEffect(() => {
@@ -99,6 +116,31 @@ const Navbar = () => {
     };
   });
 
+  const userImgURL = (imgKey) =>
+    `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${imgKey}`;
+
+  const flattenedSearchData = searchData?.pages?.reduce((acc, page) => {
+    return [...acc, ...page?.users];
+  }, []);
+
+  const searchResults = flattenedSearchData?.map((user) => (
+    <Link
+      key={user._id}
+      to={`/${user.username}`}
+      aria-label={`move to ${user.username}'s profile`}
+    >
+      <div className='search-result'>
+        <div className='profile-picture'>
+          <img src={userImgURL(user.userImgKey)} alt='user profile' />
+        </div>
+        <div className='userinfo-div'>
+          <div className='username'>{user.username}</div>
+          <div className='fullname'>{user.fullname}</div>
+        </div>
+      </div>
+    </Link>
+  ));
+
   return (
     <>
       <HeaderBar
@@ -107,8 +149,8 @@ const Navbar = () => {
         setSearchActive={setSearchActive}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        setSearchResults={setSearchResults}
-        searchResults={searchResults}
+        // setSearchResults={setSearchResults}
+        // searchResults={searchResults}
         ref={headerbarRef}
         aria-label='top navigation bar'
       />
@@ -285,7 +327,7 @@ const Navbar = () => {
               <Link to={authenticatedUser ? `/${username}` : "/accounts/login"}>
                 <div className='navbar-line'>
                   <img
-                    src={authenticatedUser ? userImgURL : profile}
+                    src={authenticatedUser ? userImgURL(img) : profile}
                     className={authenticatedUser ? "userProfileImg" : ""}
                     alt=''
                     aria-hidden='true'
@@ -374,24 +416,10 @@ const Navbar = () => {
             </div>
           </div>
           <div className='search-bottom'>
-            {searchResults.length > 0 &&
-              searchResults.map((doc) => (
-                <Link
-                  key={doc.uid}
-                  to={`/${doc.username}`}
-                  aria-label={`move to ${doc.username}'s profile`}
-                >
-                  <div className='search-result'>
-                    <div className='profile-picture'>
-                      <img src={doc.userImgURL} alt='user profile' />
-                    </div>
-                    <div className='userinfo-div'>
-                      <div className='username'>{doc.username}</div>
-                      <div className='fullname'>{doc.fullname}</div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
+            {searchQuery.length > 0 && !searchIsLoading && searchResults}
+            {searchIsLoading && searchIsFetching && (
+              <FadeLoader color='#333' cssOverride={{ scale: "0.7" }} />
+            )}
           </div>
         </div>
       </nav>
