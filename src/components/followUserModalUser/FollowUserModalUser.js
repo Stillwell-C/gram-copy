@@ -4,7 +4,7 @@ import useFollowUnfollow from "../../hooks/useFollowUnfollow";
 import "./followUserModalUser.scss";
 import useAuth from "../../hooks/useAuth";
 
-const FollowUserModalUser = ({ user }) => {
+const FollowUserModalUser = ({ user, setShowModal }) => {
   // const [following, setFollowing] = useState(false);
   const { authenticatedUser, id } = useAuth();
 
@@ -60,7 +60,7 @@ const FollowUserModalUser = ({ user }) => {
   );
 
   return (
-    <div className='individual-user'>
+    <div className='individual-user' onClick={() => setShowModal(false)}>
       <div className='individual-user-left'>
         <Link
           to={`/${user?.username}`}

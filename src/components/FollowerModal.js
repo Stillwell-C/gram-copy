@@ -54,10 +54,17 @@ const FollowerModal = ({ userID, setShowFollowerModal }) => {
           key={user._id}
           user={user.follower}
           ref={lastResultRef}
+          setShowModal={setShowFollowerModal}
         />
       );
     }
-    return <FollowUserModalUser key={user._id} user={user.follower} />;
+    return (
+      <FollowUserModalUser
+        key={user._id}
+        user={user.follower}
+        setShowModal={setShowFollowerModal}
+      />
+    );
   });
   return (
     <FollowUserModal
