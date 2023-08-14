@@ -25,10 +25,10 @@ const ProfilePosts = ({ userID }) => {
   } = useInfiniteQuery({
     queryKey,
     queryFn: ({ pageParam = 1 }) =>
-      getMultiplePosts({ pageParam, limit: postLoadLimit, reqID }),
+      getMultiplePosts({ pageParam, limit: postLoadLimit, userID, reqID }),
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, pages) => {
-      if (lastPage.page < lastPage.totalPages) return lastPage.page + 1;
+      if (lastPage?.page < lastPage?.totalPages) return lastPage.page + 1;
       return false;
     },
   });
