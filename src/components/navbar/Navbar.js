@@ -136,8 +136,7 @@ const Navbar = () => {
     [searchIsFetching, searchIsLoading, hasNextPage]
   );
 
-  const userImgURL = (imgKey) =>
-    `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${imgKey}`;
+  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
 
   const flattenedSearchData = searchData?.pages?.reduce((acc, page) => {
     return [...acc, ...page?.users];
@@ -336,7 +335,7 @@ const Navbar = () => {
               <Link to={authenticatedUser ? `/${username}` : "/accounts/login"}>
                 <div className='navbar-line'>
                   <img
-                    src={authenticatedUser ? userImgURL(img) : profile}
+                    src={authenticatedUser ? userImgURL : profile}
                     className={authenticatedUser ? "userProfileImg" : ""}
                     alt=''
                     aria-hidden='true'
