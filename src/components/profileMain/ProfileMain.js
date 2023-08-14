@@ -22,6 +22,8 @@ import { setLoading } from "../../features/display/displaySlice";
 import ProfilePosts from "../ProfilePosts";
 import ProfileSaved from "../ProfileSaved";
 import ProfileTagged from "../ProfileTagged";
+import { useQuery } from "react-query";
+import { getUser } from "../../features/users/usersApiRoutes";
 
 const ProfileMain = () => {
   const { userID } = useParams();
@@ -42,7 +44,15 @@ const ProfileMain = () => {
   });
   const [displayOwnPage, setDisplayOwnPage] = useState(false);
 
-  const { data: userData, isLoading, isError, error } = useGetUserQuery(userID);
+  const {
+    data: userData,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["userInfo", userID],
+    queryFn: () => getUser(userID),
+  });
 
   useEffect(() => {
     if (isLoading) {
