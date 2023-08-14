@@ -1,38 +1,54 @@
 import gramCopyApi from "../../app/api/gramCopyApi";
 
 export const getMultiplePosts = async ({ pageParam, ...args }) => {
-  const response = await gramCopyApi.get(`/posts`, {
-    params: { page: pageParam, ...args },
-  });
-  const postDataWithPage = response.data.posts.map((post) => ({
-    ...post,
-    pageNo: pageParam - 1,
-  }));
-  console.log({
-    ...response.data,
-    posts: postDataWithPage,
-    page: pageParam,
-  });
-  return {
-    ...response.data,
-    posts: postDataWithPage,
-    page: pageParam,
-  };
+  try {
+    const response = await gramCopyApi.get(`/posts`, {
+      params: { page: pageParam, ...args },
+    });
+    const postDataWithPage = response.data.posts.map((post) => ({
+      ...post,
+      pageNo: pageParam - 1,
+    }));
+    console.log({
+      ...response.data,
+      posts: postDataWithPage,
+      page: pageParam,
+    });
+    return {
+      ...response.data,
+      posts: postDataWithPage,
+      page: pageParam,
+    };
+  } catch (err) {
+    return {
+      posts: [],
+      totalPosts: 0,
+      page: 0,
+    };
+  }
 };
 
 export const getTaggedPosts = async ({ pageParam, userID, ...args }) => {
-  const response = await gramCopyApi.get(`/posts/tagged/${userID}`, {
-    params: { page: pageParam, ...args },
-  });
-  const postDataWithPage = response.data.posts.map((post) => ({
-    ...post,
-    pageNo: pageParam - 1,
-  }));
-  return {
-    ...response.data,
-    posts: postDataWithPage,
-    page: pageParam,
-  };
+  try {
+    const response = await gramCopyApi.get(`/posts/tagged/${userID}`, {
+      params: { page: pageParam, ...args },
+    });
+    const postDataWithPage = response.data.posts.map((post) => ({
+      ...post,
+      pageNo: pageParam - 1,
+    }));
+    return {
+      ...response.data,
+      posts: postDataWithPage,
+      page: pageParam,
+    };
+  } catch (err) {
+    return {
+      posts: [],
+      totalPosts: 0,
+      page: 0,
+    };
+  }
 };
 
 export const addNewPost = async (postData) => {
