@@ -24,6 +24,8 @@ import ProfileSaved from "../ProfileSaved";
 import ProfileTagged from "../ProfileTagged";
 import { useQuery } from "react-query";
 import { getUser } from "../../features/users/usersApiRoutes";
+import FollowingModal from "../FollowingModal";
+import FollowerModal from "../FollowerModal";
 
 const ProfileMain = () => {
   const { userID } = useParams();
@@ -103,7 +105,8 @@ const ProfileMain = () => {
   const [showAdditionalOptionsModal, setShowAdditionalOptionsModal] =
     useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
-  const [showFollowModal, setShowFollowModal] = useState(false);
+  const [showFollowingModal, setShowFollowingModal] = useState(false);
+  const [showFollowerModal, setShowFollowerModal] = useState(false);
   const [followModalType, setFollowModalType] = useState(null);
 
   const handleImgClick = () => {
@@ -175,15 +178,15 @@ const ProfileMain = () => {
     navigate("/direct/inbox");
   };
 
-  const handleFollowerModal = () => {
-    setFollowModalType("followers");
-    setShowFollowModal(true);
-  };
+  // const handleFollowerModal = () => {
+  //   setFollowModalType("followers");
+  //   setShowFollowModal(true);
+  // };
 
-  const handleFollowingModal = () => {
-    setFollowModalType("following");
-    setShowFollowModal(true);
-  };
+  // const handleFollowingModal = () => {
+  //   setFollowModalType("following");
+  //   setShowFollowModal(true);
+  // };
 
   const profileImg = displayOwnPage ? (
     <>
@@ -263,7 +266,10 @@ const ProfileMain = () => {
                   {pageInfo.posts === 1 ? "post" : "posts"}
                 </span>
               </div>
-              <div className='clickable' onClick={handleFollowerModal}>
+              <div
+                className='clickable'
+                onClick={() => setShowFollowerModal(true)}
+              >
                 <span className='user-figure'>
                   {pageInfo.followers + friendOffset}
                 </span>
@@ -272,7 +278,10 @@ const ProfileMain = () => {
                   : "followers"}
                 <span className='category'></span>
               </div>
-              <div className='clickable' onClick={handleFollowingModal}>
+              <div
+                className='clickable'
+                onClick={() => setShowFollowingModal(true)}
+              >
                 <span className='user-figure'>{pageInfo.following}</span>
                 following<span className='category'></span>
               </div>
@@ -353,13 +362,11 @@ const ProfileMain = () => {
           reportId={pageInfo.id}
         />
       )}
-      {showFollowModal && (
-        <FollowUserModal
-          setShowFollowModal={setShowFollowModal}
-          modalType={followModalType}
-          // pageFollowers={pageInfo.pageFollowers}
-          // pageFollowing={pageInfo.pageFollowing}
-        />
+      {showFollowingModal && (
+        <FollowingModal setShowFollowingModal={setShowFollowingModal} />
+      )}
+      {showFollowerModal && (
+        <FollowerModal setShowFollowerModal={setShowFollowerModal} />
       )}
     </div>
   );
