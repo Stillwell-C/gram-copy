@@ -172,11 +172,11 @@
     max-width: 245px;
   }
 
-  .search-body {
-    display: none;
-    width: 0;
-    transition: width 0.5s;
-  }
+  // .search-body {
+  //   display: none;
+  //   width: 0;
+  //   transition: width 0.5s;
+  // }
 
   .navbar-body {
     height: 100%;
@@ -412,6 +412,13 @@
     }
   }
 
+  .search-body {
+    display: flex;
+    position: absolute;
+    transform: translateX(-100);
+    transition: 1s;
+  }
+
   &.searchActive {
     max-width: 73px !important;
 
@@ -461,7 +468,6 @@
     .search-body {
       display: flex;
       flex-direction: column;
-      position: absolute;
       z-index: 3;
       top: 0;
       left: 73px;
