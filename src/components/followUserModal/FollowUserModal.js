@@ -5,51 +5,53 @@ import { AuthContext } from "../../context/authContext";
 import { db } from "../../firebase";
 import FollowUserModalUser from "../followUserModalUser/FollowUserModalUser";
 import "./followUserModal.scss";
+import { FadeLoader } from "react-spinners";
 
 const FollowUserModal = ({
-  setShowFollowModal,
+  users,
   modalType,
-  pageFollowers,
-  pageFollowing,
+  setShowModal,
+  isLoading,
+  isFetching,
 }) => {
-  const [userArr, setUserArr] = useState([]);
-  const [userInfoArr, setUserInfoArr] = useState([]);
-  const { currentUser } = useContext(AuthContext);
+  // const [userArr, setUserArr] = useState([]);
+  // const [userInfoArr, setUserInfoArr] = useState([]);
+  // const { currentUser } = useContext(AuthContext);
 
-  useEffect(() => {
-    if (modalType === "followers") {
-      setUserArr(pageFollowers);
-      return;
-    }
-    setUserArr(pageFollowing);
-  }, []);
+  // useEffect(() => {
+  //   if (modalType === "followers") {
+  //     setUserArr(pageFollowers);
+  //     return;
+  //   }
+  //   setUserArr(pageFollowing);
+  // }, []);
 
-  useEffect(() => {
-    let userData = [];
-    const getData = async () => {
-      let currentUserData = null;
-      if (currentUser?.uid) {
-        const currentUserDoc = await getDoc(
-          doc(db, "userInfo", currentUser.uid)
-        );
-        currentUserData = currentUserDoc.data();
-      }
-      for (let userUid of userArr) {
-        const singleUserData = await getDoc(doc(db, "userInfo", userUid));
-        const currentUserFollowing = currentUser
-          ? currentUserData.following.includes(userUid)
-          : false;
-        userData.push({ ...singleUserData.data(), currentUserFollowing });
-      }
-      setUserInfoArr(userData);
-    };
+  // useEffect(() => {
+  //   let userData = [];
+  //   const getData = async () => {
+  //     let currentUserData = null;
+  //     if (currentUser?.uid) {
+  //       const currentUserDoc = await getDoc(
+  //         doc(db, "userInfo", currentUser.uid)
+  //       );
+  //       currentUserData = currentUserDoc.data();
+  //     }
+  //     for (let userUid of userArr) {
+  //       const singleUserData = await getDoc(doc(db, "userInfo", userUid));
+  //       const currentUserFollowing = currentUser
+  //         ? currentUserData.following.includes(userUid)
+  //         : false;
+  //       userData.push({ ...singleUserData.data(), currentUserFollowing });
+  //     }
+  //     setUserInfoArr(userData);
+  //   };
 
-    getData();
-  }, [userArr]);
+  //   getData();
+  // }, [userArr]);
 
-  const renderedUsers = userInfoArr.map((userDoc) => (
-    <FollowUserModalUser userDoc={userDoc} key={userDoc.uid} />
-  ));
+  // const renderedUsers = userInfoArr.map((userDoc) => (
+  //   <FollowUserModalUser userDoc={userDoc} key={userDoc.uid} />
+  // ));
 
   return (
     <>
@@ -64,20 +66,27 @@ const FollowUserModal = ({
             </div>
             <div className='close-div'>
               <button
-                onClick={() => setShowFollowModal(false)}
+                onClick={() => setShowModal(false)}
                 aria-label='click to close'
               >
                 &times;
               </button>
             </div>
           </div>
-          <div className='follow-user-modal-content'>{renderedUsers}</div>
+          <div className='follow-user-modal-content'>
+            {users}
+            <div className='loading-div'>
+              {(isFetching || isLoading) && (
+                <FadeLoader cssOverride={{ scale: "0.5" }} color='#333' />
+              )}
+            </div>
+          </div>
         </div>
       </div>
       <div
         className='follow-user-modal-overlay'
         aria-label='click to close modal'
-        onClick={() => setShowFollowModal(false)}
+        onClick={() => setShowModal(false)}
       ></div>
     </>
   );
