@@ -363,10 +363,16 @@ const ProfileMain = () => {
         />
       )}
       {showFollowingModal && (
-        <FollowingModal setShowFollowingModal={setShowFollowingModal} />
+        <FollowingModal
+          setShowFollowingModal={setShowFollowingModal}
+          userID={pageInfo.id}
+        />
       )}
       {showFollowerModal && (
-        <FollowerModal setShowFollowerModal={setShowFollowerModal} />
+        <FollowerModal
+          setShowFollowerModal={setShowFollowerModal}
+          userID={pageInfo.id}
+        />
       )}
     </div>
   );
