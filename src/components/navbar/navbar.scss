@@ -458,7 +458,8 @@
     }
 
     .search-body {
-      display: block;
+      display: flex;
+      flex-direction: column;
       position: absolute;
       z-index: 3;
       top: 0;
@@ -467,6 +468,7 @@
       background-color: #fff;
       border-radius: 0 16px 16px 0;
       border-right: 1px solid #efefef;
+      height: 100%;
 
       .search-top {
         border-bottom: 1px solid #cccccc;
