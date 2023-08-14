@@ -2,76 +2,85 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useFollowUnfollow from "../../hooks/useFollowUnfollow";
 import "./followUserModalUser.scss";
+import useAuth from "../../hooks/useAuth";
 
-const FollowUserModalUser = ({ userDoc }) => {
-  const [following, setFollowing] = useState(false);
-  const [followingButton, setFollowingButton] = useState(null);
+const FollowUserModalUser = ({ user }) => {
+  // const [following, setFollowing] = useState(false);
+  const { authenticatedUser, id } = useAuth();
 
   const { follow: followUser, unfollow: unfollowUser } = useFollowUnfollow();
 
-  useEffect(() => {
-    if (userDoc.currentUserFollowing) setFollowing(true);
-  }, []);
+  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${user?.userImgKey}`;
 
-  useEffect(() => {
-    if (!following) {
-      setFollowingButton(
-        <button
-          className='modal-follow-button'
-          aria-label={`click to follow user`}
-          type='button'
-          onClick={handleFollow}
-        >
-          Follow
-        </button>
-      );
-      return;
-    }
-    setFollowingButton(
-      <button
-        className='modal-follow-button unfollow'
-        aria-label={`click to unfollow user`}
-        type='button'
-        onClick={handleUnfollow}
-      >
-        Following
-      </button>
-    );
-  }, [following]);
+  // useEffect(() => {
+  //   if (!following) {
+  //     setFollowingButton(
+  //       <button
+  //         className='modal-follow-button'
+  //         aria-label={`click to follow user`}
+  //         type='button'
+  //         onClick={handleFollow}
+  //       >
+  //         Follow
+  //       </button>
+  //     );
+  //     return;
+  //   }
+  //   setFollowingButton(
+  //     <button
+  //       className='modal-follow-button unfollow'
+  //       aria-label={`click to unfollow user`}
+  //       type='button'
+  //       onClick={handleUnfollow}
+  //     >
+  //       Following
+  //     </button>
+  //   );
+  // }, [following]);
 
-  const handleFollow = () => {
-    followUser(userDoc.uid);
-    setFollowing(true);
-  };
+  // const handleFollow = () => {
+  //   followUser(userDoc.uid);
+  //   setFollowing(true);
+  // };
 
-  const handleUnfollow = () => {
-    unfollowUser(userDoc.uid);
-    setFollowing(false);
-  };
+  // const handleUnfollow = () => {
+  //   unfollowUser(userDoc.uid);
+  //   setFollowing(false);
+  // };
+
+  const followButton = (
+    <button
+      className='modal-follow-button'
+      aria-label={`click to follow user`}
+      type='button'
+      // onClick={handleFollow}
+    >
+      Follow
+    </button>
+  );
 
   return (
     <div className='individual-user'>
       <div className='individual-user-left'>
         <Link
-          to={`/${userDoc.username}`}
-          aria-label={`move to ${userDoc.username}'s profile`}
+          to={`/${user?.username}`}
+          aria-label={`move to ${user?.username}'s profile`}
         >
           <div className='profile-picture'>
-            <img src={userDoc.userImgURL} alt='user profile' />
+            <img src={userImgURL} alt='user profile' />
           </div>
         </Link>
         <div className='userinfo-div'>
           <Link
-            key={userDoc.uid}
-            to={`/${userDoc.username}`}
-            aria-label={`move to ${userDoc.username}'s profile`}
+            to={`/${user?.username}`}
+            aria-label={`move to ${user?.username}'s profile`}
           >
-            <div className='username'>{userDoc.username}</div>
+            <div className='username'>{user?.username}</div>
           </Link>
-          <div className='fullname'>{userDoc.fullname}</div>
+          <div className='fullname'>{user?.fullname}</div>
         </div>
       </div>
-      <div className='button-div'>{followingButton}</div>
+      <div className='button-div'>{followButton}</div>
     </div>
   );
 };
