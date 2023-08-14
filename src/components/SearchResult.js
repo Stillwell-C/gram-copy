@@ -1,7 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SearchResult = React.forwardRef(({ user }, ref) => {
+  const navigate = useNavigate();
+
   const userImgURL = (imgKey) =>
     `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${imgKey}`;
 
@@ -22,6 +24,7 @@ const SearchResult = React.forwardRef(({ user }, ref) => {
       to={`/${user.username}`}
       aria-label={`move to ${user.username}'s profile`}
       ref={ref}
+      onClick={() => navigate(`/${user.username}`)}
     >
       {resultBody}
     </Link>
@@ -30,6 +33,7 @@ const SearchResult = React.forwardRef(({ user }, ref) => {
       key={user._id}
       to={`/${user.username}`}
       aria-label={`move to ${user.username}'s profile`}
+      onClick={() => navigate(`/${user.username}`)}
     >
       {resultBody}
     </Link>
