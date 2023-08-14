@@ -23,7 +23,7 @@ const PostFeed = ({
   const { username } = useAuth();
   const userCheck = userID === username;
 
-  const content = posts.map((post, i) => {
+  const content = posts?.map((post, i) => {
     if (posts.length === i + 1) {
       return (
         <ProfilePostCard
@@ -54,7 +54,9 @@ const PostFeed = ({
       <>
         {content}
         {isFetching && (
-          <FadeLoader cssOverride={{ scale: "0.7" }} color='#333' />
+          <div className='loading-div'>
+            <FadeLoader cssOverride={{ scale: "0.7" }} color='#333' />
+          </div>
         )}
         {posts.length <= 0 && userPostsFeed && userCheck && (
           <NoUserImgProfileFeed handleAddPostModal={handleAddPostModal} />
