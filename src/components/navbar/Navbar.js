@@ -418,7 +418,9 @@ const Navbar = () => {
           <div className='search-bottom'>
             {searchQuery.length > 0 && !searchIsLoading && searchResults}
             {searchIsLoading && searchIsFetching && (
-              <FadeLoader color='#333' cssOverride={{ scale: "0.7" }} />
+              <div className='loading-div'>
+                <FadeLoader color='#333' cssOverride={{ scale: "0.5" }} />
+              </div>
             )}
           </div>
         </div>
