@@ -73,7 +73,7 @@ const ProfileMain = () => {
       userImgURL: `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${userData?.userImgKey}`,
     });
     console.log(userData);
-  }, [isLoading]);
+  }, [isLoading, userID]);
 
   // useEffect(() => {
   //   console.log("success ", isSuccess);
