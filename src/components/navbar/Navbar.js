@@ -257,7 +257,9 @@ const Navbar = () => {
         </div>
       </nav>
       <nav
-        className={`navbar-container-side ${searchActive && "searchActive"}`}
+        className={`navbar-container-side ${
+          searchActive ? "searchActive" : ""
+        }`}
         ref={navbarRef}
         aria-label='main navigation bar'
       >
