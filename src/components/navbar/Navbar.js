@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./navbar.scss";
 import home from "../../assets/home-2-svgrepo-com.svg";
@@ -28,6 +28,7 @@ import { useSendLogoutMutation } from "../../features/auth/authApiSlice";
 import { getUserSearch } from "../../features/users/usersApiRoutes";
 import { useInfiniteQuery } from "react-query";
 import { FadeLoader } from "react-spinners";
+import SearchResult from "../SearchResult";
 
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
@@ -116,6 +117,25 @@ const Navbar = () => {
     };
   });
 
+  const observer = useRef();
+  const lastResultRef = useCallback(
+    (post) => {
+      if (searchIsFetching || searchIsLoading) return;
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          console.log("has more pages: ");
+          fetchNextPage();
+          console.log("near last result");
+        }
+      });
+
+      if (post) observer.current.observe(post);
+    },
+    [searchIsFetching, searchIsLoading, hasNextPage]
+  );
+
   const userImgURL = (imgKey) =>
     `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${imgKey}`;
 
@@ -123,23 +143,12 @@ const Navbar = () => {
     return [...acc, ...page?.users];
   }, []);
 
-  const searchResults = flattenedSearchData?.map((user) => (
-    <Link
-      key={user._id}
-      to={`/${user.username}`}
-      aria-label={`move to ${user.username}'s profile`}
-    >
-      <div className='search-result'>
-        <div className='profile-picture'>
-          <img src={userImgURL(user.userImgKey)} alt='user profile' />
-        </div>
-        <div className='userinfo-div'>
-          <div className='username'>{user.username}</div>
-          <div className='fullname'>{user.fullname}</div>
-        </div>
-      </div>
-    </Link>
-  ));
+  const searchResults = flattenedSearchData?.map((user, i) => {
+    if (flattenedSearchData.length === i + 1) {
+      return <SearchResult ref={lastResultRef} key={user._id} user={user} />;
+    }
+    return <SearchResult key={user._id} user={user} />;
+  });
 
   return (
     <>
