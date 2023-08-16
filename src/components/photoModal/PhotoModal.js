@@ -17,70 +17,51 @@ import SaveButton from "../SaveButton";
 const PhotoModal = ({ setShowPhotoModal, post, queryKey }) => {
   const { authenticatedUser, id } = useAuth();
 
-  const [picInfoButton, setPicInfoButton] = useState();
-  const [activateButton, setActivateButton] = useState(false);
-  const [comment, setComment] = useState("");
-  const [isFriend, setIsFriend] = useState(false);
   const [showAdditionalOptionsModal, setShowAdditionalOptionsModal] =
     useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
 
-  const navigate = useNavigate();
   const commentRef = useRef(null);
-  const { follow: followUser, unfollow: unfollowUser } = useFollowUnfollow();
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${post?.user?.userImgKey}`;
   const imgURL = `https://res.cloudinary.com/danscxcd2/image/upload/${post?.imgKey}`;
 
-  useEffect(() => {
-    if (comment.length) {
-      setActivateButton(true);
-      return;
-    }
-    setActivateButton(false);
-  }, [comment]);
-
-  useEffect(() => {
-    if (isFriend) {
-      setPicInfoButton(
-        <button
-          type='button'
-          aria-label={`click to unfollow ${post.userName}`}
-          onClick={handleUnfollow}
-        >
-          Unfollow
-        </button>
-      );
-      return;
-    }
-    setPicInfoButton(
-      <button
-        type='button'
-        aria-label={`click to follow ${post.userName}`}
-        onClick={handleFollow}
-      >
-        Follow
-      </button>
-    );
-  }, [isFriend]);
+  // <button
+  //   type='button'
+  //   aria-label={`click to unfollow ${post.userName}`}
+  //   onClick={handleUnfollow}
+  // >
+  //   Unfollow
+  // </button>
 
   const handleFollow = () => {
-    if (!authenticatedUser) {
-      navigate("/accounts/login");
-      return;
-    }
-    followUser(post.userUid);
-    setIsFriend(true);
+    // if (!authenticatedUser) {
+    //   navigate("/accounts/login");
+    //   return;
+    // }
+    // followUser(post.userUid);
+    // setIsFriend(true);
+    console.log("not implemented yet");
   };
 
-  const handleUnfollow = () => {
-    if (!authenticatedUser) {
-      navigate("/accounts/login");
-      return;
-    }
-    unfollowUser(post.userUid);
-    setIsFriend(false);
-  };
+  const followButton = (
+    <button
+      type='button'
+      aria-label={`click to follow ${post.userName}`}
+      onClick={handleFollow}
+    >
+      Follow
+    </button>
+  );
+
+  // const handleUnfollow = () => {
+  //   if (!authenticatedUser) {
+  //     navigate("/accounts/login");
+  //     return;
+  //   }
+  //   unfollowUser(post.userUid);
+  //   setIsFriend(false);
+  // };
 
   const handleCommentClick = () => {
     commentRef.current.focus();
@@ -106,7 +87,7 @@ const PhotoModal = ({ setShowPhotoModal, post, queryKey }) => {
                   {id !== post.user._id && (
                     <>
                       <span>•</span>
-                      {picInfoButton}
+                      {followButton}
                     </>
                   )}
                 </div>
@@ -146,10 +127,10 @@ const PhotoModal = ({ setShowPhotoModal, post, queryKey }) => {
                   >
                     <div className='userName'>{post.user.username}</div>
                   </Link>
-                  {id !== post.user._id && (
+                  {id !== post.user._id && !post?.isFollow && (
                     <>
                       <span>•</span>
-                      {picInfoButton}
+                      {followButton}
                     </>
                   )}
                 </div>
