@@ -13,6 +13,7 @@ import PhotoModalComments from "../PhotoModalComments";
 import AddCommentForm from "../AddCommentForm";
 import LikeButton from "../LikeButton";
 import SaveButton from "../SaveButton";
+import FollowButton from "../FollowButton";
 
 const PhotoModal = ({ setShowPhotoModal, post, queryKey }) => {
   const { authenticatedUser, id } = useAuth();
@@ -44,14 +45,24 @@ const PhotoModal = ({ setShowPhotoModal, post, queryKey }) => {
     console.log("not implemented yet");
   };
 
+  // const followButton = (
+  //   <button
+  //     type='button'
+  //     aria-label={`click to follow ${post.userName}`}
+  //     onClick={handleFollow}
+  //   >
+  //     Follow
+  //   </button>
+  // );
+
   const followButton = (
-    <button
-      type='button'
-      aria-label={`click to follow ${post.userName}`}
-      onClick={handleFollow}
-    >
-      Follow
-    </button>
+    <FollowButton
+      user={post.user}
+      queryKey={{
+        key: ["posts", post.user.username],
+        multipleInvalidation: true,
+      }}
+    />
   );
 
   // const handleUnfollow = () => {
@@ -84,7 +95,7 @@ const PhotoModal = ({ setShowPhotoModal, post, queryKey }) => {
                   >
                     <div className='userName'>{post.user.username}</div>
                   </Link>
-                  {id !== post.user._id && (
+                  {id !== post.user._id && !post?.isFollow && (
                     <>
                       <span>•</span>
                       {followButton}
