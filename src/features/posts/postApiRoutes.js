@@ -9,11 +9,6 @@ export const getMultiplePosts = async ({ pageParam, ...args }) => {
       ...post,
       pageNo: pageParam - 1,
     }));
-    console.log({
-      ...response.data,
-      posts: postDataWithPage,
-      page: pageParam,
-    });
     return {
       ...response.data,
       posts: postDataWithPage,
