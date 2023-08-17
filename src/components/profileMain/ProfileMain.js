@@ -117,14 +117,18 @@ const ProfileMain = () => {
   const friendButton = userData?.isFollow ? (
     <UnfollowButton
       user={userData}
-      classname={"follow-button"}
-      queryKey={["userInfo", userData?.username]}
+      queryKey={{
+        key: ["userInfo", userData?.username],
+        multipleInvalidation: false,
+      }}
     />
   ) : (
     <FollowButton
       user={userData}
-      classname={"follow-button"}
-      queryKey={["userInfo", userData?.username]}
+      queryKey={{
+        key: ["userInfo", userData?.username],
+        multipleInvalidation: false,
+      }}
     />
   );
 
