@@ -82,9 +82,9 @@ const LoginForm = () => {
         <form className='login-form' onSubmit={handleSignIn}>
           <div className={emailClass}>
             <label aria-label='email' htmlFor='email'>
-              <span className='label-text'>Email</span>
+              <span className='label-text'>Email or Username</span>
               <input
-                type='email'
+                type='text'
                 id='email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
