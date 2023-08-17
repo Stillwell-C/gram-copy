@@ -21,3 +21,35 @@ export const getFollowing = async ({ userID, ...args }) => {
     return { pages: [{ following: [], totalFollowing: 0, totalPages: 0 }] };
   }
 };
+
+export const addFollow = async ({ followedID, followerID }) => {
+  try {
+    const response = await gramCopyApi.request({
+      url: "/follow",
+      method: "POST",
+      data: {
+        followedID,
+        followerID,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    return { message: err.message, isError: true };
+  }
+};
+
+export const deleteFollow = async ({ followedID, followerID }) => {
+  try {
+    const response = await gramCopyApi.request({
+      url: "/follow",
+      method: "DELETE",
+      data: {
+        followedID,
+        followerID,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    return { message: err.message, isError: true };
+  }
+};
