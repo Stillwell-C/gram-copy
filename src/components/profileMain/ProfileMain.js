@@ -23,6 +23,7 @@ import FollowingModal from "../FollowingModal";
 import FollowerModal from "../FollowerModal";
 import FollowButton from "../FollowButton";
 import UnfollowButton from "../UnfollowButton";
+import ProfileUserImage from "../ProfileUserImage";
 
 const ProfileMain = () => {
   const { userID } = useParams();
@@ -54,7 +55,7 @@ const ProfileMain = () => {
   const { currentUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
-  const uploadImg = useUploadProfileImg();
+  // const uploadImg = useUploadProfileImg();
 
   const imgInputRef = useRef(null);
 
@@ -67,20 +68,20 @@ const ProfileMain = () => {
 
   const displayOwnPage = authenticatedUser && username === userID;
 
-  const handleImgClick = () => {
-    imgInputRef.current.click();
-  };
+  // const handleImgClick = () => {
+  //   imgInputRef.current.click();
+  // };
 
-  const handleImgUpload = (e) => {
-    e.preventDefault();
-    if (e.target.files && e.target.files[0]) {
-      // setPageInfo({
-      //   ...pageInfo,
-      //   pageUserImgURL: URL.createObjectURL(e.target.files[0]),
-      // });
-      uploadImg(e.target.files[0]);
-    }
-  };
+  // const handleImgUpload = (e) => {
+  //   e.preventDefault();
+  //   if (e.target.files && e.target.files[0]) {
+  //     // setPageInfo({
+  //     //   ...pageInfo,
+  //     //   pageUserImgURL: URL.createObjectURL(e.target.files[0]),
+  //     // });
+  //     uploadImg(e.target.files[0]);
+  //   }
+  // };
 
   const handleMessage = () => {
     if (!currentUser) {
@@ -90,28 +91,28 @@ const ProfileMain = () => {
     navigate("/direct/inbox");
   };
 
-  const profileImg = displayOwnPage ? (
-    <>
-      <button
-        title='Click to change profile picture'
-        aria-label='click to change profile photo'
-        onClick={handleImgClick}
-      >
-        <img src={userImgURL} alt='user profile' />
-      </button>
-      <form>
-        <input
-          type='file'
-          className='file-upload-input'
-          accept='image/png, image/jpeg'
-          ref={imgInputRef}
-          onChange={handleImgUpload}
-        />
-      </form>
-    </>
-  ) : (
-    <img src={userImgURL} alt='user profile' />
-  );
+  // const profileImg = displayOwnPage ? (
+  //   <>
+  //     <button
+  //       title='Click to change profile picture'
+  //       aria-label='click to change profile photo'
+  //       onClick={handleImgClick}
+  //     >
+  //       <img src={userImgURL} alt='user profile' />
+  //     </button>
+  //     <form>
+  //       <input
+  //         type='file'
+  //         className='file-upload-input'
+  //         accept='image/png, image/jpeg'
+  //         ref={imgInputRef}
+  //         onChange={handleImgUpload}
+  //       />
+  //     </form>
+  //   </>
+  // ) : (
+  //   <img src={userImgURL} alt='user profile' />
+  // );
 
   const friendButton = userData?.isFollow ? (
     <UnfollowButton
@@ -174,7 +175,7 @@ const ProfileMain = () => {
     <div className='profile-main-container'>
       <div className='profile-content-container'>
         <div className='profile-top'>
-          <div className='profile-img-div'>{profileImg}</div>
+          <ProfileUserImage displayOwnPage={displayOwnPage} user={userData} />
           <div className='user-info'>
             <div className='user-info-top'>
               <div className='user-info-username'>{userID}</div>
