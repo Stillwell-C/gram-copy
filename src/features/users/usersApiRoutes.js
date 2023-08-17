@@ -15,3 +15,12 @@ export const getUser = async (userID) => {
   const response = await gramCopyApi.get(`/users/${userID}`);
   return response.data;
 };
+
+export const updateUser = async ({ userID, ...args }) => {
+  const response = await gramCopyApi.request({
+    url: "/users",
+    method: "PATCH",
+    data: { id: userID, ...args },
+  });
+  return response.data;
+};
