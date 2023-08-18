@@ -4,7 +4,7 @@ import { getFollowing } from "../features/follow/followApiRoutes";
 import FollowUserModalUser from "./followUserModalUser/FollowUserModalUser";
 import FollowUserModal from "./followUserModal/FollowUserModal";
 
-const FollowingModal = ({ userID, setShowFollowingModal }) => {
+const FollowingModal = ({ user, setShowFollowingModal }) => {
   const {
     data: followData,
     isLoading,
@@ -14,9 +14,9 @@ const FollowingModal = ({ userID, setShowFollowingModal }) => {
     hasNextPage,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ["following", userID],
+    queryKey: ["following", user.username],
     queryFn: ({ pageParam = 1 }) =>
-      getFollowing({ pageParam, limit: 10, userID }),
+      getFollowing({ pageParam, limit: 10, userID: user._id }),
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, pages) => {
       if (lastPage?.page < lastPage?.totalPages) return lastPage.page + 1;
