@@ -7,78 +7,13 @@ import FollowButton from "../FollowButton";
 import UnfollowButton from "../UnfollowButton";
 
 const FollowUserModalUser = React.forwardRef(({ user, setShowModal }, ref) => {
-  // const [following, setFollowing] = useState(false);
-  const { authenticatedUser, id } = useAuth();
-
-  const { follow: followUser, unfollow: unfollowUser } = useFollowUnfollow();
-
-  const [followButton, setFollowButton] = useState(
-    <FollowButton user={user} />
-  );
-
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${user?.userImgKey}`;
 
-  // useEffect(() => {
-  //   if (!following) {
-  //     setFollowingButton(
-  //       <button
-  //         className='modal-follow-button'
-  //         aria-label={`click to follow user`}
-  //         type='button'
-  //         onClick={handleFollow}
-  //       >
-  //         Follow
-  //       </button>
-  //     );
-  //     return;
-  //   }
-  //   setFollowingButton(
-  //     <button
-  //       className='modal-follow-button unfollow'
-  //       aria-label={`click to unfollow user`}
-  //       type='button'
-  //       onClick={handleUnfollow}
-  //     >
-  //       Following
-  //     </button>
-  //   );
-  // }, [following]);
-
-  // const handleFollow = () => {
-  //   followUser(userDoc.uid);
-  //   setFollowing(true);
-  // };
-
-  // const handleUnfollow = () => {
-  //   unfollowUser(userDoc.uid);
-  //   setFollowing(false);
-  // };
-
-  // const followButton = (
-  //   <button
-  //     className='modal-follow-button'
-  //     aria-label={`click to follow user`}
-  //     type='button'
-  //     // onClick={handleFollow}
-  //   >
-  //     Follow
-  //   </button>
-  // );
-
-  // const followButton = user?.isFollow ? (
-  //   <UnfollowButton user={user} />
-  // ) : (
-  //   <FollowButton user={user} />
-  // );
-
-  useState(() => {
-    if (!user) return;
-    if (user.isFollow) {
-      setFollowButton(<UnfollowButton user={user} />);
-      return;
-    }
-    setFollowButton(<FollowButton user={user} />);
-  }, [user?.isFollow]);
+  const followButton = user?.isFollow ? (
+    <UnfollowButton user={user} />
+  ) : (
+    <FollowButton user={user} />
+  );
 
   const userInfo = (
     <>
