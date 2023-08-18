@@ -2,11 +2,12 @@ import React from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { addFollow } from "../features/follow/followApiRoutes";
 import useAuth from "../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
-import { FadeLoader } from "react-spinners";
+import { useNavigate, useParams } from "react-router-dom";
 
-const FollowButton = ({ user, queryKey }) => {
-  const { authenticatedUser, id } = useAuth();
+const FollowButton = ({ user }) => {
+  const { authenticatedUser, id, username } = useAuth();
+
+  const { userID: usernameKey } = useParams();
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -14,32 +15,6 @@ const FollowButton = ({ user, queryKey }) => {
   const addFollowMutation = useMutation({
     mutationFn: addFollow,
     onSuccess: () => {
-      if (!queryKey.multipleInvalidation) {
-        // queryClient.setQueryData(queryKey.key, (oldData) => {
-        //   const data = oldData;
-        //   data.isFollow = true;
-        //   data.followerNo = data.followerNo += 1;
-        //   return data;
-        // });
-        // queryClient.invalidateQueries({
-        //   queryKey: queryKey.key,
-        // });
-      } else if (queryKey.multipleInvalidation) {
-        // queryClient.setQueryData(['posts'], (oldData) => {
-        //   const data = oldData;
-        //   console.log(data);
-        //   for (const page of data.pages) {
-        //     for (const post of page.posts) {
-        //       if (post.user._id === user._id) {
-        //         post.isFollow = true;
-        //       }
-        //     }
-        //   }
-        //   console.log(data);
-        //   return data;
-        // });
-      }
-
       queryClient.setQueryData(["userInfo", user.username], (oldData) => {
         if (oldData) {
           const data = oldData;
@@ -51,10 +26,12 @@ const FollowButton = ({ user, queryKey }) => {
       queryClient.invalidateQueries({
         queryKey: ["userInfo", user.username],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["userInfo", username],
+      });
       queryClient.setQueryData(["posts"], (oldData) => {
         if (oldData) {
           const data = oldData;
-          console.log(data);
           for (const page of data.pages) {
             for (const post of page.posts) {
               if (post.user._id === user._id) {
@@ -62,7 +39,32 @@ const FollowButton = ({ user, queryKey }) => {
               }
             }
           }
-          console.log(data);
+          return data;
+        }
+      });
+      queryClient.setQueryData(["following", usernameKey], (oldData) => {
+        if (oldData) {
+          const data = oldData;
+          for (const page of data.pages) {
+            for (const following of page.following) {
+              if (following.following._id === user._id) {
+                following.following.isFollow = true;
+              }
+            }
+          }
+          return data;
+        }
+      });
+      queryClient.setQueryData(["followers", usernameKey], (oldData) => {
+        if (oldData) {
+          const data = oldData;
+          for (const page of data.pages) {
+            for (const follower of page.followers) {
+              if (follower.follower._id === user._id) {
+                follower.follower.isFollow = true;
+              }
+            }
+          }
           return data;
         }
       });
