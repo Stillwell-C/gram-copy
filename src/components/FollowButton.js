@@ -52,17 +52,19 @@ const FollowButton = ({ user, queryKey }) => {
         queryKey: ["userInfo", user.username],
       });
       queryClient.setQueryData(["posts"], (oldData) => {
-        const data = oldData;
-        console.log(data);
-        for (const page of data.pages) {
-          for (const post of page.posts) {
-            if (post.user._id === user._id) {
-              post.isFollow = true;
+        if (oldData) {
+          const data = oldData;
+          console.log(data);
+          for (const page of data.pages) {
+            for (const post of page.posts) {
+              if (post.user._id === user._id) {
+                post.isFollow = true;
+              }
             }
           }
+          console.log(data);
+          return data;
         }
-        console.log(data);
-        return data;
       });
     },
   });
