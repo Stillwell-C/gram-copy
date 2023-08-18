@@ -41,8 +41,6 @@ const ProfileMain = () => {
     refetchOnWindowFocus: false,
   });
 
-  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${userData?.userImgKey}`;
-
   useEffect(() => {
     if (isLoading) {
       dispatch(setLoading(true));
@@ -55,9 +53,6 @@ const ProfileMain = () => {
   const { currentUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
-  // const uploadImg = useUploadProfileImg();
-
-  const imgInputRef = useRef(null);
 
   const [displaySelector, setDisplaySelector] = useState("posts");
   const [showAdditionalOptionsModal, setShowAdditionalOptionsModal] =
@@ -68,21 +63,6 @@ const ProfileMain = () => {
 
   const displayOwnPage = authenticatedUser && username === userID;
 
-  // const handleImgClick = () => {
-  //   imgInputRef.current.click();
-  // };
-
-  // const handleImgUpload = (e) => {
-  //   e.preventDefault();
-  //   if (e.target.files && e.target.files[0]) {
-  //     // setPageInfo({
-  //     //   ...pageInfo,
-  //     //   pageUserImgURL: URL.createObjectURL(e.target.files[0]),
-  //     // });
-  //     uploadImg(e.target.files[0]);
-  //   }
-  // };
-
   const handleMessage = () => {
     if (!currentUser) {
       navigate("/accounts/login");
@@ -90,29 +70,6 @@ const ProfileMain = () => {
     }
     navigate("/direct/inbox");
   };
-
-  // const profileImg = displayOwnPage ? (
-  //   <>
-  //     <button
-  //       title='Click to change profile picture'
-  //       aria-label='click to change profile photo'
-  //       onClick={handleImgClick}
-  //     >
-  //       <img src={userImgURL} alt='user profile' />
-  //     </button>
-  //     <form>
-  //       <input
-  //         type='file'
-  //         className='file-upload-input'
-  //         accept='image/png, image/jpeg'
-  //         ref={imgInputRef}
-  //         onChange={handleImgUpload}
-  //       />
-  //     </form>
-  //   </>
-  // ) : (
-  //   <img src={userImgURL} alt='user profile' />
-  // );
 
   const friendButton = userData?.isFollow ? (
     <UnfollowButton
@@ -287,13 +244,13 @@ const ProfileMain = () => {
       {showFollowingModal && (
         <FollowingModal
           setShowFollowingModal={setShowFollowingModal}
-          userID={userData?._id}
+          user={userData}
         />
       )}
       {showFollowerModal && (
         <FollowerModal
           setShowFollowerModal={setShowFollowerModal}
-          userID={userData?._id}
+          user={userData}
         />
       )}
     </div>
