@@ -60,6 +60,7 @@ const Navbar = () => {
     queryFn: ({ pageParam = 1 }) =>
       getUserSearch({ pageParam, limit: 10, searchQuery }),
     refetchOnWindowFocus: false,
+    enabled: searchQuery.length > 0,
     getNextPageParam: (lastPage, pages) => {
       if (lastPage.page < lastPage.totalPages) return lastPage.page + 1;
       return false;
