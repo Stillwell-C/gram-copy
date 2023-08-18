@@ -14,14 +14,32 @@ const UnfollowButton = ({ user, queryKey }) => {
   const deleteFollowMutation = useMutation({
     mutationFn: deleteFollow,
     onSuccess: () => {
-      queryClient.setQueryData(queryKey, (oldData) => {
-        const data = oldData;
-        data.isFollow = false;
-        data.followerNo = data.followerNo -= 1;
-        return data;
+      queryClient.setQueryData(["userInfo", user.username], (oldData) => {
+        if (oldData) {
+          const data = oldData;
+          console.log(data);
+          data.isFollow = false;
+          data.followerNo = data.followerNo -= 1;
+          return data;
+        }
       });
       queryClient.invalidateQueries({
-        queryKey: queryKey,
+        queryKey: ["userInfo", user.username],
+      });
+      queryClient.setQueryData(["posts"], (oldData) => {
+        if (oldData) {
+          const data = oldData;
+          console.log(data);
+          for (const page of data.pages) {
+            for (const post of page.posts) {
+              if (post.user._id === user._id) {
+                post.isFollow = true;
+              }
+            }
+          }
+          console.log(data);
+          return data;
+        }
       });
     },
   });
