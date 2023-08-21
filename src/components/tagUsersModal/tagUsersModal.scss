@@ -144,20 +144,45 @@
             }
           }
 
-          .userinfo-div {
-            height: 100%;
-            flex: 1;
+          .right-display {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            .username {
-              font-weight: bold;
-              font-size: 0.9rem;
-              margin-bottom: 4px;
+            justify-content: space-between;
+            flex: 1;
+
+            .userinfo-div {
+              height: 100%;
+              flex: 1;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              .username {
+                font-weight: bold;
+                font-size: 0.9rem;
+                margin-bottom: 4px;
+              }
+              .fullname {
+                color: #8e8e8e;
+                font-size: 0.9rem;
+              }
             }
-            .fullname {
-              color: #8e8e8e;
-              font-size: 0.9rem;
+
+            .button-div {
+              display: flex;
+              align-items: center;
+              button {
+                cursor: pointer;
+                color: white;
+                background-color: #0095f6;
+                border: none;
+                border-radius: 0.5rem;
+                padding: 7px 16px;
+                font-size: 0.85rem;
+                font-weight: bold;
+
+                &:hover {
+                  background-color: #1877f2;
+                }
+              }
             }
           }
         }
