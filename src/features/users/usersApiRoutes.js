@@ -16,6 +16,11 @@ export const getUser = async (userID) => {
   return response.data;
 };
 
+export const getUsersFromArr = async (userArr) => {
+  const response = await gramCopyApi.get(`/users/userArr/${userArr.join(",")}`);
+  return response.data;
+};
+
 export const updateUser = async ({ userID, ...args }) => {
   const response = await gramCopyApi.request({
     url: "/users",
