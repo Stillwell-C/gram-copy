@@ -13,6 +13,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../../firebase";
 import "./tagUsersModal.scss";
+import TagUsersSearch from "../TagUsersSearch";
+import TaggedUsersDisplay from "../TaggedUsersDisplay";
 
 const TagUsersModal = ({ post, setShowTagUsersModal }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -20,69 +22,84 @@ const TagUsersModal = ({ post, setShowTagUsersModal }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [taggedUsersArr, setTaggedUsersArr] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [showTaggedUsersDisplay, setShowTaggedUsersDisplay] = useState(false);
 
-  const handleSearch = async (searchInput) => {
-    setSelectedUser(null);
-    setSearchQuery(searchInput);
-    console.log(searchInput);
-    if (searchInput > 1) {
-      setSearchResults([]);
-      return;
-    }
-    try {
-      const usernameQuery = await getDocs(
-        query(collection(db, "userInfo"), where("username", "==", searchInput))
-      );
-      const usernameArr = usernameQuery.docs;
-      setSearchResults(usernameArr);
-      console.log(usernameArr);
-    } catch (err) {
-      console.log(err.code);
-    }
-  };
+  // const handleSearch = async (searchInput) => {
+  //   setSelectedUser(null);
+  //   setSearchQuery(searchInput);
+  //   console.log(searchInput);
+  //   if (searchInput > 1) {
+  //     setSearchResults([]);
+  //     return;
+  //   }
+  //   try {
+  //     const usernameQuery = await getDocs(
+  //       query(collection(db, "userInfo"), where("username", "==", searchInput))
+  //     );
+  //     const usernameArr = usernameQuery.docs;
+  //     setSearchResults(usernameArr);
+  //     console.log(usernameArr);
+  //   } catch (err) {
+  //     console.log(err.code);
+  //   }
+  // };
 
-  const handleTagUser = async () => {
-    await updateDoc(doc(db, "userImgs", post.id), {
-      taggedUsers: arrayUnion(selectedUser.uid),
-    });
-    await updateDoc(doc(db, "userInfo", selectedUser.uid), {
-      taggedPosts: arrayUnion(post.id),
-    });
-    setShowTagUsersModal(false);
-  };
+  // const handleTagUser = async () => {
+  //   await updateDoc(doc(db, "userImgs", post.id), {
+  //     taggedUsers: arrayUnion(selectedUser.uid),
+  //   });
+  //   await updateDoc(doc(db, "userInfo", selectedUser.uid), {
+  //     taggedPosts: arrayUnion(post.id),
+  //   });
+  //   setShowTagUsersModal(false);
+  // };
 
-  const handleGetTaggedUsers = async () => {
-    setShowTaggedUsersModal(true);
-    const postDoc = await getDoc(doc(db, "userImgs", post.id));
-    const postData = postDoc.data();
-    const userArr = [];
-    for (let user of postData.taggedUsers) {
-      const userDoc = await getDoc(doc(db, "userInfo", user));
-      userArr.push(userDoc.data());
-    }
-    setTaggedUsersArr(userArr);
-  };
+  // const handleGetTaggedUsers = async () => {
+  //   setShowTaggedUsersModal(true);
+  //   const postDoc = await getDoc(doc(db, "userImgs", post.id));
+  //   const postData = postDoc.data();
+  //   const userArr = [];
+  //   for (let user of postData.taggedUsers) {
+  //     const userDoc = await getDoc(doc(db, "userInfo", user));
+  //     userArr.push(userDoc.data());
+  //   }
+  //   setTaggedUsersArr(userArr);
+  // };
 
-  const handleUntagUser = async (userUid) => {
-    await updateDoc(doc(db, "userImgs", post.id), {
-      taggedUsers: arrayRemove(userUid),
-    });
-    await updateDoc(doc(db, "userInfo", userUid), {
-      taggedPosts: arrayRemove(post.id),
-    });
-    setTaggedUsersArr((prevState) =>
-      prevState.filter((user) => user.uid !== userUid)
-    );
-  };
+  // const handleUntagUser = async (userUid) => {
+  //   await updateDoc(doc(db, "userImgs", post.id), {
+  //     taggedUsers: arrayRemove(userUid),
+  //   });
+  //   await updateDoc(doc(db, "userInfo", userUid), {
+  //     taggedPosts: arrayRemove(post.id),
+  //   });
+  //   setTaggedUsersArr((prevState) =>
+  //     prevState.filter((user) => user.uid !== userUid)
+  //   );
+  // };
 
-  const handleSelectUser = (userData) => {
-    setSelectedUser(userData);
-  };
+  // const handleSelectUser = (userData) => {
+  //   setSelectedUser(userData);
+  // };
 
   return (
     <>
       <div className='tag-users-modal-container'>
-        <div
+        {!showTaggedUsersDisplay && (
+          <TagUsersSearch
+            setShowTagUsersModal={setShowTagUsersModal}
+            setShowTaggedUsersDisplay={setShowTaggedUsersDisplay}
+            post={post}
+          />
+        )}
+        {showTaggedUsersDisplay && (
+          <TaggedUsersDisplay
+            post={post}
+            setShowTagUsersModal={setShowTagUsersModal}
+            setShowTaggedUsersDisplay={setShowTaggedUsersDisplay}
+          />
+        )}
+        {/* <div
           className='tag-users-modal-body'
           style={{ display: showTaggedUsersModal ? "none" : "flex" }}
         >
@@ -177,8 +194,8 @@ const TagUsersModal = ({ post, setShowTagUsersModal }) => {
                 ))}
             </div>
           </div>
-        </div>
-        <div className='check-tagged-users-body'>
+        </div> */}
+        {/* <div className='check-tagged-users-body'>
           <div className='modal-header'>
             <div className='header-btn-div left'>
               {" "}
@@ -237,7 +254,7 @@ const TagUsersModal = ({ post, setShowTagUsersModal }) => {
               ))}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <div
         className='tag-users-modal-overlay'
