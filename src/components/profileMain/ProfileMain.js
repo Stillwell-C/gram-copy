@@ -8,7 +8,6 @@ import grid from "../../assets/grid-svgrepo-com.svg";
 import bookmark from "../../assets/bookmark-svgrepo-com.svg";
 import tagged from "../../assets/user-square-svgrepo-com.svg";
 import threeDots from "../../assets/three-dots-line-svgrepo-com.svg";
-import useUploadProfileImg from "../../hooks/useUploadProfileImg";
 import AdditionalOptionsModal from "../additionalOptionsModal/AdditionalOptionsModal";
 import ReportModal from "../reportModal/ReportModal";
 import useAuth from "../../hooks/useAuth";
@@ -37,6 +36,7 @@ const ProfileMain = () => {
     error,
   } = useQuery({
     queryKey: ["userInfo", userID],
+    enabled: !!userID,
     queryFn: () => getUser(userID),
     refetchOnWindowFocus: false,
   });
