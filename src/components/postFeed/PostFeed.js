@@ -58,7 +58,7 @@ const PostFeed = ({
             <FadeLoader cssOverride={{ scale: "0.7" }} color='#333' />
           </div>
         )}
-        {posts.length <= 0 && userPostsFeed && userCheck && (
+        {posts?.length <= 0 && userPostsFeed && userCheck && (
           <NoUserImgProfileFeed handleAddPostModal={handleAddPostModal} />
         )}
         {isError && error?.data?.message}
