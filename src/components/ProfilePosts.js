@@ -1,15 +1,10 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import PostFeed from "./postFeed/PostFeed";
 import { useInfiniteQuery } from "react-query";
 import { getMultiplePosts } from "../features/posts/postApiRoutes";
-import useAuth from "../hooks/useAuth";
 import { FadeLoader } from "react-spinners";
 
 const ProfilePosts = ({ userID }) => {
-  const { id } = useAuth();
-
-  const reqID = id || "";
-
   const postLoadLimit = 9;
 
   const queryKey = ["profilePosts", userID];
@@ -24,8 +19,9 @@ const ProfilePosts = ({ userID }) => {
     fetchNextPage,
   } = useInfiniteQuery({
     queryKey,
+    enabled: !!userID,
     queryFn: ({ pageParam = 1 }) =>
-      getMultiplePosts({ pageParam, limit: postLoadLimit, userID, reqID }),
+      getMultiplePosts({ pageParam, limit: postLoadLimit, userID }),
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, pages) => {
       if (lastPage?.page < lastPage?.totalPages) return lastPage.page + 1;
