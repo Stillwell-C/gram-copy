@@ -1,6 +1,6 @@
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { updateUser } from "../features/users/usersApiRoutes";
+import { updatePostTaggedUsers } from "../features/posts/postApiRoutes";
 
 const RemoveTaggedUserButton = ({ user, post }) => {
   const queryClient = useQueryClient();
@@ -10,7 +10,7 @@ const RemoveTaggedUserButton = ({ user, post }) => {
   );
 
   const removeTaggedUserMutation = useMutation({
-    mutationFn: updateUser,
+    mutationFn: updatePostTaggedUsers,
     onSuccess: () => {
       queryClient.setQueryData(["profilePosts", post.user._id], (oldData) => {
         if (oldData) {
@@ -25,13 +25,15 @@ const RemoveTaggedUserButton = ({ user, post }) => {
           return data;
         }
       });
+      queryClient.invalidateQueries(["taggedUsers", post._id]);
     },
   });
 
   const handleRemoveTag = () => {
     removeTaggedUserMutation.mutate({
+      postID: post._id,
       userID: user._id,
-      taggedUsers: taggedUsersWithCurrentUserRemoved,
+      updateAction: "REMOVE",
     });
   };
 
