@@ -64,6 +64,19 @@ export const updatePost = async (postData) => {
   return response.data;
 };
 
+export const updatePostTaggedUsers = async ({
+  postID,
+  userID,
+  updateAction,
+}) => {
+  const response = await gramCopyApi.request({
+    url: `/posts/tagged`,
+    method: "PATCH",
+    data: { postID, userID, updateAction },
+  });
+  return response.data;
+};
+
 export const deletePost = async ({ id, imgKey }) => {
   const response = await gramCopyApi.request({
     url: `/posts/`,
