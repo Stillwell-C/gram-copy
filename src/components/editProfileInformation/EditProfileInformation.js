@@ -1,18 +1,4 @@
-import { deleteUser, updateEmail, updateProfile } from "firebase/auth";
-import {
-  collection,
-  doc,
-  getDocs,
-  query,
-  updateDoc,
-  where,
-} from "firebase/firestore";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { AuthContext } from "../../context/authContext";
-import { auth, db } from "../../firebase";
-import useGetLoggedInUserInfo from "../../hooks/useGetLoggedInUserInfo";
-import useGetLoggedInUserInfoFunction from "../../hooks/useGetLoggedInUserInfoFunction";
-import useUploadProfileImg from "../../hooks/useUploadProfileImg";
+import React, { useEffect, useState } from "react";
 import DeleteAccountModal from "../deleteAccountModal/DeleteAccountModal";
 import "./editProfileInformation.scss";
 import { useDispatch } from "react-redux";
