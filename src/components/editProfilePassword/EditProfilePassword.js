@@ -1,106 +1,63 @@
-import {
-  EmailAuthProvider,
-  reauthenticateWithCredential,
-  sendPasswordResetEmail,
-  updatePassword,
-} from "firebase/auth";
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../context/authContext";
-import { auth } from "../../firebase";
-import useGetLoggedInUserInfo from "../../hooks/useGetLoggedInUserInfo";
-import useGetLoggedInUserInfoFunction from "../../hooks/useGetLoggedInUserInfoFunction";
+import React, { useEffect, useState } from "react";
 import "./editProfilePassword.scss";
+import useAuth from "../../hooks/useAuth";
+import { useMutation } from "react-query";
+import { updateUser } from "../../features/users/usersApiRoutes";
 
 export const EditProfilePassword = () => {
-  // const { userImgURL, username } = useGetLoggedInUserInfo();
-  const getUserInfo = useGetLoggedInUserInfoFunction();
-
-  const { currentUser } = useContext(AuthContext);
+  const { id, img, username } = useAuth();
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [buttonActive, setButtonActive] = useState(false);
   const [error, setError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState([]);
+  const [errorMsg, setErrorMsg] = useState("");
   const [confirmation, setConfirmation] = useState(false);
-  const [confirmationMsg, setConfirmationMsg] = useState([]);
-  const [pageImgURL, setPageImgURL] = useState(currentUser.photoURL);
-  const [pageUsername, setPageUsername] = useState(currentUser.displayName);
+  const [confirmationMsg, setConfirmationMsg] = useState("");
 
-  useEffect(() => {
-    const getAllPageInfo = async () => {
-      const fetchedUserInfo = await getUserInfo();
-      setPageImgURL(fetchedUserInfo.userImgURL);
-      setPageUsername(fetchedUserInfo.username);
-    };
-    getAllPageInfo();
-  }, []);
+  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
 
-  useEffect(() => {
-    if (oldPassword.length && newPassword.length && confirmPassword.length) {
-      setButtonActive(true);
-      return;
-    }
-    setButtonActive(false);
-  }, [oldPassword, newPassword, confirmPassword]);
+  const updateUserMutation = useMutation({
+    mutationFn: updateUser,
+    onSuccess: () => {},
+  });
 
   const handleChangePassword = async (e) => {
-    //TODO: handle errors
     e.preventDefault();
     setConfirmation(false);
-    setConfirmationMsg([]);
+    setConfirmationMsg("");
     setError(false);
-    setErrorMsg([]);
-    const user = auth.currentUser;
+    setErrorMsg("");
     if (newPassword !== confirmPassword) {
       setError(true);
-      setErrorMsg(["Passwords do not match"]);
+      setErrorMsg("Passwords do not match");
       return;
     }
     if (newPassword.length < 6) {
       setError(true);
-      setErrorMsg(["Password must be at least 6 characters long"]);
+      setErrorMsg("Password must be at least 6 characters long");
       return;
     }
-    try {
-      const credential = EmailAuthProvider.credential(
-        currentUser.email,
-        oldPassword
-      );
-      await reauthenticateWithCredential(user, credential);
-      await updatePassword(user, newPassword);
-      setConfirmation(true);
-      setConfirmationMsg(["Your password has been changed."]);
-    } catch (err) {
-      console.log(err.message);
-      console.log(err.code);
-      setError(true);
-      setErrorMsg([err.code]);
-    }
+    updateUserMutation.mutate({ oldPassword, newPassword, id });
   };
+
+  useEffect(() => {
+    if (updateUserMutation.isError) {
+      setError(true);
+      setErrorMsg(updateUserMutation.error.response.data.message);
+    }
+  }, [updateUserMutation.isError]);
+
+  useEffect(() => {
+    if (updateUserMutation.isSuccess) {
+      setConfirmation(true);
+      setConfirmationMsg("Password updated");
+    }
+  }, [updateUserMutation.isSuccess]);
 
   const handleSendPasswordEmail = async () => {
     //TODO: alert user of success or failure
     //TODO: test with email yo ucontrol
-    setConfirmation(false);
-    setConfirmationMsg([]);
-    setError(false);
-    setErrorMsg([]);
-    try {
-      await sendPasswordResetEmail(auth, currentUser.email);
-      setConfirmation(true);
-      setConfirmationMsg();
-      setConfirmation(true);
-      setConfirmationMsg([
-        "A password reset email has been sent to your inbox.",
-      ]);
-    } catch (err) {
-      console.log(err.message);
-      console.log(err.code);
-      setError(true);
-      setErrorMsg(["Error. Please try again."]);
-    }
   };
 
   return (
@@ -111,11 +68,7 @@ export const EditProfilePassword = () => {
         }
       >
         <div className={error ? "user-error-div active" : "user-error-div"}>
-          {errorMsg.map((msg) => (
-            <span key={msg} className='error-msg'>
-              {msg}
-            </span>
-          ))}
+          {<span className='error-msg'>{errorMsg}</span>}
         </div>
         <div
           className={
@@ -124,19 +77,15 @@ export const EditProfilePassword = () => {
               : "user-confirmation-div"
           }
         >
-          {confirmationMsg.map((msg) => (
-            <span key={msg} className='confirmation-msg'>
-              {msg}
-            </span>
-          ))}
+          {<span className='confirmation-msg'>{confirmationMsg}</span>}
         </div>
       </div>
       <div className='user-info'>
         <div className='profile-img-div'>
-          <img src={pageImgURL} alt='user profile upload' />
+          <img src={userImgURL} alt='user profile upload' />
         </div>
         <div className='user-info-right'>
-          <div className='username'>{pageUsername}</div>
+          <div className='username'>{username}</div>
         </div>
       </div>
       <form onSubmit={handleChangePassword}>
@@ -193,10 +142,14 @@ export const EditProfilePassword = () => {
             <div className='submit-button-div'>
               <button
                 type='submit'
-                className={
-                  buttonActive ? "submit-button active" : "submit-button"
+                className='submit-button'
+                disabled={
+                  !(
+                    oldPassword.length &&
+                    newPassword.length &&
+                    confirmPassword.length
+                  )
                 }
-                disabled={!buttonActive}
               >
                 Change password
               </button>
