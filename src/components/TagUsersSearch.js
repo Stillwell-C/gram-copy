@@ -112,10 +112,7 @@ const TagUsersSearch = ({
         <div className='header-text-div'>
           <h2>Tag User</h2>
         </div>
-        <div
-          className='header-btn-div close-div'
-          style={{ display: selectedUser ? "none" : "flex" }}
-        >
+        <div className='header-btn-div close-div'>
           <button
             onClick={() => setShowTagUsersModal(false)}
             aria-label='click to close'
