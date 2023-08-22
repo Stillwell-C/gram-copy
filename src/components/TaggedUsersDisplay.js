@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { getUsersFromArr } from "../features/users/usersApiRoutes";
 import { FadeLoader } from "react-spinners";
+import RemoveTaggedUserButton from "./RemoveTaggedUserButton";
 
 const TaggedUsersDisplay = ({
   post,
@@ -78,12 +79,7 @@ const TaggedUsersDisplay = ({
                   </div>
                 </div>
                 <div className='button-div'>
-                  <button
-                    aria-label={`click to remove ${user.username} tag from image`}
-                    onClick={() => console.log("untag")}
-                  >
-                    Remove
-                  </button>
+                  <RemoveTaggedUserButton user={user} post={post} />
                 </div>
               </div>
             ))}
