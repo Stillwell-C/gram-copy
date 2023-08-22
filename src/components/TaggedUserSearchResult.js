@@ -1,6 +1,6 @@
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { updateUser } from "../features/users/usersApiRoutes";
+import { updatePostTaggedUsers } from "../features/posts/postApiRoutes";
 
 const TaggedUserSearchResult = React.forwardRef(
   ({ user, post, selectedUser, setSelectedUser }, ref) => {
@@ -11,8 +11,9 @@ const TaggedUserSearchResult = React.forwardRef(
     const taggedUsersWithCurrentUser = [...post.taggedUsers, user._id];
 
     const addTaggedUserMutation = useMutation({
-      mutationFn: updateUser,
+      mutationFn: updatePostTaggedUsers,
       onSuccess: () => {
+        setSelectedUser(null);
         queryClient.setQueryData(["profilePosts", post.user._id], (oldData) => {
           if (oldData) {
             const data = oldData;
@@ -32,7 +33,8 @@ const TaggedUserSearchResult = React.forwardRef(
     const handleAddTag = () => {
       addTaggedUserMutation.mutate({
         userID: user._id,
-        taggedUsers: taggedUsersWithCurrentUser,
+        postID: post._id,
+        updateAction: "ADD",
       });
     };
 
