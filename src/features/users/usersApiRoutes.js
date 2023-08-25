@@ -29,3 +29,12 @@ export const updateUser = async ({ userID, ...args }) => {
   });
   return response.data;
 };
+
+export const deleteUser = async ({ userID, ...args }) => {
+  const response = await gramCopyApi.request({
+    url: "/users",
+    method: "DELETE",
+    data: { id: userID, ...args },
+  });
+  return response.data;
+};
