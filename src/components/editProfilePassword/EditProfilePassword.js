@@ -154,7 +154,7 @@ export const EditProfilePassword = () => {
                 Change password
               </button>
             </div>
-            <div className='extra-button-div'>
+            {/* <div className='extra-button-div'>
               <button
                 type='button'
                 className='extra-button'
@@ -162,7 +162,7 @@ export const EditProfilePassword = () => {
               >
                 Forgot password?
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </form>
