@@ -11,9 +11,11 @@
   .edit-profile-div {
     margin: 30px auto 0;
     display: flex;
+    flex: 1;
     background-color: #fff;
+    width: 100%;
     max-width: 930px;
-    min-height: 790px;
+    min-height: max(700px, 90vh);
     border: 1px solid #cccccc;
     border-radius: 0.25rem;
 
@@ -154,6 +156,10 @@
       }
 
       .user-info-right {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
         button {
           background-color: transparent;
           border: none;
@@ -161,6 +167,11 @@
           cursor: pointer;
           font-weight: bold;
           color: #0095f6;
+        }
+
+        form {
+          height: 0px;
+          flex-shrink: 1;
         }
       }
     }
