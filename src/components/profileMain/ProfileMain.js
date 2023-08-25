@@ -167,7 +167,7 @@ const ProfileMain = () => {
             </div>
             <div className='user-info-bottom'>
               <div className='user-fullname'>{userData?.fullname}</div>
-              <div className='user-bio'>{userData?.bio}</div>
+              <div className='user-bio'>{userData?.userBio}</div>
             </div>
           </div>
         </div>
