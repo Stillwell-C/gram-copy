@@ -1,155 +1,195 @@
-import { useContext, useEffect, useState } from "react";
-import {
-  createUserWithEmailAndPassword,
-  fetchSignInMethodsForEmail,
-  updateProfile,
-} from "firebase/auth";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  query,
-  where,
-  setDoc,
-  doc,
-} from "firebase/firestore";
-import { auth, db, getURL } from "../../firebase";
-import { AuthContext } from "../../context/authContext";
+import { useEffect, useRef, useState } from "react";
 import logo from "../../assets/Instagram_logo.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import errorIcon from "../../assets/error-warning-danger-problem-attention-svgrepo-com.svg";
 import successIcon from "../../assets/check-circle-svgrepo-com.svg";
 import { FadeLoader } from "react-spinners";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import {
+  createUser,
+  getEmailAvailability,
+  getUsernameAvailability,
+} from "../../features/users/usersApiRoutes";
+
+//Begin with upper/lower case letter and contain 3-23 more characters
+const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+//Min 8 char long. Must contain at least one letter & one number
+const PWD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,24}$/;
+const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 const SignupForm = () => {
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
   const [email, setEmail] = useState("");
+  const [emailCheck, setEmailCheck] = useState(false);
   const [emailClick, setEmailClick] = useState(false);
   const [emailClass, setEmailClass] = useState("form-input-div");
   const [emailSuccess, setEmailSuccess] = useState(null);
-  const [userName, setUserName] = useState("");
-  const [userNameClick, setUserNameClick] = useState(false);
-  const [userNameClass, setUserNameClass] = useState("form-input-div");
-  const [userNameSuccess, setUserNameSuccess] = useState(null);
-  const [fullName, setFullName] = useState("");
-  const [fullNameClass, setFullNameClass] = useState("form-input-div");
-  const [fullNameClick, setFullNameClick] = useState(false);
-  const [fullNameSuccess, setFullNameSuccess] = useState(null);
+
+  const [fullname, setFullname] = useState("");
+  const [fullnameClass, setFullnameClass] = useState("form-input-div");
+  const [fullnameClick, setFullnameClick] = useState(false);
+  const [fullnameSuccess, setFullnameSuccess] = useState(null);
+
+  const [username, setUsername] = useState("");
+  const [usernameClick, setUsernameClick] = useState(false);
+  const [usernameClass, setUsernameClass] = useState("form-input-div");
+  const [usernameSuccess, setUsernameSuccess] = useState(null);
+  const [usernameCheck, setUsernameCheck] = useState(false);
+
   const [password, setPassword] = useState("");
   const [passwordClick, setPasswordClick] = useState(false);
   const [passwordClass, setPasswordClass] = useState("form-input-div");
+  const [passwordSuccess, setPasswordSuccess] = useState(null);
+
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // const { dispatch } = useContext(AuthContext);
+  const queryClient = useQueryClient();
 
-  const navigate = useNavigate();
+  const errRef = useRef();
+
+  //EMAIL FUNCTIONS
+  const { data: emailCheckData, isError: emailCheckIsError } = useQuery(
+    ["emailCheck", email],
+    () =>
+      getEmailAvailability(email)
+        .then(setEmailCheck(false))
+        .catch(setEmailCheck(false)),
+    {
+      enabled: emailCheck,
+      refetchOnWindowFocus: false,
+    }
+  );
 
   useEffect(() => {
+    if (!EMAIL_REGEX.test(email)) setEmailSuccess(false);
     const active = email.length ? "active" : "";
     const click = emailClick ? "clicked" : "";
-    const icon = emailSuccess !== null ? "display-icon" : "";
+    const icon = emailClick ? "" : emailSuccess !== null ? "display-icon" : "";
     setEmailClass(`form-input-div ${active} ${click} ${icon}`);
-    if (emailSuccess === false) handleEmailCheck();
   }, [email, emailClick, emailSuccess]);
 
   useEffect(() => {
-    const active = userName.length ? "active" : "";
-    const click = userNameClick ? "clicked" : "";
-    const icon = userNameSuccess !== null ? "display-icon" : "";
-    setUserNameClass(`form-input-div ${active} ${click} ${icon}`);
-    if (userNameSuccess === false) handleUsernameCheck();
-  }, [userName, userNameClick, userNameSuccess]);
-
-  useEffect(() => {
-    const active = fullName.length ? "active" : "";
-    const click = fullNameClick ? "clicked" : "";
-    const icon = fullNameSuccess !== null ? "display-icon" : "";
-    setFullNameClass(`form-input-div ${active} ${click} ${icon}`);
-    if (fullNameSuccess === false) handleFullnameCheck();
-  }, [fullName, fullNameClick, fullNameSuccess]);
-
-  useEffect(() => {
-    const active = password.length ? "active" : "";
-    const click = passwordClick ? "clicked" : "";
-    setPasswordClass(`form-input-div ${active} ${click}`);
-  }, [password, passwordClick]);
+    if (emailCheckData?.availability && EMAIL_REGEX.test(email)) {
+      setEmailSuccess(true);
+      return;
+    }
+    setEmailSuccess(false);
+  }, [emailCheckData]);
 
   const handleEmailCheck = () => {
     setEmailClick(false);
-    fetchSignInMethodsForEmail(auth, email)
-      .then((signInMethods) => {
-        signInMethods.length < 1
-          ? setEmailSuccess(true)
-          : setEmailSuccess(false);
-      })
-      .catch(setEmailSuccess(false));
+    setEmailCheck(true);
   };
+
+  //FULLNAME FUNCTIONS
+  useEffect(() => {
+    fullname.length > 2 && fullname.length < 30
+      ? setFullnameSuccess(true)
+      : setFullnameSuccess(false);
+
+    const active = fullname.length ? "active" : "";
+    const click = fullnameClick ? "clicked" : "";
+    const icon = fullnameClick
+      ? ""
+      : fullnameSuccess !== null
+      ? "display-icon"
+      : "";
+    setFullnameClass(`form-input-div ${active} ${click} ${icon}`);
+  }, [fullname, fullnameClick, fullnameSuccess]);
+
+  //USERNAME FUNCTIONS
+  const { data: usernameCheckData, isError: usernameCheckIsError } = useQuery(
+    ["usernameCheck", username],
+    () =>
+      getUsernameAvailability(username)
+        .then(setUsernameCheck(false))
+        .catch(setUsernameCheck(false)),
+    {
+      enabled: usernameCheck,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  useEffect(() => {
+    if (!USER_REGEX.test(username)) setUsernameSuccess(false);
+    const active = username.length ? "active" : "";
+    const click = usernameClick ? "clicked" : "";
+    const icon = usernameClick
+      ? ""
+      : usernameSuccess !== null
+      ? "display-icon"
+      : "";
+    setUsernameClass(`form-input-div ${active} ${click} ${icon}`);
+  }, [username, usernameClick, usernameSuccess]);
+
+  useEffect(() => {
+    if (usernameCheckData?.availability && USER_REGEX.test(username)) {
+      setUsernameSuccess(true);
+      return;
+    }
+    setUsernameSuccess(false);
+  }, [usernameCheckData]);
 
   const handleUsernameCheck = () => {
-    setUserNameClick(false);
-    checkUsername();
+    setUsernameClick(false);
+    setUsernameCheck(true);
   };
 
-  const checkUsername = async () => {
-    try {
-      const existingUserNames = await getDocs(
-        query(collection(db, "userInfo"), where("username", "==", userName))
-      );
-      existingUserNames.docs.length < 1
-        ? setUserNameSuccess(true)
-        : setUserNameSuccess(false);
-    } catch (err) {
-      setUserNameSuccess(false);
-    }
-  };
+  //PASSWORD FUNCTIONS
 
-  const handleFullnameCheck = () => {
-    setFullNameClick(false);
-    fullName.length > 2 && fullName.length < 30
-      ? setFullNameSuccess(true)
-      : setFullNameSuccess(false);
-  };
+  useEffect(() => {
+    if (PWD_REGEX.test(password)) setPasswordSuccess(true);
+    else setPasswordSuccess(false);
+    const active = password.length ? "active" : "";
+    const click = passwordClick ? "clicked" : "";
+    const icon = passwordClick
+      ? ""
+      : passwordSuccess !== null
+      ? "display-icon"
+      : "";
+    setPasswordClass(`form-input-div ${active} ${click} ${icon}`);
+  }, [password, passwordClick]);
 
-  const handleSignup = (e) => {
+  const createUserMutation = useMutation({
+    mutationFn: createUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries();
+    },
+  });
+
+  const handleCreateUser = (e) => {
     e.preventDefault();
-    signUpUser();
-  };
-
-  const signUpUser = async () => {
     setError(false);
     setErrorMsg("");
-    setLoading(true);
-    if (userName.length < 3 || userName.length > 30) {
-      setError(true);
-      setErrorMsg("Username must be 3-30 characters");
-      setLoading(false);
-      return;
-    }
-    if (fullName.length < 3 || fullName.length > 30) {
+    if (fullname.length < 3 || fullname.length > 30) {
       setError(true);
       setErrorMsg("Name must be 3-30 characters");
-      setLoading(false);
       return;
     }
-    if (password.length < 6) {
+    if (!PWD_REGEX.test(password)) {
       setError(true);
-      setErrorMsg("Password must be at least 6 characters long");
-      setLoading(false);
+      setErrorMsg("Invalid password");
       return;
     }
-    await checkUsername();
-    if (!userNameSuccess) {
+    if (!USER_REGEX.test(username)) {
       setError(true);
-      setErrorMsg("Please choose a different username");
-      setLoading(false);
+      setErrorMsg("Invalid username");
+      return;
+    }
+    //email verification will be done server side
+    //regex only performs a simple check
+    if (!email.length) {
+      setError(true);
+      setErrorMsg("Email required");
       return;
     }
     if (
       !email.length ||
-      !userName.length ||
-      !fullName.length ||
+      !username.length ||
+      !fullname.length ||
       !password.length
     ) {
       setError(true);
@@ -157,60 +197,16 @@ const SignupForm = () => {
       setLoading(false);
       return;
     }
-    try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-      //Upload new user information to DB to be accessed at a later time
-      const blankUserImg =
-        "gs://driveproject-34ebb.appspot.com/Default_pfp.svg";
-      const userImgURL = await getURL(blankUserImg);
-      const userData = {
-        email: user.email,
-        username: userName,
-        fullname: fullName,
-        following: [],
-        followers: [],
-        likedPosts: [],
-        savedPosts: [],
-        taggedPosts: [],
-        userPosts: [],
-        userBio: "",
-        userImg: blankUserImg,
-        userImgURL: userImgURL,
-        uid: user.uid,
-      };
-      await updateProfile(userCredential.user, {
-        displayName: userName,
-        photoURL: userImgURL,
-      });
-      // const userInfoUpload = await addDoc(collection(db, "userInfo"), userData);
-      await setDoc(doc(db, "userInfo", user.uid), userData);
-      // dispatch({
-      //   type: "LOGIN",
-      //   payload: {
-      //     ...user,
-      //     ...userData,
-      //     userImgURL: userImgURL,
-      //     //remove later
-      //     userInfoID: user.uid,
-      //   },
-      // });
-      navigate("/");
-    } catch (err) {
-      const errorCode = err.code;
-      console.log("Error code: ", errorCode);
-      console.log("error msg: ", err.message);
-      setError(true);
-      setErrorMsg(err.code);
-      setLoading(false);
-    }
+    createUserMutation.mutate({ username, password, email, fullname });
   };
 
-  return (
+  useEffect(() => {
+    if (error || createUserMutation.isError) {
+      errRef.current.focus();
+    }
+  }, [error, createUserMutation.isError]);
+
+  const createUserPage = (
     <>
       <div className='login-top'>
         <img src={logo} alt='instagram logo' className='login-logo' />
@@ -223,14 +219,19 @@ const SignupForm = () => {
           <div className='or-lettering'>or</div>
           <div className='line'> </div>
         </div>
-        {error && (
-          <div className='error-div'>
-            <div className='error-msg'>{errorMsg}</div>
+        <div
+          className={
+            error || createUserMutation.isError ? "error-div" : "offscreen"
+          }
+        >
+          <div className='error-msg' ref={errRef} aria-live='assertive'>
+            {errorMsg}
+            {createUserMutation?.error?.response?.data?.message}
           </div>
-        )}
-        <form className='sign-up-form' onSubmit={handleSignup}>
+        </div>
+        <form className='sign-up-form' onSubmit={handleCreateUser}>
           <div className={emailClass}>
-            <label aria-label='email' htmlFor='email'>
+            <label htmlFor='email'>
               <span className='label-text'>Email</span>
               <input
                 type='email'
@@ -239,7 +240,10 @@ const SignupForm = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 autoComplete='off'
+                spellCheck='false'
                 name='email'
+                aria-label='email'
+                aria-invalid={emailSuccess ? "false" : "true"}
                 onFocus={() => setEmailClick(true)}
                 onBlur={handleEmailCheck}
               />
@@ -252,54 +256,73 @@ const SignupForm = () => {
               />
             </div>
           </div>
-          <div className={fullNameClass}>
-            <label aria-label='full name' htmlFor='fullname'>
+          <div className={fullnameClass}>
+            <label htmlFor='fullname'>
               <span className='label-text'>Full Name</span>
               <input
                 type='text'
                 id='fullname'
-                value={fullName}
-                onChange={(e) => setFullName(e.target.value)}
+                value={fullname}
+                onChange={(e) => setFullname(e.target.value)}
                 required
                 autoComplete='off'
+                spellCheck='false'
                 name='email'
-                onFocus={() => setFullNameClick(true)}
-                onBlur={handleFullnameCheck}
+                onFocus={() => setFullnameClick(true)}
+                onBlur={() => setFullnameClick(false)}
+                aria-invalid={emailSuccess ? "false" : "true"}
+                aria-label='full name'
               />
             </label>
             <div className='input-side-div'>
               <img
                 className='icon'
-                aria-label={fullNameSuccess ? "check mark icon" : "x icon"}
-                src={fullNameSuccess ? successIcon : errorIcon}
+                aria-label={fullnameSuccess ? "check mark icon" : "x icon"}
+                src={fullnameSuccess ? successIcon : errorIcon}
               />
             </div>
           </div>
-          <div className={userNameClass}>
-            <label aria-label='username' htmlFor='username'>
+          <div className={usernameClass}>
+            <label htmlFor='username'>
               <span className='label-text'>Username</span>
               <input
                 type='text'
                 id='username'
-                value={userName}
-                onChange={(e) => setUserName(e.target.value)}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
                 autoComplete='off'
-                name='email'
-                onFocus={() => setUserNameClick(true)}
+                spellCheck='false'
+                name='username'
+                onFocus={() => setUsernameClick(true)}
                 onBlur={handleUsernameCheck}
+                aria-invalid={usernameSuccess ? "false" : "true"}
+                aria-label='username'
+                aria-describedby='usernameNote'
               />
             </label>
             <div className='input-side-div'>
               <img
                 className='icon'
-                aria-label={userNameSuccess ? "check mark icon" : "x icon"}
-                src={userNameSuccess ? successIcon : errorIcon}
+                aria-label={usernameSuccess ? "check mark icon" : "x icon"}
+                src={usernameSuccess ? successIcon : errorIcon}
               />
             </div>
           </div>
+          <p
+            id='usernameNote'
+            className={
+              usernameClick && username.length && !usernameSuccess
+                ? "form-description"
+                : "offscreen"
+            }
+          >
+            4 to 24 characters. <br />
+            Must begin with a letter. <br />
+            Letters, numbers, underscores, hyphens allowed.
+          </p>
           <div className={passwordClass}>
-            <label aria-label='password' htmlFor='password'>
+            <label htmlFor='password'>
               <span className='label-text'>Password</span>
               <input
                 type={showPassword ? "text" : "password"}
@@ -311,6 +334,9 @@ const SignupForm = () => {
                 name='password'
                 onFocus={() => setPasswordClick(true)}
                 onBlur={() => setPasswordClick(false)}
+                aria-invalid={passwordSuccess ? "false" : "true"}
+                aria-label='password'
+                aria-describedby='passwordNote'
               />
             </label>
             <div className='input-side-div'>
@@ -323,6 +349,17 @@ const SignupForm = () => {
               </button>
             </div>
           </div>
+          <p
+            id='passwordNote'
+            className={
+              passwordClick && !passwordSuccess && password.length
+                ? "form-description form-fade-in"
+                : "offscreen"
+            }
+          >
+            8 to 24 characters. <br />
+            Must include at least one letter and one number.
+          </p>
           {loading ? (
             <div className='loading-spinner-div'>
               <FadeLoader cssOverride={{ scale: "0.7" }} color='#333' />
@@ -342,6 +379,21 @@ const SignupForm = () => {
       </div>
     </>
   );
+
+  const successPage = (
+    <div className='login-top success'>
+      <img src={logo} alt='instagram logo' className='login-logo' />
+
+      <h1>Success</h1>
+      <p>
+        Your account has been successfully created. Please follow the link below
+        to log in.
+      </p>
+      <Link to='/accounts/login'>Log in</Link>
+    </div>
+  );
+
+  return createUserMutation.isSuccess ? successPage : createUserPage;
 };
 
 export default SignupForm;
