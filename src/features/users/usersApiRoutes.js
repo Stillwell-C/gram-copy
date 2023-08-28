@@ -21,6 +21,27 @@ export const getUsersFromArr = async (userArr) => {
   return response.data;
 };
 
+export const getUsernameAvailability = async (username) => {
+  const response = await gramCopyApi.get(
+    `/users/availability/username/${username}`
+  );
+  return response.data;
+};
+
+export const getEmailAvailability = async (email) => {
+  const response = await gramCopyApi.get(`/users/availability/email/${email}`);
+  return response.data;
+};
+
+export const createUser = async ({ ...args }) => {
+  const response = await gramCopyApi.request({
+    url: "/users",
+    method: "POST",
+    data: { ...args },
+  });
+  return response.data;
+};
+
 export const updateUser = async ({ userID, ...args }) => {
   const response = await gramCopyApi.request({
     url: "/users",
