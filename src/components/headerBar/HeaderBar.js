@@ -4,6 +4,7 @@ import logo from "../../assets/Instagram_logo.png";
 import { Link } from "react-router-dom";
 import useSearchForUser from "../../hooks/useSearchForUser";
 import closeCircle from "../../assets/close-circle-svgrepo-com.svg";
+import NavbarSearch from "../NavbarSearch";
 
 const HeaderBar = React.forwardRef(
   (
@@ -37,7 +38,8 @@ const HeaderBar = React.forwardRef(
           </Link>
         </div>
         <div className='header-bar-right'>
-          <div className='search-input-div' ref={ref}>
+          <NavbarSearch />
+          {/* <div className='search-input-div' ref={ref}>
             <label
               aria-label='input username to search users'
               htmlFor='username-search-input-header'
@@ -86,7 +88,7 @@ const HeaderBar = React.forwardRef(
                   </Link>
                 ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     );
