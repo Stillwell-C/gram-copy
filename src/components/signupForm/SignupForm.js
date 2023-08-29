@@ -267,7 +267,7 @@ const SignupForm = () => {
                 required
                 autoComplete='off'
                 spellCheck='false'
-                name='email'
+                name='name'
                 onFocus={() => setFullnameClick(true)}
                 onBlur={() => setFullnameClick(false)}
                 aria-invalid={emailSuccess ? "false" : "true"}
