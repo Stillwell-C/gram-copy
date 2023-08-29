@@ -81,7 +81,7 @@ const LoginForm = () => {
         )}
         <form className='login-form' onSubmit={handleSignIn}>
           <div className={emailClass}>
-            <label aria-label='email' htmlFor='email'>
+            <label htmlFor='email'>
               <span className='label-text'>Email or Username</span>
               <input
                 type='text'
@@ -91,13 +91,14 @@ const LoginForm = () => {
                 required
                 autoComplete='off'
                 name='email'
+                aria-label='email'
                 onFocus={() => setEmailClick(true)}
                 onBlur={() => setEmailClick(false)}
               />
             </label>
           </div>
           <div className={passwordClass}>
-            <label aria-label='password' htmlFor='password'>
+            <label htmlFor='password'>
               <span className='label-text'>Password</span>
               <input
                 type={showPassword ? "text" : "password"}
@@ -107,6 +108,7 @@ const LoginForm = () => {
                 required
                 autoComplete='off'
                 name='password'
+                aria-label='password'
                 onFocus={() => setPasswordClick(true)}
                 onBlur={() => setPasswordClick(false)}
               />
