@@ -1,9 +1,7 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import { AuthContext } from "../../context/authContext";
+import { useEffect, useRef, useState } from "react";
 import logo from "../../assets/Instagram_logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../features/auth/authApiSlice";
-import usePersistentLogin from "../../hooks/usePersistentLogin";
 import { setCredentials } from "../../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { FadeLoader } from "react-spinners";
@@ -11,7 +9,7 @@ import { FadeLoader } from "react-spinners";
 const LoginForm = () => {
   const errRef = useRef();
 
-  // const [error, setError] = useState(false);
+  const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [email, setEmail] = useState("");
   const [emailClick, setEmailClick] = useState(false);
@@ -20,11 +18,9 @@ const LoginForm = () => {
   const [passwordClick, setPasswordClick] = useState(false);
   const [passwordClass, setPasswordClass] = useState("form-input-div");
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  const [persistentLogin, setPersistentLogin] = usePersistentLogin();
-
-  const [login, { isLoading, error, isSuccess, isError }] = useLoginMutation();
+  const [login, { isLoading, error: errData, isSuccess, isError }] =
+    useLoginMutation();
 
   const dispatch = useDispatch();
 
@@ -48,10 +44,16 @@ const LoginForm = () => {
   };
 
   const signInUser = async () => {
-    const loginResponse = await login({ userIdentifier: email, password });
-    dispatch(setCredentials({ accessToken: loginResponse.data.accessToken }));
-    localStorage.setItem("persistLogin", JSON.stringify(true));
-    // setLoginComplete(true);
+    try {
+      setError(false);
+      setErrorMsg("");
+      const loginResponse = await login({ userIdentifier: email, password });
+      dispatch(setCredentials({ accessToken: loginResponse.data.accessToken }));
+      localStorage.setItem("persistLogin", JSON.stringify(true));
+    } catch (err) {
+      console.log(err);
+      setErrorMsg("An error occurred. Please try again.");
+    }
   };
 
   useEffect(() => {
@@ -72,13 +74,12 @@ const LoginForm = () => {
     <>
       <div className='login-top'>
         <img src={logo} alt='instagram logo' className='login-logo' />
-        {isError && (
-          <div className='error-div'>
-            <div className='error-msg' aria-live='assertive' ref={errRef}>
-              {error?.data?.message}
-            </div>
+        <div className={isError || error ? "error-div" : "offscreen"}>
+          <div className='error-msg' aria-live='assertive' ref={errRef}>
+            {errData?.data?.message}
+            {errorMsg}
           </div>
-        )}
+        </div>
         <form className='login-form' onSubmit={handleSignIn}>
           <div className={emailClass}>
             <label htmlFor='email'>
