@@ -9,8 +9,7 @@ import { FadeLoader } from "react-spinners";
 const LoginForm = () => {
   const errRef = useRef();
 
-  const [error, setError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [loginSuccess, setLoginSuccess] = useState(false);
   const [email, setEmail] = useState("");
   const [emailClick, setEmailClick] = useState(false);
   const [emailClass, setEmailClass] = useState("form-input-div");
@@ -44,25 +43,21 @@ const LoginForm = () => {
   };
 
   const signInUser = async () => {
-    try {
-      setError(false);
-      setErrorMsg("");
-      const loginResponse = await login({ userIdentifier: email, password });
+    const loginResponse = await login({ userIdentifier: email, password });
+    if (loginResponse?.data?.accessToken) {
       dispatch(setCredentials({ accessToken: loginResponse.data.accessToken }));
       localStorage.setItem("persistLogin", JSON.stringify(true));
-    } catch (err) {
-      console.log(err);
-      setErrorMsg("An error occurred. Please try again.");
+      setLoginSuccess(true);
     }
   };
 
   useEffect(() => {
-    if (isSuccess) {
+    if (loginSuccess) {
       setEmail("");
       setPassword("");
       navigate("/");
     }
-  }, [isSuccess]);
+  }, [loginSuccess]);
 
   useEffect(() => {
     if (isError) {
@@ -74,10 +69,9 @@ const LoginForm = () => {
     <>
       <div className='login-top'>
         <img src={logo} alt='instagram logo' className='login-logo' />
-        <div className={isError || error ? "error-div" : "offscreen"}>
+        <div className={isError ? "error-div" : "offscreen"}>
           <div className='error-msg' aria-live='assertive' ref={errRef}>
             {errData?.data?.message}
-            {errorMsg}
           </div>
         </div>
         <form className='login-form' onSubmit={handleSignIn}>
