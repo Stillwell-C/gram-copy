@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { updateUser } from "../features/users/usersApiRoutes";
 
+const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+
 const EditProfileInformationForm = ({
   user,
   setDisplayDeleteModal,
@@ -70,9 +72,9 @@ const EditProfileInformationForm = ({
     setErrorMsg("");
     setConfirmation(false);
     setConfirmationMsg("");
-    if (updatedInfo.username.length < 3 || updatedInfo.username.length > 30) {
+    if (!USER_REGEX.test(updatedInfo.username)) {
       setError(true);
-      setErrorMsg("Username must be 3-30 characters");
+      setErrorMsg("Invalid Username");
       return;
     }
     if (updatedInfo.fullname.length < 3 || updatedInfo.fullname.length > 30) {
