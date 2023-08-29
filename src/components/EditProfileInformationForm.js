@@ -19,6 +19,32 @@ const EditProfileInformationForm = ({
     id: user?._id,
   });
 
+  const parseUserBio = (userBioInput) => {
+    console.log(userBioInput);
+    console.log((userBioInput.match(/\n/g) || []).length);
+    console.log(userBioInput.slice(-2) === "\n");
+    if ((userBioInput.match(/\n/g) || []).length >= 3) {
+      const splitBio = userBioInput.split("\n");
+      console.log("split ", splitBio);
+      const topThreeLines = splitBio.slice(0, 3).join("\n");
+      console.log("top ", topThreeLines);
+      const remainingLines = splitBio.slice(3).join(" ");
+      console.log("rem ", remainingLines);
+
+      setUpdatedInfo({
+        ...updatedInfo,
+        userBio: `${topThreeLines} ${remainingLines}`,
+      });
+      return;
+    }
+    setUpdatedInfo({
+      ...updatedInfo,
+      userBio: userBioInput,
+    });
+  };
+
+  const [usernameClick, setUsernameClick] = useState(false);
+
   const queryClient = useQueryClient();
 
   const updateUserMutation = useMutation({
@@ -83,10 +109,12 @@ const EditProfileInformationForm = ({
             name='name-input'
             type='text'
             placeholder='name'
+            spellCheck='false'
             value={updatedInfo.fullname}
             onChange={(e) =>
               setUpdatedInfo({ ...updatedInfo, fullname: e.target.value })
             }
+            aria-label='name'
             aria-describedby='name-information-text'
           />
           <div className='form-information'>
@@ -104,6 +132,7 @@ const EditProfileInformationForm = ({
         <div className='form-right'>
           <input
             autoComplete='off'
+            spellCheck='false'
             id='username-input'
             name='username-input'
             type='text'
@@ -112,9 +141,24 @@ const EditProfileInformationForm = ({
             onChange={(e) =>
               setUpdatedInfo({ ...updatedInfo, username: e.target.value })
             }
-            aria-describedby='username-information-text'
+            onFocus={() => setUsernameClick(true)}
+            onBlur={() => setUsernameClick(false)}
+            aria-label='username'
+            aria-describedby='usernameNote'
           />
           <div className='form-information'>
+            <p
+              id='usernameNote'
+              className={
+                usernameClick && updatedInfo.username.length
+                  ? "form-description"
+                  : "offscreen"
+              }
+            >
+              4 to 24 characters. <br />
+              Must begin with a letter. <br />
+              Letters, numbers, underscores, hyphens allowed.
+            </p>
             <span id='username-information-text'>
               In most cases, you'll be able to change your username back to
               {user?.username} for another 14 days.
@@ -159,9 +203,7 @@ const EditProfileInformationForm = ({
             name='bio-input'
             type='text'
             value={updatedInfo.userBio}
-            onChange={(e) =>
-              setUpdatedInfo({ ...updatedInfo, userBio: e.target.value })
-            }
+            onChange={(e) => parseUserBio(e.target.value)}
             maxLength='150'
           ></textarea>
           <div className='form-information'>
