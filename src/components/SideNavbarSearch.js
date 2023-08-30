@@ -3,14 +3,7 @@ import { FadeLoader } from "react-spinners";
 import closeCircle from "../assets/close-circle-svgrepo-com.svg";
 import NavbarSearch from "./NavbarSearch";
 
-const SideNavbarSearch = ({
-  searchQuery,
-  handleSearch,
-  handleClearSearch,
-  searchIsLoading,
-  searchIsFetching,
-  searchResults,
-}) => {
+const SideNavbarSearch = ({ navbarSearch }) => {
   return (
     <div className='search-body'>
       <div className='search-top'>
@@ -44,7 +37,7 @@ const SideNavbarSearch = ({
           </div>
         </div> */}
       </div>
-      <NavbarSearch />
+      {navbarSearch}
       {/* <div className='search-bottom'>
         {searchQuery.length > 0 && !searchIsLoading && searchResults}
         {searchIsLoading && searchIsFetching && (
