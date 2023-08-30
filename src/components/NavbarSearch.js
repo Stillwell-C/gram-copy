@@ -63,9 +63,22 @@ const NavbarSearch = ({
 
   const searchResults = flattenedSearchData?.map((user, i) => {
     if (flattenedSearchData.length === i + 1) {
-      return <SearchResult ref={lastResultRef} key={user._id} user={user} />;
+      return (
+        <SearchResult
+          ref={lastResultRef}
+          key={user._id}
+          user={user}
+          setSearchActive={setSearchActive}
+        />
+      );
     }
-    return <SearchResult key={user._id} user={user} />;
+    return (
+      <SearchResult
+        key={user._id}
+        user={user}
+        setSearchActive={setSearchActive}
+      />
+    );
   });
 
   return (
