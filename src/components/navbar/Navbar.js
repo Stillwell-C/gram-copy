@@ -93,7 +93,7 @@ const Navbar = () => {
   );
 
   const exploreLink = (
-    <Link to='#'>
+    <Link to='/explore'>
       <div className='navbar-line'>
         <img src={compass} alt='' aria-hidden='true' />
         <span>Explore</span>
