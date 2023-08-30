@@ -6,40 +6,22 @@ import useSearchForUser from "../../hooks/useSearchForUser";
 import closeCircle from "../../assets/close-circle-svgrepo-com.svg";
 import NavbarSearch from "../NavbarSearch";
 
-const HeaderBar = React.forwardRef(
-  (
-    {
-      handleSearch,
-      searchActive,
-      setSearchActive,
-      searchQuery,
-      setSearchQuery,
-      setSearchResults,
-      searchResults,
-    },
-    ref
-  ) => {
-    const handleCloseAndClear = () => {
-      setSearchQuery("");
-      setSearchResults([]);
-      setSearchActive(false);
-    };
-
-    return (
-      <div className='header-bar-container'>
-        <div className='header-bar-left'>
-          <Link to='/'>
-            <img
-              src={logo}
-              alt=''
-              aria-hidden='true'
-              aria-label='move to home screen'
-            />
-          </Link>
-        </div>
-        <div className='header-bar-right'>
-          <NavbarSearch />
-          {/* <div className='search-input-div' ref={ref}>
+const HeaderBar = React.forwardRef(({ navbarSearch }) => {
+  return (
+    <div className='header-bar-container'>
+      <div className='header-bar-left'>
+        <Link to='/'>
+          <img
+            src={logo}
+            alt=''
+            aria-hidden='true'
+            aria-label='move to home screen'
+          />
+        </Link>
+      </div>
+      <div className='header-bar-right'>
+        {navbarSearch}
+        {/* <div className='search-input-div' ref={ref}>
             <label
               aria-label='input username to search users'
               htmlFor='username-search-input-header'
@@ -89,10 +71,9 @@ const HeaderBar = React.forwardRef(
                 ))}
             </div>
           </div> */}
-        </div>
       </div>
-    );
-  }
-);
+    </div>
+  );
+});
 
 export default HeaderBar;
