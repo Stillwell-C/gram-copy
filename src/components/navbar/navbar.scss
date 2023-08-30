@@ -165,7 +165,6 @@
   background-color: #fff;
   z-index: 4;
   flex-grow: 1;
-  overflow-x: hidden;
 
   @include small {
     display: block;
@@ -174,7 +173,7 @@
   @include large {
     width: 245px;
     max-width: 245px;
-    transition: max-width 0.5s;
+    transition: max-width 5s;
   }
 
   // .search-body {
@@ -272,6 +271,7 @@
         height: 100%;
         border-radius: 50%;
         cursor: pointer;
+        overflow-x: hidden;
 
         @include large {
           border-radius: 2rem;
