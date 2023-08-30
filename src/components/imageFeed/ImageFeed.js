@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import "./imageFeed.scss";
-import ImgFeedCard from "../../components/imageFeedCard/ImgFeedCard";
+import ImgFeedCard from "../imageFeedCard/ImgFeedCard";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../../features/display/displaySlice";
 import useAuth from "../../hooks/useAuth";

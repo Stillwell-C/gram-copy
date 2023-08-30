@@ -1,7 +1,7 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
-import UserFeed from "./pages/userFeed/UserFeed";
+import UserFeed from "./components/userFeed/UserFeed";
 import ProfileMain from "./components/profileMain/ProfileMain";
 import Layout from "./components/Layout";
 import EditProfileMain from "./components/editProfileMain/EditProfileMain";

@@ -1,4 +1,4 @@
-import FeedRightInfo from "../../components/feedRightInfo/FeedRightInfo";
+import FeedRightInfo from "../feedRightInfo/FeedRightInfo";
 import ImageFeed from "../imageFeed/ImageFeed";
 import "./userfeed.scss";
 
