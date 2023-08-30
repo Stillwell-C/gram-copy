@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import logo from "../../assets/Instagram_logo.png";
 import { Link } from "react-router-dom";
 import errorIcon from "../../assets/error-warning-danger-problem-attention-svgrepo-com.svg";
 import successIcon from "../../assets/check-circle-svgrepo-com.svg";
@@ -10,6 +9,9 @@ import {
   getEmailAvailability,
   getUsernameAvailability,
 } from "../../features/users/usersApiRoutes";
+
+import logo from "../../assets/Instagram_logo.png";
+import "../../scss/login.scss";
 
 //Begin with upper/lower case letter and contain 3-23 more characters
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -207,7 +209,7 @@ const SignupForm = () => {
   }, [error, createUserMutation.isError]);
 
   const createUserPage = (
-    <>
+    <div className='login-container'>
       <div className='login-top'>
         <img src={logo} alt='instagram logo' className='login-logo' />
         <h2 className='sign-up-header'>
@@ -377,7 +379,7 @@ const SignupForm = () => {
           Have an account? <Link to='/accounts/login'>Log in</Link>
         </p>
       </div>
-    </>
+    </div>
   );
 
   const successPage = (

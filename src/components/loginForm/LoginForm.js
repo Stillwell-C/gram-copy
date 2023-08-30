@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import logo from "../../assets/Instagram_logo.png";
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../features/auth/authApiSlice";
 import { setCredentials } from "../../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { FadeLoader } from "react-spinners";
+
+import "../../scss/login.scss";
+import logo from "../../assets/Instagram_logo.png";
 
 const LoginForm = () => {
   const errRef = useRef();
@@ -66,7 +68,7 @@ const LoginForm = () => {
   }, [isError]);
 
   return (
-    <>
+    <div className='login-container'>
       <div className='login-top'>
         <img src={logo} alt='instagram logo' className='login-logo' />
         <div className={isError ? "error-div" : "offscreen"}>
@@ -141,7 +143,7 @@ const LoginForm = () => {
           Don't have an account? <Link to='/accounts/emailsignup'>Sign up</Link>
         </p>
       </div>
-    </>
+    </div>
   );
 };
 
