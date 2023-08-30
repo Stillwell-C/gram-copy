@@ -9,6 +9,7 @@ import Layout from "./components/Layout";
 import EditProfileMain from "./components/editProfileMain/EditProfileMain";
 import ChatMain from "./components/chatComponents/chatMain/ChatMain";
 import PersistentLogin from "./features/auth/PersistentLogin";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path='/direct/inbox' element={<ChatMain />} />
             <Route path='/accounts/edit' element={<EditProfileMain />} />
             <Route path='/accounts/password' element={<EditProfileMain />} />
+            <Route path='*' element={<NotFound />} />
           </Route>
         </Route>
       </Route>
