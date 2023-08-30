@@ -1,6 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, Outlet, useLocation, Link } from "react-router-dom";
+import { useSendLogoutMutation } from "../../features/auth/authApiSlice";
+
 import "./navbar.scss";
+import styles from "../../scss/layout.module.scss";
+
 import home from "../../assets/home-2-svgrepo-com.svg";
 import search from "../../assets/search-svgrepo-com.svg";
 import compass from "../../assets/compass-svgrepo-com.svg";
@@ -12,11 +16,8 @@ import menu from "../../assets/menu-svgrepo-com.svg";
 import CreatePostModal from "../createPostModal/CreatePostModal";
 import moon from "../../assets/moon-02-svgrepo-com.svg";
 
-import { Link } from "react-router-dom";
-
 import HeaderBar from "./../headerBar/HeaderBar";
 import useAuth from "../../hooks/useAuth";
-import { useSendLogoutMutation } from "../../features/auth/authApiSlice";
 import SideNavbar from "../SideNavbar";
 import SideNavbarSearch from "../SideNavbarSearch";
 import NavbarSearch from "../NavbarSearch";
@@ -27,8 +28,19 @@ const Navbar = () => {
   const [displayMenu, setDisplayMenu] = useState(false);
   const [searchActive, setSearchActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   const { authenticatedUser, username, img } = useAuth();
+
+  let displayNav = true;
+  if (
+    pathname.match(/\/accounts\/login/i) ||
+    pathname.match(/\/accounts\/emailsignup/i)
+  ) {
+    displayNav = false;
+  }
 
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
     useSendLogoutMutation();
@@ -173,35 +185,45 @@ const Navbar = () => {
 
   return (
     <>
-      <HeaderBar
-        navbarSearch={navbarSearch}
-        notificationsLink={notificationsLink}
-      />
-      <FooterNavbar
-        homeLink={homeLink}
-        searchLink={searchLink}
-        exploreLink={exploreLink}
-        messagesLink={messagesLink}
-        createLink={createLink}
-        profileLink={profileLink}
-        moreLink={moreLink}
-        menuContent={menuContent}
-        displayMenu={displayMenu}
-        handleAddPostModal={handleAddPostModal}
-        setDisplayMenu={setDisplayMenu}
-      />
-      <nav
-        className={`navbar-container-side ${
-          searchActive ? "searchActive" : ""
-        }`}
-        aria-label='main navigation bar'
-      >
-        <SideNavbar
+      {displayNav && (
+        <HeaderBar
+          navbarSearch={navbarSearch}
+          notificationsLink={notificationsLink}
+        />
+      )}
+      {displayNav && (
+        <nav
+          className={`navbar-container-side ${
+            searchActive ? "searchActive" : ""
+          }`}
+          aria-label='main navigation bar'
+        >
+          <SideNavbar
+            homeLink={homeLink}
+            searchLink={searchLink}
+            exploreLink={exploreLink}
+            messagesLink={messagesLink}
+            notificationsLink={notificationsLink}
+            createLink={createLink}
+            profileLink={profileLink}
+            moreLink={moreLink}
+            menuContent={menuContent}
+            displayMenu={displayMenu}
+            handleAddPostModal={handleAddPostModal}
+            setDisplayMenu={setDisplayMenu}
+          />
+          <SideNavbarSearch navbarSearch={navbarSearch} />
+        </nav>
+      )}
+      <div className={styles.outlet}>
+        <Outlet />
+      </div>
+      {displayNav && (
+        <FooterNavbar
           homeLink={homeLink}
           searchLink={searchLink}
           exploreLink={exploreLink}
           messagesLink={messagesLink}
-          notificationsLink={notificationsLink}
           createLink={createLink}
           profileLink={profileLink}
           moreLink={moreLink}
@@ -210,8 +232,7 @@ const Navbar = () => {
           handleAddPostModal={handleAddPostModal}
           setDisplayMenu={setDisplayMenu}
         />
-        <SideNavbarSearch navbarSearch={navbarSearch} />
-      </nav>
+      )}
       <div
         className={
           searchActive
