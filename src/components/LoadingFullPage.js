@@ -11,7 +11,7 @@ const LoadingFullPage = ({ loadingState }) => {
       style={{ display: loadingState ? "block" : "none" }}
     >
       <div
-        className={`${LayoutStyles.layout} ${Styles.flexAlignCenter} ${Styles.flexJustifyCenter}`}
+        className={`${LayoutStyles.layout} flex-justify-center flex-align-center`}
       >
         <img src={gramImg} alt='Gram Copy Logo' />
       </div>
