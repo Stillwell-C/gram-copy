@@ -6,7 +6,7 @@ import useSearchForUser from "../../hooks/useSearchForUser";
 import closeCircle from "../../assets/close-circle-svgrepo-com.svg";
 import NavbarSearch from "../NavbarSearch";
 
-const HeaderBar = ({ navbarSearch }) => {
+const HeaderBar = ({ navbarSearch, notificationsLink }) => {
   return (
     <div className='header-bar-container'>
       <div className='header-bar-left'>
@@ -21,56 +21,7 @@ const HeaderBar = ({ navbarSearch }) => {
       </div>
       <div className='header-bar-right'>
         {navbarSearch}
-        {/* <div className='search-input-div' ref={ref}>
-            <label
-              aria-label='input username to search users'
-              htmlFor='username-search-input-header'
-            >
-              <input
-                type='text'
-                autoComplete='off'
-                name='username-search-input-header'
-                id='username-search-input-header'
-                placeholder='User Search'
-                spellCheck='false'
-                maxLength='30'
-                value={searchQuery}
-                onChange={(e) => handleSearch(e.target.value)}
-                onClick={() => setSearchActive(true)}
-              />
-            </label>
-            <div className='input-btn-div'>
-              <button
-                aria-label='clear the search box'
-                onClick={handleCloseAndClear}
-              >
-                <img src={closeCircle} alt='' aria-hidden='true' />
-              </button>
-            </div>
-            <div
-              className={`search-results-container ${searchActive && "active"}`}
-              ref={ref}
-            >
-              {searchResults?.length > 0 &&
-                searchResults.map((doc) => (
-                  <Link
-                    key={doc.uid}
-                    to={`/${doc.username}`}
-                    aria-label={`move to ${doc.username}'s profile`}
-                  >
-                    <div className='search-result'>
-                      <div className='profile-picture'>
-                        <img src={doc.userImgURL} alt='user profile' />
-                      </div>
-                      <div className='userinfo-div'>
-                        <div className='username'>{doc.username}</div>
-                        <div className='fullname'>{doc.fullname}</div>
-                      </div>
-                    </div>
-                  </Link>
-                ))}
-            </div>
-          </div> */}
+        <div className='navbar-row'>{notificationsLink}</div>
       </div>
     </div>
   );
