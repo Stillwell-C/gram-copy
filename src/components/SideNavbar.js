@@ -15,6 +15,7 @@ const SideNavbar = ({
   menuContent,
   displayMenu,
   handleAddPostModal,
+  setDisplayMenu,
 }) => {
   return (
     <div className='navbar-body'>
@@ -44,6 +45,14 @@ const SideNavbar = ({
         >
           {menuContent}
         </div>
+        <div
+          className={
+            displayMenu
+              ? "navbar-menu-close-field active"
+              : "navbar-menu-close-field"
+          }
+          onClick={() => setDisplayMenu(false)}
+        ></div>
       </div>
     </div>
   );
