@@ -6,9 +6,13 @@ import { FadeLoader } from "react-spinners";
 
 import closeCircle from "../assets/close-circle-svgrepo-com.svg";
 
-const NavbarSearch = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchActive, setSearchActive] = useState(false);
+const NavbarSearch = ({
+  searchActive,
+  setSearchActive,
+  searchQuery,
+  setSearchQuery,
+}) => {
+  // const [searchQuery, setSearchQuery] = useState("");
 
   const {
     data: searchData,
