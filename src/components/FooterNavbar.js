@@ -4,7 +4,6 @@ const FooterNavbar = ({
   homeLink,
   exploreLink,
   messagesLink,
-  notificationsLink,
   createLink,
   profileLink,
   moreLink,
@@ -16,11 +15,11 @@ const FooterNavbar = ({
   return (
     <nav className='navbar-container-bottom' aria-label='bottom navigation bar'>
       <div className='navbar-row'>{homeLink}</div>
-      <div className='navbar-row'>{messagesLink}</div>
-      <div className='navbar-row'>{notificationsLink}</div>
+      <div className='navbar-row'>{exploreLink}</div>
       <div className='navbar-row' onClick={handleAddPostModal}>
         {createLink}
       </div>
+      <div className='navbar-row'>{messagesLink}</div>
       <div className='navbar-row'>{profileLink}</div>
       <div className='navbar-row'>{moreLink}</div>
       <div
