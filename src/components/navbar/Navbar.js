@@ -31,6 +31,7 @@ import { FadeLoader } from "react-spinners";
 import SearchResult from "../SearchResult";
 import SideNavbar from "../SideNavbar";
 import SideNavbarSearch from "../SideNavbarSearch";
+import NavbarSearch from "../NavbarSearch";
 
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
@@ -102,23 +103,23 @@ const Navbar = () => {
   //   setSearchQuery("");
   // };
 
-  useEffect(() => {
-    let handler = (e) => {
-      if (
-        navbarRef.current.contains(e.target) ||
-        headerbarRef.current.contains(e.target)
-      ) {
-        return;
-      }
-      setSearchActive(false);
-    };
+  // useEffect(() => {
+  //   let handler = (e) => {
+  //     if (
+  //       navbarRef.current.contains(e.target) ||
+  //       headerbarRef.current.contains(e.target)
+  //     ) {
+  //       return;
+  //     }
+  //     setSearchActive(false);
+  //   };
 
-    document.addEventListener("mousedown", handler);
+  //   document.addEventListener("mousedown", handler);
 
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  });
+  //   return () => {
+  //     document.removeEventListener("mousedown", handler);
+  //   };
+  // });
 
   // const observer = useRef();
   // const lastResultRef = useCallback(
@@ -257,19 +258,18 @@ const Navbar = () => {
     </>
   );
 
+  const navbarSearch = (
+    <NavbarSearch
+      searchActive={searchActive}
+      setSearchActive={setSearchActive}
+      searchQuery={searchQuery}
+      setSearchQuery={setSearchQuery}
+    />
+  );
+
   return (
     <>
-      <HeaderBar
-        // handleSearch={handleSearch}
-        searchActive={searchActive}
-        setSearchActive={setSearchActive}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        // setSearchResults={setSearchResults}
-        // searchResults={searchResults}
-        ref={headerbarRef}
-        aria-label='top navigation bar'
-      />
+      <HeaderBar navbarSearch={navbarSearch} />
       <nav
         className='navbar-container-bottom'
         aria-label='bottom navigation bar'
@@ -555,16 +555,24 @@ const Navbar = () => {
             )}
           </div>
         </div> */}
-        <SideNavbarSearch />
-        {/* <div
-          className={
-            displayMenu
-              ? "navbar-menu-close-field active"
-              : "navbar-menu-close-field"
-          }
-          onClick={() => setDisplayMenu(false)}
-        ></div> */}
+        <SideNavbarSearch navbarSearch={navbarSearch} />
       </nav>
+      <div
+        className={
+          displayMenu
+            ? "navbar-menu-close-field active"
+            : "navbar-menu-close-field"
+        }
+        onClick={() => setDisplayMenu(false)}
+      ></div>
+      <div
+        className={
+          searchActive
+            ? "navbar-search-close-field active"
+            : "navbar-search-close-field"
+        }
+        onClick={() => setSearchActive(false)}
+      ></div>
       {displayPostModal && (
         <CreatePostModal setDisplayPostModal={setDisplayPostModal} />
       )}
