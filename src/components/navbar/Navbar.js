@@ -27,10 +27,8 @@ const Navbar = () => {
   const [displayMenu, setDisplayMenu] = useState(false);
   const [searchActive, setSearchActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  // const [searchResults, setSearchResults] = useState([]);
   const navigate = useNavigate();
   const { authenticatedUser, username, img } = useAuth();
-  const navbarRef = useRef();
 
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
     useSendLogoutMutation();
@@ -175,13 +173,15 @@ const Navbar = () => {
 
   return (
     <>
-      <HeaderBar navbarSearch={navbarSearch} />
+      <HeaderBar
+        navbarSearch={navbarSearch}
+        notificationsLink={notificationsLink}
+      />
       <FooterNavbar
         homeLink={homeLink}
         searchLink={searchLink}
         exploreLink={exploreLink}
         messagesLink={messagesLink}
-        notificationsLink={notificationsLink}
         createLink={createLink}
         profileLink={profileLink}
         moreLink={moreLink}
@@ -194,7 +194,6 @@ const Navbar = () => {
         className={`navbar-container-side ${
           searchActive ? "searchActive" : ""
         }`}
-        ref={navbarRef}
         aria-label='main navigation bar'
       >
         <SideNavbar
@@ -213,14 +212,6 @@ const Navbar = () => {
         />
         <SideNavbarSearch navbarSearch={navbarSearch} />
       </nav>
-      {/* <div
-        className={
-          displayMenu
-            ? "navbar-menu-close-field active"
-            : "navbar-menu-close-field"
-        }
-        onClick={() => setDisplayMenu(false)}
-      ></div> */}
       <div
         className={
           searchActive
