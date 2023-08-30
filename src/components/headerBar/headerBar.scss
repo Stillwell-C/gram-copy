@@ -1,9 +1,8 @@
 @import "../../breakpoints.scss";
 
 .header-bar-container {
-  position: fixed;
   background-color: #fff;
-  width: 100%;
+  flex: 1;
   height: 60px;
   display: flex;
   justify-content: space-between;
