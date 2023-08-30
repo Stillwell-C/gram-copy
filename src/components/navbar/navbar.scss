@@ -137,19 +137,19 @@
         border-bottom: none;
       }
     }
-    .navbar-menu-close-field {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      z-index: -100;
+    // .navbar-menu-close-field {
+    //   display: none;
+    //   position: fixed;
+    //   top: 0;
+    //   left: 0;
+    //   bottom: 0;
+    //   right: 0;
+    //   z-index: -100;
 
-      &.active {
-        display: block;
-      }
-    }
+    //   &.active {
+    //     display: block;
+    //   }
+    // }
   }
 }
 
@@ -396,19 +396,19 @@
           border-bottom: none;
         }
       }
-      .navbar-menu-close-field {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        z-index: -100;
+      // .navbar-menu-close-field {
+      //   display: none;
+      //   position: fixed;
+      //   top: 0;
+      //   left: 0;
+      //   bottom: 0;
+      //   right: 0;
+      //   z-index: -100;
 
-        &.active {
-          display: block;
-        }
-      }
+      //   &.active {
+      //     display: block;
+      //   }
+      // }
     }
   }
 
@@ -585,5 +585,33 @@
         }
       }
     }
+  }
+}
+
+.navbar-menu-close-field {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 3.5;
+
+  &.active {
+    display: block;
+  }
+}
+
+.navbar-search-close-field {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+
+  &.active {
+    display: block;
   }
 }
