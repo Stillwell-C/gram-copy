@@ -188,6 +188,7 @@ const Navbar = () => {
         menuContent={menuContent}
         displayMenu={displayMenu}
         handleAddPostModal={handleAddPostModal}
+        setDisplayMenu={setDisplayMenu}
       />
       <nav
         className={`navbar-container-side ${
@@ -208,17 +209,18 @@ const Navbar = () => {
           menuContent={menuContent}
           displayMenu={displayMenu}
           handleAddPostModal={handleAddPostModal}
+          setDisplayMenu={setDisplayMenu}
         />
         <SideNavbarSearch navbarSearch={navbarSearch} />
       </nav>
-      <div
+      {/* <div
         className={
           displayMenu
             ? "navbar-menu-close-field active"
             : "navbar-menu-close-field"
         }
         onClick={() => setDisplayMenu(false)}
-      ></div>
+      ></div> */}
       <div
         className={
           searchActive
