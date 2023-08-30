@@ -6,7 +6,7 @@ import useSearchForUser from "../../hooks/useSearchForUser";
 import closeCircle from "../../assets/close-circle-svgrepo-com.svg";
 import NavbarSearch from "../NavbarSearch";
 
-const HeaderBar = React.forwardRef(({ navbarSearch }) => {
+const HeaderBar = ({ navbarSearch }) => {
   return (
     <div className='header-bar-container'>
       <div className='header-bar-left'>
@@ -74,6 +74,6 @@ const HeaderBar = React.forwardRef(({ navbarSearch }) => {
       </div>
     </div>
   );
-});
+};
 
 export default HeaderBar;
