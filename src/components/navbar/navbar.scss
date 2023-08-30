@@ -165,6 +165,7 @@
   background-color: #fff;
   z-index: 4;
   flex-grow: 1;
+  overflow-x: hidden;
 
   @include small {
     display: block;
