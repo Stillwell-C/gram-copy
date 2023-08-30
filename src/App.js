@@ -15,12 +15,14 @@ function App() {
     <Routes>
       <Route element={<PersistentLogin />}>
         <Route path='/' element={<Layout />}>
-          <Route index element={<UserFeed />} />
-          <Route path='/:userID' element={<ProfileMain />} />
-          <Route path='/accounts/:accountsPath' element={<Login />} />
-          <Route path='/direct/inbox' element={<ChatMain />} />
-          <Route path='/accounts/edit' element={<EditProfileMain />} />
-          <Route path='/accounts/password' element={<EditProfileMain />} />
+          <Route element={<Navbar />}>
+            <Route index element={<UserFeed />} />
+            <Route path='/:userID' element={<ProfileMain />} />
+            <Route path='/accounts/:accountsPath' element={<Login />} />
+            <Route path='/direct/inbox' element={<ChatMain />} />
+            <Route path='/accounts/edit' element={<EditProfileMain />} />
+            <Route path='/accounts/password' element={<EditProfileMain />} />
+          </Route>
         </Route>
       </Route>
     </Routes>
