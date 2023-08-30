@@ -429,6 +429,7 @@
     flex-direction: column;
     height: 100%;
     z-index: 3;
+    overflow-x: hidden;
 
     .search-top {
       .search-header-div {
