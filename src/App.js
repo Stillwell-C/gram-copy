@@ -1,7 +1,6 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
-import UserFeed from "./components/userFeed/UserFeed";
 import ProfileMain from "./components/profileMain/ProfileMain";
 import Layout from "./components/Layout";
 import EditProfileMain from "./components/editProfileMain/EditProfileMain";
@@ -10,6 +9,7 @@ import PersistentLogin from "./features/auth/PersistentLogin";
 import NotFound from "./components/NotFound";
 import LoginForm from "./components/loginForm/LoginForm";
 import SignupForm from "./components/signupForm/SignupForm";
+import FeedContainer from "./components/FeedContainer";
 
 function App() {
   return (
@@ -17,7 +17,8 @@ function App() {
       <Route element={<PersistentLogin />}>
         <Route path='/' element={<Layout />}>
           <Route element={<Navbar />}>
-            <Route index element={<UserFeed />} />
+            <Route index element={<FeedContainer />} />
+            <Route index path='/explore' element={<FeedContainer />} />
             <Route path='/:userID' element={<ProfileMain />} />
             <Route path='/accounts/login' element={<LoginForm />} />
             <Route path='/accounts/emailsignup' element={<SignupForm />} />
