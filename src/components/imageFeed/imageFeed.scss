@@ -5,14 +5,23 @@
   min-width: 470px;
   margin-top: 60px;
   //needs to be disabled for mobile
-  margin-right: 60px;
   // display: flex;
   // align-items: center;
   // justify-content: flex-start;
   // flex-direction: column;
 
+  .no-following-div {
+    width: 100%;
+    width: clamp(250px, 80vw, 500px);
+    text-align: center;
+  }
+
   @include small {
     margin-top: 0px;
+  }
+
+  @include medium {
+    margin-right: 60px;
   }
 
   .card {
