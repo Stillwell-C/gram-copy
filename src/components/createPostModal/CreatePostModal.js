@@ -272,7 +272,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
                   <div>{username}</div>
                 </div>
                 <div className='bottom-user-input'>
-                  <label aria-label='Enter a caption for your image. Maximum length is 2200 characters.'>
+                  <label>
                     <textarea
                       id='caption'
                       name='caption'
@@ -283,6 +283,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
                       }}
                       maxLength='2200'
                       placeholder='Write a caption...'
+                      aria-label='image caption'
                     />
                   </label>
                   <div className='textarea-info'>
@@ -301,11 +302,13 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
                     </span>
                   </div>
                   <div className='location-input-div segmented-div'>
-                    <label aria-label='enter the image location'>
+                    <label>
                       <input
                         type='text'
                         name='photoLocation'
                         id='photoLocation'
+                        autoComplete='off'
+                        spellCheck='false'
                         value={formData.location}
                         onChange={(e) => {
                           setFormData({
@@ -315,6 +318,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
                         }}
                         placeholder='Add location'
                         maxLength='50'
+                        aria-label='image location'
                       />
                     </label>
                     <img src={locationImg} alt='map location pinpoint icon' />
@@ -359,7 +363,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
                             width='44px'
                           />
                         </div>
-                        <label aria-label='Add a description of the image. Maximum 140 characters.'>
+                        <label>
                           <input
                             type='text'
                             name='userAltText'
@@ -373,6 +377,9 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
                                 altText: e.target.value,
                               })
                             }
+                            autoComplete='off'
+                            spellCheck='false'
+                            aria-label='image alt text description'
                           />
                         </label>
                       </div>
