@@ -234,6 +234,7 @@
     }
 
     &.success {
+      display: flex;
       min-height: min(500px, 80vh);
       justify-content: flex-start;
       padding: 0 2rem;
