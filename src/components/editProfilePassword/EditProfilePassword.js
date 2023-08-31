@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./editProfilePassword.scss";
 import useAuth from "../../hooks/useAuth";
 import { useMutation } from "react-query";
 import { updateUser } from "../../features/users/usersApiRoutes";
+
+const PWD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,24}$/;
 
 export const EditProfilePassword = () => {
   const { id, img, username } = useAuth();
@@ -10,12 +12,17 @@ export const EditProfilePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [newPasswordClick, setNewPasswordClick] = useState(false);
+  const [newPasswordSuccess, setNewPasswordSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [confirmation, setConfirmation] = useState(false);
   const [confirmationMsg, setConfirmationMsg] = useState("");
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
+
+  const errRef = useRef();
+  const successRef = useRef();
 
   const updateUserMutation = useMutation({
     mutationFn: updateUser,
@@ -28,23 +35,39 @@ export const EditProfilePassword = () => {
     setConfirmationMsg("");
     setError(false);
     setErrorMsg("");
+    if (!oldPassword.length || !newPassword.length || !confirmPassword.length) {
+      setError(true);
+      setErrorMsg(
+        "Please enter your old password, new password, and new password confirmation"
+      );
+      return;
+    }
     if (newPassword !== confirmPassword) {
       setError(true);
       setErrorMsg("Passwords do not match");
       return;
     }
-    if (newPassword.length < 6) {
+    if (!PWD_REGEX.test(newPassword)) {
       setError(true);
-      setErrorMsg("Password must be at least 6 characters long");
+      setErrorMsg("Invalid password.");
       return;
     }
     updateUserMutation.mutate({ oldPassword, newPassword, id });
   };
 
   useEffect(() => {
+    if (PWD_REGEX.test(newPassword)) {
+      setNewPasswordSuccess(true);
+      return;
+    }
+    setNewPasswordSuccess(false);
+  }, [newPassword]);
+
+  useEffect(() => {
     if (updateUserMutation.isError) {
       setError(true);
       setErrorMsg(updateUserMutation.error.response.data.message);
+      errRef.current.focus();
     }
   }, [updateUserMutation.isError]);
 
@@ -52,6 +75,7 @@ export const EditProfilePassword = () => {
     if (updateUserMutation.isSuccess) {
       setConfirmation(true);
       setConfirmationMsg("Password updated");
+      successRef.current.focus();
     }
   }, [updateUserMutation.isSuccess]);
 
@@ -67,7 +91,11 @@ export const EditProfilePassword = () => {
           error || confirmation ? "user-msg-div active" : "user-msg-div"
         }
       >
-        <div className={error ? "user-error-div active" : "user-error-div"}>
+        <div
+          aria-live='assertive'
+          ref={errRef}
+          className={error ? "user-error-div active" : "user-error-div"}
+        >
           {<span className='error-msg'>{errorMsg}</span>}
         </div>
         <div
@@ -76,6 +104,8 @@ export const EditProfilePassword = () => {
               ? "user-confirmation-div active"
               : "user-confirmation-div"
           }
+          aria-live='assertive'
+          ref={successRef}
         >
           {<span className='confirmation-msg'>{confirmationMsg}</span>}
         </div>
@@ -102,6 +132,7 @@ export const EditProfilePassword = () => {
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
               className='password-input'
+              aria-label='old password'
             />
           </div>
         </div>
@@ -118,7 +149,23 @@ export const EditProfilePassword = () => {
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               className='password-input'
+              aria-label='new password'
+              aria-describedby='passwordNote'
+              aria-invalid={!newPasswordSuccess}
+              onFocus={() => setNewPasswordClick(true)}
+              onBlur={() => setNewPasswordClick(false)}
             />
+            <p
+              id='passwordNote'
+              className={
+                newPasswordClick && !newPasswordSuccess && newPassword.length
+                  ? "form-description margin-top-5p"
+                  : "offscreen"
+              }
+            >
+              8 to 24 characters. <br />
+              Must include at least one letter and one number.
+            </p>
           </div>
         </div>
         <div className='form-row'>
@@ -134,6 +181,8 @@ export const EditProfilePassword = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               className='password-input'
+              aria-label='new password confirmation'
+              aria-invalid={newPassword !== confirmPassword}
             />
           </div>
         </div>
