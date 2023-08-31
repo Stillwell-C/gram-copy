@@ -10,7 +10,7 @@ import { FadeLoader } from "react-spinners";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const FOLLOWFEED_REGEX = /^\/$/;
-const EXPLORE_REGEX = /^\/explore/;
+const EXPLORE_REGEX = /^\/explore/i;
 
 const ImageFeed = () => {
   const { id, authenticatedUser } = useAuth();
