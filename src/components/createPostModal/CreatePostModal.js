@@ -150,7 +150,6 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
     }
     const uploadData = {
       ...formData,
-      user: "64c1dff6ba375748febb3853",
       imgData: imgUploadData,
     };
     console.log(uploadData);
