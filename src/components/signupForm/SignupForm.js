@@ -209,7 +209,7 @@ const SignupForm = () => {
   }, [error, createUserMutation.isError]);
 
   const createUserPage = (
-    <div className='login-container'>
+    <>
       <div className='login-top'>
         <img src={logo} alt='instagram logo' className='login-logo' />
         <h2 className='sign-up-header'>
@@ -379,7 +379,7 @@ const SignupForm = () => {
           Have an account? <Link to='/accounts/login'>Log in</Link>
         </p>
       </div>
-    </div>
+    </>
   );
 
   const successPage = (
@@ -395,7 +395,9 @@ const SignupForm = () => {
     </div>
   );
 
-  return createUserMutation.isSuccess ? successPage : createUserPage;
+  const content = createUserMutation.isSuccess ? successPage : createUserPage;
+
+  return <div className='login-container'>{content}</div>;
 };
 
 export default SignupForm;
