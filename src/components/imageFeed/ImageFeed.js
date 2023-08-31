@@ -13,17 +13,16 @@ const FOLLOWFEED_REGEX = /^\/$/;
 const EXPLORE_REGEX = /^\/explore/i;
 
 const ImageFeed = () => {
-  const { id, authenticatedUser } = useAuth();
+  const { authenticatedUser } = useAuth();
   const { pathname } = useLocation();
 
   const dispatch = useDispatch();
 
   const postLoadLimit = 5;
-  const reqID = id || "";
 
   //Set different queries for the following feed and the explore page
   const displayFollowingFeed = FOLLOWFEED_REGEX.test(pathname) ? true : false;
-  const queryKey = FOLLOWFEED_REGEX.test(pathname) ? "exploreFeed" : "posts";
+  const queryKey = FOLLOWFEED_REGEX.test(pathname) ? "posts" : "exploreFeed";
   const enabled = EXPLORE_REGEX.test(pathname)
     ? true
     : authenticatedUser
@@ -44,7 +43,6 @@ const ImageFeed = () => {
       getMultiplePosts({
         pageParam,
         limit: postLoadLimit,
-        reqID,
         followingFeed: displayFollowingFeed,
       }),
     refetchOnWindowFocus: false,
@@ -96,7 +94,7 @@ const ImageFeed = () => {
   const noFollowingAuthenticated = (
     <>
       <p className='margin-btm-5p'>
-        To create your very own feed, you need to follow another user
+        To create your very own feed, follow a user who has made a post.
       </p>
     </>
   );
