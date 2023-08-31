@@ -66,7 +66,10 @@ export const EditProfilePassword = () => {
   useEffect(() => {
     if (updateUserMutation.isError) {
       setError(true);
-      setErrorMsg(updateUserMutation.error.response.data.message);
+      setErrorMsg(
+        updateUserMutation?.error?.response?.data?.message ||
+          "An error occurred. Please try again."
+      );
       errRef.current.focus();
     }
   }, [updateUserMutation.isError]);
@@ -75,6 +78,9 @@ export const EditProfilePassword = () => {
     if (updateUserMutation.isSuccess) {
       setConfirmation(true);
       setConfirmationMsg("Password updated");
+      setOldPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
       successRef.current.focus();
     }
   }, [updateUserMutation.isSuccess]);
