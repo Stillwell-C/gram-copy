@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import DeleteAccountModal from "../deleteAccountModal/DeleteAccountModal";
 import "./editProfileInformation.scss";
 import { useDispatch } from "react-redux";
@@ -12,6 +12,15 @@ import useAuth from "../../hooks/useAuth";
 const EditProfileInformation = () => {
   const { username } = useAuth();
   const dispatch = useDispatch();
+
+  const errRef = useRef();
+  const successRef = useRef();
+
+  const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [confirmation, setConfirmation] = useState(false);
+  const [confirmationMsg, setConfirmationMsg] = useState("");
 
   const {
     data: userData,
@@ -34,11 +43,22 @@ const EditProfileInformation = () => {
     console.log(userData);
   }, [isLoading, username]);
 
-  const [displayDeleteModal, setDisplayDeleteModal] = useState(false);
-  const [error, setError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState([]);
-  const [confirmation, setConfirmation] = useState(false);
-  const [confirmationMsg, setConfirmationMsg] = useState([]);
+  useEffect(() => {
+    if (isError || error) {
+      if (isError)
+        setErrorMsg(
+          userDataError?.response?.data?.message ||
+            "An error occurred. Please try again."
+        );
+      errRef.current.focus();
+    }
+  }, [isError || error]);
+
+  useEffect(() => {
+    if (confirmation) {
+      successRef.current.focus();
+    }
+  }, [confirmation]);
 
   return (
     <div className='edit-profile-information-container'>
@@ -47,7 +67,10 @@ const EditProfileInformation = () => {
           error || confirmation ? "user-msg-div active" : "user-msg-div"
         }
       >
-        <div className={error ? "user-error-div active" : "user-error-div"}>
+        <div
+          className={error ? "user-error-div active" : "user-error-div"}
+          ref={errRef}
+        >
           {<span className='error-msg'>{errorMsg}</span>}
         </div>
         <div
@@ -56,6 +79,7 @@ const EditProfileInformation = () => {
               ? "user-confirmation-div active"
               : "user-confirmation-div"
           }
+          ref={successRef}
         >
           {<span className='confirmation-msg'>{confirmationMsg}</span>}
         </div>
