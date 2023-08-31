@@ -21,11 +21,6 @@ const ImageFeed = () => {
   const postLoadLimit = 5;
   const reqID = id || "";
 
-  useEffect(() => {
-    console.log(pathname);
-    console.log(FOLLOWFEED_REGEX.test(pathname));
-  }, [pathname]);
-
   //Set different queries for the following feed and the explore page
   const displayFollowingFeed = FOLLOWFEED_REGEX.test(pathname) ? true : false;
   const queryKey = FOLLOWFEED_REGEX.test(pathname) ? "exploreFeed" : "posts";
