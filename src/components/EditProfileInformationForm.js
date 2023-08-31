@@ -46,6 +46,7 @@ const EditProfileInformationForm = ({
   };
 
   const [usernameClick, setUsernameClick] = useState(false);
+  const [usernameSuccess, setUsernameSuccess] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -97,6 +98,14 @@ const EditProfileInformationForm = ({
     }
   }, [updateUserMutation.isError]);
 
+  useEffect(() => {
+    if (USER_REGEX.test(updatedInfo.username)) {
+      setUsernameSuccess(true);
+      return;
+    }
+    setUsernameSuccess(false);
+  }, [updatedInfo.username]);
+
   return (
     <form onSubmit={handleEditUserInformation}>
       <div className='form-row'>
@@ -147,12 +156,13 @@ const EditProfileInformationForm = ({
             onBlur={() => setUsernameClick(false)}
             aria-label='username'
             aria-describedby='usernameNote'
+            aria-invalid={!usernameSuccess}
           />
           <div className='form-information'>
             <p
               id='usernameNote'
               className={
-                usernameClick && updatedInfo.username.length
+                usernameClick && !usernameSuccess && updatedInfo.username.length
                   ? "form-description"
                   : "offscreen"
               }
