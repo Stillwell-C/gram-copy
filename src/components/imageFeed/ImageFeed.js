@@ -9,6 +9,9 @@ import { getMultiplePosts } from "../../features/posts/postApiRoutes";
 import { FadeLoader } from "react-spinners";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
+const FOLLOWFEED_REGEX = /^\/$/;
+const EXPLORE_REGEX = /^\/explore/;
+
 const ImageFeed = () => {
   const { id, authenticatedUser } = useAuth();
   const { pathname } = useLocation();
@@ -17,10 +20,20 @@ const ImageFeed = () => {
 
   const postLoadLimit = 5;
   const reqID = id || "";
-  const displayFollowingFeed = pathname.match(/\/explore/) ? false : true;
-  const queryKey = pathname.match(/\/explore/) ? "exploreFeed" : "posts";
-  const enabled =
-    !pathname.match(/\/explore/) && !authenticatedUser ? false : true;
+
+  useEffect(() => {
+    console.log(pathname);
+    console.log(FOLLOWFEED_REGEX.test(pathname));
+  }, [pathname]);
+
+  //Set different queries for the following feed and the explore page
+  const displayFollowingFeed = FOLLOWFEED_REGEX.test(pathname) ? true : false;
+  const queryKey = FOLLOWFEED_REGEX.test(pathname) ? "exploreFeed" : "posts";
+  const enabled = EXPLORE_REGEX.test(pathname)
+    ? true
+    : authenticatedUser
+    ? true
+    : false;
 
   const {
     data: postData,
@@ -87,33 +100,31 @@ const ImageFeed = () => {
 
   const noFollowingAuthenticated = (
     <>
-      <p>To create your very own feed, you need to follow another user</p>
-      <p>
-        Hop on over to the <Link to='/explore'>Explore Page</Link> to find posts
-        from our community.
+      <p className='margin-btm-5p'>
+        To create your very own feed, you need to follow another user
       </p>
     </>
   );
 
   const noFollowingUnauthenticated = (
     <>
-      <p>
+      <p className='margin-btm-5p'>
         To see your feed, <Link to='/accounts/login'>log in</Link> or{" "}
         <Link to='/accounts/emailsignup'>sign up</Link>{" "}
-      </p>
-      <p>
-        To see posts from our community, hop on over to the{" "}
-        <Link to='/explore'>Explore Page</Link>
       </p>
     </>
   );
 
   const noFollowingDiv = (
-    <div className='flex-container flex-column flex-align-center margin-top-3 padding-1'>
+    <div className='no-following-div flex-container flex-column flex-align-center margin-top-3 padding-1'>
       <h2 className='margin-btm-1'>No Feed Yet...</h2>
       {authenticatedUser
         ? noFollowingAuthenticated
         : noFollowingUnauthenticated}
+      <p>
+        Hop on over to the <Link to='/explore'>Explore Page</Link> to find posts
+        from our community.
+      </p>
     </div>
   );
 
