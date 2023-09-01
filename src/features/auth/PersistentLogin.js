@@ -4,8 +4,9 @@ import { selectCurrentToken, setCredentialsLoading } from "./authSlice";
 import { useEffect, useRef, useState } from "react";
 import { useRefreshMutation } from "./authApiSlice";
 import LoadingFullPage from "../../components/LoadingFullPage";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { setLoading } from "../display/displaySlice";
+import { refresh } from "./authApiRoutes";
 
 const PersistentLogin = () => {
   const [persistentLogin, setPersistentLogin] = usePersistentLogin();
@@ -13,46 +14,53 @@ const PersistentLogin = () => {
   const runEffect = useRef(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [loginSuccess, setLoginSuccess] = useState(false);
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [loginError, setLoginError] = useState(false);
+  const [loginUninitalized, setLoginUninitialized] = useState(true);
 
-  const [refresh, { isUninitialized, isLoading, isSuccess, isError }] =
-    useRefreshMutation();
+  // const [refresh, { isUninitialized, isLoading, isSuccess, isError }] =
+  //   useRefreshMutation();
 
   useEffect(() => {
     if (runEffect.current === true || process.env.NODE_ENV !== "development") {
       const verifyRefreshToken = async () => {
         try {
-          dispatch(setCredentialsLoading(true));
+          // dispatch(setCredentialsLoading(true));
+          dispatch(setLoading(true));
+          setLoginLoading(true);
+          setLoginUninitialized(false);
           await refresh();
+          dispatch(setLoading(false));
           setLoginSuccess(true);
-          dispatch(setCredentialsLoading(false));
+          setLoginLoading(false);
+          // dispatch(setCredentialsLoading(false));
         } catch (err) {
-          dispatch(setCredentialsLoading(false));
+          // dispatch(setCredentialsLoading(false));
+          setPersistentLogin(false);
+          dispatch(setLoading(false));
+          navigate("/accounts/login", { replace: true });
         }
       };
       if (!accessToken && persistentLogin) verifyRefreshToken();
     }
 
     return () => (runEffect.current = true);
-  }, []);
+  }, [accessToken]);
 
   let pageContent;
 
-  if (persistentLogin && isLoading) {
-    dispatch(setLoading(true));
-  } else if (
-    !persistentLogin ||
-    (isSuccess && loginSuccess) ||
-    (accessToken && isUninitialized)
-  ) {
-    dispatch(setLoading(false));
+  // if (persistentLogin && isLoading) {
+  //   pageContent = "";
+  // } else
+
+  if (!persistentLogin || loginSuccess || (accessToken && loginUninitalized)) {
     pageContent = <Outlet />;
-  } else if (isError) {
-    setPersistentLogin(false);
-    dispatch(setLoading(false));
+  } else if (loginError) {
     //Make an error div or page
-    console.log("An error occurred. Please login again.");
+    console.log(loginError);
   }
 
   return pageContent;
