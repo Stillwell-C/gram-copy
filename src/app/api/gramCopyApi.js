@@ -19,7 +19,6 @@ gramCopyApi.interceptors.request.use((config) => {
 
 gramCopyApi.interceptors.response.use(
   (response) => {
-    console.log("intercetp: ", response);
     return response;
   },
   async (error) => {
@@ -29,7 +28,6 @@ gramCopyApi.interceptors.response.use(
       error?.response?.config?.url !== "/auth/refresh"
     ) {
       const refreshResult = await refresh();
-      console.log("refresh ", refreshResult);
       if (refreshResult?.data?.accessToken) {
         return gramCopyApi.request(error.config);
       }
@@ -37,9 +35,6 @@ gramCopyApi.interceptors.response.use(
         return (window.location.href = "/accounts/error");
       }
     }
-
-    // if (error?.response?.config?.url === "/auth/refresh") {
-    // }
 
     return Promise.reject(error);
   }
