@@ -10,6 +10,7 @@ import NotFound from "./components/NotFound";
 import LoginForm from "./components/loginForm/LoginForm";
 import SignupForm from "./components/signupForm/SignupForm";
 import FeedContainer from "./components/FeedContainer";
+import AccountError from "./components/AccountError";
 
 function App() {
   return (
@@ -20,8 +21,12 @@ function App() {
             <Route index element={<FeedContainer />} />
             <Route index path='/explore' element={<FeedContainer />} />
             <Route path='/:userID' element={<ProfileMain />} />
-            <Route path='/accounts/login' element={<LoginForm />} />
-            <Route path='/accounts/emailsignup' element={<SignupForm />} />
+            <Route path='/accounts'>
+              <Route path='login' element={<LoginForm />} />
+              <Route path='emailsignup' element={<SignupForm />} />
+              <Route path='error' element={<AccountError />} />
+            </Route>
+
             <Route path='/direct/inbox' element={<ChatMain />} />
             <Route path='/accounts/edit' element={<EditProfileMain />} />
             <Route path='/accounts/password' element={<EditProfileMain />} />
