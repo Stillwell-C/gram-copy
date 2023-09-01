@@ -1,5 +1,6 @@
 import axios from "axios";
 import { store } from "../store";
+import { refresh } from "../../features/auth/authApiRoutes";
 
 const gramCopyApi = axios.create({
   baseURL: "http://localhost:3500",
@@ -15,5 +16,33 @@ gramCopyApi.interceptors.request.use((config) => {
 
   return config;
 });
+
+gramCopyApi.interceptors.response.use(
+  (response) => {
+    console.log("intercetp: ", response);
+    return response;
+  },
+  async (error) => {
+    //If 403 comes from /auth/refresh route, user has been confirmed to not be authenticated
+    if (
+      error?.response?.status === 403 &&
+      error?.response?.config?.url !== "/auth/refresh"
+    ) {
+      const refreshResult = await refresh();
+      console.log("refresh ", refreshResult);
+      if (refreshResult?.data?.accessToken) {
+        return gramCopyApi.request(error.config);
+      }
+      if (!refreshResult) {
+        return (window.location.href = "/accounts/error");
+      }
+    }
+
+    // if (error?.response?.config?.url === "/auth/refresh") {
+    // }
+
+    return Promise.reject(error);
+  }
+);
 
 export default gramCopyApi;
