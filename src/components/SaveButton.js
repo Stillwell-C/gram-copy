@@ -74,8 +74,12 @@ const SaveButton = ({ save = false, postID, postPage, queryKey }) => {
   return (
     <button
       className='bookmarkButton'
-      aria-label='click to save post'
+      aria-label='save post'
       onClick={handleSave}
+      disabled={addNewSaveMutation.isLoading || deleteSaveMutation.isLoading}
+      aria-disabled={
+        addNewSaveMutation.isLoading || deleteSaveMutation.isLoading
+      }
     >
       <img
         src={saved ? filledBookmark : outlinedBookmark}

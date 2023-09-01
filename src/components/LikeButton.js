@@ -85,8 +85,12 @@ const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
   return (
     <button
       className='likeButton'
-      aria-label='click to like post'
+      aria-label='like post'
       onClick={handleLike}
+      disabled={addNewLikeMutation.isLoading || deleteLikeMutation.isLoading}
+      aria-disabled={
+        addNewLikeMutation.isLoading || deleteLikeMutation.isLoading
+      }
     >
       <img
         src={liked ? filledHeart : outlinedHeart}
