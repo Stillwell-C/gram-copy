@@ -31,12 +31,12 @@ const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
         return data;
       });
       //Maybe just stop here
-      queryClient.invalidateQueries({
-        queryKey: queryKeyInvalidationKey,
-        refetchPage: (page, index, allPages) => {
-          return index === postPage;
-        },
-      });
+      // queryClient.invalidateQueries({
+      //   queryKey: queryKeyInvalidationKey,
+      //   refetchPage: (page, index, allPages) => {
+      //     return index === postPage;
+      //   },
+      // });
     },
   });
 
@@ -55,12 +55,12 @@ const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
         return data;
       });
       //Maybe just stop here
-      queryClient.invalidateQueries({
-        queryKey: queryKeyInvalidationKey,
-        refetchPage: (page, index, allPages) => {
-          return index === postPage;
-        },
-      });
+      // queryClient.invalidateQueries({
+      //   queryKey: queryKeyInvalidationKey,
+      //   refetchPage: (page, index, allPages) => {
+      //     return index === postPage;
+      //   },
+      // });
     },
   });
 
