@@ -9,6 +9,7 @@ const ProfileUserImage = ({ user, displayOwnPage }) => {
   const [newUserImgKey, setNewUserImgKey] = useState(null);
 
   useEffect(() => {
+    if (!user?.userImgKey) return;
     setUserImgURL(
       `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${user?.userImgKey}`
     );
