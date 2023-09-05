@@ -76,7 +76,7 @@ const UnfollowButton = ({ user }) => {
       navigate("/accounts/login");
       return;
     }
-    deleteFollowMutation.mutate({ followerID: id, followedID: user._id });
+    deleteFollowMutation.mutate({ followedID: user._id });
   };
 
   return (

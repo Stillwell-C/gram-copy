@@ -22,14 +22,13 @@ export const getFollowing = async ({ userID, ...args }) => {
   }
 };
 
-export const addFollow = async ({ followedID, followerID }) => {
+export const addFollow = async ({ followedID }) => {
   try {
     const response = await gramCopyApi.request({
       url: "/follow",
       method: "POST",
       data: {
         followedID,
-        followerID,
       },
     });
     return response.data;
@@ -38,14 +37,13 @@ export const addFollow = async ({ followedID, followerID }) => {
   }
 };
 
-export const deleteFollow = async ({ followedID, followerID }) => {
+export const deleteFollow = async ({ followedID }) => {
   try {
     const response = await gramCopyApi.request({
       url: "/follow",
       method: "DELETE",
       data: {
         followedID,
-        followerID,
       },
     });
     return response.data;

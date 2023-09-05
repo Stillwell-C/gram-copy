@@ -76,7 +76,7 @@ const FollowButton = ({ user }) => {
       navigate("/accounts/login");
       return;
     }
-    addFollowMutation.mutate({ followerID: id, followedID: user._id });
+    addFollowMutation.mutate({ followedID: user._id });
   };
 
   return (
