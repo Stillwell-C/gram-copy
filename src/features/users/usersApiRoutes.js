@@ -1,4 +1,6 @@
 import gramCopyApi from "../../app/api/gramCopyApi";
+import { store } from "../../app/store";
+import { setCredentials } from "../auth/authSlice";
 
 export const getUserSearch = async (searchQuery, pageParam, args) => {
   const response = await gramCopyApi.get(`/users/search/${searchQuery}`, {
@@ -48,6 +50,10 @@ export const updateUser = async ({ userID, ...args }) => {
     method: "PATCH",
     data: { id: userID, ...args },
   });
+
+  const { accessToken } = response.data;
+  store.dispatch(setCredentials({ accessToken }));
+
   return response.data;
 };
 
