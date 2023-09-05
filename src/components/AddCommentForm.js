@@ -33,7 +33,6 @@ const AddCommentForm = React.forwardRef(({ post }, ref) => {
       return;
     }
     addNewCommentMutation.mutate({
-      author: id,
       parentPostId: post._id,
       commentBody: comment,
     });
