@@ -74,10 +74,10 @@ const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
       return;
     }
     if (liked) {
-      deleteLikeMutation.mutate({ userID: id, parentPostID: postID });
+      deleteLikeMutation.mutate({ parentPostID: postID });
     }
     if (!liked) {
-      addNewLikeMutation.mutate({ userID: id, parentPostID: postID });
+      addNewLikeMutation.mutate({ parentPostID: postID });
     }
     setLiked(!liked);
   };
