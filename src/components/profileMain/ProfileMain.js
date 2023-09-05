@@ -28,6 +28,7 @@ const ProfileMain = () => {
   const { userID } = useParams();
   const { authenticatedUser, username } = useAuth();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     data: userData,
@@ -42,6 +43,19 @@ const ProfileMain = () => {
   });
 
   useEffect(() => {
+    if (isError && error.response.status === 400) {
+      navigate("/error", {
+        replace: true,
+        state: {
+          errorTitle: "User not found.",
+          errorMessage:
+            "The link you followed may be broken, or the page may have been removed.",
+        },
+      });
+    }
+  }, [isError]);
+
+  useEffect(() => {
     if (isLoading) {
       dispatch(setLoading(true));
       return;
@@ -51,8 +65,6 @@ const ProfileMain = () => {
   }, [isLoading, userID]);
 
   const { currentUser } = useContext(AuthContext);
-
-  const navigate = useNavigate();
 
   const [displaySelector, setDisplaySelector] = useState("posts");
   const [showAdditionalOptionsModal, setShowAdditionalOptionsModal] =
