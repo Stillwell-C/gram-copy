@@ -11,6 +11,7 @@ import LoginForm from "./components/loginForm/LoginForm";
 import SignupForm from "./components/signupForm/SignupForm";
 import FeedContainer from "./components/FeedContainer";
 import AccountError from "./components/AccountError";
+import ErrorPage from "./components/ErrorPage";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path='/direct/inbox' element={<ChatMain />} />
             <Route path='/accounts/edit' element={<EditProfileMain />} />
             <Route path='/accounts/password' element={<EditProfileMain />} />
+            <Route path='/error' element={<ErrorPage />} />
             <Route path='*' element={<NotFound />} />
           </Route>
         </Route>
