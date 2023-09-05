@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { updateUser } from "../features/users/usersApiRoutes";
+import { useNavigate } from "react-router-dom";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 
@@ -12,6 +13,8 @@ const EditProfileInformationForm = ({
   setConfirmation,
   setConfirmationMsg,
 }) => {
+  const navigate = useNavigate();
+
   const [updatedInfo, setUpdatedInfo] = useState({
     username: user?.username || "",
     fullname: user?.fullname || "",
@@ -55,15 +58,18 @@ const EditProfileInformationForm = ({
     onSuccess: () => {
       setConfirmation(true);
       setConfirmationMsg("Profile updated");
-      queryClient.setQueryData(["userInfo", user?.username], (oldData) => {
-        if (oldData) {
-          const updatedData = { ...oldData, ...updatedInfo };
-          return updatedData;
-        }
-      });
+      if (user?.username === updatedInfo.username) {
+        queryClient.setQueryData(["userInfo", user?.username], (oldData) => {
+          if (oldData) {
+            const updatedData = { ...oldData, ...updatedInfo };
+            return updatedData;
+          }
+        });
+      }
       queryClient.invalidateQueries({
         queryKey: ["userInfo", user?.username],
       });
+      navigate(`/${updatedInfo.username}`);
     },
   });
 
