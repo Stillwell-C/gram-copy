@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Notification from "./Notification";
 import addNotificationsIcon from "../assets/add-circle-svgrepo-com.svg";
 import { FadeLoader } from "react-spinners";
+import "../scss/notification.scss";
 
 const NotificationsPage = () => {
   const navigate = useNavigate();
@@ -28,7 +29,9 @@ const NotificationsPage = () => {
       }),
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, pages) => {
-      if (lastPage.page < lastPage.totalPages) return lastPage.page + 1;
+      console.log(lastPage);
+      if (lastPage.page < lastPage.totalPages)
+        return parseInt(lastPage.page) + 1;
       return false;
     },
   });
@@ -36,6 +39,10 @@ const NotificationsPage = () => {
   useEffect(() => {
     if (isError && error?.response?.status !== 400) navigate("/error");
   }, [isError]);
+
+  useEffect(() => {
+    console.log(hasNextPage);
+  }, [hasNextPage]);
 
   const flattenedData = notificationsData?.pages?.reduce((acc, page) => {
     return [...acc, ...page?.notifications];
