@@ -26,11 +26,12 @@ function App() {
               <Route path='login' element={<LoginForm />} />
               <Route path='emailsignup' element={<SignupForm />} />
               <Route path='error' element={<AccountError />} />
+              <Route path='edit' element={<EditProfileMain />} />
+              <Route path='password' element={<EditProfileMain />} />
             </Route>
 
             <Route path='/direct/inbox' element={<ChatMain />} />
-            <Route path='/accounts/edit' element={<EditProfileMain />} />
-            <Route path='/accounts/password' element={<EditProfileMain />} />
+
             <Route path='/error' element={<ErrorPage />} />
             <Route path='*' element={<NotFound />} />
           </Route>
