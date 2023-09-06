@@ -129,6 +129,9 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
         <AdditionalOptionsModal
           setShowAdditionalOptionsModal={setShowAdditionalOptionsModal}
           setShowReportModal={setShowReportModal}
+          goToPost={true}
+          copyLink={true}
+          post={post}
         />
       )}
       {showReportModal && (
