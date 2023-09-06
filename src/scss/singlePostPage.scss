@@ -1,0 +1,25 @@
+@import "../breakpoints.scss";
+
+.single-post-page {
+  min-height: 100%;
+  width: 100%;
+
+  .single-post-container {
+    border-radius: 0.5rem;
+    border: 1px solid #cccccc;
+    background-color: #fff;
+    width: clamp(300px, 80%, 1000px);
+    height: auto;
+    min-height: 300px;
+    overflow: hidden;
+    cursor: default;
+
+    @include small {
+      height: clamp(300px, 80%, 900px);
+    }
+  }
+
+  @include small {
+    border-radius: 0 0.5rem 0.5rem 0;
+  }
+}
