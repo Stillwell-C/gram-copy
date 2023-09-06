@@ -111,7 +111,7 @@ const Navbar = () => {
   );
 
   const notificationsLink = (
-    <Link to='#'>
+    <Link to='/notifications'>
       <div className='navbar-line'>
         <img src={heart} alt='' aria-hidden='true' />
         <span>Notifications</span>
