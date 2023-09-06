@@ -28,8 +28,8 @@ const ErrorPage = () => {
   return (
     <main className='flex-container fg-1 flex-column flex-align-center margin-top-3 gap-1'>
       <h2>{errorTitle}</h2>
-      {errorMessage.length && <p>{errorMessage}</p>}
-      {!errorMessage.length && <p>An error occurred. Please try again.</p>}
+      {errorMessage && <p>{errorMessage}</p>}
+      {!errorMessage && <p>An error occurred. Please try again.</p>}
       <Link to='/'>Go back to Instagram.</Link>
     </main>
   );
