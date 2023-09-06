@@ -169,8 +169,8 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
         <AdditionalOptionsModal
           setShowAdditionalOptionsModal={setShowAdditionalOptionsModal}
           setShowReportModal={setShowReportModal}
-          goToPost={true}
-          copyLink={setShowPhotoModal ? true : false}
+          goToPost={setShowPhotoModal ? true : false}
+          copyLink={true}
           post={post}
         />
       )}
