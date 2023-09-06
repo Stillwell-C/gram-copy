@@ -47,8 +47,8 @@ const FollowButton = ({ user }) => {
           const data = oldData;
           for (const page of data.pages) {
             for (const following of page.following) {
-              if (following.following._id === user._id) {
-                following.following.isFollow = true;
+              if (following.followed._id === user._id) {
+                following.followed.isFollow = true;
               }
             }
           }
@@ -79,7 +79,7 @@ const FollowButton = ({ user }) => {
     addFollowMutation.mutate({ followedID: user._id });
   };
 
-  return (
+  const followButtonContent = (
     <button
       className='follow-button'
       aria-label={`click to follow user`}
@@ -90,6 +90,8 @@ const FollowButton = ({ user }) => {
       Follow
     </button>
   );
+
+  if (user?._id !== id) return followButtonContent;
 };
 
 export default FollowButton;

@@ -42,13 +42,15 @@ const UnfollowButton = ({ user }) => {
           return data;
         }
       });
+      //username key may just need to be user's id
+      //other people follows wont change respective to users choices
       queryClient.setQueryData(["following", usernameKey], (oldData) => {
         if (oldData) {
           const data = oldData;
           for (const page of data.pages) {
             for (const following of page.following) {
-              if (following.following._id === user._id) {
-                following.following.isFollow = false;
+              if (following.followed._id === user._id) {
+                following.followed.isFollow = false;
               }
             }
           }
@@ -79,7 +81,7 @@ const UnfollowButton = ({ user }) => {
     deleteFollowMutation.mutate({ followedID: user._id });
   };
 
-  return (
+  const unfollowButtonContent = (
     <button
       className='follow-button'
       aria-label={`click to unfollow user`}
@@ -90,6 +92,8 @@ const UnfollowButton = ({ user }) => {
       Unfollow
     </button>
   );
+
+  if (user?._id !== id) return unfollowButtonContent;
 };
 
 export default UnfollowButton;
