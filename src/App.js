@@ -13,6 +13,7 @@ import FeedContainer from "./components/FeedContainer";
 import AccountError from "./components/AccountError";
 import ErrorPage from "./components/ErrorPage";
 import SinglePostPage from "./components/SinglePostPage";
+import NotificationsPage from "./components/NotificationsPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route index element={<FeedContainer />} />
             <Route index path='/explore' element={<FeedContainer />} />
             <Route path='/:userID' element={<ProfileMain />} />
+            <Route path='/notifications' element={<NotificationsPage />} />
             <Route path='/p/:postID' element={<SinglePostPage />} />
             <Route path='/accounts'>
               <Route path='login' element={<LoginForm />} />
