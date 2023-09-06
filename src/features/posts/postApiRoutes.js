@@ -1,5 +1,10 @@
 import gramCopyApi from "../../app/api/gramCopyApi";
 
+export const getPost = async (postID) => {
+  const response = await gramCopyApi.get(`/posts/${postID}`);
+  return response.data;
+};
+
 export const getMultiplePosts = async ({ pageParam, ...args }) => {
   try {
     const response = await gramCopyApi.get(`/posts`, {
