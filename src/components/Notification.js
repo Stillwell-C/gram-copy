@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "../scss/notification.scss";
 
 const Notification = ({ notification }) => {
   let notificationMessage;
