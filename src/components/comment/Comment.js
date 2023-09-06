@@ -41,6 +41,12 @@ const Comment = ({
     setFormatedDate(fromNow);
   }, [comment.updatedAt]);
 
+  const handleClose = () => {
+    if (setShowPhotoModal) {
+      setShowPhotoModal(false);
+    }
+  };
+
   return (
     <div className='single-comment'>
       {showImage && (
@@ -48,7 +54,7 @@ const Comment = ({
           <Link
             aria-label={`move to ${comment.author.username}'s profile`}
             to={`/${comment.author.username}`}
-            onClick={() => setShowPhotoModal(false)}
+            onClick={handleClose}
           >
             <img src={userImgURL} alt='user profile' aria-hidden='true' />
           </Link>
@@ -59,7 +65,7 @@ const Comment = ({
           <Link
             aria-label={`move to ${comment.author.username}'s profile`}
             to={`/${comment.author.username}`}
-            onClick={() => setShowPhotoModal(false)}
+            onClick={handleClose}
           >
             <span className='comment-username'>{comment.author.username}</span>
           </Link>
