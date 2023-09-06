@@ -21,11 +21,18 @@ const SaveButton = ({ save = false, postID, postPage, queryKey }) => {
       queryClient.setQueryData(queryKeyInvalidationKey, (oldData) => {
         const data = oldData;
         //Increment like
-        data.pages[postPage].posts.find(
-          (post) => post._id === postID
-        ).isSaved = true;
+        if (data?.pages) {
+          data.pages[postPage].posts.find(
+            (post) => post._id === postID
+          ).isSaved = true;
+        } else if (data?.imgKey) {
+          data.isSaved = true;
+        }
         return data;
       });
+      if (queryKeyInvalidationKey[0] !== "posts") {
+        queryClient.invalidateQueries({ queryKey: ["posts"] });
+      }
       //Maybe just stop here
       // queryClient.invalidateQueries({
       //   queryKey: queryKeyInvalidationKey,
@@ -42,11 +49,18 @@ const SaveButton = ({ save = false, postID, postPage, queryKey }) => {
       queryClient.setQueryData(queryKeyInvalidationKey, (oldData) => {
         const data = oldData;
         //Increment like
-        data.pages[postPage].posts.find(
-          (post) => post._id === postID
-        ).isSaved = false;
+        if (data?.pages) {
+          data.pages[postPage].posts.find(
+            (post) => post._id === postID
+          ).isSaved = false;
+        } else if (data?.imgKey) {
+          data.isSaved = false;
+        }
         return data;
       });
+      if (queryKeyInvalidationKey[0] !== "posts") {
+        queryClient.invalidateQueries({ queryKey: ["posts"] });
+      }
       //Maybe just stop here
       // queryClient.invalidateQueries({
       //   queryKey: queryKeyInvalidationKey,
