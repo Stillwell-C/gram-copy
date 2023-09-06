@@ -17,12 +17,12 @@ const PhotoModalComments = ({ post, setShowPhotoModal }) => {
     hasNextPage,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ["comments", post._id],
+    queryKey: ["comments", post?._id],
     queryFn: ({ pageParam = 1 }) =>
       getPostComments({
         pageParam,
         limit: commentLoadLimit,
-        postID: post._id,
+        postID: post?._id,
       }),
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, pages) => {
@@ -35,18 +35,20 @@ const PhotoModalComments = ({ post, setShowPhotoModal }) => {
     if (isError) console.log(error);
   }, [isError]);
 
-  const flattenedFeedData = commentData?.pages?.reduce((acc, page) => {
-    return [...acc, ...page.comments];
-  }, []);
+  const flattenedFeedData = commentData?.pages?.length
+    ? commentData?.pages?.reduce((acc, page) => {
+        return [...acc, ...page?.comments];
+      }, [])
+    : [];
 
   const captionComment = {
-    commentBody: post.caption,
-    updatedAt: post.updatedAt,
+    commentBody: post?.caption,
+    updatedAt: post?.updatedAt,
     author: {
-      username: post.user.username,
-      userImgKey: post.user.userImgKey,
+      username: post?.user?.username,
+      userImgKey: post?.user?.userImgKey,
     },
-    _id: `${post._id}postCaption`,
+    _id: `${post?._id}postCaption`,
   };
 
   const commentsArr = post?.caption?.length
