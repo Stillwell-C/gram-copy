@@ -75,7 +75,7 @@ const PhotoModalComments = ({ post, setShowPhotoModal }) => {
       {comments}
       {(isLoading || isFetching) && (
         <FadeLoader
-          cssOverride={{ alignSelf: "center", scale: "0.7" }}
+          cssOverride={{ alignSelf: "center", scale: "0.5" }}
           color='#333'
         />
       )}
