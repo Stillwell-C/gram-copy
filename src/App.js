@@ -12,6 +12,7 @@ import SignupForm from "./components/signupForm/SignupForm";
 import FeedContainer from "./components/FeedContainer";
 import AccountError from "./components/AccountError";
 import ErrorPage from "./components/ErrorPage";
+import SinglePostPage from "./components/SinglePostPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route index element={<FeedContainer />} />
             <Route index path='/explore' element={<FeedContainer />} />
             <Route path='/:userID' element={<ProfileMain />} />
+            <Route path='/p/:postID' element={<SinglePostPage />} />
             <Route path='/accounts'>
               <Route path='login' element={<LoginForm />} />
               <Route path='emailsignup' element={<SignupForm />} />
@@ -29,9 +31,7 @@ function App() {
               <Route path='edit' element={<EditProfileMain />} />
               <Route path='password' element={<EditProfileMain />} />
             </Route>
-
             <Route path='/direct/inbox' element={<ChatMain />} />
-
             <Route path='/error' element={<ErrorPage />} />
             <Route path='*' element={<NotFound />} />
           </Route>
