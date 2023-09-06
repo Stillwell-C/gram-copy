@@ -21,15 +21,23 @@ const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
     onSuccess: () => {
       queryClient.setQueryData(queryKeyInvalidationKey, (oldData) => {
         const data = oldData;
-        // Increment like
-        data.pages[postPage].posts.find(
-          (post) => post._id === postID
-        ).likes += 1;
-        data.pages[postPage].posts.find(
-          (post) => post._id === postID
-        ).isLiked = true;
+        if (data?.pages) {
+          // Increment like
+          data.pages[postPage].posts.find(
+            (post) => post._id === postID
+          ).likes += 1;
+          data.pages[postPage].posts.find(
+            (post) => post._id === postID
+          ).isLiked = true;
+        } else if (data?.imgKey) {
+          data.isLiked = true;
+          data.likes += 1;
+        }
         return data;
       });
+      if (queryKeyInvalidationKey[0] !== "posts") {
+        queryClient.invalidateQueries({ queryKey: ["posts"] });
+      }
       //Maybe just stop here
       // queryClient.invalidateQueries({
       //   queryKey: queryKeyInvalidationKey,
@@ -45,15 +53,23 @@ const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
     onSuccess: () => {
       queryClient.setQueryData(queryKeyInvalidationKey, (oldData) => {
         const data = oldData;
-        //Decrement like
-        data.pages[postPage].posts.find(
-          (post) => post._id === postID
-        ).likes -= 1;
-        data.pages[postPage].posts.find(
-          (post) => post._id === postID
-        ).isLiked = false;
+        if (data?.pages) {
+          //Decrement like
+          data.pages[postPage].posts.find(
+            (post) => post._id === postID
+          ).likes -= 1;
+          data.pages[postPage].posts.find(
+            (post) => post._id === postID
+          ).isLiked = false;
+        } else if (data?.imgKey) {
+          data.isLiked = false;
+          data.likes -= 1;
+        }
         return data;
       });
+      if (queryKeyInvalidationKey[0] !== "posts") {
+        queryClient.invalidateQueries({ queryKey: ["posts"] });
+      }
       //Maybe just stop here
       // queryClient.invalidateQueries({
       //   queryKey: queryKeyInvalidationKey,
