@@ -80,8 +80,8 @@ const SaveButton = ({ save = false, postID, postPage, queryKey }) => {
       navigate("/accounts/login");
       return;
     }
-    if (!saved) addNewSaveMutation.mutate({ userID: id, parentPostID: postID });
-    if (saved) deleteSaveMutation.mutate({ userID: id, parentPostID: postID });
+    if (!saved) addNewSaveMutation.mutate({ parentPostID: postID });
+    if (saved) deleteSaveMutation.mutate({ parentPostID: postID });
     setSaved(!saved);
   };
 
