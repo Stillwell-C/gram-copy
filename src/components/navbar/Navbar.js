@@ -69,9 +69,17 @@ const Navbar = () => {
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
 
+  const scrollUpOnHomeScreen = () => {
+    if (pathname.match(/^\/$/)) {
+      document
+        .getElementById("content-outlet")
+        .scroll({ top: 0, behavior: "smooth" });
+    }
+  };
+
   const homeLink = (
     <Link to='/'>
-      <div className='navbar-line'>
+      <div className='navbar-line' onClick={scrollUpOnHomeScreen}>
         <img src={home} alt='' aria-hidden='true' />
         <span>Home</span>
       </div>
@@ -92,9 +100,17 @@ const Navbar = () => {
     </Link>
   );
 
+  const scrollUpOnExploreScreen = () => {
+    if (pathname.match(/^\/explore$/i)) {
+      document
+        .getElementById("content-outlet")
+        .scroll({ top: 0, behavior: "smooth" });
+    }
+  };
+
   const exploreLink = (
     <Link to='/explore'>
-      <div className='navbar-line'>
+      <div className='navbar-line' onClick={scrollUpOnExploreScreen}>
         <img src={compass} alt='' aria-hidden='true' />
         <span>Explore</span>
       </div>
@@ -215,7 +231,7 @@ const Navbar = () => {
           <SideNavbarSearch navbarSearch={navbarSearch} />
         </nav>
       )}
-      <div className={styles.outlet}>
+      <div className={styles.outlet} id='content-outlet'>
         <Outlet />
       </div>
       {displayNav && (
