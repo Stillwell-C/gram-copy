@@ -144,6 +144,26 @@ const ProfileMain = () => {
   const userInfoButtons =
     username === userID ? ownPageButtons : defaultPageButtons;
 
+  const userStats = (
+    <>
+      <div>
+        <span className='user-figure'>{userData?.postNo}</span>
+        <span className='category'>
+          {userData?.posts === 1 ? "post" : "posts"}
+        </span>
+      </div>
+      <div className='clickable' onClick={() => setShowFollowerModal(true)}>
+        <span className='user-figure'>{userData?.followerNo}</span>
+        {userData?.followerNo === 1 ? "follower" : "followers"}
+        <span className='category'></span>
+      </div>
+      <div className='clickable' onClick={() => setShowFollowingModal(true)}>
+        <span className='user-figure'>{userData?.followingNo}</span>
+        following<span className='category'></span>
+      </div>
+    </>
+  );
+
   return (
     <div className='profile-main-container'>
       <div className='profile-content-container'>
@@ -154,35 +174,14 @@ const ProfileMain = () => {
               <div className='user-info-username'>{userID}</div>
               {userInfoButtons}
             </div>
-            <div className='user-info-middle'>
-              <div>
-                <span className='user-figure'>{userData?.postNo}</span>
-                <span className='category'>
-                  {userData?.posts === 1 ? "post" : "posts"}
-                </span>
-              </div>
-              <div
-                className='clickable'
-                onClick={() => setShowFollowerModal(true)}
-              >
-                <span className='user-figure'>{userData?.followerNo}</span>
-                {userData?.followerNo === 1 ? "follower" : "followers"}
-                <span className='category'></span>
-              </div>
-              <div
-                className='clickable'
-                onClick={() => setShowFollowingModal(true)}
-              >
-                <span className='user-figure'>{userData?.followingNo}</span>
-                following<span className='category'></span>
-              </div>
-            </div>
+            <div className='user-info-middle'>{userStats}</div>
             <div className='user-info-bottom'>
               <div className='user-fullname'>{userData?.fullname}</div>
               <div className='user-bio'>{userData?.userBio}</div>
             </div>
           </div>
         </div>
+        <div className='user-info-stats-small'>{userStats}</div>
         <div className='profile-bottom'>
           <div className='display-selector'>
             <div
