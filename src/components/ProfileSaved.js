@@ -20,7 +20,7 @@ const ProfileSaved = ({ userID }) => {
   } = useInfiniteQuery({
     queryKey,
     queryFn: ({ pageParam = 1 }) =>
-      getSavedPosts({ pageParam, limit: postLoadLimit, userID }),
+      getSavedPosts({ pageParam, limit: postLoadLimit }),
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, pages) => {
       if (lastPage.page < lastPage.totalPages) return lastPage.page + 1;
