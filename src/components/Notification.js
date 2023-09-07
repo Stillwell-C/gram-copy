@@ -12,7 +12,7 @@ const Notification = ({ notification }) => {
   if (notification.notificationType === "POSTLIKE") {
     notificationMessage = (
       <p>
-        <Link to={`/${notification?.notifyingUser?._id}`}>
+        <Link to={`/${notification?.notifyingUser?.username}`}>
           {notification?.notifyingUser?.username}
         </Link>{" "}
         liked your <Link to={`/p/${notification?.post}`}>post</Link>
@@ -22,7 +22,7 @@ const Notification = ({ notification }) => {
   if (notification.notificationType === "FOLLOW") {
     notificationMessage = (
       <p>
-        <Link to={`/${notification?.notifyingUser?._id}`}>
+        <Link to={`/${notification?.notifyingUser?.username}`}>
           {notification?.notifyingUser?.username}
         </Link>{" "}
         followed you
@@ -32,7 +32,7 @@ const Notification = ({ notification }) => {
   if (notification.notificationType === "COMMENT") {
     notificationMessage = (
       <p>
-        <Link to={`/${notification?.notifyingUser?._id}`}>
+        <Link to={`/${notification?.notifyingUser?.username}`}>
           {notification?.notifyingUser?.username}
         </Link>{" "}
         commented on your <Link to={`/p/${notification?.post}`}>post</Link>
