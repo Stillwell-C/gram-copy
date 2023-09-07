@@ -1,7 +1,7 @@
 import gramCopyApi from "../../app/api/gramCopyApi";
 
-export const getSavedPosts = async ({ userID, pageParam, ...args }) => {
-  const response = await gramCopyApi.get(`/postsave/user/${userID}`, {
+export const getSavedPosts = async ({ pageParam, ...args }) => {
+  const response = await gramCopyApi.get("/postsave/user/", {
     params: { page: pageParam, ...args },
   });
   const postDataWithPage = response.data.posts.map((post) => ({
@@ -15,20 +15,18 @@ export const getSavedPosts = async ({ userID, pageParam, ...args }) => {
   };
 };
 
-export const addNewSave = async ({ parentPostID, userID }) => {
+export const addNewSave = async ({ parentPostID }) => {
   const response = await gramCopyApi.request({
     url: `/postsave/${parentPostID}`,
     method: "POST",
-    data: { userID },
   });
   return response.data;
 };
 
-export const deleteSave = async ({ parentPostID, userID }) => {
+export const deleteSave = async ({ parentPostID }) => {
   const response = await gramCopyApi.request({
     url: `/postsave/${parentPostID}`,
     method: "DELETE",
-    data: { userID },
   });
   return response.data;
 };
