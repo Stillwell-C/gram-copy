@@ -32,8 +32,6 @@ const ProfileSaved = ({ userID }) => {
     return [...acc, ...page.posts];
   }, []);
 
-  console.log(flattenedFeedData);
-
   const observer = useRef();
   const lastPostRef = useCallback(
     (post) => {
