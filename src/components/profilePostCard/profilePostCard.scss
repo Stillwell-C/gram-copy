@@ -12,6 +12,10 @@
     border: 1px solid #fff;
   }
 
+  &.filler-div {
+    cursor: inherit;
+  }
+
   .post-img {
     object-fit: cover;
     width: 100%;
