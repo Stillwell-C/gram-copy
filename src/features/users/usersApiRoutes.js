@@ -44,11 +44,11 @@ export const createUser = async ({ ...args }) => {
   return response.data;
 };
 
-export const updateUser = async ({ userID, ...args }) => {
+export const updateUser = async ({ ...args }) => {
   const response = await gramCopyApi.request({
     url: "/users",
     method: "PATCH",
-    data: { id: userID, ...args },
+    data: { ...args },
   });
 
   const { accessToken } = response.data;
@@ -57,11 +57,11 @@ export const updateUser = async ({ userID, ...args }) => {
   return response.data;
 };
 
-export const deleteUser = async ({ userID, ...args }) => {
+export const deleteUser = async ({ ...args }) => {
   const response = await gramCopyApi.request({
     url: "/users",
     method: "DELETE",
-    data: { id: userID, ...args },
+    data: { ...args },
   });
   return response.data;
 };
