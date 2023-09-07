@@ -14,6 +14,8 @@ import AccountError from "./components/AccountError";
 import ErrorPage from "./components/ErrorPage";
 import SinglePostPage from "./components/SinglePostPage";
 import NotificationsPage from "./components/NotificationsPage";
+import RequireLogout from "./features/auth/RequireLogout";
+import RequireLogin from "./features/auth/RequireLogin";
 
 function App() {
   return (
@@ -24,16 +26,25 @@ function App() {
             <Route index element={<FeedContainer />} />
             <Route index path='/explore' element={<FeedContainer />} />
             <Route path='/:userID' element={<ProfileMain />} />
-            <Route path='/notifications' element={<NotificationsPage />} />
             <Route path='/p/:postID' element={<SinglePostPage />} />
-            <Route path='/accounts'>
-              <Route path='login' element={<LoginForm />} />
-              <Route path='emailsignup' element={<SignupForm />} />
-              <Route path='error' element={<AccountError />} />
-              <Route path='edit' element={<EditProfileMain />} />
-              <Route path='password' element={<EditProfileMain />} />
+
+            <Route element={<RequireLogin />}>
+              <Route path='/direct/inbox' element={<ChatMain />} />
+              <Route path='/notifications' element={<NotificationsPage />} />
             </Route>
-            <Route path='/direct/inbox' element={<ChatMain />} />
+
+            <Route path='/accounts'>
+              <Route element={<RequireLogout />}>
+                <Route path='login' element={<LoginForm />} />
+                <Route path='emailsignup' element={<SignupForm />} />
+              </Route>
+              <Route path='error' element={<AccountError />} />
+              <Route element={<RequireLogin />}>
+                <Route path='edit' element={<EditProfileMain />} />
+                <Route path='password' element={<EditProfileMain />} />
+              </Route>
+            </Route>
+
             <Route path='/error' element={<ErrorPage />} />
             <Route path='*' element={<NotFound />} />
           </Route>
