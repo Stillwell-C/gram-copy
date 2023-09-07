@@ -1,22 +1,39 @@
-.add-notifications-button-div {
-  button {
-    cursor: pointer;
-    background-color: transparent;
-    border: none;
+@import "../breakpoints.scss";
 
-    &:hover {
-      transform: scale(1.03);
+.notifications-page {
+  .notifications-content {
+    .add-notifications-button-div {
+      button {
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+
+        &:hover {
+          transform: scale(1.03);
+        }
+
+        img {
+          height: 24px;
+          width: 24px;
+        }
+      }
     }
 
-    img {
-      height: 24px;
-      width: 24px;
+    .single-notification {
+      a {
+        color: #000;
+      }
     }
   }
-}
 
-.single-notification {
-  a {
-    color: #000;
+  .footer-container {
+    .footer {
+      align-items: center;
+      margin-bottom: 75px;
+
+      @include small {
+        margin-bottom: 50px;
+      }
+    }
   }
 }
