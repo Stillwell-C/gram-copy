@@ -4,7 +4,6 @@
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  margin-top: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,9 +15,13 @@
 
   .profile-content-container {
     max-width: 935px;
-    width: calc(100% - 40px);
+    width: 100%;
     display: flex;
     flex-direction: column;
+
+    @include small {
+      width: calc(100% - 40px);
+    }
 
     .profile-top {
       display: flex;
@@ -194,9 +197,37 @@
       }
     }
 
+    .user-info-stats-small {
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 16px 0;
+      border-top: 1px solid #cccccc;
+
+      & > div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      @include small {
+        display: none;
+      }
+
+      .user-figure {
+        font-weight: bold;
+        margin-right: 5px;
+      }
+
+      .clickable {
+        cursor: pointer;
+      }
+    }
+
     .profile-bottom {
       width: 100%;
-      border-top: 1px solid #cccc;
+      border-top: 1px solid #cccccc;
 
       .display-selector {
         width: 100%;
