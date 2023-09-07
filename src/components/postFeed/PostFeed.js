@@ -45,6 +45,10 @@ const PostFeed = ({
     );
   });
 
+  for (let i = 0; i < posts?.length % 3; i++) {
+    content.push(<div className='post-card-container filler-div'></div>);
+  }
+
   const handleAddPostModal = () => {
     setDisplayPostModal(true);
   };
