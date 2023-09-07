@@ -56,7 +56,6 @@ const EditProfileInformationImage = ({
         `${cloudinaryResponse.public_id}.${cloudinaryResponse.format}`
       );
       updateUserMutation.mutate({
-        userID: user._id,
         userImgKey: `${cloudinaryResponse.public_id}.${cloudinaryResponse.format}`,
       });
     }

@@ -7,7 +7,7 @@ import { updateUser } from "../../features/users/usersApiRoutes";
 const PWD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,24}$/;
 
 export const EditProfilePassword = () => {
-  const { id, img, username } = useAuth();
+  const { img, username } = useAuth();
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -52,7 +52,7 @@ export const EditProfilePassword = () => {
       setErrorMsg("Invalid password.");
       return;
     }
-    updateUserMutation.mutate({ oldPassword, newPassword, id });
+    updateUserMutation.mutate({ oldPassword, newPassword });
   };
 
   useEffect(() => {

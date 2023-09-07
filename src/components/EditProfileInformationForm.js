@@ -21,7 +21,6 @@ const EditProfileInformationForm = ({
     userBio: user?.userBio || "",
     website: "Website",
     email: user?.email || "",
-    id: user?._id,
   });
 
   const parseUserBio = (userBioInput) => {
