@@ -76,10 +76,14 @@ const DeleteAccountModal = ({ setDisplayDeleteModal }) => {
   };
 
   const content = (
-    <div className='delete-account-modal-container'>
+    <div
+      className='delete-account-modal-container'
+      role='dialog'
+      aria-labelledby='dialog-header'
+    >
       <div className='delete-account-modal'>
         <div className='modal-header'>
-          <h2>Delete your account</h2>
+          <h2 id='dialog-header'>Delete your account</h2>
         </div>
         <div className='modal-body'>
           <div
