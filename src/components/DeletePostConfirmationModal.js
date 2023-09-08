@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "react-query";
 import { deletePost } from "../features/posts/postApiRoutes";
 import useAuth from "../hooks/useAuth";
+import FocusTrapModalParent from "./FocusTrapModalParent";
 
 const DeletePostConfirmationModal = ({ post, setShowDeleteConfirmation }) => {
   const { id } = useAuth();
@@ -20,33 +21,41 @@ const DeletePostConfirmationModal = ({ post, setShowDeleteConfirmation }) => {
     setShowDeleteConfirmation(false);
   };
 
-  return (
-    <>
-      <div className='delete-confirmation-modal'>
-        <div className='delete-confirmation-body'>
-          <h4>Are you sure you want to delete this image?</h4>
-          <div className='button-div'>
-            <button
-              aria-label='click to cancel and not delete this image'
-              onClick={() => setShowDeleteConfirmation(false)}
-            >
-              Cancel
-            </button>
-            <button
-              aria-label='click to delete this image'
-              className='delete'
-              onClick={handleDelete}
-            >
-              Delete
-            </button>
-          </div>
+  const handleClose = () => {
+    setShowDeleteConfirmation(false);
+  };
+
+  const content = (
+    <div className='delete-confirmation-modal'>
+      <div className='delete-confirmation-body'>
+        <h4>Are you sure you want to delete this image?</h4>
+        <div className='button-div'>
+          <button
+            aria-label='click to cancel and not delete this image'
+            onClick={() => setShowDeleteConfirmation(false)}
+            id='modal-cancel-btn'
+          >
+            Cancel
+          </button>
+          <button
+            aria-label='click to delete this image'
+            className='delete'
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
         </div>
       </div>
-      <div
-        className='delete-confirmation-overlay'
-        onClick={() => setShowDeleteConfirmation(false)}
-      ></div>
-    </>
+    </div>
+  );
+
+  return (
+    <FocusTrapModalParent
+      content={content}
+      handleClose={handleClose}
+      initialFocus='#modal-cancel-btn'
+      showClose={false}
+    />
   );
 };
 
