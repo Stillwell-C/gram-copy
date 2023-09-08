@@ -11,12 +11,19 @@ import AdditionalOptionsModal from "../additionalOptionsModal/AdditionalOptionsM
 import SaveButton from "../SaveButton";
 import LikeButton from "../LikeButton";
 import AddCommentForm from "../AddCommentForm";
+import useAuth from "../../hooks/useAuth";
+import DeletePostConfirmationModal from "../DeletePostConfirmationModal";
+import TagUsersModal from "../tagUsersModal/TagUsersModal";
 
 const ImgFeedCard = React.forwardRef(({ post }, ref) => {
+  const { id } = useAuth();
+
   const [showPhotoModal, setShowPhotoModal] = useState(false);
   const [showAdditionalOptionsModal, setShowAdditionalOptionsModal] =
     useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [showTagUsersModal, setShowTagUsersModal] = useState(false);
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${post?.user?.userImgKey}`;
   const imgURL = `https://res.cloudinary.com/danscxcd2/image/upload/${post?.imgKey}`;
@@ -132,6 +139,12 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
           goToPost={true}
           copyLink={true}
           post={post}
+          setShowDeleteConfirmation={
+            post.user._id === id ? setShowDeleteConfirmation : false
+          }
+          setShowTagUsersModal={
+            post.user._id === id ? setShowTagUsersModal : false
+          }
         />
       )}
       {showReportModal && (
@@ -139,6 +152,18 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
           setShowReportModal={setShowReportModal}
           reportDistinction={"Post"}
           reportId={post?._id}
+        />
+      )}
+      {showDeleteConfirmation && post.user._id === id && (
+        <DeletePostConfirmationModal
+          setShowDeleteConfirmation={setShowDeleteConfirmation}
+          post={post}
+        />
+      )}
+      {showTagUsersModal && post.user._id === id && (
+        <TagUsersModal
+          post={post}
+          setShowTagUsersModal={setShowTagUsersModal}
         />
       )}
     </>
