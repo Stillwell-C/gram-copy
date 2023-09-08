@@ -25,7 +25,15 @@ const RemoveTaggedUserButton = ({ user, post }) => {
           return data;
         }
       });
-      queryClient.invalidateQueries(["taggedUsers", post._id]);
+      queryClient.setQueryData(["taggedUsers", post._id], (oldData) => {
+        if (oldData) {
+          const data = oldData;
+          const filteredData = data.filter(
+            (taggedUser) => taggedUser._id !== user._id
+          );
+          return filteredData;
+        }
+      });
     },
   });
 
