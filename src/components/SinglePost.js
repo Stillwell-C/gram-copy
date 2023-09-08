@@ -13,15 +13,19 @@ import AddCommentForm from "./AddCommentForm";
 import AdditionalOptionsModal from "./additionalOptionsModal/AdditionalOptionsModal";
 import ReportModal from "./reportModal/ReportModal";
 import "../scss/singlePost.scss";
+import TagUsersModal from "./tagUsersModal/TagUsersModal";
+import DeletePostConfirmationModal from "./DeletePostConfirmationModal";
 
 const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
-  const { id } = useAuth();
+  const { id, authenticatedUser } = useAuth();
 
   const commentRef = useRef(null);
 
   const [showAdditionalOptionsModal, setShowAdditionalOptionsModal] =
     useState(false);
   const [showReportModal, setShowReportModal] = useState(false);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [showTagUsersModal, setShowTagUsersModal] = useState(false);
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${post?.user?.userImgKey}`;
   const imgURL = `https://res.cloudinary.com/danscxcd2/image/upload/${post?.imgKey}`;
@@ -172,6 +176,12 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
           goToPost={setShowPhotoModal ? true : false}
           copyLink={true}
           post={post}
+          setShowDeleteConfirmation={
+            post.user._id === id ? setShowDeleteConfirmation : false
+          }
+          setShowTagUsersModal={
+            post.user._id === id ? setShowTagUsersModal : false
+          }
         />
       )}
       {showReportModal && (
@@ -179,6 +189,18 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
           setShowReportModal={setShowReportModal}
           reportDistinction={"Post"}
           reportId={post?._id}
+        />
+      )}
+      {showDeleteConfirmation && post.user._id === id && (
+        <DeletePostConfirmationModal
+          setShowDeleteConfirmation={setShowDeleteConfirmation}
+          post={post}
+        />
+      )}
+      {showTagUsersModal && post.user._id === id && (
+        <TagUsersModal
+          post={post}
+          setShowTagUsersModal={setShowTagUsersModal}
         />
       )}
     </>
