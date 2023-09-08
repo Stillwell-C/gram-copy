@@ -9,6 +9,8 @@ const AdditionalOptionsModal = ({
   post,
   goToPost,
   copyLink,
+  setShowDeleteConfirmation,
+  setShowTagUsersModal,
 }) => {
   const navigate = useNavigate();
 
@@ -49,6 +51,40 @@ const AdditionalOptionsModal = ({
     </div>
   );
 
+  const handleOpenTagUsersModal = () => {
+    setShowAdditionalOptionsModal(false);
+    setShowTagUsersModal(true);
+  };
+
+  const showTagUsersModalButton = (
+    <div className='select-option-div'>
+      <button
+        className='cancel-button'
+        onClick={handleOpenTagUsersModal}
+        aria-label='click to close'
+      >
+        Tag Users
+      </button>
+    </div>
+  );
+
+  const handleDeletePost = () => {
+    setShowAdditionalOptionsModal(false);
+    setShowDeleteConfirmation(true);
+  };
+
+  const showDeleteConfirmationModalButton = (
+    <div className='select-option-div'>
+      <button
+        className='cancel-button'
+        onClick={handleDeletePost}
+        aria-label='click to close'
+      >
+        Delete Post
+      </button>
+    </div>
+  );
+
   const content = (
     <div
       className='options-modal-container'
@@ -67,6 +103,8 @@ const AdditionalOptionsModal = ({
         </div>
         {goToPost && goToPostButton}
         {copyLink && copyLinkButton}
+        {setShowTagUsersModal && showTagUsersModalButton}
+        {setShowDeleteConfirmation && showDeleteConfirmationModalButton}
         <div className='select-option-div'>
           <button
             className='cancel-button'
