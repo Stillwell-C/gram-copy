@@ -1,5 +1,6 @@
 import FocusTrap from "focus-trap-react";
 import React, { useEffect } from "react";
+import "../scss/modal.scss";
 
 const FocusTrapModalParent = ({
   content,
