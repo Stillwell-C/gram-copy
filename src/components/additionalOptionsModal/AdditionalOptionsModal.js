@@ -1,6 +1,7 @@
 import React from "react";
 import "./additionalOptionsModal.scss";
 import { useNavigate } from "react-router-dom";
+import FocusTrapModalParent from "../FocusTrapModalParent";
 
 const AdditionalOptionsModal = ({
   setShowReportModal,
@@ -14,6 +15,10 @@ const AdditionalOptionsModal = ({
   const handleShowReportModal = () => {
     setShowAdditionalOptionsModal(false);
     setShowReportModal(true);
+  };
+
+  const handleClose = () => {
+    setShowAdditionalOptionsModal(false);
   };
 
   const goToPostButton = (
@@ -44,39 +49,34 @@ const AdditionalOptionsModal = ({
     </div>
   );
 
-  return (
-    <>
-      <div className='options-modal-container'>
-        <div className='options-modal-body'>
-          <div className='select-option-div'>
-            <button
-              className='report-button'
-              aria-label='Click to report'
-              onClick={handleShowReportModal}
-            >
-              Report
-            </button>
-          </div>
-          {goToPost && goToPostButton}
-          {copyLink && copyLinkButton}
-          <div className='select-option-div'>
-            <button
-              className='cancel-button'
-              onClick={() => setShowAdditionalOptionsModal(false)}
-              aria-label='click to close'
-            >
-              Cancel
-            </button>
-          </div>
+  const content = (
+    <div className='options-modal-container'>
+      <div className='options-modal-body'>
+        <div className='select-option-div'>
+          <button
+            className='report-button'
+            aria-label='Click to report'
+            onClick={handleShowReportModal}
+          >
+            Report
+          </button>
+        </div>
+        {goToPost && goToPostButton}
+        {copyLink && copyLinkButton}
+        <div className='select-option-div'>
+          <button
+            className='cancel-button'
+            onClick={() => setShowAdditionalOptionsModal(false)}
+            aria-label='click to close'
+          >
+            Cancel
+          </button>
         </div>
       </div>
-      <div
-        className='options-modal-overlay'
-        aria-label='click to close'
-        onClick={() => setShowAdditionalOptionsModal(false)}
-      ></div>
-    </>
+    </div>
   );
+
+  return <FocusTrapModalParent content={content} handleClose={handleClose} />;
 };
 
 export default AdditionalOptionsModal;
