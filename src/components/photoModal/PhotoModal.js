@@ -21,7 +21,7 @@ const PhotoModal = ({ setShowPhotoModal, post, queryKey }) => {
     </div>
   );
 
-  <FocusTrapModalParent content={content} handleClose={handleClose} />;
+  return <FocusTrapModalParent content={content} handleClose={handleClose} />;
 };
 
 export default PhotoModal;
