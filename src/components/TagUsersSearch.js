@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "react-query";
 import { getUserSearch } from "../features/users/usersApiRoutes";
 import TaggedUserSearchResult from "./TaggedUserSearchResult";
@@ -11,6 +11,8 @@ const TagUsersSearch = ({
 }) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const searchBarRef = useRef();
 
   const {
     data: searchData,
@@ -83,8 +85,14 @@ const TagUsersSearch = ({
     );
   });
 
+  useEffect(() => searchBarRef.current.focus(), []);
+
   return (
-    <div className='tag-users-modal-body'>
+    <div
+      className='tag-users-modal-body'
+      role='dialog'
+      aria-labelledby='dialog-header'
+    >
       <div className='modal-header'>
         <div
           style={{ display: selectedUser ? "none" : "flex" }}
@@ -110,7 +118,7 @@ const TagUsersSearch = ({
           </button>
         </div>
         <div className='header-text-div'>
-          <h2>Tag User</h2>
+          <h2 id='dialog-header'>Tag User</h2>
         </div>
         <div className='header-btn-div close-div'>
           <button
@@ -137,6 +145,7 @@ const TagUsersSearch = ({
               maxLength='30'
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              ref={searchBarRef}
             />
           </label>
         </div>
