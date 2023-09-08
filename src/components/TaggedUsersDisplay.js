@@ -25,7 +25,11 @@ const TaggedUsersDisplay = ({
   });
 
   return (
-    <div className='check-tagged-users-body'>
+    <div
+      className='check-tagged-users-body'
+      role='dialog'
+      aria-labelledby='dialog-header'
+    >
       <div className='modal-header'>
         <div className='header-btn-div left'>
           <button
@@ -36,7 +40,7 @@ const TaggedUsersDisplay = ({
           </button>
         </div>
         <div className='header-text-div'>
-          <h2>Tagged Users</h2>
+          <h2 id='dialog-header'>Tagged Users</h2>
         </div>
         <div className='header-btn-div close-div'>
           <button
