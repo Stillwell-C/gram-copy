@@ -3,6 +3,7 @@ import "./createPostModal.scss";
 import { addNewPost } from "../../features/posts/postApiRoutes";
 import CreatePostDragDrop from "../CreatePostDragDrop";
 import CreatePostInformationForm from "../CreatePostInformationForm";
+import FocusTrapModalParent from "../FocusTrapModalParent";
 
 const CreatePostModal = ({ setDisplayPostModal }) => {
   const [dragDropScreen, setDragDropScreen] = useState(true);
@@ -25,7 +26,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
     }
   }, [addNewPost.isError]);
 
-  return (
+  const content = (
     <>
       {dragDropScreen ? (
         <CreatePostDragDrop
@@ -34,6 +35,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
           setDragDropScreen={setDragDropScreen}
           setImgUploadData={setImgUploadData}
           setImgUploadLoading={setImgUploadLoading}
+          handleClose={handleClose}
         />
       ) : (
         <CreatePostInformationForm
@@ -44,13 +46,10 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
           imgFileUpload={imgFileUpload}
         />
       )}
-      <div className='modal-overlay' onClick={handleClose}>
-        <div className='modal-overlay-close'>
-          <button aria-label='click to close image upload menu'>&times;</button>
-        </div>
-      </div>
     </>
   );
+
+  return <FocusTrapModalParent content={content} handleClose={handleClose} />;
 };
 
 export default CreatePostModal;
