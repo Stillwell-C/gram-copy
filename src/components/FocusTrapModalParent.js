@@ -1,7 +1,12 @@
 import FocusTrap from "focus-trap-react";
 import React, { useEffect } from "react";
 
-const FocusTrapModalParent = ({ content, handleClose }) => {
+const FocusTrapModalParent = ({
+  content,
+  handleClose,
+  showClose = true,
+  initialFocus = false,
+}) => {
   useEffect(() => {
     //This will close modal with escape key
     function keyListener(e) {
@@ -16,14 +21,16 @@ const FocusTrapModalParent = ({ content, handleClose }) => {
   }, []);
 
   return (
-    <FocusTrap>
+    <FocusTrap focusTrapOptions={{ initialFocus }}>
       <div>
-        {content}
+        <div>{content}</div>
         <div className='modal-overlay' onClick={handleClose}>
           <div className='modal-overlay-close'>
-            <button aria-label='click to close image upload menu'>
-              &times;
-            </button>
+            {showClose && (
+              <button aria-label='click to close image upload menu'>
+                &times;
+              </button>
+            )}
           </div>
         </div>
       </div>
