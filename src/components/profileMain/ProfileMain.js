@@ -248,7 +248,7 @@ const ProfileMain = () => {
       {showReportModal && (
         <ReportModal
           setShowReportModal={setShowReportModal}
-          reportDistinction={"user"}
+          reportDistinction={"User"}
           reportId={userData?._id}
         />
       )}

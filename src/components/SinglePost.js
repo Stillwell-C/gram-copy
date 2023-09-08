@@ -177,8 +177,8 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
       {showReportModal && (
         <ReportModal
           setShowReportModal={setShowReportModal}
-          reportDistinction={"post"}
-          reportId={post?.id}
+          reportDistinction={"Post"}
+          reportId={post?._id}
         />
       )}
     </>

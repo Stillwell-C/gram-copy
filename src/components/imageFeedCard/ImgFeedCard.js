@@ -137,8 +137,8 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
       {showReportModal && (
         <ReportModal
           setShowReportModal={setShowReportModal}
-          reportDistinction={"image"}
-          reportId={post.id}
+          reportDistinction={"Post"}
+          reportId={post?._id}
         />
       )}
     </>
