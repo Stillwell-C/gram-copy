@@ -97,63 +97,6 @@
     }
   }
 
-  .delete-confirmation-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 15;
-    border-radius: 0.5rem;
-    background-color: #fff;
-    width: 300px;
-    overflow: hidden;
-    cursor: default;
-
-    .delete-confirmation-body {
-      width: 100%;
-      height: 100%;
-      padding: 1rem 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-
-      h4 {
-        font-size: 0.9rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .button-div {
-        display: flex;
-        gap: 15px;
-
-        button {
-          padding: 7px 16px;
-          border-radius: 0.5rem;
-          border: none;
-          font-size: 0.85rem;
-          font-weight: bold;
-          color: black;
-          background-color: #efefef;
-          cursor: pointer;
-
-          &:hover {
-            background-color: #dbdbdb;
-          }
-
-          &.delete {
-            background-color: #0095f6;
-            color: #fff;
-
-            &:hover {
-              background-color: #1877f2;
-            }
-          }
-        }
-      }
-    }
-  }
-
   .delete-confirmation-overlay {
     position: fixed;
     top: 0;
