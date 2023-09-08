@@ -45,8 +45,17 @@ const PostFeed = ({
     );
   });
 
-  for (let i = 0; i < posts?.length % 3; i++) {
-    content.push(<div className='post-card-container filler-div'></div>);
+  let limit = 0;
+  if (posts?.length % 3 === 1) limit = 2;
+  if (posts?.length % 3 === 2) limit = 1;
+
+  for (let i = 0; i < limit; i++) {
+    content.push(
+      <div
+        key={`filler-div-${i}`}
+        className='post-card-container filler-div'
+      ></div>
+    );
   }
 
   const handleAddPostModal = () => {
