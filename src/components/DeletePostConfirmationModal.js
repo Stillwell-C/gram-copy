@@ -26,7 +26,11 @@ const DeletePostConfirmationModal = ({ post, setShowDeleteConfirmation }) => {
   };
 
   const content = (
-    <div className='delete-confirmation-modal'>
+    <div
+      className='delete-confirmation-modal'
+      role='dialog'
+      aria-label='delete post confirmation dialog'
+    >
       <div className='delete-confirmation-body'>
         <h4>Are you sure you want to delete this image?</h4>
         <div className='button-div'>
