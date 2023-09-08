@@ -50,7 +50,11 @@ const AdditionalOptionsModal = ({
   );
 
   const content = (
-    <div className='options-modal-container'>
+    <div
+      className='options-modal-container'
+      role='dialog'
+      aria-label='additional options dialog'
+    >
       <div className='options-modal-body'>
         <div className='select-option-div'>
           <button

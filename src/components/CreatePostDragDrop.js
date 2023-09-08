@@ -155,10 +155,14 @@ const CreatePostDragDrop = ({
   );
 
   return (
-    <div className='modal-container initial'>
+    <div
+      className='modal-container initial'
+      role='dialog'
+      aria-labelledby='dialog-header'
+    >
       <div className='modal-header'>
         <div className={imgFileUpload ? "" : "hidden"}></div>
-        <h2>Create new post</h2>
+        <h2 id='dialog-header'>Create new post</h2>
         <div
           className={imgFileUpload ? "button-div" : "button-div hidden"}
           onClick={() => setDragDropScreen(false)}

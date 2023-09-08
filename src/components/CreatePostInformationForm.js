@@ -65,11 +65,15 @@ const CreatePostInformationForm = ({
   };
 
   return (
-    <div className='modal-container secondary'>
+    <div
+      className='modal-container secondary'
+      role='dialog'
+      aria-labelledby='dialog-header'
+    >
       <form onSubmit={uploadPost}>
         <div className='modal-header'>
           <div></div>
-          <h2>Create new post</h2>
+          <h2 id='dialog-header'>Create new post</h2>
           <div className='button-div'>
             <button
               type='submit'
