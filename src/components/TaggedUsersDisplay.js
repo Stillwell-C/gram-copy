@@ -19,7 +19,8 @@ const TaggedUsersDisplay = ({
     error,
   } = useQuery({
     queryKey: ["taggedUsers", post._id],
-    queryFn: () => getUsersFromArr(post.taggedUsers),
+    queryFn: () => getUsersFromArr(post?.taggedUsers),
+    enabled: post?.taggedUsers?.length > 0,
     refetchOnWindowFocus: false,
   });
 
