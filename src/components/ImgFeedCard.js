@@ -26,7 +26,10 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
   const [showTagUsersModal, setShowTagUsersModal] = useState(false);
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${post?.user?.userImgKey}`;
+
   const imgURL = `https://res.cloudinary.com/danscxcd2/image/upload/${post?.imgKey}`;
+  const imgURLSmall = `https://res.cloudinary.com/danscxcd2/image/upload/w_370,c_fill/${post?.imgKey}`;
+  const imgURLLarge = `https://res.cloudinary.com/danscxcd2/image/upload/w_470,c_fill/${post?.imgKey}`;
 
   const imgContent = (
     <>
@@ -66,11 +69,23 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
       </div>
       <div className='main-img-div flex-container flex-align-center'>
         <div className='img-div flex-container flex-align-center flex-justify-center height-100'>
-          <img
-            className='mainImg'
-            alt={post.altText ? post.altText : "user upload"}
-            src={imgURL}
-          />
+          <picture>
+            <source
+              className='mainImg'
+              media='(max-width:370px)'
+              srcSet={imgURLSmall}
+            />
+            <source
+              className='mainImg'
+              media='(max-width:470px)'
+              srcSet={imgURLLarge}
+            />
+            <img
+              className='mainImg'
+              alt={post.altText ? post.altText : "user upload"}
+              src={imgURL}
+            />
+          </picture>
         </div>
       </div>
       <div className='card-bottom'>
