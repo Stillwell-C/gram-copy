@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import threeDots from "../../assets/three-dots-line-svgrepo-com.svg";
-import commentBubble from "../../assets/message-circle-01-svgrepo-com.svg";
-import message from "../../assets/plane-svgrepo-com.svg";
-import Comment from "../comment/Comment";
+import threeDots from "../assets/three-dots-line-svgrepo-com.svg";
+import commentBubble from "../assets/message-circle-01-svgrepo-com.svg";
+import message from "../assets/plane-svgrepo-com.svg";
+import Comment from "./comment/Comment";
 import moment from "moment";
-import PhotoModal from "../photoModal/PhotoModal";
-import ReportModal from "../reportModal/ReportModal";
-import AdditionalOptionsModal from "../additionalOptionsModal/AdditionalOptionsModal";
-import SaveButton from "../SaveButton";
-import LikeButton from "../LikeButton";
-import AddCommentForm from "../AddCommentForm";
-import useAuth from "../../hooks/useAuth";
-import DeletePostConfirmationModal from "../DeletePostConfirmationModal";
-import TagUsersModal from "../tagUsersModal/TagUsersModal";
+import PhotoModal from "./photoModal/PhotoModal";
+import ReportModal from "./reportModal/ReportModal";
+import AdditionalOptionsModal from "./additionalOptionsModal/AdditionalOptionsModal";
+import SaveButton from "./SaveButton";
+import LikeButton from "./LikeButton";
+import AddCommentForm from "./AddCommentForm";
+import useAuth from "../hooks/useAuth";
+import DeletePostConfirmationModal from "./DeletePostConfirmationModal";
+import TagUsersModal from "./tagUsersModal/TagUsersModal";
 
 const ImgFeedCard = React.forwardRef(({ post }, ref) => {
   const { id } = useAuth();
@@ -30,46 +30,59 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
 
   const imgContent = (
     <>
-      <div className='card-top'>
-        <Link
-          to={`/${post.user.username}`}
-          className='photo-link'
-          aria-label={`move to ${post.user.username}'s profile`}
-        >
-          <img className='userImg' src={userImgURL} alt='' aria-hidden='true' />
-        </Link>
-        <div className='photoInfo'>
+      <div className='card-top flex-container flex-align-center'>
+        <div className='card-top-left flex-container fg-1'>
           <Link
             to={`/${post.user.username}`}
+            className='photo-link flex-container flex-align-center height-100'
             aria-label={`move to ${post.user.username}'s profile`}
           >
-            <div className='userName'>{post.user.username}</div>
+            <img
+              className='userImg circular-image'
+              src={userImgURL}
+              alt='user profile'
+              aria-hidden='true'
+            />
           </Link>
-          <div className='photoLocation'>{post.location && post.location}</div>
+          <div className='photoInfo flex-container flex-column flex-justify-center'>
+            <Link
+              to={`/${post.user.username}`}
+              aria-label={`move to ${post.user.username}'s profile`}
+            >
+              <div className='userName'>{post.user.username}</div>
+            </Link>
+            <div className='photoLocation'>
+              {post.location && post.location}
+            </div>
+          </div>
         </div>
         <button
-          className='optionButton'
+          className='optionButton icon-button'
           onClick={() => setShowAdditionalOptionsModal(true)}
           aria-label='click for additional options'
         >
           <img src={threeDots} alt='three dots' />
         </button>
       </div>
-      <img
-        className='mainImg'
-        alt={post.altText ? post.altText : "user upload"}
-        src={imgURL}
-      />
+      <div className='main-img-div flex-container flex-align-center'>
+        <div className='img-div flex-container flex-align-center flex-justify-center height-100'>
+          <img
+            className='mainImg'
+            alt={post.altText ? post.altText : "user upload"}
+            src={imgURL}
+          />
+        </div>
+      </div>
       <div className='card-bottom'>
-        <div className='buttons'>
-          <div className='buttons-left'>
+        <div className='bottom-buttons flex-container flex-align-center'>
+          <div className='buttons-left flex-container flex-align-center'>
             <LikeButton
               like={post?.isLiked}
               postID={post?._id}
               postPage={post?.pageNo}
             />
             <button
-              className='commentButton'
+              className='commentButton icon-button'
               aria-label='open post to view and make comments'
             >
               <img
@@ -79,7 +92,10 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
                 aria-hidden='true'
               />
             </button>
-            <button className='messageButton' aria-label='click to share post'>
+            <button
+              className='messageButton icon-button'
+              aria-label='click to share post'
+            >
               <img src={message} alt='' aria-hidden='true' />
             </button>
           </div>
@@ -91,7 +107,7 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
             />
           </div>
         </div>
-        <div className='card-bottom-text'>
+        <div className='card-bottom-text flex-container flex-justify-center flex-column gap-5p'>
           <div className='likes-counter'>
             {post?.likes}
             {post?.likes === 1 ? " Like" : " Likes"}
@@ -114,7 +130,7 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
           <div className='view-more-div'>
             <button
               type='button'
-              className='view-comments-button'
+              className='view-comments-button transparent-button'
               aria-label='click to view all comments'
               onClick={() => setShowPhotoModal(true)}
             >
@@ -170,11 +186,11 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
   );
 
   const imgCard = ref ? (
-    <article className='card' ref={ref}>
+    <article className='img-feed-card width-100' ref={ref}>
       {imgContent}
     </article>
   ) : (
-    <article className='card'>{imgContent}</article>
+    <article className='img-feed-card width-100'>{imgContent}</article>
   );
 
   return imgCard;
