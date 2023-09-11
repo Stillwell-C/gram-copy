@@ -52,6 +52,19 @@ const ProfileUserImage = ({ user, displayOwnPage }) => {
     imgInputRef.current.click();
   };
 
+  const userImg = (
+    <picture className='user-img-picture'>
+      <source
+        srcSet={`https://res.cloudinary.com/danscxcd2/image/upload/w_175,c_fill/${user?.userImgKey}`}
+        media='(min-width:768px)'
+      />
+      <source
+        srcSet={`https://res.cloudinary.com/danscxcd2/image/upload/w_95,c_fill/${user?.userImgKey}`}
+      />
+      <img src={userImgURL} alt='user profile' />
+    </picture>
+  );
+
   const profileImg = displayOwnPage ? (
     <div className='profile-img-div'>
       <button
@@ -59,7 +72,7 @@ const ProfileUserImage = ({ user, displayOwnPage }) => {
         aria-label='click to change profile photo'
         onClick={handleImgClick}
       >
-        <img src={userImgURL} alt='user profile' />
+        {userImg}
       </button>
       <form>
         <input
@@ -72,9 +85,7 @@ const ProfileUserImage = ({ user, displayOwnPage }) => {
       </form>
     </div>
   ) : (
-    <div className='profile-img-div'>
-      <img src={userImgURL} alt='user profile' />
-    </div>
+    <div className='profile-img-div'>{userImg}</div>
   );
 
   return profileImg;
