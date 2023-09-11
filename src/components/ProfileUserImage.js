@@ -57,9 +57,11 @@ const ProfileUserImage = ({ user, displayOwnPage }) => {
       <source
         srcSet={`https://res.cloudinary.com/danscxcd2/image/upload/w_175,c_fill/${user?.userImgKey}`}
         media='(min-width:768px)'
+        alt='user profile'
       />
       <source
         srcSet={`https://res.cloudinary.com/danscxcd2/image/upload/w_95,c_fill/${user?.userImgKey}`}
+        alt='user profile'
       />
       <img src={userImgURL} alt='user profile' />
     </picture>
