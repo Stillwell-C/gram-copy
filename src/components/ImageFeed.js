@@ -1,11 +1,10 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import "./imageFeed.scss";
-import ImgFeedCard from "../imageFeedCard/ImgFeedCard";
+import ImgFeedCard from "./ImgFeedCard";
 import { useDispatch } from "react-redux";
-import { setLoading } from "../../features/display/displaySlice";
-import useAuth from "../../hooks/useAuth";
+import { setLoading } from "../features/display/displaySlice";
+import useAuth from "../hooks/useAuth";
 import { useInfiniteQuery } from "react-query";
-import { getMultiplePosts } from "../../features/posts/postApiRoutes";
+import { getMultiplePosts } from "../features/posts/postApiRoutes";
 import { FadeLoader } from "react-spinners";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -122,7 +121,7 @@ const ImageFeed = () => {
   );
 
   return (
-    <div className='feedContainer'>
+    <div className='img-feed-container'>
       <>
         {content}
         {!isFetching && !isLoading && !content?.length && noFollowingDiv}
