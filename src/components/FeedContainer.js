@@ -1,5 +1,6 @@
 import FeedRightInfo from "./feedRightInfo/FeedRightInfo";
-import ImageFeed from "./imageFeed/ImageFeed";
+import ImageFeed from "./ImageFeed";
+import "../scss/feedContainer.scss";
 
 const FeedContainer = () => {
   return (

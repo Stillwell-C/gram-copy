@@ -87,7 +87,7 @@ const SaveButton = ({ save = false, postID, postPage, queryKey }) => {
 
   return (
     <button
-      className='bookmarkButton'
+      className='bookmarkButton icon-button'
       aria-label='save post'
       onClick={handleSave}
       disabled={addNewSaveMutation.isLoading || deleteSaveMutation.isLoading}

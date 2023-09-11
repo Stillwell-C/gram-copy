@@ -47,10 +47,12 @@ const AddCommentForm = React.forwardRef(({ post }, ref) => {
   }, [comment.length, addNewComment.isLoading]);
 
   return (
-    <div className='input-comment-div'>
+    <div className='input-comment-div width-100'>
       <form
         onSubmit={handleAddComment}
-        className={`input-left ${addNewComment.isLoading ? "disabled" : ""}`}
+        className={`input-left ${
+          addNewComment.isLoading ? "disabled" : ""
+        } flex-container flex-align-center height-100`}
       >
         <div className='input-left'>
           <label>
@@ -65,10 +67,10 @@ const AddCommentForm = React.forwardRef(({ post }, ref) => {
             />
           </label>
         </div>
-        <div className='input-right'>
+        <div className='input-right flex-container flex-align-center flex-justify-cetner'>
           <button
             type='submit'
-            className={`${buttonDisabled ? "disabled" : ""}`}
+            className={`${buttonDisabled ? "disabled" : ""} transparent-button`}
             disabled={buttonDisabled}
             aria-disabled={buttonDisabled ? "true" : "false"}
           >

@@ -100,7 +100,7 @@ const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
 
   return (
     <button
-      className='likeButton'
+      className='likeButton icon-button'
       aria-label='like post'
       onClick={handleLike}
       disabled={addNewLikeMutation.isLoading || deleteLikeMutation.isLoading}
