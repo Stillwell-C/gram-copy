@@ -72,13 +72,14 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
           <picture>
             <source
               className='mainImg'
-              media='(max-width:370px)'
-              srcSet={imgURLSmall}
+              media='(min-width:370px)'
+              srcSet={imgURLLarge}
+              alt={post.altText ? post.altText : "user upload"}
             />
             <source
               className='mainImg'
-              media='(max-width:470px)'
-              srcSet={imgURLLarge}
+              srcSet={imgURLSmall}
+              alt={post.altText ? post.altText : "user upload"}
             />
             <img
               className='mainImg'
