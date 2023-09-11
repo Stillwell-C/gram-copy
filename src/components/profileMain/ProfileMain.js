@@ -165,9 +165,9 @@ const ProfileMain = () => {
   );
 
   return (
-    <div className='profile-main-container'>
-      <div className='profile-content-container'>
-        <div className='profile-top'>
+    <div className='profile-main-container fg-1 flex-container flex-column flex-align-center'>
+      <div className='profile-content-container width-100 flex-container flex-column'>
+        <div className='profile-top flex-container'>
           <ProfileUserImage displayOwnPage={displayOwnPage} user={userData} />
           <div className='user-info'>
             <div className='user-info-top'>
