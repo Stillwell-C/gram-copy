@@ -66,7 +66,11 @@ const ProfileUserImage = ({ user, displayOwnPage }) => {
         alt='user profile'
       />
       <source srcSet={userImgSmall} alt='user profile' />
-      <img src={userImgLarge} alt='user profile' className='circular-image' />
+      <img
+        src={userImgLarge}
+        alt='user profile'
+        className='circular-image user-profile-img'
+      />
     </picture>
   );
 
