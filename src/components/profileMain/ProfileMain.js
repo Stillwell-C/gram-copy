@@ -159,106 +159,108 @@ const ProfileMain = () => {
   );
 
   return (
-    <main className='profile-main-container fg-1 flex-container flex-column flex-align-center'>
-      <div className='profile-content-container width-100 flex-container flex-column'>
-        <div className='profile-top flex-container'>
-          <ProfileUserImage displayOwnPage={displayOwnPage} user={userData} />
-          <div className='user-info'>
-            <div className='user-info-top'>
-              <div className='user-info-username'>{userID}</div>
-              {userInfoButtons}
-            </div>
-            <div className='user-info-middle'>{userStats}</div>
-            <div className='user-info-bottom'>
-              <div className='user-fullname'>{userData?.fullname}</div>
-              <div className='user-bio'>{userData?.userBio}</div>
+    !isLoading && (
+      <main className='profile-main-container fg-1 flex-container flex-column flex-align-center'>
+        <div className='profile-content-container width-100 flex-container flex-column'>
+          <div className='profile-top flex-container'>
+            <ProfileUserImage displayOwnPage={displayOwnPage} user={userData} />
+            <div className='user-info'>
+              <div className='user-info-top'>
+                <div className='user-info-username'>{userID}</div>
+                {userInfoButtons}
+              </div>
+              <div className='user-info-middle'>{userStats}</div>
+              <div className='user-info-bottom'>
+                <div className='user-fullname'>{userData?.fullname}</div>
+                <div className='user-bio'>{userData?.userBio}</div>
+              </div>
             </div>
           </div>
-        </div>
-        <div className='user-info-stats-small'>{userStats}</div>
-        <div className='profile-bottom'>
-          <div className='display-selector'>
-            <div
-              className={
-                displaySelector === "posts"
-                  ? "display-selector-individual active"
-                  : "display-selector-individual"
-              }
-              aria-label='click to see user posts'
-              onClick={() => setDisplaySelector("posts")}
-            >
-              <img src={grid} alt='grid icon'></img>
-              <span>POSTS</span>
-            </div>
-            {displayOwnPage && (
+          <div className='user-info-stats-small'>{userStats}</div>
+          <div className='profile-bottom'>
+            <div className='display-selector'>
               <div
                 className={
-                  displaySelector === "saved"
+                  displaySelector === "posts"
                     ? "display-selector-individual active"
                     : "display-selector-individual"
                 }
-                aria-label='click to see saved posts'
-                onClick={() => setDisplaySelector("saved")}
+                aria-label='click to see user posts'
+                onClick={() => setDisplaySelector("posts")}
               >
-                <img src={bookmark} alt='bookmark icon'></img>
-                <span>SAVED</span>
+                <img src={grid} alt='grid icon'></img>
+                <span>POSTS</span>
               </div>
-            )}
-            <div
-              className={
-                displaySelector === "tagged"
-                  ? "display-selector-individual active"
-                  : "display-selector-individual"
-              }
-              aria-label='click to see posts where user was tagged'
-              onClick={() => setDisplaySelector("tagged")}
-            >
-              <img src={tagged} alt='tagged user icon'></img>
-              <span>TAGGED</span>
+              {displayOwnPage && (
+                <div
+                  className={
+                    displaySelector === "saved"
+                      ? "display-selector-individual active"
+                      : "display-selector-individual"
+                  }
+                  aria-label='click to see saved posts'
+                  onClick={() => setDisplaySelector("saved")}
+                >
+                  <img src={bookmark} alt='bookmark icon'></img>
+                  <span>SAVED</span>
+                </div>
+              )}
+              <div
+                className={
+                  displaySelector === "tagged"
+                    ? "display-selector-individual active"
+                    : "display-selector-individual"
+                }
+                aria-label='click to see posts where user was tagged'
+                onClick={() => setDisplaySelector("tagged")}
+              >
+                <img src={tagged} alt='tagged user icon'></img>
+                <span>TAGGED</span>
+              </div>
+            </div>
+            <div className='img-feed-container'>
+              {displaySelector === "posts" && (
+                <ProfilePosts userID={userData?._id} />
+              )}
+              {displaySelector === "saved" && (
+                <ProfileSaved userID={userData?._id} />
+              )}
+              {displaySelector === "tagged" && (
+                <ProfileTagged userID={userData?._id} />
+              )}
             </div>
           </div>
-          <div className='img-feed-container'>
-            {displaySelector === "posts" && (
-              <ProfilePosts userID={userData?._id} />
-            )}
-            {displaySelector === "saved" && (
-              <ProfileSaved userID={userData?._id} />
-            )}
-            {displaySelector === "tagged" && (
-              <ProfileTagged userID={userData?._id} />
-            )}
-          </div>
         </div>
-      </div>
-      <div className='footer-container'>
-        <Footer />
-      </div>
-      {showAdditionalOptionsModal && (
-        <AdditionalOptionsModal
-          setShowAdditionalOptionsModal={setShowAdditionalOptionsModal}
-          setShowReportModal={setShowReportModal}
-        />
-      )}
-      {showReportModal && (
-        <ReportModal
-          setShowReportModal={setShowReportModal}
-          reportDistinction={"User"}
-          reportId={userData?._id}
-        />
-      )}
-      {showFollowingModal && (
-        <FollowingModal
-          setShowFollowingModal={setShowFollowingModal}
-          user={userData}
-        />
-      )}
-      {showFollowerModal && (
-        <FollowerModal
-          setShowFollowerModal={setShowFollowerModal}
-          user={userData}
-        />
-      )}
-    </main>
+        <div className='footer-container'>
+          <Footer />
+        </div>
+        {showAdditionalOptionsModal && (
+          <AdditionalOptionsModal
+            setShowAdditionalOptionsModal={setShowAdditionalOptionsModal}
+            setShowReportModal={setShowReportModal}
+          />
+        )}
+        {showReportModal && (
+          <ReportModal
+            setShowReportModal={setShowReportModal}
+            reportDistinction={"User"}
+            reportId={userData?._id}
+          />
+        )}
+        {showFollowingModal && (
+          <FollowingModal
+            setShowFollowingModal={setShowFollowingModal}
+            user={userData}
+          />
+        )}
+        {showFollowerModal && (
+          <FollowerModal
+            setShowFollowerModal={setShowFollowerModal}
+            user={userData}
+          />
+        )}
+      </main>
+    )
   );
 };
 
