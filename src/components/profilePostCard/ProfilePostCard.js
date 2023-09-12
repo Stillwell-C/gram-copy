@@ -3,7 +3,6 @@ import message from "../../assets/message-bubble-svgrepo-com.svg";
 import heart from "../../assets/heart-svgrepo-com.svg";
 import trashIcon from "../../assets/trash-delete-svgrepo-com.svg";
 import tagUserIcon from "../../assets/user-add-svgrepo-com.svg";
-import "./profilePostCard.scss";
 import PhotoModal from "../photoModal/PhotoModal";
 import TagUsersModal from "../tagUsersModal/TagUsersModal";
 import useAuth from "../../hooks/useAuth";
@@ -49,7 +48,7 @@ const ProfilePostCard = React.forwardRef(
               </button>
             </div>
           )}
-          <div className='icon-div'>
+          <div className='icon-div flex-container'>
             <div className='icon-row'>
               <img src={heart} alt='heart icon' />
               <span>{post.likes}</span>
@@ -88,7 +87,7 @@ const ProfilePostCard = React.forwardRef(
 
     const postCard = ref ? (
       <article
-        aria-label='click to see image and comments'
+        aria-label='click to see image and comments dialog'
         className='post-card-container'
         ref={ref}
       >
@@ -96,7 +95,7 @@ const ProfilePostCard = React.forwardRef(
       </article>
     ) : (
       <article
-        aria-label='click to see image and comments'
+        aria-label='click to see image and comments dialog'
         className='post-card-container'
       >
         {cardContent}

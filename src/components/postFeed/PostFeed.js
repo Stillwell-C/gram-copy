@@ -68,7 +68,7 @@ const PostFeed = ({
         {content}
         {isFetching && (
           <div className='loading-div'>
-            <FadeLoader cssOverride={{ scale: "0.7" }} color='#333' />
+            <FadeLoader cssOverride={{ scale: "0.5" }} color='#333' />
           </div>
         )}
         {posts?.length <= 0 && userPostsFeed && userCheck && (

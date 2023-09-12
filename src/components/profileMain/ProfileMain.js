@@ -22,12 +22,14 @@ import FollowerModal from "../FollowerModal";
 import FollowButton from "../FollowButton";
 import UnfollowButton from "../UnfollowButton";
 import ProfileUserImage from "../ProfileUserImage";
+import useParseNumber from "../../hooks/useParseNumber";
 
 const ProfileMain = () => {
   const { userID } = useParams();
   const { authenticatedUser, username } = useAuth();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const parseNum = useParseNumber();
 
   const {
     data: userData,
@@ -60,7 +62,6 @@ const ProfileMain = () => {
       return;
     }
     dispatch(setLoading(false));
-    console.log(userData);
   }, [isLoading, userID]);
 
   const { currentUser } = useContext(AuthContext);
@@ -101,21 +102,38 @@ const ProfileMain = () => {
   );
 
   const ownPageButtons = (
-    <div className='user-info-buttons'>
+    <div className='user-info-buttons flex-container flex-align-center flex-justify-start'>
       <div className='edit-profile'>
-        <Link to='/accounts/edit' aria-label='edit profile information'>
-          <button className='edit-profile-btn'>Edit profile</button>
+        <Link to='/accounts/edit'>
+          <button
+            className='edit-profile-btn standard-button grey-button'
+            aria-label='edit profile information'
+          >
+            Edit profile
+          </button>
         </Link>
       </div>
     </div>
   );
 
+  const optionsButton = (
+    <div className='options-div'>
+      <button
+        className='options-button transparent-button'
+        aria-label='click for more options'
+        onClick={() => setShowAdditionalOptionsModal(true)}
+      >
+        <img src={threeDots} alt='' aria-hidden='true' />
+      </button>
+    </div>
+  );
+
   const defaultPageButtons = (
-    <div className='user-info-buttons'>
+    <div className='user-info-buttons flex-container flex-align-center flex-justify-start'>
       <div className='follow-div'>{friendButton}</div>
       <div className='message-div'>
         <button
-          className='message-button'
+          className='message-button standard-button grey-button'
           aria-label='click to message user'
           type='button'
           onClick={handleMessage}
@@ -123,15 +141,7 @@ const ProfileMain = () => {
           Message
         </button>
       </div>
-      <div className='options-div'>
-        <button
-          className='options-button'
-          aria-label='click for more options'
-          onClick={() => setShowAdditionalOptionsModal(true)}
-        >
-          <img src={threeDots} alt='' aria-hidden='true' />
-        </button>
-      </div>
+      {optionsButton}
     </div>
   );
 
@@ -141,18 +151,26 @@ const ProfileMain = () => {
   const userStats = (
     <>
       <div>
-        <span className='user-figure'>{userData?.postNo}</span>
+        <span className='user-figure'>{parseNum(userData?.postNo)}</span>
         <span className='category'>
           {userData?.posts === 1 ? "post" : "posts"}
         </span>
       </div>
-      <div className='clickable' onClick={() => setShowFollowerModal(true)}>
-        <span className='user-figure'>{userData?.followerNo}</span>
+      <div
+        className='clickable'
+        aria-label='click to see followers dialog'
+        onClick={() => setShowFollowerModal(true)}
+      >
+        <span className='user-figure'>{parseNum(userData?.followerNo)}</span>
         {userData?.followerNo === 1 ? "follower" : "followers"}
         <span className='category'></span>
       </div>
-      <div className='clickable' onClick={() => setShowFollowingModal(true)}>
-        <span className='user-figure'>{userData?.followingNo}</span>
+      <div
+        className='clickable'
+        aria-label='click to see following dialog'
+        onClick={() => setShowFollowingModal(true)}
+      >
+        <span className='user-figure'>{parseNum(userData?.followingNo)}</span>
         following<span className='category'></span>
       </div>
     </>
@@ -165,60 +183,67 @@ const ProfileMain = () => {
           <div className='profile-top flex-container'>
             <ProfileUserImage displayOwnPage={displayOwnPage} user={userData} />
             <div className='user-info'>
-              <div className='user-info-top'>
-                <div className='user-info-username'>{userID}</div>
+              <div className='user-info-top flex-container flex-column flex-align-start flex-justify-center'>
+                <div className='user-info-top-heading flex-container flex-align-center'>
+                  <div className='user-info-username'>{userID}</div>
+                  {optionsButton}
+                </div>
                 {userInfoButtons}
               </div>
-              <div className='user-info-middle'>{userStats}</div>
+              <div className='user-info-middle flex-align-center flex-justify-start'>
+                {userStats}
+              </div>
               <div className='user-info-bottom'>
                 <div className='user-fullname'>{userData?.fullname}</div>
                 <div className='user-bio'>{userData?.userBio}</div>
               </div>
             </div>
           </div>
-          <div className='user-info-stats-small'>{userStats}</div>
-          <div className='profile-bottom'>
-            <div className='display-selector'>
-              <div
-                className={
-                  displaySelector === "posts"
-                    ? "display-selector-individual active"
-                    : "display-selector-individual"
-                }
-                aria-label='click to see user posts'
+          <div className='user-info-stats-small width-100 flex-container flex-align-center'>
+            {userStats}
+          </div>
+          <div className='profile-bottom width-100'>
+            <nav
+              className='display-selector'
+              aria-label='Toggle posts displayed on profile page navigation menu'
+            >
+              <button
+                className={`display-selector-individual transparent-button ${
+                  displaySelector === "posts" ? "active" : ""
+                }`}
+                aria-label='display user posts'
+                aria-current={displaySelector === "posts"}
                 onClick={() => setDisplaySelector("posts")}
               >
                 <img src={grid} alt='grid icon'></img>
                 <span>POSTS</span>
-              </div>
+              </button>
               {displayOwnPage && (
-                <div
-                  className={
-                    displaySelector === "saved"
-                      ? "display-selector-individual active"
-                      : "display-selector-individual"
-                  }
-                  aria-label='click to see saved posts'
+                <button
+                  className={`display-selector-individual transparent-button ${
+                    displaySelector === "saved" ? "active" : ""
+                  }`}
+                  aria-label='display saved posts'
+                  aria-current={displaySelector === "saved"}
                   onClick={() => setDisplaySelector("saved")}
                 >
                   <img src={bookmark} alt='bookmark icon'></img>
                   <span>SAVED</span>
-                </div>
+                </button>
               )}
-              <div
-                className={
-                  displaySelector === "tagged"
-                    ? "display-selector-individual active"
-                    : "display-selector-individual"
-                }
-                aria-label='click to see posts where user was tagged'
+              <button
+                className={`display-selector-individual transparent-button ${
+                  displaySelector === "tagged" ? "active" : ""
+                }`}
+                aria-label='display tagged posts'
+                aria-current={displaySelector === "tagged"}
                 onClick={() => setDisplaySelector("tagged")}
               >
                 <img src={tagged} alt='tagged user icon'></img>
                 <span>TAGGED</span>
-              </div>
-            </div>
-            <div className='img-feed-container'>
+              </button>
+            </nav>
+            <div className='profile-img-feed-container'>
               {displaySelector === "posts" && (
                 <ProfilePosts userID={userData?._id} />
               )}

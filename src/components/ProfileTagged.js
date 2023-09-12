@@ -56,7 +56,9 @@ const ProfileTagged = ({ userID }) => {
   );
 
   return isLoading ? (
-    <FadeLoader cssOverride={{ scale: "0.7" }} color='#333' />
+    <div className='loading-div'>
+      <FadeLoader cssOverride={{ scale: "0.5" }} color='#333' />
+    </div>
   ) : (
     <PostFeed
       posts={flattenedFeedData}

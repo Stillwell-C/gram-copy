@@ -84,7 +84,7 @@ const ProfileUserImage = ({ user, displayOwnPage }) => {
       >
         {userImg}
       </button>
-      <form>
+      <form aria-hidden='true'>
         <input
           type='file'
           className='file-upload-input'
