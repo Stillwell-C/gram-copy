@@ -1,7 +1,7 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
-import ProfileMain from "./components/profileMain/ProfileMain";
+import ProfileMain from "./components/ProfileMain";
 import Layout from "./components/Layout";
 import EditProfileMain from "./components/editProfileMain/EditProfileMain";
 import ChatMain from "./components/chatComponents/chatMain/ChatMain";
