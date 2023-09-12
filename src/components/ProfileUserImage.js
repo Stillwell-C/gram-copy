@@ -5,14 +5,19 @@ import { useMutation, useQueryClient } from "react-query";
 import DefaultUserImg from "../assets/Default_pfp.svg";
 
 const ProfileUserImage = ({ user, displayOwnPage }) => {
-  const [userImgURL, setUserImgURL] = useState(DefaultUserImg);
+  const [userImgSmall, setUserImgSmall] = useState(
+    `https://res.cloudinary.com/danscxcd2/image/upload/w_95,c_fill/${user?.userImgKey}`
+  );
+  const [userImgLarge, setUserImgLarge] = useState(
+    `https://res.cloudinary.com/danscxcd2/image/upload/w_175,c_fill/${user?.userImgKey}`
+  );
   const [newUserImgKey, setNewUserImgKey] = useState(null);
 
   useEffect(() => {
-    if (!user?.userImgKey) return;
-    setUserImgURL(
-      `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${user?.userImgKey}`
-    );
+    if (!user?.userImgKey) {
+      setUserImgSmall(DefaultUserImg);
+      setUserImgSmall(DefaultUserImg);
+    }
   }, [user]);
 
   const imgInputRef = useRef(null);
@@ -36,7 +41,6 @@ const ProfileUserImage = ({ user, displayOwnPage }) => {
   const handleImgUpload = async (e) => {
     e.preventDefault();
     if (e.target.files && e.target.files[0]) {
-      setUserImgURL(URL.createObjectURL(e.target.files[0]));
       const cloudinaryResponse = await cloudinaryUpload(e.target.files[0]);
       setNewUserImgKey(
         `${cloudinaryResponse.public_id}.${cloudinaryResponse.format}`
@@ -45,6 +49,8 @@ const ProfileUserImage = ({ user, displayOwnPage }) => {
         userID: user._id,
         userImgKey: `${cloudinaryResponse.public_id}.${cloudinaryResponse.format}`,
       });
+      setUserImgSmall(URL.createObjectURL(e.target.files[0]));
+      setUserImgLarge(URL.createObjectURL(e.target.files[0]));
     }
   };
 
@@ -55,15 +61,12 @@ const ProfileUserImage = ({ user, displayOwnPage }) => {
   const userImg = (
     <picture className='user-img-picture'>
       <source
-        srcSet={`https://res.cloudinary.com/danscxcd2/image/upload/w_175,c_fill/${user?.userImgKey}`}
+        srcSet={userImgLarge}
         media='(min-width:768px)'
         alt='user profile'
       />
-      <source
-        srcSet={`https://res.cloudinary.com/danscxcd2/image/upload/w_95,c_fill/${user?.userImgKey}`}
-        alt='user profile'
-      />
-      <img src={userImgURL} alt='user profile' />
+      <source srcSet={userImgSmall} alt='user profile' />
+      <img src={userImgLarge} alt='user profile' className='circular-image' />
     </picture>
   );
 
@@ -73,6 +76,7 @@ const ProfileUserImage = ({ user, displayOwnPage }) => {
         title='Click to change profile picture'
         aria-label='click to change profile photo'
         onClick={handleImgClick}
+        className='transparent-button'
       >
         {userImg}
       </button>
