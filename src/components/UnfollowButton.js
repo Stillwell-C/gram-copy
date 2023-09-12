@@ -83,7 +83,7 @@ const UnfollowButton = ({ user }) => {
 
   const unfollowButtonContent = (
     <button
-      className='follow-button'
+      className='follow-button standard-button blue-button'
       aria-label={`click to unfollow user`}
       type='button'
       onClick={handleUnfollow}

@@ -81,7 +81,7 @@ const FollowButton = ({ user }) => {
 
   const followButtonContent = (
     <button
-      className='follow-button'
+      className='follow-button standard-button blue-button'
       aria-label={`click to follow user`}
       type='button'
       onClick={handleFollow}
