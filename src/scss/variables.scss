@@ -3,12 +3,22 @@ $margin-grey: #cccccc;
 $content-grey: #737373;
 $disabled-background-grey: #fafafa;
 
+$background-grey: #fafafa;
+
+$error-red: red;
+$success-green: green;
+
 $grey-button: #efefef;
 $grey-button-hover: #cccccc;
 
 $button-blue: #0095f6;
-$button-blue-hover: #00376b;
+$button-blue-hover-light: #1877f2;
+$button-blue-hover-dark: #00376b;
 $button-blue-disabled: #b3d7ff;
 
 $font-medium: 0.875rem;
 $font-small: 0.75rem;
+
+$header-medium: 2rem;
+$header-small: 1.5rem;
+$header-xsmall: 1.3rem;
