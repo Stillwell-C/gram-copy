@@ -1,5 +1,5 @@
 import React from "react";
-import camera from "../../assets/camera-player-multimedia-svgrepo-com.svg";
+import camera from "../assets/camera-player-multimedia-svgrepo-com.svg";
 
 const NoUserImgProfileFeed = ({ handleAddPostModal }) => {
   return (
