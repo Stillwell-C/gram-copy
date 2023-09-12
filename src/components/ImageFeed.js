@@ -121,7 +121,7 @@ const ImageFeed = () => {
   );
 
   return (
-    <div className='img-feed-container'>
+    <section className='img-feed-container'>
       <>
         {content}
         {!isFetching && !isLoading && !content?.length && noFollowingDiv}
@@ -132,7 +132,7 @@ const ImageFeed = () => {
         )}
         {isError && error.message}
       </>
-    </div>
+    </section>
   );
 };
 
