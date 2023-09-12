@@ -1,5 +1,5 @@
 import { useCallback, useRef } from "react";
-import PostFeed from "./postFeed/PostFeed";
+import PostFeed from "./PostFeed";
 import { useInfiniteQuery } from "react-query";
 import { getSavedPosts } from "../features/saved/savedApiRoutes";
 import { FadeLoader } from "react-spinners";

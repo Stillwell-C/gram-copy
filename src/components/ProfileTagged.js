@@ -1,5 +1,5 @@
 import { useCallback, useRef } from "react";
-import PostFeed from "./postFeed/PostFeed";
+import PostFeed from "./PostFeed";
 import { useInfiniteQuery } from "react-query";
 import useAuth from "../hooks/useAuth";
 import { getTaggedPosts } from "../features/posts/postApiRoutes";
