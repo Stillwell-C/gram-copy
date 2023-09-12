@@ -3,7 +3,6 @@ import { AuthContext } from "../../context/authContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Footer from "../footer/Footer";
 import "./profileMain.scss";
-import sprocket from "../../assets/gear-wide-svgrepo-com.svg";
 import grid from "../../assets/grid-svgrepo-com.svg";
 import bookmark from "../../assets/bookmark-svgrepo-com.svg";
 import tagged from "../../assets/user-square-svgrepo-com.svg";
@@ -108,11 +107,6 @@ const ProfileMain = () => {
           <button className='edit-profile-btn'>Edit profile</button>
         </Link>
       </div>
-      <div className='user-settings'>
-        <button className='user-settings-btn' aria-label='user settings'>
-          <img src={sprocket} alt='' aria-hidden='true' />
-        </button>
-      </div>
     </div>
   );
 
@@ -165,7 +159,7 @@ const ProfileMain = () => {
   );
 
   return (
-    <div className='profile-main-container fg-1 flex-container flex-column flex-align-center'>
+    <main className='profile-main-container fg-1 flex-container flex-column flex-align-center'>
       <div className='profile-content-container width-100 flex-container flex-column'>
         <div className='profile-top flex-container'>
           <ProfileUserImage displayOwnPage={displayOwnPage} user={userData} />
@@ -264,7 +258,7 @@ const ProfileMain = () => {
           user={userData}
         />
       )}
-    </div>
+    </main>
   );
 };
 
