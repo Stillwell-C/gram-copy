@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import CreatePostModal from "../createPostModal/CreatePostModal";
-import NoUserImgProfileFeed from "../noUserImgProfileFeed/NoUserImgProfileFeed";
-import ProfilePostCard from "../profilePostCard/ProfilePostCard";
-import useAuth from "../../hooks/useAuth";
+import CreatePostModal from "./createPostModal/CreatePostModal";
+import NoUserImgProfileFeed from "./NoUserImgProfileFeed";
+import ProfilePostCard from "./ProfilePostCard";
+import useAuth from "../hooks/useAuth";
 import { useParams } from "react-router-dom";
 import { FadeLoader } from "react-spinners";
 
