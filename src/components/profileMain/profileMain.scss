@@ -31,21 +31,13 @@
           flex-grow: 1;
         }
 
-        button {
-          background-color: transparent;
-          border: none;
-          cursor: pointer;
+        .user-profile-img {
+          width: 77px;
+          height: 77px;
 
-          img {
-            width: 77px;
-            height: 77px;
-            border-radius: 50%;
-            object-fit: cover;
-
-            @include small {
-              width: 150px;
-              height: 150px;
-            }
+          @include small {
+            width: 150px;
+            height: 150px;
           }
         }
 
@@ -58,10 +50,6 @@
         flex-grow: 2;
 
         .user-info-top {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          justify-content: center;
           gap: 15px;
           margin-bottom: 24px;
 
@@ -72,70 +60,35 @@
             margin-bottom: 20px;
           }
 
-          .user-info-username {
-            font-size: 20px;
-            font-weight: 400;
+          .user-info-top-heading {
+            gap: 15px;
+
+            .user-info-username {
+              font-size: $header-xsmall;
+              font-weight: 400;
+            }
+
+            .options-div {
+              img {
+                width: 24px;
+              }
+
+              @include small {
+                display: none;
+              }
+            }
           }
 
           .user-info-buttons {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
             gap: 15px;
-            .edit-profile-btn {
-              padding: 7px 16px;
-              font-weight: bold;
-              border: none;
-              border-radius: 0.5rem;
-              background-color: #efefef;
-              cursor: pointer;
-
-              &:hover {
-                background-color: #cccccc;
-              }
-            }
-
-            .user-settings-btn {
-              cursor: pointer;
-              display: flex;
-              align-items: center;
-              background-color: transparent;
-              border: none;
-            }
-
-            .follow-button {
-              cursor: pointer;
-              background-color: #0095f6;
-              padding: 7px 16px;
-              color: #fff;
-              font-weight: bold;
-              border: none;
-              border-radius: 0.5rem;
-
-              &:hover {
-                background-color: #1877f2;
-              }
-            }
-
-            .message-button {
-              cursor: pointer;
-              background-color: #efefef;
-              color: #000;
-              font-weight: bold;
-              padding: 7px 16px;
-              border: none;
-              border-radius: 0.5rem;
-
-              &:hover {
-                background-color: #cccccc;
-              }
-            }
 
             .options-button {
-              cursor: pointer;
+              display: none;
               padding: 8px;
-              border: none;
-              background-color: transparent;
+
+              @include small {
+                display: block;
+              }
 
               img {
                 width: 24px;
@@ -146,8 +99,6 @@
 
         .user-info-middle {
           display: none;
-          align-items: center;
-          justify-content: flex-start;
           gap: 40px;
           margin-bottom: 20px;
 
@@ -181,21 +132,12 @@
           }
         }
       }
-
-      .user-settings-btn {
-        img {
-          width: 24px;
-        }
-      }
     }
 
     .user-info-stats-small {
-      width: 100%;
-      display: flex;
       justify-content: space-around;
-      align-items: center;
       padding: 16px 0;
-      border-top: 1px solid #cccccc;
+      border-top: 1px solid $margin-grey;
 
       & > div {
         display: flex;
@@ -219,13 +161,14 @@
 
     .profile-bottom {
       width: 100%;
-      border-top: 1px solid #cccccc;
+      border-top: 1px solid $margin-grey;
 
       .display-selector {
         width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
+        gap: 50px;
 
         .display-selector-individual {
           display: flex;
@@ -233,10 +176,8 @@
           justify-content: center;
           font-weight: bold;
           font-size: 12px;
-          margin-right: 50px;
-          color: #8e8e8e;
-          padding: 20px 0;
-          cursor: pointer;
+          color: $content-grey;
+          padding: 20px 3px;
 
           img {
             width: 12px;
@@ -256,7 +197,7 @@
         }
       }
 
-      .img-feed-container {
+      .profile-img-feed-container {
         width: 100%;
         height: 100%;
         display: flex;
@@ -274,6 +215,151 @@
           @include small {
             gap: 28px;
           }
+
+          .share-photo-info {
+            margin: 60px 45px;
+            gap: 25px;
+
+            .camera-icon-button {
+              img {
+                width: 62px;
+              }
+            }
+
+            h3 {
+              font-size: 2rem;
+            }
+
+            .sub-text {
+              font-size: $font-medium;
+            }
+
+            .bottom-upload-button {
+              font-weight: bold;
+              font-size: $font-medium;
+              color: $button-blue;
+            }
+          }
+
+          .post-card-container {
+            aspect-ratio: 1 / 1;
+            max-width: min(293px, 30%);
+            flex: 1 1 30%;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+
+            &:focus {
+              border: 1px solid #fff;
+            }
+
+            &.filler-div {
+              cursor: inherit;
+            }
+
+            .post-img {
+              object-fit: cover;
+              width: 100%;
+              height: 100%;
+            }
+
+            .hover-div {
+              width: 100%;
+              height: 100%;
+              display: none;
+              background-color: rgba(0, 0, 0, 0.3);
+
+              .delete-btn-div,
+              .tag-user-btn-div {
+                .delete-btn,
+                .tag-user-btn {
+                  position: absolute;
+                  background-color: transparent;
+                  border: none;
+                  z-index: 9;
+
+                  img {
+                    width: 18px;
+
+                    @include small {
+                      width: 24px;
+                    }
+                  }
+                }
+
+                .delete-btn {
+                  top: 5px;
+                  left: 5px;
+                }
+
+                .tag-user-btn {
+                  top: 5px;
+                  right: 5px;
+                }
+              }
+
+              .icon-div {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                gap: 25px;
+                z-index: 5;
+
+                .icon-row {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 5px;
+                  font-size: $font-small;
+                  color: white;
+                  font-weight: bold;
+
+                  @include small {
+                    font-size: $font-medium;
+                  }
+
+                  img {
+                    width: 18px;
+                    filter: invert(100%) sepia(6%) saturate(23%)
+                      hue-rotate(161deg) brightness(106%) contrast(106%);
+
+                    @include small {
+                      width: 24px;
+                    }
+                  }
+                }
+              }
+
+              .background {
+                position: absolute;
+                background-color: rgba(0, 0, 0, 0.3);
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 1;
+              }
+            }
+
+            &:hover {
+              .hover-div {
+                display: block;
+              }
+            }
+
+            .delete-confirmation-overlay {
+              position: fixed;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
+              background-color: rgba(0, 0, 0, 0.6);
+              pointer-events: all;
+              cursor: default;
+              z-index: 13;
+            }
+          }
         }
       }
     }
@@ -283,6 +369,11 @@
     .footer {
       align-items: center;
       margin-bottom: 75px;
+
+      nav {
+        max-width: 80%;
+        justify-content: center;
+      }
 
       @include small {
         margin-bottom: 50px;
