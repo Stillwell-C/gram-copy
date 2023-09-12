@@ -19,9 +19,9 @@ const EditProfileMain = () => {
   };
 
   return (
-    <div className='edit-profile-container'>
-      <div className='edit-profile-div'>
-        <div className='edit-profile-sidebar'>
+    <div className='edit-profile-container flex-container flex-align-center flex-justify-center flex-column fg-1'>
+      <div className='edit-profile-div flex-container flex-column'>
+        <div className='edit-profile-sidebar flex-container'>
           <div
             aria-label='click to switch to edit profile page'
             className={pageDisplay === "edit" ? "active" : ""}

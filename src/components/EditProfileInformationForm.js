@@ -95,7 +95,7 @@ const EditProfileInformationForm = ({
   useEffect(() => {
     if (updateUserMutation.isError) {
       setError(true);
-      setErrorMsg(updateUserMutation.error.response.data.message);
+      setErrorMsg(updateUserMutation?.error?.response?.data?.message);
     }
   }, [updateUserMutation.isError]);
 

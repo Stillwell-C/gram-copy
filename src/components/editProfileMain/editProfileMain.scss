@@ -1,78 +1,64 @@
 @import "../../breakpoints.scss";
+@import "../../scss/variables.scss";
 
 .edit-profile-container {
-  width: 100%;
-  margin-top: 60px;
-
-  @include small {
-    margin-top: 0px;
-  }
+  padding-bottom: 2rem 0;
 
   .edit-profile-div {
-    margin: 30px auto 0;
-    display: flex;
-    flex: 1;
     background-color: #fff;
-    width: 100%;
-    max-width: 930px;
-    min-height: max(700px, 90vh);
-    border: 1px solid #cccccc;
+    width: clamp(300px, 80%, 950px);
+    min-height: 800px;
+    border: 1px solid $margin-grey;
     border-radius: 0.25rem;
 
+    @include medium {
+      flex-direction: row;
+    }
+
     .edit-profile-sidebar {
-      min-height: 100%;
-      border-right: 1px solid #cccccc;
-      display: flex;
-      flex-direction: column;
-
-      &:hover {
-        div {
-          transition: width 0.3s ease-in;
-          width: 180px;
-          span {
-            display: block;
-          }
-        }
-      }
-
-      @include small {
-        &:hover {
-          div {
-            width: 236px;
-          }
-        }
+      border-bottom: 1px solid $margin-grey;
+      @include medium {
+        flex-direction: column;
+        border-right: 1px solid $margin-grey;
+        border-bottom: none;
       }
 
       div {
-        transition: width 0.3s ease-in;
-        padding: 16px 16px 16px 30px;
-        width: 25px;
+        padding: 16px;
         min-height: 50px;
-        border-left: 2px solid transparent;
         cursor: pointer;
         position: relative;
+        transition: width ease-in-out 0.3s;
 
-        &:hover {
-          background-color: #fafafa;
-          border-left-color: #cccccc;
+        @include medium {
+          width: 180px;
+          padding: 16px 16px 16px 30px;
         }
 
-        span {
-          display: none;
-          font-size: 0.9rem;
+        @include large {
+          width: 240px;
+        }
 
-          @include small {
-            display: block;
+        &:hover {
+          background-color: $background-grey;
+
+          @include medium {
+            border-left: 2px solid $margin-grey;
           }
         }
 
-        @include small {
-          width: 236px;
+        span {
+          font-size: $font-medium;
         }
 
         &.active {
           font-weight: bold;
-          border-left-color: black;
+          border-bottom: 1px solid black;
+
+          @include medium {
+            border-bottom: none;
+            border-left: 2px solid black;
+          }
         }
       }
     }
@@ -80,54 +66,29 @@
 
   .edit-profile-body {
     flex-grow: 1;
-    padding: 0 20px;
+    padding: 20px;
 
     @include small {
       margin-right: 60px;
       padding: 0;
     }
-    .user-msg-div {
-      display: none;
 
-      &.active {
-        width: 100%;
-        margin-top: 1rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 5px;
-      }
+    .user-error-div,
+    .user-confirmation-div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-      .user-error-div {
-        display: none;
+    .user-error-div {
+      color: $error-red;
+    }
 
-        &.active {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          gap: 5px;
-          color: red;
-        }
-      }
-
-      .user-confirmation-div {
-        display: none;
-
-        &.active {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          gap: 5px;
-          color: green;
-        }
-      }
+    .user-success-div {
+      color: $success-green;
     }
 
     .user-info {
-      display: flex;
       margin-top: 32px;
 
       .profile-img-div {

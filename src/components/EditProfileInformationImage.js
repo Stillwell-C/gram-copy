@@ -70,7 +70,7 @@ const EditProfileInformationImage = ({
 
   return (
     <>
-      <div className='user-info'>
+      <div className='user-info flex-container'>
         <div className='profile-img-div'>
           <button
             title='Click to change profile picture'
