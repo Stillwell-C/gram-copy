@@ -1,14 +1,12 @@
 import axios from "axios";
-import React from "react";
+import gramCopyApi from "../app/api/gramCopyApi";
 
 const api_key = "419818228346469";
 const cloud_name = "danscxcd2";
 
 const useCloudinaryUpload = () => {
   const uploadImage = async (imageFile) => {
-    const signatureResponse = await axios.get(
-      "http://localhost:3500/auth/cloud-signature"
-    );
+    const signatureResponse = await gramCopyApi.get("/auth/cloud-signature");
 
     const imgData = new FormData();
     imgData.append("file", imageFile);
