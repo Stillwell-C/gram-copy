@@ -6,8 +6,6 @@ import Layout from "./components/Layout";
 import ChatMain from "./components/chatComponents/chatMain/ChatMain";
 import PersistentLogin from "./features/auth/PersistentLogin";
 import NotFound from "./components/NotFound";
-import LoginForm from "./components/loginForm/LoginForm";
-import SignupForm from "./components/signupForm/SignupForm";
 import FeedContainer from "./components/FeedContainer";
 import AccountError from "./components/AccountError";
 import ErrorPage from "./components/ErrorPage";
@@ -16,6 +14,8 @@ import NotificationsPage from "./components/NotificationsPage";
 import RequireLogout from "./features/auth/RequireLogout";
 import RequireLogin from "./features/auth/RequireLogin";
 import EditProfileMain from "./components/EditProfileMain";
+import LoginForm from "./components/LoginForm";
+import SignupForm from "./components/SignupForm";
 
 function App() {
   return (
