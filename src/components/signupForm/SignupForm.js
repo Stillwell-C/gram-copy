@@ -215,7 +215,9 @@ const SignupForm = () => {
         <h2 className='sign-up-header'>
           Sign up to see photos and videos from your friends.
         </h2>
-        <button className='login-google-button'>Log in with Google</button>
+        <button className='login-google-button blue-button standard-button'>
+          Log in with Google
+        </button>
         <div className='or-div'>
           <div className='line'> </div>
           <div className='or-lettering'>or</div>
