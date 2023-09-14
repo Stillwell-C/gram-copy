@@ -57,12 +57,17 @@ const TagUsersSearch = ({
     return [...acc, ...page?.users];
   }, []);
 
-  const filteredSearchData = flattenedSearchData?.filter(
-    (user) => post.taggedUsers.indexOf(user._id) === -1
-  );
+  let filteredSearchData;
+  if (post?.taggedUsers) {
+    filteredSearchData = flattenedSearchData?.filter(
+      (user) => !post?.taggedUsers?.includes(user?._id)
+    );
+  } else {
+    filteredSearchData = flattenedSearchData;
+  }
 
   const searchResults = filteredSearchData?.map((user, i) => {
-    if (flattenedSearchData.length === i + 1) {
+    if (filteredSearchData.length === i + 1) {
       return (
         <TaggedUserSearchResult
           ref={lastResultRef}

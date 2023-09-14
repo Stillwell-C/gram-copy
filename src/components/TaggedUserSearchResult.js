@@ -8,7 +8,7 @@ const TaggedUserSearchResult = React.forwardRef(
 
     const queryClient = useQueryClient();
 
-    const taggedUsersWithCurrentUser = [...post.taggedUsers, user._id];
+    const taggedUsersWithCurrentUser = [...post?.taggedUsers, user._id];
 
     const addTaggedUserMutation = useMutation({
       mutationFn: updatePostTaggedUsers,
