@@ -1,12 +1,8 @@
-@import "../../breakpoints.scss";
-@import "../../scss/variables.scss";
+@import "../breakpoints.scss";
+@import "./variables.scss";
 
 .edit-profile-container {
-  margin-top: 1rem;
-
-  @include small {
-    margin-top: 3rem;
-  }
+  margin: auto;
 
   .edit-profile-div {
     background-color: #fff;
@@ -14,13 +10,16 @@
     height: fit-content;
     border: 1px solid $margin-grey;
     border-radius: 0.25rem;
+    margin-top: 1rem;
 
     @include small {
-      width: clamp(300px, 80%, 950px);
+      width: clamp(300px, 90%, 800px);
+      margin-top: 3rem;
     }
 
     @include medium {
       flex-direction: row;
+      width: clamp(300px, 80%, 950px);
     }
 
     .edit-profile-sidebar {
@@ -130,9 +129,6 @@
     }
 
     form {
-      // width: 100%;
-      // display: flex;
-      // flex-direction: column;
       padding-bottom: 2rem;
 
       .form-row {
