@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "./tagUsersModal.scss";
-import TagUsersSearch from "../TagUsersSearch";
-import TaggedUsersDisplay from "../TaggedUsersDisplay";
-import FocusTrapModalParent from "../FocusTrapModalParent";
+import "../scss/tagUsersModal.scss";
+import TagUsersSearch from "./TagUsersSearch";
+import TaggedUsersDisplay from "./TaggedUsersDisplay";
+import FocusTrapModalParent from "./FocusTrapModalParent";
 
 const TagUsersModal = ({ post, setShowTagUsersModal }) => {
   const [showTaggedUsersDisplay, setShowTaggedUsersDisplay] = useState(false);
