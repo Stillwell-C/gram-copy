@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import EditProfileInformation from "../editProfileInformation/EditProfileInformation";
-import { EditProfilePassword } from "../editProfilePassword/EditProfilePassword";
-import Footer from "../footer/Footer";
-import "./editProfileMain.scss";
+import EditProfileInformation from "./editProfileInformation/EditProfileInformation";
+import { EditProfilePassword } from "./editProfilePassword/EditProfilePassword";
+import Footer from "./footer/Footer";
+import "../scss/editProfileMain.scss";
 
 const EditProfileMain = () => {
   const [pageDisplay, setPageDisplay] = useState("edit");
