@@ -49,6 +49,7 @@ const RemoveTaggedUserButton = ({ user, post }) => {
     <button
       aria-label={`click to remove ${user.username} tag from image`}
       onClick={handleRemoveTag}
+      className='standard-button blue-button'
     >
       Remove
     </button>

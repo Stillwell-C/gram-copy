@@ -40,24 +40,25 @@ const TaggedUserSearchResult = React.forwardRef(
 
     return (
       <div
-        className={`search-result ${
+        className={`search-result flex-container flex-align-center ${
           user._id === selectedUser?._id && "highlight"
         }`}
         onClick={() => setSelectedUser(user)}
       >
-        <div className='profile-picture'>
-          <img src={userImgURL} alt='user profile' />
+        <div className='profile-picture flex-container flex-align-center'>
+          <img src={userImgURL} alt='user profile' className='circular-image' />
         </div>
-        <div className='right-display'>
-          <div className='userinfo-div'>
+        <div className='right-display flex-container fg-1'>
+          <div className='userinfo-div height-100 fg-1 flex-container flex-column flex-justify-center'>
             <div className='username'>{user.username}</div>
             <div className='fullname'>{user.fullname}</div>
           </div>
           {user._id === selectedUser?._id && (
-            <div className='button-div'>
+            <div className='button-div flex-container flex-align-center'>
               <button
                 aria-label={`tag ${user.username} in image`}
                 onClick={handleAddTag}
+                className='blue-button'
               >
                 +
               </button>

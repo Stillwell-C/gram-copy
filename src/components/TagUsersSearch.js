@@ -134,35 +134,33 @@ const TagUsersSearch = ({
           </button>
         </div>
       </div>
-      <div className='modal-content'>
-        <div className='user-search'>
-          <label
-            aria-label='search for users to tag in this image'
-            htmlFor='username-search'
-          >
-            <input
-              type='text'
-              autoComplete='off'
-              name='username-search'
-              id='username-search'
-              placeholder='Username Search'
-              spellCheck='false'
-              maxLength='30'
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              ref={searchBarRef}
-            />
-          </label>
-        </div>
-
-        <div className='search-results'>
-          {searchResults}
-          {(searchIsLoading || searchIsFetching) && (
-            <div className='loading-div'>
-              <FadeLoader color='#333' cssOverride={{ scale: "0.5" }} />
-            </div>
-          )}
-        </div>
+      <div className='user-search width-100'>
+        <label
+          aria-label='search for users to tag in this image'
+          htmlFor='username-search'
+        >
+          <input
+            type='text'
+            autoComplete='off'
+            name='username-search'
+            id='username-search'
+            placeholder='Username Search'
+            className='width-100'
+            spellCheck='false'
+            maxLength='30'
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            ref={searchBarRef}
+          />
+        </label>
+      </div>
+      <div className='search-results flex-container flex-column width-100'>
+        {searchResults}
+        {(searchIsLoading || searchIsFetching) && (
+          <div className='loading-div'>
+            <FadeLoader color='#333' cssOverride={{ scale: "0.5" }} />
+          </div>
+        )}
       </div>
     </div>
   );

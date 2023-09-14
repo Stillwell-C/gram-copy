@@ -12,7 +12,7 @@ const TagUsersModal = ({ post, setShowTagUsersModal }) => {
   };
 
   const content = (
-    <div className='tag-users-modal-container'>
+    <div className='tag-users-modal-container modal-body'>
       {!showTaggedUsersDisplay && (
         <TagUsersSearch
           setShowTagUsersModal={setShowTagUsersModal}
