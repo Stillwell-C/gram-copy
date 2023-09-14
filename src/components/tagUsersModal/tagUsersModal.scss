@@ -1,36 +1,39 @@
+@import "../../breakpoints.scss";
+@import "../../scss/global.scss";
+@import "../../scss/variables.scss";
+
 .tag-users-modal-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   z-index: 15;
   border-radius: 0.5rem;
   background-color: #fff;
-  width: 400px;
+  width: 90%;
   height: 450px;
   overflow: hidden;
   cursor: default;
+
+  @include x-small {
+    width: 400px;
+  }
 
   .tag-users-modal-body,
   .check-tagged-users-body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
     height: 100%;
+
     .modal-header {
       width: 100%;
       min-height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-bottom: 1px solid #cccccc;
+      border-bottom: 1px solid $margin-grey;
       color: #000;
 
       button {
         background-color: transparent;
         border: none;
-        cursor: pointer;
       }
 
       div {
@@ -44,7 +47,7 @@
         justify-content: center;
 
         h2 {
-          font-size: 0.9rem;
+          font-size: $font-medium;
         }
       }
 
@@ -56,10 +59,9 @@
         button {
           background-color: transparent;
           margin-right: 10px;
-          cursor: pointer;
-          font-size: 0.9rem;
+          font-size: $font-medium;
           font-weight: bold;
-          color: #0096f0;
+          color: $button-blue;
         }
 
         &.close-div {
@@ -86,103 +88,67 @@
       }
     }
 
-    .modal-content {
-      width: 100%;
-      height: 100%;
+    .user-search {
+      padding: 1rem 0;
+      border-bottom: 1px solid $margin-grey;
 
-      .user-search {
-        width: 100%;
-        padding: 1rem 0;
-        border-bottom: 1px solid #cccccc;
-
-        label {
-          input {
-            width: 100%;
-            padding: 3px 16px;
-            background-color: transparent;
-            border: none;
-            outline: none;
-          }
+      label {
+        input {
+          padding: 3px 16px;
+          background-color: transparent;
+          border: none;
+          outline: none;
         }
       }
+    }
 
-      .search-results {
-        display: flex;
-        flex-direction: column;
-        overflow-y: auto;
-        flex-grow: 1;
-        height: 100%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
+    .search-results {
+      overflow-y: auto;
+      padding: 1rem 0;
 
-        .search-result {
-          padding: 8px 16px;
-          display: flex;
-          align-items: center;
-          cursor: pointer;
+      .search-result {
+        padding: 8px 16px;
+        cursor: pointer;
 
-          &:hover {
-            background-color: #f5f5f5;
+        &:hover {
+          background-color: $background-grey-highlighted;
+        }
+
+        &.highlight {
+          background-color: $background-grey-highlighted-dark;
+        }
+
+        .profile-picture {
+          margin-right: 12px;
+
+          img {
+            height: 44px;
+            width: 44px;
           }
+        }
 
-          &.highlight {
-            background-color: #dedede;
-          }
+        .right-display {
+          justify-content: space-between;
 
-          .profile-picture {
-            margin-right: 12px;
-            display: flex;
-            align-items: center;
-
-            img {
-              height: 44px;
-              width: 44px;
-              border-radius: 50%;
-              object-fit: cover;
+          .userinfo-div {
+            .username {
+              font-weight: bold;
+              font-size: $font-medium;
+              margin-bottom: 4px;
+            }
+            .fullname {
+              color: $content-grey;
+              font-size: $font-medium;
             }
           }
 
-          .right-display {
-            display: flex;
-            justify-content: space-between;
-            flex: 1;
-
-            .userinfo-div {
-              height: 100%;
-              flex: 1;
-              display: flex;
-              flex-direction: column;
-              justify-content: center;
-              .username {
-                font-weight: bold;
-                font-size: 0.9rem;
-                margin-bottom: 4px;
-              }
-              .fullname {
-                color: #8e8e8e;
-                font-size: 0.9rem;
-              }
-            }
-
-            .button-div {
-              display: flex;
-              align-items: center;
-              button {
-                cursor: pointer;
-                color: white;
-                background-color: #0095f6;
-                border: none;
-                border-radius: 0.5rem;
-                padding: 7px 16px;
-                font-size: 0.85rem;
-                font-weight: bold;
-
-                &:hover {
-                  background-color: #1877f2;
-                }
-              }
+          .button-div {
+            button {
+              border: none;
+              border-radius: 0.5rem;
+              padding: 7px 16px;
+              font-size: $font-medium;
+              font-weight: bold;
             }
           }
         }
@@ -192,44 +158,24 @@
 
   .check-tagged-users-body {
     .user-list {
-      height: 100%;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
       overflow-y: auto;
 
       .individual-user {
-        width: 100%;
         padding: 8px 16px;
-        display: flex;
-        align-items: center;
         justify-content: space-between;
         cursor: pointer;
 
         .individual-user-left {
-          display: flex;
-          align-items: center;
-
           .profile-picture {
             margin-right: 12px;
-            display: flex;
-            align-items: center;
 
             img {
               height: 44px;
               width: 44px;
-              border-radius: 50%;
-              object-fit: cover;
             }
           }
 
           .userinfo-div {
-            height: 100%;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-
             a {
               text-decoration: none;
               color: black;
@@ -237,54 +183,16 @@
 
             .username {
               font-weight: bold;
-              font-size: 0.9rem;
+              font-size: $font-medium;
               margin-bottom: 4px;
             }
             .fullname {
-              color: #8e8e8e;
-              font-size: 0.9rem;
-            }
-          }
-        }
-
-        .button-div {
-          button {
-            cursor: pointer;
-            color: white;
-            background-color: #0095f6;
-            border: none;
-            border-radius: 0.5rem;
-            padding: 7px 16px;
-            font-size: 0.85rem;
-            font-weight: bold;
-
-            &:hover {
-              background-color: #1877f2;
-            }
-
-            &.unfollow {
-              color: black;
-              background-color: #efefef;
-
-              &:hover {
-                background-color: #dbdbdb;
-              }
+              color: $content-grey;
+              font-size: $font-medium;
             }
           }
         }
       }
     }
   }
-}
-
-.tag-users-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  pointer-events: all;
-  cursor: default;
-  z-index: 13;
 }
