@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../../features/auth/authApiSlice";
-import { setCredentials } from "../../features/auth/authSlice";
+import { useLoginMutation } from "../features/auth/authApiSlice";
+import { setCredentials } from "../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { FadeLoader } from "react-spinners";
 
-import "../../scss/login.scss";
-import logo from "../../assets/Instagram_logo.png";
+import "../scss/login.scss";
+import logo from "../assets/Instagram_logo.png";
 
 const LoginForm = () => {
   const errRef = useRef();
