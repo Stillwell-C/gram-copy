@@ -1,9 +1,12 @@
 $margin-grey: #cccccc;
+$margin-grey-highlighted: #a8a8a8;
 //Anything 8e8e8e should be this
 $content-grey: #737373;
 $disabled-background-grey: #fafafa;
 
 $background-grey: #fafafa;
+$background-grey-highlighted: #f5f5f5;
+$background-grey-highlighted-dark: #dedede;
 
 $error-red: red;
 $success-green: green;
@@ -16,6 +19,7 @@ $button-blue-hover-light: #1877f2;
 $button-blue-hover-dark: #00376b;
 $button-blue-disabled: #b3d7ff;
 
+$font-large: 1rem;
 $font-medium: 0.875rem;
 $font-small: 0.75rem;
 
