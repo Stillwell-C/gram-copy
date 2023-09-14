@@ -2,14 +2,22 @@
 @import "../../scss/variables.scss";
 
 .edit-profile-container {
-  padding-bottom: 2rem 0;
+  margin-top: 1rem;
+
+  @include small {
+    margin-top: 3rem;
+  }
 
   .edit-profile-div {
     background-color: #fff;
-    width: clamp(300px, 80%, 950px);
-    min-height: 800px;
+    width: 95%;
+    height: fit-content;
     border: 1px solid $margin-grey;
     border-radius: 0.25rem;
+
+    @include small {
+      width: clamp(300px, 80%, 950px);
+    }
 
     @include medium {
       flex-direction: row;
@@ -65,11 +73,11 @@
   }
 
   .edit-profile-body {
-    flex-grow: 1;
     padding: 20px;
 
     @include small {
       margin-right: 60px;
+      min-height: 750px;
       padding: 0;
     }
 
@@ -88,60 +96,44 @@
       color: $success-green;
     }
 
+    .file-upload-input {
+      display: none;
+    }
+
     .user-info {
       margin-top: 32px;
 
       .profile-img-div {
-        overflow: hidden;
         margin-right: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
 
         @include small {
           margin-left: 124px;
         }
 
-        button {
-          background-color: transparent;
-          border: none;
-          cursor: pointer;
-        }
-
         img {
           width: 38px;
           height: 38px;
-          object-fit: cover;
-          border-radius: 50%;
         }
       }
 
       .user-info-right {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
         button {
-          background-color: transparent;
-          border: none;
-          font-size: 14px;
-          cursor: pointer;
+          font-size: $font-medium;
           font-weight: bold;
-          color: #0095f6;
+          color: $button-blue;
         }
 
         form {
-          height: 0px;
-          flex-shrink: 1;
+          display: none;
         }
       }
     }
 
     form {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 16px;
+      // width: 100%;
+      // display: flex;
+      // flex-direction: column;
+      padding-bottom: 2rem;
 
       .form-row {
         display: flex;
@@ -154,12 +146,11 @@
 
         .form-left {
           font-weight: bold;
-          font-size: 15px;
-          margin-top: 5px;
-          margin-bottom: 5px;
+          font-size: $font-large;
+          margin: 5px 0;
 
           @include small {
-            flex: 0 0 194px;
+            width: 200px;
             padding-left: 32px;
             padding-right: 32px;
             text-align: right;
@@ -172,12 +163,12 @@
           flex-direction: column;
 
           @include small {
-            flex-basis: 355px;
+            width: 350px;
           }
 
           input {
-            border: 1px solid #cccccc;
-            font-size: 16px;
+            border: 1px solid $margin-grey;
+            font-size: $font-large;
             padding: 0 10px;
             height: 32px;
             border-radius: 0.25rem;
@@ -189,16 +180,16 @@
 
           textarea {
             resize: vertical;
-            border: 1px solid #cccccc;
-            font-size: 16px;
+            border: 1px solid $margin-grey;
+            font-size: $font-large;
             height: 60px;
             padding: 6px 10px;
             border-radius: 0.25rem;
           }
 
           .form-information {
-            font-size: 12px;
-            color: #8e8e8e;
+            font-size: $font-small;
+            color: $content-grey;
             margin-top: 5px;
 
             p {
@@ -207,52 +198,51 @@
           }
 
           .personal-information-disclaimer {
-            margin-bottom: -22px;
+            margin-bottom: -20px;
 
             h2 {
-              font-size: 14px;
+              font-size: $font-medium;
             }
           }
         }
       }
       .button-div {
         .button-div-right {
-          display: flex;
-
           @include small {
-            margin-left: 194px;
+            margin-left: 190px;
           }
 
-          .submit-button {
-            cursor: pointer;
-            font-size: 14px;
+          .delete-button {
+            font-size: $font-medium;
             font-weight: bold;
-            color: white;
-            background-color: #0095f6;
-            padding: 7px 16px;
-            border: none;
-            border-radius: 0.5rem;
+            color: $button-blue;
+            margin-left: 100px;
 
             &:hover {
-              background-color: #1877f2;
+              color: $button-blue-hover-dark;
             }
           }
+        }
+      }
 
-          .extra-button-div {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            .extra-button {
-              cursor: pointer;
-              font-size: 14px;
-              font-weight: bold;
-              color: #0095f6;
-              border: none;
-              background-color: transparent;
-              margin-left: 100px;
+      &.password-form {
+        input {
+          &.password-input {
+            background-color: #fafafa;
+          }
+        }
+
+        .button-div-right {
+          .submit-button {
+            opacity: 1;
+            margin-bottom: 16px;
+
+            &:disabled {
+              opacity: 0.7;
+              cursor: default;
 
               &:hover {
-                color: black;
+                background-color: $button-blue;
               }
             }
           }
@@ -262,6 +252,12 @@
   }
 
   .footer {
+    padding: 1rem;
+
     align-items: center;
+
+    nav {
+      justify-content: center;
+    }
   }
 }
