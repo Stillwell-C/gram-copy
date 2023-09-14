@@ -13,7 +13,7 @@ import AddCommentForm from "./AddCommentForm";
 import AdditionalOptionsModal from "./additionalOptionsModal/AdditionalOptionsModal";
 import ReportModal from "./reportModal/ReportModal";
 import "../scss/singlePost.scss";
-import TagUsersModal from "./tagUsersModal/TagUsersModal";
+import TagUsersModal from "./TagUsersModal";
 import DeletePostConfirmationModal from "./DeletePostConfirmationModal";
 
 const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {

@@ -13,7 +13,7 @@ import LikeButton from "./LikeButton";
 import AddCommentForm from "./AddCommentForm";
 import useAuth from "../hooks/useAuth";
 import DeletePostConfirmationModal from "./DeletePostConfirmationModal";
-import TagUsersModal from "./tagUsersModal/TagUsersModal";
+import TagUsersModal from "./TagUsersModal";
 
 const ImgFeedCard = React.forwardRef(({ post }, ref) => {
   const { id } = useAuth();

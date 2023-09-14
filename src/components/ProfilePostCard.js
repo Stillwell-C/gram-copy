@@ -4,7 +4,7 @@ import heart from "../assets/heart-svgrepo-com.svg";
 import trashIcon from "../assets/trash-delete-svgrepo-com.svg";
 import tagUserIcon from "../assets/user-add-svgrepo-com.svg";
 import PhotoModal from "./photoModal/PhotoModal";
-import TagUsersModal from "./tagUsersModal/TagUsersModal";
+import TagUsersModal from "./TagUsersModal";
 import useAuth from "../hooks/useAuth";
 import DeletePostConfirmationModal from "./DeletePostConfirmationModal";
 
