@@ -3,8 +3,8 @@ import "./footer.scss";
 
 const Footer = () => {
   return (
-    <div className='footer'>
-      <nav>
+    <div className='footer flex-container flex-column flex-align-start flex-justify-center'>
+      <nav className='flex-container flex-justify-start flex-align-center'>
         <a href='#'>About</a>
         <a href='https://github.com/Stillwell-C'>Github</a>
         <a href='#'>Press</a>
