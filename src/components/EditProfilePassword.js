@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import useAuth from "../../hooks/useAuth";
+import useAuth from "../hooks/useAuth";
 import { useMutation } from "react-query";
-import { updateUser } from "../../features/users/usersApiRoutes";
+import { updateUser } from "../features/users/usersApiRoutes";
 
 const PWD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,24}$/;
 
