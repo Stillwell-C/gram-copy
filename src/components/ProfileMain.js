@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/authContext";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import Footer from "./footer/Footer";
+import Footer from "./Footer";
 import "../scss/profileMain.scss";
 import grid from "../assets/grid-svgrepo-com.svg";
 import bookmark from "../assets/bookmark-svgrepo-com.svg";

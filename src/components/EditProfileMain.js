@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import EditProfileInformation from "./EditProfileInformation";
 import { EditProfilePassword } from "./EditProfilePassword";
-import Footer from "./footer/Footer";
+import Footer from "./Footer";
 import "../scss/editProfileMain.scss";
 
 const EditProfileMain = () => {

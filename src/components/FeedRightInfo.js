@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import Footer from "./footer/Footer";
+import Footer from "./Footer";
 import useAuth from "../hooks/useAuth";
 import { useSendLogoutMutation } from "../features/auth/authApiSlice";
 

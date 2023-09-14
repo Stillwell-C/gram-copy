@@ -6,7 +6,7 @@ import Notification from "./Notification";
 import addNotificationsIcon from "../assets/add-circle-svgrepo-com.svg";
 import { FadeLoader } from "react-spinners";
 import "../scss/notification.scss";
-import Footer from "./footer/Footer";
+import Footer from "./Footer";
 
 const NotificationsPage = () => {
   const navigate = useNavigate();
