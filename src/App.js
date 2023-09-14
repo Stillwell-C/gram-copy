@@ -3,7 +3,6 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/navbar/Navbar";
 import ProfileMain from "./components/ProfileMain";
 import Layout from "./components/Layout";
-import EditProfileMain from "./components/editProfileMain/EditProfileMain";
 import ChatMain from "./components/chatComponents/chatMain/ChatMain";
 import PersistentLogin from "./features/auth/PersistentLogin";
 import NotFound from "./components/NotFound";
@@ -16,6 +15,7 @@ import SinglePostPage from "./components/SinglePostPage";
 import NotificationsPage from "./components/NotificationsPage";
 import RequireLogout from "./features/auth/RequireLogout";
 import RequireLogin from "./features/auth/RequireLogin";
+import EditProfileMain from "./components/EditProfileMain";
 
 function App() {
   return (
