@@ -186,7 +186,7 @@ const ProfileMain = () => {
               <div className='user-info-top flex-container flex-column flex-align-start flex-justify-center'>
                 <div className='user-info-top-heading flex-container flex-align-center'>
                   <div className='user-info-username'>{userID}</div>
-                  {optionsButton}
+                  {!authenticatedUser && { optionsButton }}
                 </div>
                 {userInfoButtons}
               </div>
