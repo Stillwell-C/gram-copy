@@ -19,7 +19,7 @@ const EditProfileMain = () => {
   };
 
   return (
-    <div className='edit-profile-container flex-container flex-align-center flex-justify-center flex-column fg-1'>
+    <main className='edit-profile-container flex-container flex-align-center flex-column fg-1'>
       <div className='edit-profile-div flex-container flex-column'>
         <div className='edit-profile-sidebar flex-container'>
           <div
@@ -44,7 +44,7 @@ const EditProfileMain = () => {
         </div>
       </div>
       <Footer />
-    </div>
+    </main>
   );
 };
 

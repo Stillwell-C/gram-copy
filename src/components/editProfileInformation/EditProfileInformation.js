@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import DeleteAccountModal from "../deleteAccountModal/DeleteAccountModal";
-import "./editProfileInformation.scss";
 import { useDispatch } from "react-redux";
 import EditProfileInformationForm from "../EditProfileInformationForm";
 import EditProfileInformationImage from "../EditProfileInformationImage";
@@ -61,7 +60,7 @@ const EditProfileInformation = () => {
   }, [confirmation]);
 
   return (
-    <div className='edit-profile-information-container flex-container flex-column flex-justify-center flex-align-center'>
+    <div className='edit-profile-information-container flex-container flex-column flex-justify-center flex-align-start'>
       {error && (
         <div className='user-error-div' ref={errRef}>
           <span className='error-msg'>{errorMsg}</span>

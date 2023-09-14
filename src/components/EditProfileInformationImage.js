@@ -71,16 +71,18 @@ const EditProfileInformationImage = ({
   return (
     <>
       <div className='user-info flex-container'>
-        <div className='profile-img-div'>
+        <div className='profile-img-div flex-container flex-align-center flex-justify-center'>
           <button
             title='Click to change profile picture'
             aria-label='change profile photo'
             onClick={() => imgInputRef.current.click()}
+            className='transparent-button'
           >
             <img
               src={userImgURL}
               alt='user profile upload'
               aria-hidden='true'
+              className='circular-image'
             />
           </button>
           <form>
@@ -94,11 +96,12 @@ const EditProfileInformationImage = ({
             />
           </form>
         </div>
-        <div className='user-info-right'>
+        <div className='user-info-right flex-container height-100 flex-column flex-justify-center'>
           <div className='username'>{user?.username}</div>
           <button
             aria-label='change profile photo'
             onClick={() => btnInputRef.current.click()}
+            className='transparent-button'
           >
             Change profile photo
           </button>

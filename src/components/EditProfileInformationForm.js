@@ -108,7 +108,10 @@ const EditProfileInformationForm = ({
   }, [updatedInfo.username]);
 
   return (
-    <form onSubmit={handleEditUserInformation}>
+    <form
+      onSubmit={handleEditUserInformation}
+      className='flex-container flex-column'
+    >
       <div className='form-row'>
         <div className='form-left'>
           <label htmlFor='name-input'>Name</label>
@@ -256,16 +259,19 @@ const EditProfileInformationForm = ({
         </div>
       </div>
       <div className='button-div'>
-        <div className='button-div-right'>
+        <div className='button-div-right flex-container'>
           <div className='submit-button-div'>
-            <button type='submit' className='submit-button'>
+            <button
+              type='submit'
+              className='submit-button standard-button blue-button'
+            >
               Submit
             </button>
           </div>
-          <div className='extra-button-div'>
+          <div className='delete-button-div flex-container flex-align-center flex-justify-center'>
             <button
               type='button'
-              className='extra-button'
+              className='delete-button transparent-button'
               onClick={() => setDisplayDeleteModal(true)}
             >
               Delete my account

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import "./editProfilePassword.scss";
 import useAuth from "../../hooks/useAuth";
 import { useMutation } from "react-query";
 import { updateUser } from "../../features/users/usersApiRoutes";
@@ -85,11 +84,6 @@ export const EditProfilePassword = () => {
     }
   }, [updateUserMutation.isSuccess]);
 
-  const handleSendPasswordEmail = async () => {
-    //TODO: alert user of success or failure
-    //TODO: test with email yo ucontrol
-  };
-
   return (
     <div className='edit-profile-password-container'>
       <div
@@ -116,15 +110,19 @@ export const EditProfilePassword = () => {
           {<span className='confirmation-msg'>{confirmationMsg}</span>}
         </div>
       </div>
-      <div className='user-info'>
-        <div className='profile-img-div'>
-          <img src={userImgURL} alt='user profile upload' />
+      <div className='user-info flex-container'>
+        <div className='profile-img-div flex-container flex-align-center flex-justify-center'>
+          <img
+            src={userImgURL}
+            alt='user profile upload'
+            className='circular-image'
+          />
         </div>
-        <div className='user-info-right'>
+        <div className='user-info-right flex-container fg-1 flex-align-center'>
           <div className='username'>{username}</div>
         </div>
       </div>
-      <form onSubmit={handleChangePassword}>
+      <form onSubmit={handleChangePassword} className='password-form'>
         <div className='form-row'>
           <div className='form-left'>
             <label htmlFor='old-password'>Old password</label>
@@ -193,11 +191,11 @@ export const EditProfilePassword = () => {
           </div>
         </div>
         <div className='button-div'>
-          <div className='button-div-right password'>
+          <div className='button-div-right'>
             <div className='submit-button-div'>
               <button
                 type='submit'
-                className='submit-button'
+                className='submit-button standard-button blue-button'
                 disabled={
                   !(
                     oldPassword.length &&
@@ -209,15 +207,6 @@ export const EditProfilePassword = () => {
                 Change password
               </button>
             </div>
-            {/* <div className='extra-button-div'>
-              <button
-                type='button'
-                className='extra-button'
-                onClick={handleSendPasswordEmail}
-              >
-                Forgot password?
-              </button>
-            </div> */}
           </div>
         </div>
       </form>
