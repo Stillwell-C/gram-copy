@@ -68,7 +68,7 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
         </button>
       </div>
       <div className='main-img-div flex-container flex-align-center'>
-        <div className='img-div flex-container flex-align-center flex-justify-center height-100'>
+        <div className='img-div flex-container flex-align-center flex-justify-center height-100 width-100'>
           <picture>
             <source
               className='mainImg'
