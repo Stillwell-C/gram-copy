@@ -8,48 +8,18 @@
   z-index: 15;
   border-radius: 0.5rem;
   background-color: #fff;
-  min-width: 300px;
-  width: 80%;
-  max-height: 80%;
-  height: auto;
+  width: 95%;
   min-height: 300px;
-  // overflow: hidden;
   cursor: default;
 
   @include small {
     border-radius: 0 0.5rem 0.5rem 0;
     height: 80%;
+    width: 80svw;
+    width: 80vw;
   }
 
   .photo-modal-right {
     overflow: hidden;
-  }
-}
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  pointer-events: all;
-  cursor: default;
-  z-index: 13;
-
-  .modal-overlay-close {
-    width: 100vw;
-    display: flex;
-    justify-content: flex-end;
-    pointer-events: all;
-
-    button {
-      border: none;
-      background-color: transparent;
-      color: #fff;
-      font-size: 3rem;
-      cursor: pointer;
-      margin: 5px 20px;
-    }
   }
 }
