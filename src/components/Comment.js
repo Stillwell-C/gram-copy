@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
-import defaultProfilePic from "../../assets/Default_pfp.svg";
-import useGetUserInfoFunction from "../../hooks/useGetUserInfoFunction";
+import defaultProfilePic from "../assets/Default_pfp.svg";
 
 const Comment = ({
   comment,
@@ -20,7 +19,9 @@ const Comment = ({
   const [dateCheck, setDateCheck] = useState(false);
   const [formatedDate, setFormatedDate] = useState("");
 
-  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${comment?.author?.userImgKey}`;
+  const userImgURL = comment?.author?.userImgKey
+    ? `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${comment?.author?.userImgKey}`
+    : defaultProfilePic;
 
   // const getCommentInfo = useGetUserInfoFunction();
 
