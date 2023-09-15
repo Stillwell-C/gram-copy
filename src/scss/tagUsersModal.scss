@@ -6,7 +6,6 @@
   z-index: 15;
   border-radius: 0.5rem;
   background-color: #fff;
-  width: 90%;
   height: 450px;
   overflow: hidden;
   cursor: default;
@@ -42,9 +41,10 @@
 
       .header-text-div {
         flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        // display: flex;
+        // align-items: center;
+        // justify-content: center;
+        text-align: center;
 
         h2 {
           font-size: $font-medium;
