@@ -17,7 +17,7 @@ import TagUsersModal from "./TagUsersModal";
 import DeletePostConfirmationModal from "./DeletePostConfirmationModal";
 
 const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
-  const { id, authenticatedUser } = useAuth();
+  const { id } = useAuth();
 
   const commentRef = useRef(null);
 
@@ -26,8 +26,15 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
   const [showReportModal, setShowReportModal] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showTagUsersModal, setShowTagUsersModal] = useState(false);
+  const [displayCommentsMobile, setDisplayCommentsMobile] = useState(false);
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${post?.user?.userImgKey}`;
+
+  const imgURLXSmall = `https://res.cloudinary.com/danscxcd2/image/upload/w_370/${post?.imgKey}`;
+  const imgURLSmall = `https://res.cloudinary.com/danscxcd2/image/upload/w_500/${post?.imgKey}`;
+  const imgURLMedium = `https://res.cloudinary.com/danscxcd2/image/upload/w_800/${post?.imgKey}`;
+  const imgURLLarge = `https://res.cloudinary.com/danscxcd2/image/upload/w_1000/${post?.imgKey}`;
+  const imgURLXLarge = `https://res.cloudinary.com/danscxcd2/image/upload/w_1200/${post?.imgKey}`;
   const imgURL = `https://res.cloudinary.com/danscxcd2/image/upload/${post?.imgKey}`;
 
   const followButton = (
@@ -44,130 +51,183 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
     commentRef.current.focus();
   };
 
+  const mobileHeader = (
+    <div className='single-post-header flex-container width-100'>
+      <div className='header-left flex-container fg-1 flex-align-center flex-justify-start'>
+        <div className='user-img-div flex-container flex-align-center'>
+          <img src={userImgURL} alt='user profile' className='circular-image' />
+        </div>
+        <div className='photo-info-div flex-container flex-column flex-justify-center flex-align-start width-100'>
+          <div className='photo-info-top flex-container flex-align-center'>
+            <Link
+              to={`/${post?.user?.username}`}
+              aria-label={`move to ${post?.user?.username}'s profile`}
+            >
+              <div className='userName'>{post?.user?.username}</div>
+            </Link>
+            {id !== post?.user?._id && !post?.isFollow && (
+              <>
+                <span>•</span>
+                {followButton}
+              </>
+            )}
+          </div>
+          <div className='photo-location'>
+            {post?.location ? post?.location : ""}
+          </div>
+        </div>
+        <div className='header-right'>
+          <button
+            className='optionButton transparent-button'
+            onClick={() => setShowAdditionalOptionsModal(true)}
+            aria-label='click for additional options'
+          >
+            <img src={threeDots} alt='' aria-hidden='true' />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  //Make picture
+  const singlePhotoImage = (
+    <div className='single-post-left'>
+      <div className='img-container flex-container flex-align-center flex-justify-center height-100'>
+        <picture>
+          <source media='(min-width:1200px)' srcSet={imgURL} />
+          <source media='(min-width:1000px)' srcSet={imgURLXLarge} />
+          <source media='(min-width:768px)' srcSet={imgURLLarge} />
+          <source media='(min-width:648px)' srcSet={imgURLMedium} />
+          <source media='(min-width:370px)' srcSet={imgURLSmall} />
+          <source srcSet={imgURLXSmall} />
+          <img alt={post.altText ? post.altText : "user upload"} src={imgURL} />
+        </picture>
+      </div>
+    </div>
+  );
+
+  const singlePhotoBottom = (
+    <div className='single-post-bottom flex-container flex-column'>
+      <div className='buttons flex-container flex-align-center'>
+        <div className='buttons-left flex-container flex-align-center flex-justify-center'>
+          <LikeButton
+            like={post?.isLiked}
+            postID={post?._id}
+            postPage={post?.pageNo}
+            queryKey={queryKey}
+          />
+          <button
+            className='commentButton'
+            onClick={handleCommentClick}
+            aria-label='click to write a comment'
+          >
+            <img src={commentBubble} alt='' aria-hidden='true' />
+          </button>
+          <button className='messageButton'>
+            <img src={message} alt='paper airplane' />
+          </button>
+        </div>
+        <div className='buttons-right'>
+          <SaveButton
+            save={post?.isSaved}
+            postID={post?._id}
+            postPage={post?.pageNo}
+            queryKey={queryKey}
+          />
+        </div>
+      </div>
+      <div className='post-bottom-text flex-container flex-column flex-align-start flex-justify-center'>
+        <div className='likes-counter'>
+          {post?.likes}
+          {post?.likes === 1 ? " Like" : " Likes"}
+        </div>
+        <div className='time-ago'>
+          {moment(post?.updatedAt).fromNow().toUpperCase()}
+        </div>
+      </div>
+      <div className='comments-toggle'>
+        {!displayCommentsMobile && (
+          <button
+            className='transparent-button'
+            aria-label='view comments'
+            onClick={() => setDisplayCommentsMobile(true)}
+          >
+            View comments
+          </button>
+        )}
+        {displayCommentsMobile && (
+          <button
+            className='transparent-button'
+            aria-label='view image'
+            onClick={() => setDisplayCommentsMobile(false)}
+          >
+            View image
+          </button>
+        )}{" "}
+      </div>
+      <AddCommentForm post={post} ref={commentRef} />
+    </div>
+  );
+
+  const singlePostComments = (
+    <div className='single-post-comments flex-container flex-column flex-align-start flex-justify-start width-100 fg-1'>
+      <PhotoModalComments post={post} setShowPhotoModal={setShowPhotoModal} />
+    </div>
+  );
+
+  const mobileComments = (
+    <div className='mobile-comments-container flex-container'>
+      {singlePostComments}
+    </div>
+  );
+
+  const singlePhotoRight = (
+    <div className='photo-modal-right flex-container flex-column height-100'>
+      <div className='photo-modal-right-top flex-align-center'>
+        <div className='user-img-div flex-container flex-align-center'>
+          <img src={userImgURL} alt='user profile' className='circular-image' />
+        </div>
+        <div className='photo-info-div flex-container flex-column flex-justify-center flex-align-start width-100'>
+          <div className='photo-info-top flex-container flex-align-center'>
+            <Link
+              to={`/${post?.user?.username}`}
+              aria-label={`move to ${post?.user?.username}'s profile`}
+            >
+              <div className='userName'>{post?.user?.username}</div>
+            </Link>
+            {id !== post?.user?._id && !post?.isFollow && (
+              <>
+                <span>•</span>
+                {followButton}
+              </>
+            )}
+          </div>
+          <div className='photo-location'>
+            {post?.location ? post?.location : ""}
+          </div>
+        </div>
+        <button
+          className='optionButton transparent-button'
+          onClick={() => setShowAdditionalOptionsModal(true)}
+        >
+          <img src={threeDots} alt='three dots' />
+        </button>
+      </div>
+      {singlePostComments}
+      {singlePhotoBottom}
+    </div>
+  );
+
   return (
     <>
-      <div className='single-post-body'>
-        <div className='single-post-header'>
-          <div className='header-left'>
-            <div className='user-img-div'>
-              <img src={userImgURL} alt='user profile' />
-            </div>
-            <div className='photo-info-div'>
-              <div className='photo-info-top'>
-                <Link
-                  to={`/${post?.user?.username}`}
-                  aria-label={`move to ${post?.user?.username}'s profile`}
-                >
-                  <div className='userName'>{post?.user?.username}</div>
-                </Link>
-                {id !== post?.user?._id && !post?.isFollow && (
-                  <>
-                    <span>•</span>
-                    {followButton}
-                  </>
-                )}
-              </div>
-              <div className='photo-location'>
-                {post?.location ? post?.location : ""}
-              </div>
-            </div>
-            <div className='header-right'>
-              <button
-                className='optionButton'
-                onClick={() => setShowAdditionalOptionsModal(true)}
-                aria-label='click for additional options'
-              >
-                <img src={threeDots} alt='' aria-hidden='true' />
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className='photo-modal-left'>
-          <div className='img-container'>
-            <img
-              src={imgURL}
-              alt={post?.altText ? post?.altText : "user upload"}
-            />
-          </div>
-        </div>
-        <div className='photo-modal-right'>
-          <div className='photo-modal-right-top'>
-            <div className='user-img-div'>
-              <img src={userImgURL} alt='user profile' />
-            </div>
-            <div className='photo-info-div'>
-              <div className='photo-info-top'>
-                <Link
-                  to={`/${post?.user?.username}`}
-                  aria-label={`move to ${post?.user?.username}'s profile`}
-                >
-                  <div className='userName'>{post?.user?.username}</div>
-                </Link>
-                {id !== post?.user?._id && !post?.isFollow && (
-                  <>
-                    <span>•</span>
-                    {followButton}
-                  </>
-                )}
-              </div>
-              <div className='photo-location'>
-                {post?.location ? post?.location : ""}
-              </div>
-            </div>
-            <button
-              className='optionButton'
-              onClick={() => setShowAdditionalOptionsModal(true)}
-            >
-              <img src={threeDots} alt='three dots' />
-            </button>
-          </div>
-          <div className='photo-modal-right-middle'>
-            <PhotoModalComments
-              post={post}
-              setShowPhotoModal={setShowPhotoModal}
-            />
-          </div>
-          <div className='photo-modal-right-bottom'>
-            <div className='buttons'>
-              <div className='buttons-left'>
-                <LikeButton
-                  like={post?.isLiked}
-                  postID={post?._id}
-                  postPage={post?.pageNo}
-                  queryKey={queryKey}
-                />
-                <button
-                  className='commentButton'
-                  onClick={handleCommentClick}
-                  aria-label='click to write a comment'
-                >
-                  <img src={commentBubble} alt='' aria-hidden='true' />
-                </button>
-                <button className='messageButton'>
-                  <img src={message} alt='paper airplane' />
-                </button>
-              </div>
-              <div className='buttons-right'>
-                <SaveButton
-                  save={post?.isSaved}
-                  postID={post?._id}
-                  postPage={post?.pageNo}
-                  queryKey={queryKey}
-                />
-              </div>
-            </div>
-            <div className='photo-bottom-text'>
-              <div className='likes-counter'>
-                {post?.likes}
-                {post?.likes === 1 ? " Like" : " Likes"}
-              </div>
-              <div className='time-ago'>
-                {moment(post?.updatedAt).fromNow().toUpperCase()}
-              </div>
-            </div>
-            <AddCommentForm post={post} ref={commentRef} />
-          </div>
-        </div>
+      <div className='single-post-body single-post-large-display'>
+        {singlePhotoImage}
+        {singlePhotoRight}
+      </div>
+      <div className='single-post-body single-post-mobile-display'>
+        {mobileHeader}
+        {displayCommentsMobile ? mobileComments : singlePhotoImage}
+        {singlePhotoBottom}
       </div>
       {showAdditionalOptionsModal && (
         <AdditionalOptionsModal
