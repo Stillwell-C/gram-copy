@@ -1,7 +1,7 @@
 import React from "react";
-import "./additionalOptionsModal.scss";
+import "../scss/additionalOptionsModal.scss";
 import { useNavigate } from "react-router-dom";
-import FocusTrapModalParent from "../FocusTrapModalParent";
+import FocusTrapModalParent from "./FocusTrapModalParent";
 
 const AdditionalOptionsModal = ({
   setShowReportModal,
