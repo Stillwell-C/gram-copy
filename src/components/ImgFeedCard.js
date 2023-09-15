@@ -5,7 +5,7 @@ import commentBubble from "../assets/message-circle-01-svgrepo-com.svg";
 import message from "../assets/plane-svgrepo-com.svg";
 import Comment from "./comment/Comment";
 import moment from "moment";
-import PhotoModal from "./photoModal/PhotoModal";
+import PhotoModal from "./PhotoModal";
 import ReportModal from "./reportModal/ReportModal";
 import AdditionalOptionsModal from "./AdditionalOptionsModal";
 import SaveButton from "./SaveButton";
