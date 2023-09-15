@@ -23,22 +23,9 @@ const Comment = ({
     ? `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${comment?.author?.userImgKey}`
     : defaultProfilePic;
 
-  // const getCommentInfo = useGetUserInfoFunction();
-
-  // useEffect(() => {
-  //   const setImgURL = async () => {
-  //     const commentInfo = await getCommentInfo(comment.username, "username");
-  //     setCommentImgURL(commentInfo.userImgURL);
-  //   };
-  //   setImgURL();
-  // }, []);
-
   useEffect(() => {
     if (comment.updatedAt) setDateCheck(true);
     let fromNow = moment(comment.updatedAt).fromNow(true);
-    // let numArr = fromNow.match(/^\d{1,2}/);
-    // let charArr = fromNow.match(/([a-z])/);
-    // setFormatedDate(`${numArr[0]}${charArr[0]}`);
     setFormatedDate(fromNow);
   }, [comment.updatedAt]);
 
