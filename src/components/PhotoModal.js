@@ -1,6 +1,6 @@
-import "./photoModal.scss";
-import SinglePost from "../SinglePost";
-import FocusTrapModalParent from "../FocusTrapModalParent";
+import "../scss/photoModal.scss";
+import SinglePost from "./SinglePost";
+import FocusTrapModalParent from "./FocusTrapModalParent";
 
 const PhotoModal = ({ setShowPhotoModal, post, queryKey }) => {
   const handleClose = () => {
