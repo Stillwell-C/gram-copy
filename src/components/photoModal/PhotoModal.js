@@ -9,7 +9,7 @@ const PhotoModal = ({ setShowPhotoModal, post, queryKey }) => {
 
   const content = (
     <div
-      className='photo-modal-container'
+      className='photo-modal-container modal-body'
       role='dialog'
       aria-label='user post dialog'
     >
