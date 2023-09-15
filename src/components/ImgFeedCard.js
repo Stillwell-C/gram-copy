@@ -7,7 +7,7 @@ import Comment from "./comment/Comment";
 import moment from "moment";
 import PhotoModal from "./photoModal/PhotoModal";
 import ReportModal from "./reportModal/ReportModal";
-import AdditionalOptionsModal from "./additionalOptionsModal/AdditionalOptionsModal";
+import AdditionalOptionsModal from "./AdditionalOptionsModal";
 import SaveButton from "./SaveButton";
 import LikeButton from "./LikeButton";
 import AddCommentForm from "./AddCommentForm";
