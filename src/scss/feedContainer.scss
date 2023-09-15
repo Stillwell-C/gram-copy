@@ -2,16 +2,10 @@
 @import "./variables.scss";
 
 .img-feed-container {
-  margin-top: 60px;
-
   .no-following-div {
     width: 100%;
     width: clamp(250px, 80vw, 500px);
     text-align: center;
-  }
-
-  @include small {
-    margin-top: 0px;
   }
 
   @include medium {
@@ -68,18 +62,28 @@
 
     .main-img-div {
       background-color: #fff;
-      max-height: 585px;
-      min-height: 450px;
+      // min-height: 450px;
       overflow: hidden;
       border-top: 1px solid $margin-grey;
-      border-bottom: 1px solid $margin-grey;
+      // border-bottom: 1px solid $margin-grey;
+
+      @include x-small {
+        max-height: 585px;
+        border-top: none;
+      }
 
       .img-div {
-        .mainImg {
-          max-height: 100%;
+        img {
+          max-height: 60svh;
+          max-height: 60vh;
+          height: 100%;
           max-width: 100%;
           object-fit: cover;
           border-radius: 0.25rem;
+
+          @include x-small {
+            max-height: 100%;
+          }
         }
       }
     }
