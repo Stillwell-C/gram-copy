@@ -24,6 +24,7 @@ const ProfilePostCard = React.forwardRef(
           className='post-img'
           alt={post.altText ? post.altText : "user upload"}
           src={imgURL}
+          onClick={() => setShowPhotoModal(true)}
         />
         <div className='hover-div'>
           {id === post.user._id && profilePosts && (

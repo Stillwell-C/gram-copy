@@ -344,7 +344,9 @@
 
             &:hover {
               .hover-div {
-                display: block;
+                @include small {
+                  display: block;
+                }
               }
             }
 
