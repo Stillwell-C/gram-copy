@@ -87,11 +87,11 @@ const AdditionalOptionsModal = ({
 
   const content = (
     <div
-      className='options-modal-container'
+      className='options-modal-container modal-body'
       role='dialog'
       aria-label='additional options dialog'
     >
-      <div className='options-modal-body'>
+      <div className='options-modal-body flex-container flex-column flex-align-center'>
         <div className='select-option-div'>
           <button
             className='report-button'
@@ -118,7 +118,13 @@ const AdditionalOptionsModal = ({
     </div>
   );
 
-  return <FocusTrapModalParent content={content} handleClose={handleClose} />;
+  return (
+    <FocusTrapModalParent
+      content={content}
+      handleClose={handleClose}
+      showClose={false}
+    />
+  );
 };
 
 export default AdditionalOptionsModal;
