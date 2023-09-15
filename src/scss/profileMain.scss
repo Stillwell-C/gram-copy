@@ -168,7 +168,15 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 50px;
+        gap: 15px;
+
+        @include mobile-small {
+          gap: 25px;
+        }
+
+        @include small {
+          gap: 50px;
+        }
 
         .display-selector-individual {
           display: flex;
