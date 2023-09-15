@@ -1,105 +1,96 @@
 @import "../breakpoints.scss";
+@import "../scss/variables.scss";
 
 .single-post-body {
-  display: flex;
-  flex-direction: column;
   width: 100%;
   height: 100%;
 
-  @include small {
-    flex-direction: row;
+  &.single-post-large-display {
+    display: none;
+
+    @include small {
+      display: flex;
+    }
   }
 
-  .single-post-header {
-    width: 100%;
+  &.single-post-mobile-display {
     display: flex;
-    .header-left {
-      padding: 14px 4px 14px 16px;
-      flex-grow: 1;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-
-      .user-img-div {
-        display: flex;
-        align-items: center;
-        margin-right: 1rem;
-        img {
-          height: 32px;
-          width: 32px;
-          border-radius: 50%;
-        }
-      }
-
-      .photo-info-div {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-
-        .photo-info-top {
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          a {
-            text-decoration: none;
-            color: black;
-            font-weight: bold;
-            font-size: 0.9rem;
-          }
-
-          button {
-            padding: 0;
-            color: #0095f6;
-            font-weight: bold;
-            font-size: 0.85rem;
-            &:hover {
-              color: #003366;
-            }
-          }
-        }
-
-        .photo-location {
-          font-size: 0.85rem;
-        }
-      }
-
-      .header-right {
-        padding-right: 8px;
-        .optionButton {
-          background-color: transparent;
-          border: none;
-          padding: 8px;
-
-          img {
-            width: 24px;
-            height: 24px;
-          }
-        }
-      }
-    }
+    flex-direction: column;
 
     @include small {
       display: none;
     }
   }
 
-  .photo-modal-left {
-    // overflow: hidden;
+  .single-post-header {
+    @include small {
+      display: none;
+    }
+
+    .header-left {
+      padding: 14px 4px 14px 16px;
+
+      .photo-info-div {
+        .photo-info-top {
+          gap: 5px;
+          a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            font-size: $font-medium;
+          }
+
+          button {
+            padding: 0;
+            color: $button-blue;
+            font-weight: bold;
+            font-size: $font-small;
+            &:hover {
+              color: $button-blue-hover-dark;
+            }
+          }
+        }
+
+        .photo-location {
+          font-size: $font-medium;
+        }
+      }
+
+      .header-right {
+        padding-right: 8px;
+      }
+    }
+  }
+
+  .optionButton {
+    padding: 8px;
+
+    img {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .user-img-div {
+    margin-right: 1rem;
+    img {
+      height: 32px;
+      width: 32px;
+    }
+  }
+
+  .single-post-left {
     flex: 1.25;
     background-color: #000;
 
     .img-container {
       overflow: hidden;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
 
       img {
         object-fit: cover;
-        max-height: calc(80vh - 235px);
+        max-height: 40svh;
+        max-height: 40vh;
+        max-width: calc(80svw);
         max-width: calc(80vw);
 
         @include small {
@@ -114,253 +105,242 @@
 
   .photo-modal-right {
     flex: 1;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
     justify-content: space-between;
-
-    button {
-      padding: 8px;
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-
-      img {
-        width: 24px;
-      }
-    }
 
     .photo-modal-right-top {
       padding: 14px 8px 14px 16px;
       display: none;
-      align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid #cccccc;
+      border-bottom: 1px solid $margin-grey;
 
       @include small {
         display: flex;
       }
 
-      .user-img-div {
-        display: flex;
-        align-items: center;
-        margin-right: 1rem;
-        img {
-          height: 32px;
-          width: 32px;
-          border-radius: 50%;
-        }
-      }
-
       .photo-info-div {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-
         .photo-info-top {
-          display: flex;
-          align-items: center;
           gap: 5px;
           a {
             text-decoration: none;
             color: black;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: $font-medium;
           }
 
           button {
             padding: 0;
-            color: #0095f6;
+            color: $button-blue;
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: $font-medium;
             &:hover {
-              color: #003366;
+              color: $button-blue-hover-dark;
             }
           }
         }
 
         .photo-location {
-          font-size: 0.85rem;
+          font-size: $font-medium;
+        }
+      }
+    }
+  }
+
+  .mobile-comments-container {
+    overflow: hidden;
+    height: 40svh;
+    height: 40vh;
+  }
+
+  .single-post-comments {
+    padding: 1rem;
+    box-sizing: content-box;
+    overflow-y: scroll;
+    border-top: 1px solid $margin-grey;
+
+    @include small {
+      height: 100%;
+      border-top: none;
+    }
+
+    .single-comment {
+      display: flex;
+      margin-bottom: 1rem;
+
+      a {
+        text-decoration: none;
+        color: black;
+      }
+
+      .comment-image {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        margin-right: 18px;
+        img {
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+        }
+      }
+
+      .comment-main {
+        .comment-main-top {
+          font-size: $font-medium;
+          .comment-username {
+            font-weight: bold;
+            margin-right: 5px;
+          }
+          .comment-body {
+            white-space: pre-wrap;
+          }
+        }
+
+        .comment-main-bottom {
+          margin-top: 8px;
+          font-size: $font-small;
+          color: $content-grey;
         }
       }
     }
 
-    .photo-modal-right-middle {
-      flex: 1;
-      height: 100%;
+    .add-comments-button-div {
       width: 100%;
-      display: none;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
-      padding: 1rem;
-      box-sizing: content-box;
-      overflow-y: scroll;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      button {
+        padding: 8px;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+
+        img {
+          width: 24px;
+        }
+      }
+    }
+  }
+
+  .single-post-bottom {
+    border-top: 1px solid $margin-grey;
+
+    .buttons {
+      padding: 6px 16px 8px;
+      justify-content: space-between;
+
+      button {
+        padding: 8px;
+        background-color: transparent;
+        border: none;
+        img {
+          width: 24px;
+
+          &:hover {
+            filter: invert(64%) sepia(0%) saturate(0%) hue-rotate(175deg)
+              brightness(87%) contrast(98%);
+          }
+        }
+        .filled {
+          &:hover {
+            filter: none;
+          }
+
+          &.heart {
+            filter: invert(61%) sepia(68%) saturate(6105%) hue-rotate(328deg)
+              brightness(94%) contrast(96%);
+          }
+        }
+      }
+    }
+
+    .post-bottom-text {
+      padding: 2px 16px;
+      font-size: $font-medium;
+      gap: 5px;
+
+      .likes-counter {
+        font-weight: bold;
+      }
+
+      .comment-username {
+        font-weight: bold;
+        margin-right: 10px;
+      }
+
+      .view-more-div {
+        color: $content-grey;
+        cursor: pointer;
+      }
+
+      .time-ago {
+        font-size: $font-small;
+        color: $font-small;
+
+        @include small {
+          margin-bottom: 1rem;
+        }
+      }
+    }
+
+    .comments-toggle {
+      padding: 2px 16px;
+      margin-bottom: 1rem;
+
+      button {
+        font-weight: bold;
+        color: $button-blue;
+      }
 
       @include small {
-        display: flex;
-      }
-
-      .single-comment {
-        display: flex;
-        margin-bottom: 1rem;
-
-        a {
-          text-decoration: none;
-          color: black;
-        }
-
-        .comment-image {
-          display: flex;
-          align-items: flex-start;
-          justify-content: flex-start;
-          margin-right: 18px;
-          img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-          }
-        }
-
-        .comment-main {
-          .comment-main-top {
-            font-size: 0.9rem;
-            .comment-username {
-              font-weight: bold;
-              margin-right: 5px;
-            }
-            .comment-body {
-              white-space: pre-wrap;
-            }
-          }
-
-          .comment-main-bottom {
-            margin-top: 8px;
-            font-size: 0.8rem;
-            color: #8e8e8e;
-          }
-        }
-      }
-
-      .add-comments-button-div {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: none;
       }
     }
 
-    .photo-modal-right-bottom {
-      border-top: 1px solid #cccccc;
-      .buttons {
-        padding: 6px 16px 8px;
+    .input-comment-div {
+      width: 100%;
+      height: 50px;
+      border-top: 1px solid $margin-grey;
+
+      form {
+        height: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        .buttons-left {
+        &.disabled {
+          background-color: $background-grey;
+        }
+
+        .input-left {
+          margin-right: 12px;
+          flex: 1;
+
+          input {
+            padding: 5px 16px;
+            width: 100%;
+            outline: none;
+            border: none;
+          }
+        }
+
+        .input-right {
           display: flex;
           align-items: center;
-          justify-content: flex-start;
-        }
-
-        button {
-          img {
-            &:hover {
-              filter: invert(64%) sepia(0%) saturate(0%) hue-rotate(175deg)
-                brightness(87%) contrast(98%);
-            }
-          }
-          .filled {
-            &:hover {
-              filter: none;
-            }
-
-            &.heart {
-              filter: invert(61%) sepia(68%) saturate(6105%) hue-rotate(328deg)
-                brightness(94%) contrast(96%);
-            }
-          }
-        }
-      }
-
-      .photo-bottom-text {
-        padding: 2px 16px;
-        font-size: 0.875rem;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        gap: 5px;
-
-        .likes-counter {
-          font-weight: bold;
-        }
-
-        .comment-username {
-          font-weight: bold;
+          justify-content: center;
           margin-right: 10px;
-        }
 
-        .view-more-div {
-          color: #8e8e8e;
-          cursor: pointer;
-        }
-
-        .time-ago {
-          font-size: 0.75rem;
-          color: #8e8e8e;
-          margin-bottom: 1rem;
-        }
-      }
-
-      .input-comment-div {
-        width: 100%;
-        height: 50px;
-        border-top: 1px solid #cccccc;
-
-        form {
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-
-          &.disabled {
-            background-color: #fafafa;
+          input:disabled {
+            background-color: $background-grey;
           }
 
-          .input-left {
-            margin-right: 12px;
-            flex: 1;
+          button {
+            color: $button-blue;
+            font-weight: bold;
 
-            input {
-              padding: 5px 16px;
-              width: 100%;
-              outline: none;
-              border: none;
-            }
-          }
-
-          .input-right {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-
-            input:disabled {
-              background-color: #fafafa;
-            }
-
-            button {
-              color: #0095f6;
-              font-weight: bold;
-
-              &.disabled {
-                color: #b3d7ff;
-                cursor: default;
-              }
+            &.disabled {
+              color: $button-blue-disabled;
+              cursor: default;
             }
           }
         }
