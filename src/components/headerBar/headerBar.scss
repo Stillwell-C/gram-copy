@@ -20,7 +20,11 @@
     align-items: center;
     a {
       img {
-        width: 103px;
+        width: 40px;
+
+        @include x-small {
+          width: 103px;
+        }
       }
     }
   }
