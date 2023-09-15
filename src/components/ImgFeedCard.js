@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import threeDots from "../assets/three-dots-line-svgrepo-com.svg";
 import commentBubble from "../assets/message-circle-01-svgrepo-com.svg";
 import message from "../assets/plane-svgrepo-com.svg";
-import Comment from "./comment/Comment";
+import Comment from "./Comment";
 import moment from "moment";
 import PhotoModal from "./PhotoModal";
 import ReportModal from "./reportModal/ReportModal";
