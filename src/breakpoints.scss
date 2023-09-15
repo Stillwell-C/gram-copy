@@ -1,10 +1,17 @@
 $breakpoints: (
+  "mobile-small": 300px,
   "mobile-large": 470px,
   "x-small": 648px,
-  "small": 768px,
+  "small": 769px,
   "medium": 1000px,
   "large": 1250px,
 );
+
+@mixin mobile-small {
+  @media (min-width: map-get($breakpoints, "mobile-small")) {
+    @content;
+  }
+}
 
 @mixin mobile-large {
   @media (min-width: map-get($breakpoints, "mobile-large")) {
