@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./headerBar.scss";
 import logo from "../../assets/Instagram_logo.png";
+import squareLogo from "../../assets/instagram-svgrepo-com.svg";
 import { Link } from "react-router-dom";
 import useSearchForUser from "../../hooks/useSearchForUser";
 import closeCircle from "../../assets/close-circle-svgrepo-com.svg";
@@ -11,12 +12,16 @@ const HeaderBar = ({ navbarSearch, notificationsLink }) => {
     <div className='header-bar-container'>
       <div className='header-bar-left'>
         <Link to='/'>
-          <img
-            src={logo}
-            alt=''
-            aria-hidden='true'
-            aria-label='move to home screen'
-          />
+          <picture>
+            <source srcSet={logo} media='(min-width:648px)' />
+            <source srcSet={squareLogo} media='(max-width:647px)' />
+            <img
+              src={logo}
+              alt=''
+              aria-hidden='true'
+              aria-label='move to home screen'
+            />
+          </picture>
         </Link>
       </div>
       <div className='header-bar-right'>
