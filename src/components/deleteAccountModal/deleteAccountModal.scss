@@ -1,51 +1,57 @@
+@import "../../scss/variables.scss";
+@import "../../breakpoints.scss";
+
 .delete-account-modal-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid #cccccc;
+  border: 1px solid $margin-grey;
   border-radius: 0.5rem;
   z-index: 15;
   background-color: #fff;
-  min-width: 300px;
-  width: min(80%, 700px);
-  height: min(70%, 1600px);
-  min-height: 300px;
-  overflow: hidden;
+  height: 90vh;
+  height: 85svh;
+
+  @include small {
+    width: clamp(300px, 80%, 700px);
+    height: clamp(300px, 70%, 600px);
+    min-height: 300px;
+    min-width: 300px;
+  }
 
   .modal-header {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 10px;
-    border-bottom: 0.5px solid #cccccc;
+    border-bottom: 0.5px solid $margin-grey;
     h2 {
-      font-size: 1.15rem;
+      font-size: $font-large;
+
+      @include mobile-large {
+        font-size: $header-xxsmall;
+      }
     }
   }
 
   .modal-body {
-    height: 100%;
-    width: 100%;
     padding: 10px 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 
     h3 {
-      font-size: 1.3rem;
+      display: none;
+
+      @include mobile-medium {
+        display: block;
+        font-size: $header-xxsmall;
+      }
+
+      @include mobile-large {
+        font-size: $header-xsmall;
+      }
     }
 
     .user-msg-container {
       .error-msg {
-        color: red;
+        color: $error-red;
         margin-bottom: 10px;
       }
 
       .confirmation-msg {
-        color: green;
+        color: $success-green;
         margin-bottom: 10px;
       }
     }
@@ -53,34 +59,29 @@
     .modal-confirmation {
       form {
         margin-top: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        color: #8e8e8e;
+        color: $content-grey;
+        padding-bottom: 0;
 
         .larger-text {
           font-size: 1rem;
           font-weight: bold;
-          color: #8e8e8e;
+          color: $content-grey;
         }
 
         .fine-print-div {
           height: 5rem;
           overflow-y: scroll;
-          border: 1px solid #cccccc;
+          border: 1px solid $margin-grey;
           border-radius: 0.25rem;
           padding: 5px 10px;
 
           span {
-            font-size: 0.8rem;
-            color: #8e8e8e;
+            font-size: $font-small;
+            color: $content-grey;
           }
         }
 
         .agree-label {
-          display: flex;
-          justify-content: flex-start;
-          align-items: center;
           .agree-checkbox {
             margin-right: 5px;
             cursor: pointer;
@@ -89,13 +90,13 @@
 
         .confirmation-div {
           .confirmation-prompt {
-            font-size: 0.9rem;
+            font-size: $font-medium;
             color: black;
             margin-bottom: 1rem;
           }
 
           input {
-            border: 1px solid #cccccc;
+            border: 1px solid $margin-grey;
             font-size: 16px;
             padding: 0 10px;
             height: 32px;
@@ -105,30 +106,9 @@
 
         .button-div {
           margin-top: 1rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          button {
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            color: white;
-            background-color: #0095f6;
-            padding: 7px 16px;
-            border: none;
-            border-radius: 0.5rem;
-
-            &:hover {
-              background-color: #1877f2;
-            }
-          }
         }
 
         .delete-loading-div {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-direction: column;
           .loading-spinner-div {
             transform: scale(0.5);
             height: 50px;
@@ -140,32 +120,6 @@
           }
         }
       }
-    }
-  }
-}
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 13;
-
-  .modal-overlay-close {
-    width: 100vw;
-    display: flex;
-    justify-content: flex-end;
-    pointer-events: all;
-
-    button {
-      border: none;
-      background-color: transparent;
-      color: #fff;
-      font-size: 3rem;
-      cursor: pointer;
-      margin: 5px 20px;
     }
   }
 }
