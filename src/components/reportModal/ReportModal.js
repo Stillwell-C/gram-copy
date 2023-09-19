@@ -52,14 +52,6 @@ const ReportModal = ({ setShowReportModal, reportDistinction, reportId }) => {
       reportContent.reportedUser = reportId;
     }
     submitReportMutation.mutate(reportContent);
-
-    // try {
-    //   await setDoc(doc(collection(db, "reports")), reportContent);
-    //   setShowReportModal(false);
-    // } catch (err) {
-    //   setError(true);
-    //   setErrMsg(err.code);
-    // }
   };
 
   const handleScamSpam = () => {
@@ -92,14 +84,14 @@ const ReportModal = ({ setShowReportModal, reportDistinction, reportId }) => {
 
   const content = (
     <div
-      className='report-modal-container'
+      className='report-modal-container modal-body'
       role='dialog'
       aria-labelledby='dialog-header'
     >
-      <div className='report-modal-body'>
-        <div className='modal-header'>
+      <div className='report-modal-body flex-container flex-column flex-align-center width-100 height-100'>
+        <div className='modal-header width-100 flex-container flex-align-center flex-justify-center'>
           <div></div>
-          <div className='header-text-div'>
+          <div className='header-text-div flex-container flex-align-center flex-justify-center'>
             <h2 id='dialog-header'>
               {`Report ${
                 reportDistinction.slice(0, 1).toUpperCase() +
@@ -107,30 +99,36 @@ const ReportModal = ({ setShowReportModal, reportDistinction, reportId }) => {
               }`}
             </h2>
           </div>
-          <div className='close-div'>
+          <div className='close-div flex-container flex-align-center'>
             <button
               onClick={() => setShowReportModal(false)}
               aria-label='click to close'
+              className='transparent-button'
             >
               &times;
             </button>
           </div>
         </div>
-        <div className='modal-form'>
-          <form onSubmit={handleSubmit}>
+        <div className='modal-form flex-container flex-column flex-align-center width-100'>
+          <form
+            onSubmit={handleSubmit}
+            className='flex-container flex-column flex-align-center width-100'
+          >
             {error && (
               <div className='error-div' ref={errRef}>
                 {errMsg}
               </div>
             )}
-            <div className='reason-div'>
-              <h4>Why are you reporting this {reportDistinction}?</h4>
+            <div className='reason-div flex-container flex-column flex-align-center width-100'>
+              <h3>Why are you reporting this {reportDistinction}?</h3>
               <ul>
                 <li className='button-li'>
                   <button
                     type='button'
                     onClick={handleScamSpam}
                     className={`${reportReason === "spam/scam" && "active"}`}
+                    aria-label='report post for spam or a scam'
+                    aria-pressed={reportReason === "spam/scam"}
                   >
                     Spam or Scam
                   </button>
@@ -142,6 +140,8 @@ const ReportModal = ({ setShowReportModal, reportDistinction, reportId }) => {
                     className={`${
                       reportReason === "hateful/abusive" && "active"
                     }`}
+                    aria-label='report post for hateful or abusive'
+                    aria-pressed={reportReason === "hateful/abusive"}
                   >
                     Hateful or Abusive Content
                   </button>
@@ -153,13 +153,15 @@ const ReportModal = ({ setShowReportModal, reportDistinction, reportId }) => {
                     className={`${
                       reportReason === "inappropriate" && "active"
                     }`}
+                    aria-label='report post for inappropriate content'
+                    aria-pressed={reportReason === "inappropriate"}
                   >
                     Inappropriate Content
                   </button>
                 </li>
               </ul>
             </div>
-            <div className='textarea-div'>
+            <div className='textarea-div flex-container flex-column flex-align-center'>
               <h4 className='textarea-header'>
                 {"Additional comments (optional)"}
               </h4>
@@ -182,7 +184,10 @@ const ReportModal = ({ setShowReportModal, reportDistinction, reportId }) => {
                 {additionalComments.length} / 2200
               </span>
             </div>
-            <button className='submit-button' type='submit'>
+            <button
+              className='submit-button standard-button blue-button'
+              type='submit'
+            >
               Submit Report
             </button>
           </form>
