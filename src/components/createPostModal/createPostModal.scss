@@ -1,21 +1,19 @@
 @import "../../breakpoints.scss";
+@import "../../scss/variables.scss";
 
 .modal-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 0.5rem;
   z-index: 15;
   background-color: #fff;
-  min-width: 300px;
-  width: min(80%, 1000px);
-  height: min(70%, 1600px);
-  min-height: 300px;
-  overflow: hidden;
+  height: 80svh;
+  height: 80vh;
 
-  &.initial {
-    width: min(80%, 682px);
+  @include small {
+    width: clamp(300px, 90%, 1200px);
+    height: clamp(300px, 60%, 1500px);
+
+    &.initial-create-post-display {
+      max-width: 700px;
+    }
   }
 
   form {
@@ -28,12 +26,12 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    border-bottom: 0.5px solid lightgrey;
+    border-bottom: 0.5px solid $margin-grey;
     padding: 10px;
     font-weight: bold;
 
     h2 {
-      font-size: 1rem;
+      font-size: $font-large;
     }
 
     div {
@@ -51,19 +49,18 @@
 
       button {
         border: none;
-        color: #0095f6;
+        color: $button-blue;
         background-color: transparent;
         font-weight: bold;
-        cursor: pointer;
       }
 
       button:disabled {
-        color: #8e8e8e;
+        color: $content-grey;
       }
     }
   }
 
-  .modal-body {
+  .modal-content {
     height: 100%;
     width: 100%;
     overflow: hidden;
@@ -79,32 +76,14 @@
       }
 
       label {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
         gap: 10px;
 
         .media-upload-display-img {
-          width: 77px;
-        }
-
-        .initial-upload-button {
-          cursor: pointer;
-          background-color: #0095f6;
-          border: none;
-          border-radius: 0.5rem;
-          padding: 7px 16px;
-          color: white;
-          font-weight: bold;
-          &:hover {
-            background-color: #1877f2;
-          }
+          width: 75px;
         }
 
         &.drag-active {
-          background-color: #fbfbfb;
+          background-color: $background-grey-highlighted;
         }
       }
 
@@ -120,22 +99,22 @@
     }
 
     .upload-image-preview {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+        object-fit: cover;
+      }
     }
   }
 
-  &.secondary {
-    width: min(90%, 1000px);
+  &.secondary-create-post-display {
+    width: clamp(300px, 90%, 1200px);
 
     form {
-      height: 100%;
-
-      .modal-body {
+      .modal-content {
         max-height: 100%;
-        display: flex;
-        flex-direction: column;
         overflow-y: scroll;
         background-color: #fff;
 
@@ -146,12 +125,8 @@
 
         .modal-body-left {
           flex: 3;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background-color: black;
-          border-right: 1px solid #cccccc;
+          background-color: #000;
+          border-right: 1px solid $margin-grey;
 
           img {
             object-fit: cover;
@@ -159,40 +134,22 @@
             max-width: 100%;
             width: auto;
             height: auto;
-
-            @include small {
-              max-height: 100%;
-              max-width: 100%;
-              width: auto;
-              height: auto;
-            }
           }
         }
 
         .modal-body-right {
           flex: 2;
-          display: flex;
-          align-items: flex-start;
-          justify-content: flex-start;
-          flex-direction: column;
           gap: 15px;
-          width: 100%;
-          height: 100%;
           background-color: #fff;
 
           .top-user-info {
             padding: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: $font-medium;
             img {
               width: 28px;
               height: 28px;
               margin-right: 10px;
-              border-radius: 50%;
-              object-fit: cover;
             }
           }
 
@@ -222,17 +179,17 @@
             align-items: center;
             justify-content: flex-end;
             font-size: 12px;
-            color: #cccccc;
+            color: $content-grey;
             cursor: pointer;
             position: relative;
 
             &:hover {
-              color: black;
+              color: #000;
             }
 
             .caption-length-info {
               position: absolute;
-              background-color: black;
+              background-color: #000;
               color: white;
               padding: 5px;
               text-align: center;
@@ -247,15 +204,12 @@
           }
 
           .segmented-div {
-            border-top: 1px solid #cccccc;
-            border-bottom: 1px solid #cccccc;
+            border-top: 1px solid $margin-grey;
+            border-bottom: 1px solid $margin-grey;
           }
 
           .location-input-div {
             padding: 5px 15px;
-            width: 100%;
-            display: flex;
-            align-items: center;
             justify-content: space-between;
 
             label {
@@ -278,26 +232,14 @@
           .accessibility-info {
             border-top: none;
             padding: 10px 15px;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            font-size: 1rem;
-            color: #262626;
+            color: #000;
 
             .accessibility-top {
-              display: flex;
-              width: 100%;
-              align-items: center;
               justify-content: space-between;
-              font-size: 1rem;
+              font-size: $font-large;
               cursor: pointer;
 
               button {
-                background-color: transparent;
-                border: none;
-                cursor: pointer;
                 .down-arrow-img {
                   width: 16px;
                 }
@@ -321,24 +263,19 @@
                 .accessibility-info-text {
                   font-size: 12px;
                   margin: 7px 0;
-                  color: #8e8e8e;
+                  color: $content-grey;
                 }
 
                 .accessibility-input-div {
-                  display: flex;
-                  align-items: center;
-                  justify-content: flex-start;
                   gap: 5px;
 
                   .accessibility-img-div {
-                    display: flex;
-                    align-items: center;
                     overflow: hidden;
 
                     img {
                       height: 44px;
                       width: 44px;
-                      object-fit: cover;
+                      object-fit: contain;
                     }
                   }
 
@@ -350,7 +287,7 @@
                       margin-right: 15px;
                       border-radius: 0.25rem;
                       outline: none;
-                      border: 1px solid #cccccc;
+                      border: 1px solid $margin-grey;
                     }
                   }
                 }
@@ -359,32 +296,6 @@
           }
         }
       }
-    }
-  }
-}
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 13;
-
-  .modal-overlay-close {
-    width: 100vw;
-    display: flex;
-    justify-content: flex-end;
-    pointer-events: all;
-
-    button {
-      border: none;
-      background-color: transparent;
-      color: #fff;
-      font-size: 3rem;
-      cursor: pointer;
-      margin: 5px 20px;
     }
   }
 }
