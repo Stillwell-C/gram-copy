@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import useFollowUnfollow from "../../hooks/useFollowUnfollow";
-import "./followUserModalUser.scss";
-import useAuth from "../../hooks/useAuth";
-import FollowButton from "../FollowButton";
-import UnfollowButton from "../UnfollowButton";
+import FollowButton from "./FollowButton";
+import UnfollowButton from "./UnfollowButton";
 
 const FollowUserModalUser = React.forwardRef(({ user, setShowModal }, ref) => {
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${user?.userImgKey}`;
@@ -17,16 +14,23 @@ const FollowUserModalUser = React.forwardRef(({ user, setShowModal }, ref) => {
 
   const userInfo = (
     <>
-      <div className='individual-user-left' onClick={() => setShowModal(false)}>
+      <div
+        className='individual-user-left flex-container flex-align-center'
+        onClick={() => setShowModal(false)}
+      >
         <Link
           to={`/${user?.username}`}
           aria-label={`move to ${user?.username}'s profile`}
         >
-          <div className='profile-picture'>
-            <img src={userImgURL} alt='user profile' />
+          <div className='profile-picture flex-container flex-align-center'>
+            <img
+              src={userImgURL}
+              alt='user profile'
+              className='circular-image'
+            />
           </div>
         </Link>
-        <div className='userinfo-div'>
+        <div className='userinfo-div height-100 fg-1 flex-container flex-column flex-justify-center'>
           <Link
             to={`/${user?.username}`}
             aria-label={`move to ${user?.username}'s profile`}
@@ -41,11 +45,14 @@ const FollowUserModalUser = React.forwardRef(({ user, setShowModal }, ref) => {
   );
 
   const followModalUser = ref ? (
-    <div className='individual-user' ref={ref}>
+    <div
+      className='individual-user width-100 flex-container flex-align-center'
+      ref={ref}
+    >
       {userInfo}
     </div>
   ) : (
-    <div className='individual-user' ref={ref}>
+    <div className='individual-user width-100 flex-container flex-align-center'>
       {userInfo}
     </div>
   );
