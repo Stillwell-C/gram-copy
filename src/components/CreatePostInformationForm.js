@@ -66,11 +66,11 @@ const CreatePostInformationForm = ({
 
   return (
     <div
-      className='modal-container secondary'
+      className='modal-body modal-container secondary-create-post-display'
       role='dialog'
       aria-labelledby='dialog-header'
     >
-      <form onSubmit={uploadPost}>
+      <form onSubmit={uploadPost} className='height-100'>
         <div className='modal-header'>
           <div></div>
           <h2 id='dialog-header'>Create new post</h2>
@@ -85,17 +85,21 @@ const CreatePostInformationForm = ({
             </button>
           </div>
         </div>
-        <div className='modal-body'>
-          <div className='modal-body-left'>
+        <div className='modal-content flex-container flex-column'>
+          <div className='modal-body-left height-100 flex-container flex-align-center flex-justify-center'>
             <img
               className='upload-image-preview'
               alt='User upload preview'
               src={URL.createObjectURL(imgFileUpload)}
             />
           </div>
-          <div className='modal-body-right'>
-            <div className='top-user-info'>
-              <img className='userImg' src={userImgURL} alt='user profile' />
+          <div className='modal-body-right flex-container flex-align-start flex-justify-start flex-column height-100 width-100'>
+            <div className='top-user-info flex-container flex-align-center flex-justify-start'>
+              <img
+                className='userImg circular-image'
+                src={userImgURL}
+                alt='user profile'
+              />
               <div>{username}</div>
             </div>
             <div className='bottom-user-input'>
@@ -127,7 +131,7 @@ const CreatePostInformationForm = ({
                   Captions longer than 125 characters appear truncated in feed.
                 </span>
               </div>
-              <div className='location-input-div segmented-div'>
+              <div className='location-input-div segmented-div width-100 flex-container flex-align-center'>
                 <label>
                   <input
                     type='text'
@@ -150,21 +154,23 @@ const CreatePostInformationForm = ({
                 <img src={locationImg} alt='map location pinpoint icon' />
               </div>
               <div
-                className={
-                  expandAccessibility
-                    ? "accessibility-info segmented-div expand"
-                    : "accessibility-info segmented-div"
-                }
+                className={`accessibility-info width-100 flex-container flex-column flex-align-start flex-justify-center segmented-div ${
+                  expandAccessibility ? "expand" : ""
+                }`}
               >
-                <div className='accessibility-top' onClick={handleExpand}>
+                <div
+                  className='accessibility-top flex-container flex-align-center width-100'
+                  onClick={handleExpand}
+                >
                   <div>Accessibility</div>
                   <button
                     aria-label='open menu to add image description to assist users with visual impairments'
                     aria-controls='accessibility-input-container'
-                    aria-expanded={expandAccessibility ? "true" : "false"}
+                    className='transparent-button'
                   >
                     <img
                       className='down-arrow-img'
+                      aria-expanded={expandAccessibility ? "true" : "false"}
                       src={downArrow}
                       alt=''
                       aria-hidden='true'
@@ -180,8 +186,8 @@ const CreatePostInformationForm = ({
                     impairments. Alt text will be automatically created for your
                     photos or you can choose to write your own.
                   </div>
-                  <div className='accessibility-input-div'>
-                    <div className='accessibility-img-div'>
+                  <div className='accessibility-input-div flex-container flex-align-center flex-justify-start'>
+                    <div className='accessibility-img-div flex-container flex-align-center'>
                       <img
                         className='upload-image-accessibility-mini'
                         alt='preview of uploaded file'
@@ -205,7 +211,7 @@ const CreatePostInformationForm = ({
                         }
                         autoComplete='off'
                         spellCheck='false'
-                        aria-label='image alt text description'
+                        aria-label='input image description to assist users with visual impairments'
                       />
                     </label>
                   </div>

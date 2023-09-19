@@ -110,7 +110,9 @@ const CreatePostDragDrop = ({
       />
       <label
         id='initial-file-upload-label'
-        className={dragActive ? "drag-active" : ""}
+        className={`flex-container flex-column flex-align-center flex-justify-center height-100 ${
+          dragActive ? "drag-active" : ""
+        }`}
         htmlFor='intial-file-upload'
         aria-label='drop an image here or click the select from computer button below to upload image'
       >
@@ -124,7 +126,7 @@ const CreatePostDragDrop = ({
         <div>Drag photos here</div>
         <div>
           <button
-            className='initial-upload-button'
+            className='initial-upload-button standard-button blue-button'
             onClick={onNextButtonClick}
             aria-label='click here to select an image from your computer to upload'
           >
@@ -147,16 +149,14 @@ const CreatePostDragDrop = ({
   const previewImgSRC = imgFileUpload ? URL.createObjectURL(imgFileUpload) : "";
 
   const previewImg = (
-    <img
-      className='upload-image-preview'
-      alt='User upload preview'
-      src={previewImgSRC}
-    />
+    <div className='upload-image-preview flex-container flex-justify-center flex-align-center height-100 width-100'>
+      <img alt='User upload preview' src={previewImgSRC} />
+    </div>
   );
 
   return (
     <div
-      className='modal-container initial'
+      className='modal-container initial-create-post-display modal-body flex-container flex-column'
       role='dialog'
       aria-labelledby='dialog-header'
     >
@@ -167,12 +167,12 @@ const CreatePostDragDrop = ({
           className={imgFileUpload ? "button-div" : "button-div hidden"}
           onClick={() => setDragDropScreen(false)}
         >
-          <button aria-label='select image and proceed to next step'>
+          <button aria-label='select image and proceed to next step of creating post'>
             Next
           </button>
         </div>
       </div>
-      <div className='modal-body droparea'>
+      <div className='modal-content'>
         {!imgFileUpload ? uploadForm : previewImg}
       </div>
     </div>
