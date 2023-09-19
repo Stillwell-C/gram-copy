@@ -1,34 +1,22 @@
+@import "../../scss/variables.scss";
+@import "../../breakpoints.scss";
+
 .follow-user-modal-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   z-index: 15;
-  border-radius: 0.5rem;
-  background-color: #fff;
-  width: 400px;
-  height: 400px;
   overflow: hidden;
+  border-radius: 0.5rem;
   cursor: default;
+  background-color: #fff;
+  height: 80vh;
+
+  @include small {
+    width: 400px;
+    height: 400px;
+  }
 
   .follow-user-modal-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 100%;
     .follow-user-modal-header {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-bottom: 1px solid #cccccc;
-
-      button {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-      }
+      border-bottom: 1px solid $margin-grey;
 
       div {
         flex: 1;
@@ -36,47 +24,58 @@
 
       .modal-header-text {
         flex: 2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
 
         h2 {
-          font-size: 1rem;
+          font-size: $font-large;
         }
       }
 
       .close-div {
-        display: flex;
         justify-content: flex-end;
-        align-items: center;
 
         button {
           margin-right: 10px;
-          background-color: transparent;
-          cursor: pointer;
-          font-size: 2rem;
+          font-size: $header-medium;
         }
       }
     }
 
     .follow-user-modal-content {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
       overflow-y: auto;
     }
   }
-}
 
-.follow-user-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  pointer-events: all;
-  cursor: default;
-  z-index: 13;
+  .individual-user {
+    padding: 8px 16px;
+    justify-content: space-between;
+    cursor: pointer;
+
+    .individual-user-left {
+      .profile-picture {
+        margin-right: 12px;
+
+        img {
+          height: 44px;
+          width: 44px;
+        }
+      }
+
+      .userinfo-div {
+        a {
+          text-decoration: none;
+          color: black;
+        }
+
+        .username {
+          font-weight: bold;
+          font-size: $font-medium;
+          margin-bottom: 4px;
+        }
+        .fullname {
+          color: $content-grey;
+          font-size: $font-medium;
+        }
+      }
+    }
+  }
 }
