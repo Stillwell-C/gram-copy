@@ -1,4 +1,5 @@
 @import "../breakpoints.scss";
+@import "./variables.scss";
 
 .single-post-page {
   min-height: 100%;
@@ -6,20 +7,29 @@
 
   .single-post-container {
     border-radius: 0.5rem;
-    border: 1px solid #cccccc;
+    border: 1px solid $margin-grey;
     background-color: #fff;
-    width: clamp(300px, 80%, 1000px);
+    width: clamp(250px, 80%, 1000px);
     height: auto;
     min-height: 300px;
     overflow: hidden;
     cursor: default;
+    margin: auto;
 
-    @include small {
-      height: clamp(300px, 80%, 900px);
+    @include medium {
+      height: clamp(300px, 80%, 750px);
     }
   }
 
-  @include small {
+  @include medium {
     border-radius: 0 0.5rem 0.5rem 0;
+  }
+
+  .single-post-img-container {
+    img {
+      @include medium {
+        max-height: min(750px, 80vh);
+      }
+    }
   }
 }

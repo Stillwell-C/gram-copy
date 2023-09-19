@@ -7,7 +7,7 @@
   min-height: 300px;
   cursor: default;
 
-  @include small {
+  @include medium {
     border-radius: 0 0.5rem 0.5rem 0;
     height: 80%;
     width: 80svw;
@@ -16,5 +16,13 @@
 
   .photo-modal-right {
     overflow: hidden;
+  }
+
+  .single-post-img-container {
+    img {
+      @include medium {
+        max-height: 80vh;
+      }
+    }
   }
 }
