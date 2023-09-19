@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import CreatePostModal from "./createPostModal/CreatePostModal";
+import CreatePostModal from "./CreatePostModal";
 import NoUserImgProfileFeed from "./NoUserImgProfileFeed";
 import ProfilePostCard from "./ProfilePostCard";
 import useAuth from "../hooks/useAuth";

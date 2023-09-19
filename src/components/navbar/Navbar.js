@@ -13,9 +13,9 @@ import heart from "../../assets/heart-rounded-svgrepo-com.svg";
 import add from "../../assets/add-box-svgrepo-com.svg";
 import profile from "../../assets/Default_pfp.svg";
 import menu from "../../assets/menu-svgrepo-com.svg";
-import CreatePostModal from "../createPostModal/CreatePostModal";
 import moon from "../../assets/moon-02-svgrepo-com.svg";
 
+import CreatePostModal from "../CreatePostModal";
 import HeaderBar from "./../headerBar/HeaderBar";
 import useAuth from "../../hooks/useAuth";
 import SideNavbar from "../SideNavbar";
