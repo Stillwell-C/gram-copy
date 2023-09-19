@@ -1,8 +1,8 @@
 import React, { useRef, useState } from "react";
-import "./reportModal.scss";
+import "../scss/reportModal.scss";
 import { useMutation } from "react-query";
-import { addReport } from "../../features/reports/reportsApiRoutes";
-import FocusTrapModalParent from "../FocusTrapModalParent";
+import { addReport } from "../features/reports/reportsApiRoutes";
+import FocusTrapModalParent from "./FocusTrapModalParent";
 
 const ReportModal = ({ setShowReportModal, reportDistinction, reportId }) => {
   const [error, setError] = useState(false);
