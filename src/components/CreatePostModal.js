@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import "./createPostModal.scss";
-import { addNewPost } from "../../features/posts/postApiRoutes";
-import CreatePostDragDrop from "../CreatePostDragDrop";
-import CreatePostInformationForm from "../CreatePostInformationForm";
-import FocusTrapModalParent from "../FocusTrapModalParent";
+import "../scss/createPostModal.scss";
+import { addNewPost } from "../features/posts/postApiRoutes";
+import CreatePostDragDrop from "./CreatePostDragDrop";
+import CreatePostInformationForm from "./CreatePostInformationForm";
+import FocusTrapModalParent from "./FocusTrapModalParent";
 
 const CreatePostModal = ({ setDisplayPostModal }) => {
   const [dragDropScreen, setDragDropScreen] = useState(true);
