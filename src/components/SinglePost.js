@@ -91,15 +91,15 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
 
   //Make picture
   const singlePhotoImage = (
-    <div className='single-post-left'>
-      <div className='img-container flex-container flex-align-center flex-justify-center height-100'>
+    <div className='single-post-left flex-container flex-align-center flex-justify-center'>
+      <div className='single-post-img-container flex-container flex-align-center flex-justify-center'>
         <picture>
           <source media='(min-width:1200px)' srcSet={imgURL} />
           <source media='(min-width:1000px)' srcSet={imgURLXLarge} />
           <source media='(min-width:768px)' srcSet={imgURLLarge} />
           <source media='(min-width:648px)' srcSet={imgURLMedium} />
           <source media='(min-width:370px)' srcSet={imgURLSmall} />
-          <source srcSet={imgURLXSmall} />
+          <source media='(max-width:369px)' srcSet={imgURLXSmall} />
           <img alt={post.altText ? post.altText : "user upload"} src={imgURL} />
         </picture>
       </div>
