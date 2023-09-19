@@ -51,7 +51,7 @@ const SinglePostPage = () => {
   }, [isError]);
 
   return (
-    <div className='single-post-page flex-container flex-align-center flex-justify-center fg-1'>
+    <div className='single-post-page flex-container flex-align-center'>
       <div className='single-post-container'>
         {postData?._id && <SinglePost post={postData} queryKey={queryKey} />}
       </div>
