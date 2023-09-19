@@ -11,7 +11,7 @@ import LikeButton from "./LikeButton";
 import SaveButton from "./SaveButton";
 import AddCommentForm from "./AddCommentForm";
 import AdditionalOptionsModal from "./AdditionalOptionsModal";
-import ReportModal from "./reportModal/ReportModal";
+import ReportModal from "./ReportModal";
 import "../scss/singlePost.scss";
 import TagUsersModal from "./TagUsersModal";
 import DeletePostConfirmationModal from "./DeletePostConfirmationModal";
