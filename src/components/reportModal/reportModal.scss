@@ -1,34 +1,20 @@
+@import "../../breakpoints.scss";
+@import "../../scss/variables.scss";
+
 .report-modal-container {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   z-index: 20;
   border-radius: 0.5rem;
   background-color: #fff;
-  width: 400px;
-  // height: 450px;
   overflow: hidden;
   cursor: default;
 
-  .report-modal-body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    .modal-header {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-bottom: 1px solid #cccccc;
+  @include small {
+    width: 400px;
+  }
 
-      button {
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-      }
+  .report-modal-body {
+    .modal-header {
+      border-bottom: 1px solid $margin-grey;
 
       div {
         flex: 1;
@@ -36,69 +22,47 @@
 
       .header-text-div {
         flex: 2;
-        display: flex;
-        align-items: center;
-        justify-content: center;
 
         h2 {
-          font-size: 0.9rem;
+          font-size: $font-medium;
         }
       }
 
       .close-div {
-        display: flex;
         justify-content: flex-end;
-        align-items: center;
 
         button {
           margin-right: 10px;
-          background-color: transparent;
-          cursor: pointer;
-          font-size: 2rem;
+          font-size: $header-medium;
         }
       }
     }
 
     .modal-form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-
       form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
         h4 {
-          font-size: 0.85rem;
+          font-size: $font-medium;
         }
 
         .error-div {
-          color: red;
+          color: $error-red;
           margin-top: 1rem;
         }
 
         .reason-div {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          width: 100%;
-
-          h4 {
+          h3 {
+            text-align: center;
             width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             padding: 1.5rem 0;
-            border-bottom: 1px solid #cccccc;
+            border-bottom: 1px solid $margin-grey;
+            font-size: $font-medium;
           }
 
           ul {
             width: 100%;
             .button-li {
               width: 100%;
-              border-bottom: 1px solid #cccccc;
+              border-bottom: 1px solid $margin-grey;
 
               display: flex;
               align-items: center;
@@ -109,16 +73,15 @@
                 width: 100%;
                 height: 100%;
                 padding: 0.5rem 0;
-                color: #0095f6;
+                color: $button-blue;
                 font-size: 0.85rem;
                 font-weight: bold;
                 background-color: transparent;
                 border: none;
-                cursor: pointer;
 
                 &.active {
                   color: #fff;
-                  background-color: #0095f6;
+                  background-color: $button-blue;
                 }
               }
             }
@@ -127,9 +90,6 @@
 
         .textarea-div {
           width: 80%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
 
           .textarea-header {
             margin-top: 1rem;
@@ -146,39 +106,15 @@
 
           .textarea-count {
             align-self: flex-end;
-            color: #cccccc;
+            color: $content-grey;
             font-size: 0.85rem;
           }
         }
 
         .submit-button {
-          background-color: #0095f6;
           margin: 1.5rem 0;
-          color: #fff;
-          font-size: 0.85rem;
-          font-weight: bold;
-          padding: 7px 12px;
-          border-radius: 0.5rem;
-          border: 1px solid #0095f6;
-          cursor: pointer;
-
-          &:hover {
-            background-color: #1877f2;
-          }
         }
       }
     }
   }
-}
-
-.report-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  pointer-events: all;
-  cursor: default;
-  z-index: 16;
 }
