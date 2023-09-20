@@ -1,7 +1,7 @@
 import React from "react";
-import "./headerBar.scss";
-import logo from "../../assets/Instagram_logo.png";
-import squareLogo from "../../assets/instagram-svgrepo-com.svg";
+import "../scss/headerBar.scss";
+import logo from "../assets/Instagram_logo.png";
+import squareLogo from "../assets/instagram-svgrepo-com.svg";
 import { Link } from "react-router-dom";
 
 const HeaderBar = ({ navbarSearch, notificationsLink, setSearchActive }) => {
