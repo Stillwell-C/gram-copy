@@ -6,17 +6,21 @@ import DefaultUserImg from "../assets/Default_pfp.svg";
 
 const ProfileUserImage = ({ user, displayOwnPage }) => {
   const [userImgSmall, setUserImgSmall] = useState(
-    `https://res.cloudinary.com/danscxcd2/image/upload/w_95,c_fill/${user?.userImgKey}`
+    `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${user?.userImgKey}`
+  );
+  const [userImgMedium, setUserImgMedium] = useState(
+    `https://res.cloudinary.com/danscxcd2/image/upload/w_250,c_fill/${user?.userImgKey}`
   );
   const [userImgLarge, setUserImgLarge] = useState(
-    `https://res.cloudinary.com/danscxcd2/image/upload/w_175,c_fill/${user?.userImgKey}`
+    `https://res.cloudinary.com/danscxcd2/image/upload/w_350,c_fill/${user?.userImgKey}`
   );
   const [newUserImgKey, setNewUserImgKey] = useState(null);
 
   useEffect(() => {
     if (!user?.userImgKey) {
       setUserImgSmall(DefaultUserImg);
-      setUserImgSmall(DefaultUserImg);
+      setUserImgMedium(DefaultUserImg);
+      setUserImgLarge(DefaultUserImg);
     }
   }, [user]);
 
@@ -59,19 +63,26 @@ const ProfileUserImage = ({ user, displayOwnPage }) => {
   };
 
   const userImg = (
-    <picture className='user-img-picture'>
-      <source
-        srcSet={userImgLarge}
-        media='(min-width:768px)'
-        alt='user profile'
-      />
-      <source srcSet={userImgSmall} alt='user profile' />
-      <img
-        src={userImgLarge}
-        alt='user profile'
-        className='circular-image user-profile-img'
-      />
-    </picture>
+    // <picture className='user-img-picture'>
+    //   <source
+    //     srcSet={userImgLarge}
+    //     media='(min-width:768px)'
+    //     alt='user profile'
+    //   />
+    //   <source srcSet={userImgSmall} alt='user profile' />
+    //   <img
+    //     src={userImgLarge}
+    //     alt='user profile'
+    //     className='circular-image user-profile-img'
+    //   />
+    // </picture>
+    <img
+      src={userImgLarge}
+      alt='user profile'
+      className='circular-image user-profile-img'
+      srcSet={`${userImgSmall} 150w, ${userImgMedium} 250w, ${userImgLarge} 350w`}
+      sizes='(max-width: 349px) 150px, (max-width: 647px) 250px, 350px'
+    />
   );
 
   const profileImg = displayOwnPage ? (
