@@ -1,23 +1,20 @@
 @import "../../breakpoints.scss";
+@import "../../scss/variables.scss";
 
 .header-bar-container {
   background-color: #fff;
-  flex: 1;
   max-height: 60px;
-  display: flex;
   justify-content: space-between;
   padding: 0 16px;
   z-index: 10;
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid $margin-grey;
+  display: flex;
 
   @include small {
     display: none;
   }
 
   .header-bar-left {
-    height: 100%;
-    display: flex;
-    align-items: center;
     a {
       img {
         width: 40px;
@@ -30,18 +27,18 @@
   }
 
   .header-bar-right {
-    height: 100%;
-    display: flex;
-    align-items: center;
     padding: 0 16px;
     gap: 20px;
 
     .navbar-search-container {
       border-radius: 0.5rem;
       height: 40px;
-      background-color: #efefef;
-      position: relative;
+      background-color: $search-background;
       width: 100%;
+
+      @include x-small {
+        position: relative;
+      }
 
       .search-container-top {
         width: 100%;
@@ -86,14 +83,21 @@
       .search-results-container {
         display: none;
         position: absolute;
-        border: 1px solid #cccccc;
-        left: -110px;
-        top: 55px;
+        border: 1px solid $margin-grey;
+        left: 5vw;
+        top: 65px;
         background-color: #fff;
         border-radius: 0.25rem;
-        height: 375px;
-        width: 375px;
+        height: 50vh;
+        width: 90vw;
         overflow-y: auto;
+
+        @include x-small {
+          height: 375px;
+          width: 375px;
+          left: -110px;
+          top: 55px;
+        }
 
         &.active {
           display: block;
@@ -111,7 +115,7 @@
           cursor: pointer;
 
           &:hover {
-            background-color: #f5f5f5;
+            background-color: $background-grey-highlighted;
           }
 
           .profile-picture {
@@ -148,9 +152,6 @@
     }
 
     .navbar-row {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
       margin: 4px 0;
       padding: 12px;
       border-radius: 50%;
@@ -177,19 +178,12 @@
         transform: scale(1);
       }
 
-      .userProfileImg {
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-
       span {
         display: none;
       }
 
       &:hover {
-        background-color: #fafafa;
+        background-color: $background-grey;
         img {
           transform: scale(1.1);
           transition: transform 200ms ease-in;
