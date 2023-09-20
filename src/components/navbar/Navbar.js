@@ -67,7 +67,7 @@ const Navbar = () => {
     }
   };
 
-  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
+  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_90,c_fill/${img}`;
 
   const scrollUpOnHomeScreen = () => {
     if (pathname.match(/^\/$/)) {
