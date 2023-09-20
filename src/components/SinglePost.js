@@ -28,7 +28,7 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
   const [showTagUsersModal, setShowTagUsersModal] = useState(false);
   const [displayCommentsMobile, setDisplayCommentsMobile] = useState(false);
 
-  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${post?.user?.userImgKey}`;
+  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_90,c_fill/${post?.user?.userImgKey}`;
 
   // const imgURLXSmall = `https://res.cloudinary.com/danscxcd2/image/upload/w_370/${post?.imgKey}`;
   // const imgURLSmall = `https://res.cloudinary.com/danscxcd2/image/upload/w_500/${post?.imgKey}`;
