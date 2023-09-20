@@ -25,7 +25,7 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showTagUsersModal, setShowTagUsersModal] = useState(false);
 
-  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${post?.user?.userImgKey}`;
+  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_90,c_fill/${post?.user?.userImgKey}`;
 
   const imgURL = `https://res.cloudinary.com/danscxcd2/image/upload/${post?.imgKey}`;
   const imgURLSmall = `https://res.cloudinary.com/danscxcd2/image/upload/w_500,c_fill/${post?.imgKey}`;
