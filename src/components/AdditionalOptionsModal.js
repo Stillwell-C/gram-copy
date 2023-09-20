@@ -8,6 +8,7 @@ const AdditionalOptionsModal = ({
   setShowAdditionalOptionsModal,
   post,
   goToPost,
+  goToProfile,
   copyLink,
   setShowDeleteConfirmation,
   setShowTagUsersModal,
@@ -31,6 +32,18 @@ const AdditionalOptionsModal = ({
         aria-label='click to close'
       >
         Go to post
+      </button>
+    </div>
+  );
+
+  const goToProfileButton = (
+    <div className='select-option-div'>
+      <button
+        className='cancel-button'
+        onClick={() => navigate(`/${post.user.username}`)}
+        aria-label='click to close'
+      >
+        Go to profile
       </button>
     </div>
   );
@@ -102,6 +115,7 @@ const AdditionalOptionsModal = ({
           </button>
         </div>
         {goToPost && goToPostButton}
+        {goToProfile && goToProfileButton}
         {copyLink && copyLinkButton}
         {setShowTagUsersModal && showTagUsersModalButton}
         {setShowDeleteConfirmation && showDeleteConfirmationModalButton}
