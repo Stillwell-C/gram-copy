@@ -390,6 +390,7 @@
   background-color: #fff;
   z-index: 4;
   flex-grow: 1;
+  overflow-y: hidden;
 
   @include small {
     display: block;
