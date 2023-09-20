@@ -1,27 +1,27 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Outlet, useLocation, Link } from "react-router-dom";
-import { useSendLogoutMutation } from "../../features/auth/authApiSlice";
+import { useSendLogoutMutation } from "../features/auth/authApiSlice";
 
-import "./navbar.scss";
-import styles from "../../scss/layout.module.scss";
+import "../scss/navbar.scss";
+import styles from "../scss/layout.module.scss";
 
-import home from "../../assets/home-2-svgrepo-com.svg";
-import search from "../../assets/search-svgrepo-com.svg";
-import compass from "../../assets/compass-svgrepo-com.svg";
-import message from "../../assets/plane-svgrepo-com.svg";
-import heart from "../../assets/heart-rounded-svgrepo-com.svg";
-import add from "../../assets/add-box-svgrepo-com.svg";
-import profile from "../../assets/Default_pfp.svg";
-import menu from "../../assets/menu-svgrepo-com.svg";
-import moon from "../../assets/moon-02-svgrepo-com.svg";
+import home from "../assets/home-2-svgrepo-com.svg";
+import search from "../assets/search-svgrepo-com.svg";
+import compass from "../assets/compass-svgrepo-com.svg";
+import message from "../assets/plane-svgrepo-com.svg";
+import heart from "../assets/heart-rounded-svgrepo-com.svg";
+import add from "../assets/add-box-svgrepo-com.svg";
+import profile from "../assets/Default_pfp.svg";
+import menu from "../assets/menu-svgrepo-com.svg";
+import moon from "../assets/moon-02-svgrepo-com.svg";
 
-import CreatePostModal from "../CreatePostModal";
-import HeaderBar from "../HeaderBar";
-import useAuth from "../../hooks/useAuth";
-import SideNavbar from "../SideNavbar";
-import SideNavbarSearch from "../SideNavbarSearch";
-import NavbarSearch from "../NavbarSearch";
-import FooterNavbar from "../FooterNavbar";
+import CreatePostModal from "./CreatePostModal";
+import HeaderBar from "./HeaderBar";
+import useAuth from "../hooks/useAuth";
+import SideNavbar from "./SideNavbar";
+import SideNavbarSearch from "./SideNavbarSearch";
+import NavbarSearch from "./NavbarSearch";
+import FooterNavbar from "./FooterNavbar";
 
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
