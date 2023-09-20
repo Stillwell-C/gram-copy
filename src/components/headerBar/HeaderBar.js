@@ -1,11 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import "./headerBar.scss";
 import logo from "../../assets/Instagram_logo.png";
 import squareLogo from "../../assets/instagram-svgrepo-com.svg";
 import { Link } from "react-router-dom";
-import useSearchForUser from "../../hooks/useSearchForUser";
-import closeCircle from "../../assets/close-circle-svgrepo-com.svg";
-import NavbarSearch from "../NavbarSearch";
 
 const HeaderBar = ({ navbarSearch, notificationsLink }) => {
   return (
