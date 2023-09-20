@@ -16,7 +16,7 @@ const EditProfileInformationImage = ({
 
   useEffect(() => {
     setUserImgURL(
-      `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${user?.userImgKey}`
+      `https://res.cloudinary.com/danscxcd2/image/upload/w_90,c_fill/${user?.userImgKey}`
     );
   }, [user]);
 

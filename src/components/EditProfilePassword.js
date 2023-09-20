@@ -18,7 +18,7 @@ export const EditProfilePassword = () => {
   const [confirmation, setConfirmation] = useState(false);
   const [confirmationMsg, setConfirmationMsg] = useState("");
 
-  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
+  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_90,c_fill/${img}`;
 
   const errRef = useRef();
   const successRef = useRef();
