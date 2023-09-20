@@ -110,6 +110,7 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
         <img
           alt={post.altText ? post.altText : "user upload"}
           srcSet={`${imgURLSmall} 500w, ${imgURLMedium} 1000w, ${imgURLLarge} 1500w, ${imgURL} 2000w`}
+          sizes='(max-width: 349px) 500px, (max-width: 647px) 1000px, (max-width: 1249px) 1500px, 2000px'
           src={imgURLMedium}
         />
       </div>
