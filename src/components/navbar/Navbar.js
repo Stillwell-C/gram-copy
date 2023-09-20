@@ -70,6 +70,7 @@ const Navbar = () => {
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_90,c_fill/${img}`;
 
   const scrollUpOnHomeScreen = () => {
+    setSearchActive(false);
     if (pathname.match(/^\/$/)) {
       document
         .getElementById("content-outlet")
@@ -101,6 +102,7 @@ const Navbar = () => {
   );
 
   const scrollUpOnExploreScreen = () => {
+    setSearchActive(false);
     if (pathname.match(/^\/explore$/i)) {
       document
         .getElementById("content-outlet")
@@ -119,7 +121,7 @@ const Navbar = () => {
 
   const messagesLink = (
     <Link to='/direct/inbox'>
-      <div className='navbar-line'>
+      <div className='navbar-line' onClick={() => setSearchActive(false)}>
         <img src={message} alt='' aria-hidden='true' />
         <span>Messages</span>
       </div>
@@ -128,7 +130,7 @@ const Navbar = () => {
 
   const notificationsLink = (
     <Link to='/notifications'>
-      <div className='navbar-line'>
+      <div className='navbar-line' onClick={() => setSearchActive(false)}>
         <img src={heart} alt='' aria-hidden='true' />
         <span>Notifications</span>
       </div>
@@ -137,7 +139,7 @@ const Navbar = () => {
 
   const createLink = (
     <Link to='#'>
-      <div className='navbar-line'>
+      <div className='navbar-line' onClick={() => setSearchActive(false)}>
         <img src={add} alt='' aria-hidden='true' />
         <span>Create</span>
       </div>
@@ -146,7 +148,7 @@ const Navbar = () => {
 
   const profileLink = (
     <Link to={authenticatedUser ? `/${username}` : "/accounts/login"}>
-      <div className='navbar-line'>
+      <div className='navbar-line' onClick={() => setSearchActive(false)}>
         <img
           src={authenticatedUser ? userImgURL : profile}
           className={authenticatedUser ? "userProfileImg" : ""}
@@ -205,6 +207,7 @@ const Navbar = () => {
         <HeaderBar
           navbarSearch={navbarSearch}
           notificationsLink={notificationsLink}
+          setSearchActive={setSearchActive}
         />
       )}
       {displayNav && (
