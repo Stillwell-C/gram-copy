@@ -16,7 +16,7 @@ import menu from "../../assets/menu-svgrepo-com.svg";
 import moon from "../../assets/moon-02-svgrepo-com.svg";
 
 import CreatePostModal from "../CreatePostModal";
-import HeaderBar from "./../headerBar/HeaderBar";
+import HeaderBar from "../HeaderBar";
 import useAuth from "../../hooks/useAuth";
 import SideNavbar from "../SideNavbar";
 import SideNavbarSearch from "../SideNavbarSearch";
