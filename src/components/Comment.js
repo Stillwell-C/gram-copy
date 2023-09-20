@@ -20,7 +20,7 @@ const Comment = ({
   const [formatedDate, setFormatedDate] = useState("");
 
   const userImgURL = comment?.author?.userImgKey
-    ? `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${comment?.author?.userImgKey}`
+    ? `https://res.cloudinary.com/danscxcd2/image/upload/w_90,c_fill/${comment?.author?.userImgKey}`
     : defaultProfilePic;
 
   useEffect(() => {
