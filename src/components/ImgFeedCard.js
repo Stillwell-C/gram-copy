@@ -176,6 +176,7 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
           setShowAdditionalOptionsModal={setShowAdditionalOptionsModal}
           setShowReportModal={setShowReportModal}
           goToPost={true}
+          goToProfile={id !== post.user._id ? true : false}
           copyLink={true}
           post={post}
           setShowDeleteConfirmation={

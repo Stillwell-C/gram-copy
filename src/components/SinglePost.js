@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import FollowButton from "./FollowButton";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import threeDots from "../assets/three-dots-line-svgrepo-com.svg";
 import commentBubble from "../assets/message-circle-01-svgrepo-com.svg";
@@ -18,6 +18,7 @@ import DeletePostConfirmationModal from "./DeletePostConfirmationModal";
 
 const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
   const { id } = useAuth();
+  const { userID } = useParams();
 
   const commentRef = useRef(null);
 
@@ -55,6 +56,8 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
   const handleCommentClick = () => {
     commentRef.current.focus();
   };
+
+  const showProfile = userID !== id && id !== post.user._id;
 
   const mobileHeader = (
     <div className='single-post-header flex-container width-100'>
@@ -245,6 +248,7 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
           setShowAdditionalOptionsModal={setShowAdditionalOptionsModal}
           setShowReportModal={setShowReportModal}
           goToPost={setShowPhotoModal ? true : false}
+          goToProfile={showProfile ? true : false}
           copyLink={true}
           post={post}
           setShowDeleteConfirmation={
