@@ -1,5 +1,149 @@
 @import "../../breakpoints.scss";
+@import "../../scss/variables.scss";
 
+//SHARED NAVBAR SIDE && NAVBAR BOTTOM SCSS
+.navbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 4px 0;
+  padding: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+
+  .navbar-line {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  a {
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: black;
+  }
+
+  img {
+    height: 24px;
+    max-width: 24px;
+    transform: scale(1);
+  }
+
+  .userProfileImg {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  span {
+    display: none;
+  }
+
+  &:hover {
+    background-color: $background-grey;
+    img {
+      transform: scale(1.1);
+      transition: transform 200ms ease-in;
+    }
+  }
+}
+
+.navbar-menu {
+  min-width: 240px;
+  position: absolute;
+  top: -4rem;
+  display: none;
+  flex-direction: column;
+  box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.19);
+  width: 98%;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  z-index: 5;
+
+  .menu-line {
+    padding: 10px;
+    border-bottom: 1px solid $margin-grey;
+    background-color: #fff;
+
+    button {
+      background-color: transparent;
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    a {
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      text-decoration: none;
+      color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    img {
+      height: 24px;
+      max-width: 24px;
+      transform: scale(1);
+    }
+
+    &:hover {
+      background-color: $background-grey;
+      img {
+        transform: scale(1.1);
+        transition: transform 200ms ease-in;
+      }
+    }
+  }
+
+  &.active {
+    display: flex;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.navbar-menu-close-field {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -100;
+
+  &.active {
+    display: block;
+  }
+}
+
+.navbar-search-close-field {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+
+  &.active {
+    display: block;
+  }
+}
+
+//SCSS SPECIFIC TO NAVBAR BOTTOM
 .navbar-container-bottom {
   width: 100%;
   height: 50px;
@@ -15,60 +159,6 @@
     display: none;
   }
 
-  .navbar-row {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin: 4px 0;
-    padding: 12px;
-    border-radius: 50%;
-    cursor: pointer;
-
-    .navbar-line {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-    }
-
-    a {
-      width: 100%;
-      height: 100%;
-      text-decoration: none;
-      color: black;
-    }
-
-    img {
-      height: 24px;
-      max-width: 24px;
-      transform: scale(1);
-    }
-
-    .userProfileImg {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
-    // span {
-    //   padding-left: 16px;
-    // }
-
-    span {
-      display: none;
-    }
-
-    &:hover {
-      background-color: #fafafa;
-      img {
-        transform: scale(1.1);
-        transition: transform 200ms ease-in;
-      }
-    }
-  }
-
   .navbar-menu-container {
     position: relative;
 
@@ -77,90 +167,18 @@
     }
 
     .navbar-menu {
-      min-width: 240px;
-      position: absolute;
-      top: -5rem;
       right: 0rem;
-      display: none;
-      flex-direction: column;
-      box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.19);
-      -webkit-box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.19);
-      width: 98%;
-      border-radius: 0.5rem;
-      overflow: hidden;
-      z-index: 5;
-
-      .menu-line {
-        padding: 10px;
-        border-bottom: 1px solid #dbdbdb;
-        background-color: #fff;
-
-        button {
-          cursor: pointer;
-          background-color: transparent;
-          width: 100%;
-          height: 100%;
-          border: none;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        a {
-          cursor: pointer;
-          width: 100%;
-          height: 100%;
-          text-decoration: none;
-          color: black;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-
-        img {
-          height: 24px;
-          max-width: 24px;
-          transform: scale(1);
-        }
-
-        &:hover {
-          background-color: #fafafa;
-          img {
-            transform: scale(1.1);
-            transition: transform 200ms ease-in;
-          }
-        }
-      }
-
-      &.active {
-        display: flex;
-      }
-
-      &:last-child {
-        border-bottom: none;
-      }
-    }
-    .navbar-menu-close-field {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      z-index: -100;
-
-      &.active {
-        display: block;
-      }
+      top: -5.2rem;
     }
   }
 }
 
+//SCSS SPECIFIC TO NAVBAR SIDE
 .navbar-container-side {
   max-width: 73px;
   display: none;
-  height: 100vh;
-  height: 100svh;
+  // height: 100vh;
+  // height: 100svh;
   border-right: 1px solid #cccccc;
   background-color: #fff;
   z-index: 4;
@@ -175,12 +193,6 @@
     max-width: 245px;
     transition: max-width 0.5s;
   }
-
-  // .search-body {
-  //   display: none;
-  //   width: 0;
-  //   transition: width 0.5s;
-  // }
 
   .navbar-body {
     height: 100%;
@@ -262,15 +274,8 @@
       }
 
       .navbar-row {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        margin: 4px 0;
-        padding: 12px;
         width: 100%;
         height: 100%;
-        border-radius: 50%;
-        cursor: pointer;
         overflow-x: hidden;
 
         @include large {
@@ -278,54 +283,13 @@
         }
 
         .navbar-line {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 100%;
-          height: 100%;
-
-          span {
-            display: none;
-          }
-
           @include large {
             justify-content: flex-start;
 
             span {
               display: block;
+              padding-left: 16px;
             }
-          }
-        }
-
-        a {
-          width: 100%;
-          height: 100%;
-          text-decoration: none;
-          color: black;
-        }
-
-        img {
-          height: 24px;
-          max-width: 24px;
-          transform: scale(1);
-        }
-
-        .userProfileImg {
-          min-width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          object-fit: cover;
-        }
-
-        span {
-          padding-left: 16px;
-        }
-
-        &:hover {
-          background-color: #fafafa;
-          img {
-            transform: scale(1.1);
-            transition: transform 200ms ease-in;
           }
         }
       }
@@ -336,83 +300,6 @@
       z-index: 5;
       .navbar-row {
         margin-bottom: 20px;
-      }
-
-      .navbar-menu {
-        min-width: 240px;
-        position: absolute;
-        top: -5rem;
-        display: none;
-        flex-direction: column;
-        box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.19);
-        -webkit-box-shadow: 5px 5px 10px 2px rgba(0, 0, 0, 0.19);
-        width: 98%;
-        border-radius: 0.5rem;
-        overflow: hidden;
-        z-index: 5;
-
-        .menu-line {
-          padding: 10px;
-          border-bottom: 1px solid #dbdbdb;
-          background-color: #fff;
-
-          button {
-            cursor: pointer;
-            background-color: transparent;
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-          }
-
-          a {
-            cursor: pointer;
-            width: 100%;
-            height: 100%;
-            text-decoration: none;
-            color: black;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-          }
-
-          img {
-            height: 24px;
-            max-width: 24px;
-            transform: scale(1);
-          }
-
-          &:hover {
-            background-color: #fafafa;
-            img {
-              transform: scale(1.1);
-              transition: transform 200ms ease-in;
-            }
-          }
-        }
-
-        &.active {
-          display: flex;
-        }
-
-        &:last-child {
-          border-bottom: none;
-        }
-      }
-      .navbar-menu-close-field {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        z-index: -100;
-
-        &.active {
-          display: block;
-        }
       }
     }
   }
@@ -593,19 +480,5 @@
       left: 73px;
       transition: width 1s;
     }
-  }
-}
-
-.navbar-search-close-field {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 1;
-
-  &.active {
-    display: block;
   }
 }
