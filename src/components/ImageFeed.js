@@ -84,7 +84,7 @@ const ImageFeed = () => {
   }, []);
 
   const content = flattenedFeedData?.map((post, i) => {
-    if (flattenedFeedData.length === i + 1) {
+    if (flattenedFeedData.length - 2 === i) {
       return <ImgFeedCard key={post._id} post={post} ref={lastPostRef} />;
     }
     return <ImgFeedCard key={post._id} post={post} />;
