@@ -29,7 +29,7 @@ const ProfilePostCard = React.forwardRef(
           src={imgURL}
           onClick={() => setShowPhotoModal(true)}
           srcSet={`${imgURLSmall} 200w, ${imgURLMedium} 350w, ${imgURLLarge} 550w`}
-          sizes='(max-width: 350px) 200px, (max-width: 649px) 350px, 550px'
+          sizes='(max-width: 349px) 200px, (max-width: 647px) 350px, 550px'
         />
         <div className='hover-div'>
           {id === post.user._id && profilePosts && (
