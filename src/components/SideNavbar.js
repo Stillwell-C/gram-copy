@@ -37,7 +37,12 @@ const SideNavbar = ({
         <div className='navbar-row'>{profileLink}</div>
       </div>
       <div className='navbar-bottom'>
-        <div className='navbar-row'>{moreLink}</div>
+        <div
+          className='navbar-row'
+          onClick={() => setDisplayMenu(!displayMenu)}
+        >
+          {moreLink}
+        </div>
         <div
           id='large-navbar-menu-content'
           className={displayMenu ? "navbar-menu active" : "navbar-menu"}
