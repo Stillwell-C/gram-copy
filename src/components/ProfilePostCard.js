@@ -12,7 +12,10 @@ const ProfilePostCard = React.forwardRef(
   ({ post, profilePosts, queryKey }, ref) => {
     const { id } = useAuth();
 
-    const imgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_300,c_fill/${post?.imgKey}`;
+    const imgURL = `https://res.cloudinary.com/danscxcd2/image/upload/${post?.imgKey}`;
+    const imgURLSmall = `https://res.cloudinary.com/danscxcd2/image/upload/w_200,c_fill/${post?.imgKey}`;
+    const imgURLMedium = `https://res.cloudinary.com/danscxcd2/image/upload/w_350,c_fill/${post?.imgKey}`;
+    const imgURLLarge = `https://res.cloudinary.com/danscxcd2/image/upload/w_550,c_fill/${post?.imgKey}`;
 
     const [showPhotoModal, setShowPhotoModal] = useState(false);
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
@@ -25,6 +28,8 @@ const ProfilePostCard = React.forwardRef(
           alt={post.altText ? post.altText : "user upload"}
           src={imgURL}
           onClick={() => setShowPhotoModal(true)}
+          srcSet={`${imgURLSmall} 200w, ${imgURLMedium} 350w, ${imgURLLarge} 550w`}
+          sizes='(max-width: 350px) 200px, (max-width: 649px) 350px, 550px'
         />
         <div className='hover-div'>
           {id === post.user._id && profilePosts && (
