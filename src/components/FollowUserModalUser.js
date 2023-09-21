@@ -57,7 +57,7 @@ const FollowUserModalUser = React.forwardRef(({ user, setShowModal }, ref) => {
     </div>
   );
 
-  return followModalUser;
+  if (user?._id) return followModalUser;
 });
 
 export default FollowUserModalUser;
