@@ -82,6 +82,22 @@
           .user-info-buttons {
             gap: 15px;
 
+            .follow-div {
+              button {
+                padding: 7px 16px;
+                font-weight: bold;
+                border: none;
+                border-radius: 0.5rem;
+                font-size: $font-medium;
+                background-color: $button-blue;
+                color: #fff;
+
+                &:hover {
+                  background-color: $button-blue-hover-light;
+                }
+              }
+            }
+
             .options-button {
               display: none;
               padding: 8px;
@@ -389,5 +405,16 @@
         margin-bottom: 50px;
       }
     }
+  }
+}
+
+.banned-page {
+  margin-top: 1rem;
+
+  @include small {
+    margin-top: 3rem;
+  }
+  img {
+    width: 75px;
   }
 }
