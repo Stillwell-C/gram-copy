@@ -9,24 +9,24 @@ import { ChatContext } from "../../../context/chatContext";
 import ChatContainer from "../chatContainer/ChatContainer";
 
 const ChatMain = () => {
-  const { currentUser } = useContext(AuthContext);
-  const { userData } = useContext(ChatContext);
+  // const { currentUser } = useContext(AuthContext);
+  // const { userData } = useContext(ChatContext);
 
-  const [username, setUsername] = useState("");
-  const [showSendMessageModal, setShowSendMessageModal] = useState(false);
-  const [displayChat, setDisplayChat] = useState(false);
+  // const [username, setUsername] = useState("");
+  // const [showSendMessageModal, setShowSendMessageModal] = useState(false);
+  // const [displayChat, setDisplayChat] = useState(false);
 
-  useEffect(() => {
-    setUsername(currentUser.displayName);
-  }, [currentUser.displayName]);
+  // useEffect(() => {
+  //   setUsername(currentUser.displayName);
+  // }, [currentUser.displayName]);
 
-  useEffect(() => {
-    if (userData.user.uid) {
-      setDisplayChat(true);
-      return;
-    }
-    setDisplayChat(false);
-  }, [userData]);
+  // useEffect(() => {
+  //   if (userData.user.uid) {
+  //     setDisplayChat(true);
+  //     return;
+  //   }
+  //   setDisplayChat(false);
+  // }, [userData]);
 
   return (
     // <main className='chat-main-container'>
