@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import EditProfileInformationForm from "./EditProfileInformationForm";
 import EditProfileInformationImage from "./EditProfileInformationImage";
 import { useQuery } from "react-query";
-import { getUser } from "../features/users/usersApiRoutes";
+import { getUserData } from "../features/users/usersApiRoutes";
 import { setLoading } from "../features/display/displaySlice";
 import useAuth from "../hooks/useAuth";
 
@@ -27,9 +27,9 @@ const EditProfileInformation = () => {
     isError,
     error: userDataError,
   } = useQuery({
-    queryKey: ["userInfo", username],
+    queryKey: ["personalUserData", username],
     enabled: !!username,
-    queryFn: () => getUser(username),
+    queryFn: getUserData,
     refetchOnWindowFocus: false,
   });
 
