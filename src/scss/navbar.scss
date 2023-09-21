@@ -408,7 +408,6 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
-    overflow-x: hidden;
     overflow-y: hidden;
 
     .navbar-top,
@@ -429,6 +428,7 @@
         cursor: pointer;
         min-height: 87px;
         margin-bottom: 10px;
+        overflow-x: hidden;
 
         a {
           margin: 4px 0;
@@ -501,9 +501,7 @@
     }
 
     .navbar-bottom {
-      // position: relative;
       z-index: 5;
-      overflow-x: visible;
       .navbar-row {
         margin-bottom: 20px;
       }
