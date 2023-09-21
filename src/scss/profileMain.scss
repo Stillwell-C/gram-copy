@@ -146,6 +146,13 @@
           .user-bio {
             white-space: pre-wrap;
           }
+
+          .user-link {
+            margin-top: 5px;
+            a {
+              font-weight: bold;
+            }
+          }
         }
       }
     }
