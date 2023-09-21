@@ -8,6 +8,10 @@
     text-align: center;
   }
 
+  @include mobile-large {
+    min-width: 470px;
+  }
+
   @include medium {
     margin-right: 60px;
   }
