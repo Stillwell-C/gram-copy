@@ -17,7 +17,14 @@ const Notification = ({ notification }) => {
   if (notification.notificationType === "POSTLIKE") {
     notificationMessage = (
       <p className='notification-link'>
-        <Link to={`/${notification?.notifyingUser?.username || "#"}`}>
+        <Link
+          to={`/${notification?.notifyingUser?.username || "#"}`}
+          aria-label={
+            notification?.notifyingUser?.username
+              ? `move to ${notification?.notifyingUser?.username}'s profile`
+              : "user not located. unable to move to user profile"
+          }
+        >
           {notification?.notifyingUser?.username || "A user"}
         </Link>{" "}
         liked your <Link to={`/p/${notification?.post}`}>post</Link>
@@ -27,7 +34,14 @@ const Notification = ({ notification }) => {
   if (notification.notificationType === "FOLLOW") {
     notificationMessage = (
       <p className='notification-link'>
-        <Link to={`/${notification?.notifyingUser?.username || "#"}`}>
+        <Link
+          to={`/${notification?.notifyingUser?.username || "#"}`}
+          aria-label={
+            notification?.notifyingUser?.username
+              ? `move to ${notification?.notifyingUser?.username}'s profile`
+              : "user not located. unable to move to user profile"
+          }
+        >
           {notification?.notifyingUser?.username || "A user"}
         </Link>{" "}
         followed you
@@ -37,7 +51,14 @@ const Notification = ({ notification }) => {
   if (notification.notificationType === "COMMENT") {
     notificationMessage = (
       <p className='notification-link'>
-        <Link to={`/${notification?.notifyingUser?.username || "#"}`}>
+        <Link
+          to={`/${notification?.notifyingUser?.username || "#"}`}
+          aria-label={
+            notification?.notifyingUser?.username
+              ? `move to ${notification?.notifyingUser?.username}'s profile`
+              : "user not located. unable to move to user profile"
+          }
+        >
           {notification?.notifyingUser?.username || "A user"}
         </Link>{" "}
         commented on your <Link to={`/p/${notification?.post}`}>post</Link>
@@ -56,6 +77,11 @@ const Notification = ({ notification }) => {
         <Link
           to={`/${notification?.notifyingUser?.username}`}
           className='flex-container flex-align-center height-100'
+          aria-label={
+            notification?.notifyingUser?.username
+              ? `move to ${notification?.notifyingUser?.username}'s profile`
+              : "user not located. unable to move to user profile"
+          }
         >
           <img
             className='user-image circular-image'
