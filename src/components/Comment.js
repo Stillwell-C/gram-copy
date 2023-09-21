@@ -25,9 +25,9 @@ const Comment = ({
 
   useEffect(() => {
     if (comment.updatedAt) setDateCheck(true);
-    let fromNow = moment(comment.updatedAt).fromNow(true);
+    let fromNow = moment(comment?.updatedAt).fromNow(true);
     setFormatedDate(fromNow);
-  }, [comment.updatedAt]);
+  }, [comment?.updatedAt]);
 
   const handleClose = () => {
     if (setShowPhotoModal) {
@@ -40,8 +40,12 @@ const Comment = ({
       {showImage && (
         <div className='comment-image'>
           <Link
-            aria-label={`move to ${comment.author.username}'s profile`}
-            to={`/${comment.author.username}`}
+            aria-label={
+              comment?.author?.username
+                ? `move to ${comment?.author?.username}'s profile`
+                : "user not located. unable to move to user profile"
+            }
+            to={`/${comment?.author?.username || "#"}`}
             onClick={handleClose}
           >
             <img src={userImgURL} alt='user profile' aria-hidden='true' />
@@ -51,11 +55,17 @@ const Comment = ({
       <div className='comment-main'>
         <div className='comment-main-top'>
           <Link
-            aria-label={`move to ${comment.author.username}'s profile`}
-            to={`/${comment.author.username}`}
+            aria-label={
+              comment?.author?.username
+                ? `move to ${comment?.author?.username}'s profile`
+                : "user not located. unable to move to user profile"
+            }
+            to={`/${comment?.author?.username || "#"}`}
             onClick={handleClose}
           >
-            <span className='comment-username'>{comment.author.username}</span>
+            <span className='comment-username'>
+              {comment?.author?.username || "A user"}
+            </span>
           </Link>
           <span className='comment-body'>{commentBody}</span>
         </div>
