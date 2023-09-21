@@ -54,30 +54,34 @@ const NotificationsPage = () => {
   });
 
   return (
-    <div className='flex-container fg-1 flex-column flex-align-center margin-top-3 notifications-page'>
-      <h2 className='margin-btm-2'>Notifications</h2>
-      <div className='notifications-content flex-container fg-1 flex-column flex-align-center gap-2'>
-        {content}
-        {isError && error?.response?.data?.message}
-        {(isLoading || isFetching) && (
-          <FadeLoader
-            cssOverride={{ alignSelf: "center", scale: "0.5" }}
-            color='#333'
-          />
-        )}
-        {hasNextPage && !isLoading && !isFetching && (
-          <div className='add-notifications-button-div'>
-            <button
-              type='button'
-              aria-label='show more comments'
-              onClick={fetchNextPage}
-            >
-              <img src={addNotificationsIcon} alt='' aria-hidden='true' />
-            </button>
-          </div>
-        )}
+    <div className='flex-container flex-column flex-align-center notifications-page width-100'>
+      <div className='notifications-container flex-container flex-column'>
+        <div className='header-div width-100'>
+          <h2 className='margin-btm-1'>Notifications</h2>
+        </div>
+        <div className='notifications-content width-100 flex-container flex-column gap-2'>
+          {content}
+          {isError && error?.response?.data?.message}
+          {(isLoading || isFetching) && (
+            <FadeLoader
+              cssOverride={{ alignSelf: "center", scale: "0.5" }}
+              color='#333'
+            />
+          )}
+          {hasNextPage && !isLoading && !isFetching && (
+            <div className='add-notifications-button-div width-100 flex-container flex-justify-center'>
+              <button
+                type='button'
+                aria-label='show more comments'
+                onClick={fetchNextPage}
+              >
+                <img src={addNotificationsIcon} alt='' aria-hidden='true' />
+              </button>
+            </div>
+          )}
+        </div>
       </div>
-      <div className='footer-container margin-top-2'>
+      <div className='footer-container'>
         <Footer />
       </div>
     </div>
