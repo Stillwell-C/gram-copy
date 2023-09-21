@@ -23,6 +23,7 @@ import FollowButton from "./FollowButton";
 import UnfollowButton from "./UnfollowButton";
 import ProfileUserImage from "./ProfileUserImage";
 import useParseNumber from "../hooks/useParseNumber";
+import BannedAccount from "./BannedAccount";
 
 const ProfileMain = () => {
   const { userID } = useParams();
@@ -176,117 +177,123 @@ const ProfileMain = () => {
     </>
   );
 
-  return (
-    !isLoading && (
-      <main className='profile-main-container fg-1 flex-container flex-column flex-align-center'>
-        <div className='profile-content-container width-100 flex-container flex-column'>
-          <div className='profile-top flex-container'>
-            <ProfileUserImage displayOwnPage={displayOwnPage} user={userData} />
-            <div className='user-info'>
-              <div className='user-info-top flex-container flex-column flex-align-start flex-justify-center'>
-                <div className='user-info-top-heading flex-container flex-align-center'>
-                  <div className='user-info-username'>{userID}</div>
-                  {!authenticatedUser && { optionsButton }}
-                </div>
-                {userInfoButtons}
+  const profilePage = (
+    <main className='profile-main-container fg-1 flex-container flex-column flex-align-center'>
+      <div className='profile-content-container width-100 flex-container flex-column'>
+        <div className='profile-top flex-container'>
+          <ProfileUserImage displayOwnPage={displayOwnPage} user={userData} />
+          <div className='user-info'>
+            <div className='user-info-top flex-container flex-column flex-align-start flex-justify-center'>
+              <div className='user-info-top-heading flex-container flex-align-center'>
+                <div className='user-info-username'>{userID}</div>
+                {!authenticatedUser && { optionsButton }}
               </div>
-              <div className='user-info-middle flex-align-center flex-justify-start'>
-                {userStats}
-              </div>
-              <div className='user-info-bottom'>
-                <div className='user-fullname'>{userData?.fullname}</div>
-                <div className='user-bio'>{userData?.userBio}</div>
-              </div>
+              {userInfoButtons}
+            </div>
+            <div className='user-info-middle flex-align-center flex-justify-start'>
+              {userStats}
+            </div>
+            <div className='user-info-bottom'>
+              <div className='user-fullname'>{userData?.fullname}</div>
+              <div className='user-bio'>{userData?.userBio}</div>
             </div>
           </div>
-          <div className='user-info-stats-small width-100 flex-container flex-align-center'>
-            {userStats}
-          </div>
-          <div className='profile-bottom width-100'>
-            <nav
-              className='display-selector'
-              aria-label='Toggle posts displayed on profile page navigation menu'
+        </div>
+        <div className='user-info-stats-small width-100 flex-container flex-align-center'>
+          {userStats}
+        </div>
+        <div className='profile-bottom width-100'>
+          <nav
+            className='display-selector'
+            aria-label='Toggle posts displayed on profile page navigation menu'
+          >
+            <button
+              className={`display-selector-individual transparent-button ${
+                displaySelector === "posts" ? "active" : ""
+              }`}
+              aria-label='display user posts'
+              aria-current={displaySelector === "posts"}
+              onClick={() => setDisplaySelector("posts")}
             >
+              <img src={grid} alt='grid icon'></img>
+              <span>POSTS</span>
+            </button>
+            {displayOwnPage && (
               <button
                 className={`display-selector-individual transparent-button ${
-                  displaySelector === "posts" ? "active" : ""
+                  displaySelector === "saved" ? "active" : ""
                 }`}
-                aria-label='display user posts'
-                aria-current={displaySelector === "posts"}
-                onClick={() => setDisplaySelector("posts")}
+                aria-label='display saved posts'
+                aria-current={displaySelector === "saved"}
+                onClick={() => setDisplaySelector("saved")}
               >
-                <img src={grid} alt='grid icon'></img>
-                <span>POSTS</span>
+                <img src={bookmark} alt='bookmark icon'></img>
+                <span>SAVED</span>
               </button>
-              {displayOwnPage && (
-                <button
-                  className={`display-selector-individual transparent-button ${
-                    displaySelector === "saved" ? "active" : ""
-                  }`}
-                  aria-label='display saved posts'
-                  aria-current={displaySelector === "saved"}
-                  onClick={() => setDisplaySelector("saved")}
-                >
-                  <img src={bookmark} alt='bookmark icon'></img>
-                  <span>SAVED</span>
-                </button>
-              )}
-              <button
-                className={`display-selector-individual transparent-button ${
-                  displaySelector === "tagged" ? "active" : ""
-                }`}
-                aria-label='display tagged posts'
-                aria-current={displaySelector === "tagged"}
-                onClick={() => setDisplaySelector("tagged")}
-              >
-                <img src={tagged} alt='tagged user icon'></img>
-                <span>TAGGED</span>
-              </button>
-            </nav>
-            <div className='profile-img-feed-container'>
-              {displaySelector === "posts" && (
-                <ProfilePosts userID={userData?._id} />
-              )}
-              {displaySelector === "saved" && (
-                <ProfileSaved userID={userData?._id} />
-              )}
-              {displaySelector === "tagged" && (
-                <ProfileTagged userID={userData?._id} />
-              )}
-            </div>
+            )}
+            <button
+              className={`display-selector-individual transparent-button ${
+                displaySelector === "tagged" ? "active" : ""
+              }`}
+              aria-label='display tagged posts'
+              aria-current={displaySelector === "tagged"}
+              onClick={() => setDisplaySelector("tagged")}
+            >
+              <img src={tagged} alt='tagged user icon'></img>
+              <span>TAGGED</span>
+            </button>
+          </nav>
+          <div className='profile-img-feed-container'>
+            {displaySelector === "posts" && (
+              <ProfilePosts userID={userData?._id} />
+            )}
+            {displaySelector === "saved" && (
+              <ProfileSaved userID={userData?._id} />
+            )}
+            {displaySelector === "tagged" && (
+              <ProfileTagged userID={userData?._id} />
+            )}
           </div>
         </div>
-        <div className='footer-container'>
-          <Footer />
-        </div>
-        {showAdditionalOptionsModal && (
-          <AdditionalOptionsModal
-            setShowAdditionalOptionsModal={setShowAdditionalOptionsModal}
-            setShowReportModal={setShowReportModal}
-          />
-        )}
-        {showReportModal && (
-          <ReportModal
-            setShowReportModal={setShowReportModal}
-            reportDistinction={"User"}
-            reportId={userData?._id}
-          />
-        )}
-        {showFollowingModal && (
-          <FollowingModal
-            setShowFollowingModal={setShowFollowingModal}
-            user={userData}
-          />
-        )}
-        {showFollowerModal && (
-          <FollowerModal
-            setShowFollowerModal={setShowFollowerModal}
-            user={userData}
-          />
-        )}
-      </main>
-    )
+      </div>
+      <div className='footer-container'>
+        <Footer />
+      </div>
+      {showAdditionalOptionsModal && (
+        <AdditionalOptionsModal
+          setShowAdditionalOptionsModal={setShowAdditionalOptionsModal}
+          setShowReportModal={setShowReportModal}
+        />
+      )}
+      {showReportModal && (
+        <ReportModal
+          setShowReportModal={setShowReportModal}
+          reportDistinction={"User"}
+          reportId={userData?._id}
+        />
+      )}
+      {showFollowingModal && (
+        <FollowingModal
+          setShowFollowingModal={setShowFollowingModal}
+          user={userData}
+        />
+      )}
+      {showFollowerModal && (
+        <FollowerModal
+          setShowFollowerModal={setShowFollowerModal}
+          user={userData}
+        />
+      )}
+    </main>
   );
+
+  const bannedUserPage = <BannedAccount />;
+
+  const pageContent = !userData?.banned ? profilePage : bannedUserPage;
+
+  const returnedContent = !isLoading ? pageContent : null;
+
+  return returnedContent;
 };
 
 export default ProfileMain;
