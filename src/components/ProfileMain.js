@@ -186,7 +186,7 @@ const ProfileMain = () => {
             <div className='user-info-top flex-container flex-column flex-align-start flex-justify-center'>
               <div className='user-info-top-heading flex-container flex-align-center'>
                 <div className='user-info-username'>{userID}</div>
-                {!authenticatedUser && { optionsButton }}
+                {!authenticatedUser && optionsButton}
               </div>
               {userInfoButtons}
             </div>
@@ -196,6 +196,13 @@ const ProfileMain = () => {
             <div className='user-info-bottom'>
               <div className='user-fullname'>{userData?.fullname}</div>
               <div className='user-bio'>{userData?.userBio}</div>
+              {userData?.urlLink.length > 0 && (
+                <div className='user-link'>
+                  <a href={userData?.urlLink}>
+                    {userData?.urlLinkText || userData?.urlLink}
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         </div>
