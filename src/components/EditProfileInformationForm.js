@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { updateUser } from "../features/users/usersApiRoutes";
 import { useNavigate } from "react-router-dom";
+import useLimitLineBreaks from "../hooks/useLimitLineBreaks";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 
@@ -14,6 +15,7 @@ const EditProfileInformationForm = ({
   setConfirmationMsg,
 }) => {
   const navigate = useNavigate();
+  const limitLineBreaks = useLimitLineBreaks();
 
   const [updatedInfo, setUpdatedInfo] = useState({
     username: user?.username || "",
@@ -24,19 +26,9 @@ const EditProfileInformationForm = ({
   });
 
   const parseUserBio = (userBioInput) => {
-    if ((userBioInput.match(/\n/g) || []).length >= 3) {
-      const splitBio = userBioInput.split("\n");
-      const topThreeLines = splitBio.slice(0, 3).join("\n");
-
-      setUpdatedInfo({
-        ...updatedInfo,
-        userBio: `${topThreeLines}`,
-      });
-      return;
-    }
     setUpdatedInfo({
       ...updatedInfo,
-      userBio: userBioInput,
+      userBio: limitLineBreaks(userBioInput, 3),
     });
   };
 
