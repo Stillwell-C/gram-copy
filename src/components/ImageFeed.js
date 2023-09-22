@@ -11,54 +11,17 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 const FOLLOWFEED_REGEX = /^\/$/;
 const EXPLORE_REGEX = /^\/explore/i;
 
-const ImageFeed = () => {
+const ImageFeed = ({
+  postData,
+  isError,
+  error,
+  isLoading,
+  isFetching,
+  hasNextPage,
+  fetchNextPage,
+  homeFeed = false,
+}) => {
   const { authenticatedUser } = useAuth();
-  const { pathname } = useLocation();
-
-  const dispatch = useDispatch();
-
-  const postLoadLimit = 5;
-
-  //Set different queries for the following feed and the explore page
-  const displayFollowingFeed = FOLLOWFEED_REGEX.test(pathname) ? true : false;
-  const queryKey = FOLLOWFEED_REGEX.test(pathname) ? "posts" : "exploreFeed";
-  const enabled = EXPLORE_REGEX.test(pathname)
-    ? true
-    : authenticatedUser
-    ? true
-    : false;
-
-  const {
-    data: postData,
-    isLoading,
-    isError,
-    error,
-    isFetching,
-    hasNextPage,
-    fetchNextPage,
-  } = useInfiniteQuery({
-    queryKey: [queryKey],
-    queryFn: ({ pageParam = 1 }) =>
-      getMultiplePosts({
-        pageParam,
-        limit: postLoadLimit,
-        followingFeed: displayFollowingFeed,
-      }),
-    refetchOnWindowFocus: false,
-    enabled,
-    getNextPageParam: (lastPage, pages) => {
-      if (lastPage.page < lastPage.totalPages) return lastPage.page + 1;
-      return false;
-    },
-  });
-
-  useEffect(() => {
-    if (isLoading) {
-      dispatch(setLoading(true));
-      return;
-    }
-    dispatch(setLoading(false));
-  }, [isLoading]);
 
   const observer = useRef();
   const lastPostRef = useCallback(
@@ -124,7 +87,11 @@ const ImageFeed = () => {
     <section className='img-feed-container'>
       <>
         {content}
-        {!isFetching && !isLoading && !content?.length && noFollowingDiv}
+        {!isFetching &&
+          !isLoading &&
+          !content?.length &&
+          homeFeed &&
+          noFollowingDiv}
         {(isFetching || isLoading) && (
           <div className='loading-div'>
             <FadeLoader cssOverride={{ scale: "0.5" }} color='#333' />
