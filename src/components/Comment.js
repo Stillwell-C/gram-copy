@@ -63,7 +63,6 @@ const Comment = ({
         );
       });
     });
-    console.log(parsedText);
     return <span className='comment-body'>{parsedText}</span>;
   };
 
