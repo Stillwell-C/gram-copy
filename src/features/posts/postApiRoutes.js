@@ -28,6 +28,29 @@ export const getMultiplePosts = async ({ pageParam, ...args }) => {
   }
 };
 
+export const searchPosts = async ({ pageParam, ...args }) => {
+  try {
+    const response = await gramCopyApi.get(`/posts/search`, {
+      params: { page: pageParam, ...args },
+    });
+    const postDataWithPage = response.data.posts.map((post) => ({
+      ...post,
+      pageNo: pageParam - 1,
+    }));
+    return {
+      ...response.data,
+      posts: postDataWithPage,
+      page: pageParam,
+    };
+  } catch (err) {
+    return {
+      posts: [],
+      totalPosts: 0,
+      page: 0,
+    };
+  }
+};
+
 export const getTaggedPosts = async ({ pageParam, userID, ...args }) => {
   try {
     const response = await gramCopyApi.get(`/posts/tagged/${userID}`, {
