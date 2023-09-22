@@ -11,11 +11,6 @@ const Comment = ({
   showTime,
   setShowPhotoModal,
 }) => {
-  let commentBody = comment.commentBody;
-  if (abbreviate && commentBody?.length > 150) {
-    commentBody = `${commentBody.slice(0, 150)}...`;
-  }
-
   const [dateCheck, setDateCheck] = useState(false);
   const [formatedDate, setFormatedDate] = useState("");
 
@@ -38,7 +33,9 @@ const Comment = ({
   const parseComment = (commentText) => {
     const hashtagRegex = /#(\w+)/g;
     const atRegex = /@(\w+)/g;
-    const commentLines = commentText.split("\n");
+    const commentLines = abbreviate
+      ? commentText.split("\n").slice(0, 4)
+      : commentText.split("\n");
     const parsedText = commentLines.map((line) => {
       const lineWords = line.split(" ");
       return lineWords.map((fragment, i) => {
@@ -63,7 +60,12 @@ const Comment = ({
         );
       });
     });
-    return <span className='comment-body'>{parsedText}</span>;
+    return (
+      <span className='comment-body'>
+        {parsedText}
+        {abbreviate && commentText.split("\n").length > 4 && <>...</>}
+      </span>
+    );
   };
 
   const parsedCommentBody = parseComment(comment.commentBody);
