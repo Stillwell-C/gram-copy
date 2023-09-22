@@ -38,23 +38,32 @@ const Comment = ({
   const parseComment = (commentText) => {
     const hashtagRegex = /#(\w+)/g;
     const atRegex = /@(\w+)/g;
-    const parsedText = commentText.split(" ").map((fragment) => {
-      if (hashtagRegex.test(fragment)) {
+    const commentLines = commentText.split("\n");
+    const parsedText = commentLines.map((line) => {
+      const lineWords = line.split(" ");
+      return lineWords.map((fragment, i) => {
+        const key = `${fragment}-${i}`;
+        let parsedFragment = fragment;
+        if (hashtagRegex.test(fragment)) {
+          parsedFragment = (
+            <Link to={`/search/hash/${fragment.substring(1)}`}>{fragment}</Link>
+          );
+        }
+        if (atRegex.test(fragment)) {
+          parsedFragment = (
+            <Link to={`/${fragment.substring(1)}`}>{fragment}</Link>
+          );
+        }
+        const spaceOrBreak = i + 1 === lineWords.length ? <br /> : " ";
         return (
-          <>
-            <Link to={`/search/hash/${fragment.substring(1)}`}>{fragment}</Link>{" "}
-          </>
+          <React.Fragment key={key}>
+            {parsedFragment}
+            {spaceOrBreak}
+          </React.Fragment>
         );
-      }
-      if (atRegex.test(fragment)) {
-        return (
-          <>
-            <Link to={`/${fragment.substring(1)}`}>{fragment}</Link>{" "}
-          </>
-        );
-      }
-      return fragment;
+      });
     });
+    console.log(parsedText);
     return <span className='comment-body'>{parsedText}</span>;
   };
 
