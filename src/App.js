@@ -6,7 +6,6 @@ import Layout from "./components/Layout";
 import ChatMain from "./components/chatComponents/chatMain/ChatMain";
 import PersistentLogin from "./features/auth/PersistentLogin";
 import NotFound from "./components/NotFound";
-import FeedContainer from "./components/FeedContainer";
 import AccountError from "./components/AccountError";
 import ErrorPage from "./components/ErrorPage";
 import SinglePostPage from "./components/SinglePostPage";
@@ -16,6 +15,9 @@ import RequireLogin from "./features/auth/RequireLogin";
 import EditProfileMain from "./components/EditProfileMain";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
+import HomeFeed from "./components/HomeFeed";
+import ExploreFeed from "./components/ExploreFeed";
+import SearchFeed from "./components/SearchFeed";
 
 function App() {
   return (
@@ -23,8 +25,13 @@ function App() {
       <Route element={<PersistentLogin />}>
         <Route path='/' element={<Layout />}>
           <Route element={<Navbar />}>
-            <Route index element={<FeedContainer />} />
-            <Route index path='/explore' element={<FeedContainer />} />
+            <Route index element={<HomeFeed />} />
+            <Route index path='/explore' element={<ExploreFeed />} />
+            <Route
+              index
+              path='/search/:searchParam/:searchQuery'
+              element={<SearchFeed />}
+            />
             <Route path='/:userID' element={<ProfileMain />} />
             <Route path='/p/:postID' element={<SinglePostPage />} />
 
