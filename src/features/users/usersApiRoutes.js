@@ -2,7 +2,7 @@ import gramCopyApi from "../../app/api/gramCopyApi";
 import { store } from "../../app/store";
 import { setCredentials } from "../auth/authSlice";
 
-export const getUserSearch = async (searchQuery, pageParam, args) => {
+export const getUserSearch = async ({ searchQuery, pageParam, args }) => {
   const response = await gramCopyApi.get(`/users/search/${searchQuery}`, {
     params: { page: pageParam, ...args },
   });
