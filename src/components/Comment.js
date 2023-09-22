@@ -35,7 +35,7 @@ const Comment = ({
     const atRegex = /@(\w+)/g;
     const commentLines = abbreviate
       ? commentText.split("\n").slice(0, 4)
-      : commentText.split("\n");
+      : commentText.split("\n").slice(0, 20);
     const parsedText = commentLines.map((line) => {
       const lineWords = line.split(" ");
       return lineWords.map((fragment, i) => {
