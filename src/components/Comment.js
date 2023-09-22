@@ -35,6 +35,31 @@ const Comment = ({
     }
   };
 
+  const parseComment = (commentText) => {
+    const hashtagRegex = /#(\w+)/g;
+    const atRegex = /@(\w+)/g;
+    const parsedText = commentText.split(" ").map((fragment) => {
+      if (hashtagRegex.test(fragment)) {
+        return (
+          <>
+            <Link to={`/search/hash/${fragment.substring(1)}`}>{fragment}</Link>{" "}
+          </>
+        );
+      }
+      if (atRegex.test(fragment)) {
+        return (
+          <>
+            <Link to={`/${fragment.substring(1)}`}>{fragment}</Link>{" "}
+          </>
+        );
+      }
+      return fragment;
+    });
+    return <span className='comment-body'>{parsedText}</span>;
+  };
+
+  const parsedCommentBody = parseComment(comment.commentBody);
+
   return (
     <div className='single-comment'>
       {showImage && (
@@ -67,7 +92,7 @@ const Comment = ({
               {comment?.author?.username || "A user"}
             </span>
           </Link>
-          <span className='comment-body'>{commentBody}</span>
+          {parsedCommentBody}
         </div>
         {showTime && dateCheck && (
           <div className='comment-main-bottom'>{formatedDate}</div>
