@@ -55,7 +55,14 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
               <div className='userName'>{post.user.username}</div>
             </Link>
             <div className='photoLocation'>
-              {post.location && post.location}
+              {post.location && (
+                <Link
+                  to={`/search/location/${post.location}`}
+                  aria-label={`search for other posts from this location`}
+                >
+                  {post.location}
+                </Link>
+              )}
             </div>
           </div>
         </div>
