@@ -4,6 +4,7 @@ import { addNewPost } from "../features/posts/postApiRoutes";
 import useAuth from "../hooks/useAuth";
 import locationImg from "../assets/location-svgrepo-com.svg";
 import downArrow from "../assets/down-arrow-backup-2-svgrepo-com.svg";
+import useLimitLineBreaks from "../hooks/useLimitLineBreaks";
 
 const CreatePostInformationForm = ({
   handleClear,
@@ -14,6 +15,8 @@ const CreatePostInformationForm = ({
 }) => {
   const queryClient = useQueryClient();
   const { id, username, img } = useAuth();
+
+  const limitLineBreaks = useLimitLineBreaks();
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
 
@@ -110,7 +113,10 @@ const CreatePostInformationForm = ({
                   className='caption-textarea'
                   value={formData.caption}
                   onChange={(e) => {
-                    setFormData({ ...formData, caption: e.target.value });
+                    setFormData({
+                      ...formData,
+                      caption: limitLineBreaks(e.target.value, 10),
+                    });
                   }}
                   maxLength='2200'
                   placeholder='Write a caption...'
