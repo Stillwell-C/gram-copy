@@ -24,9 +24,6 @@ const EditProfileInformationForm = ({
   });
 
   const parseUserBio = (userBioInput) => {
-    console.log(userBioInput);
-    console.log((userBioInput.match(/\n/g) || []).length);
-    console.log(userBioInput.slice(-2) === "\n");
     if ((userBioInput.match(/\n/g) || []).length >= 3) {
       const splitBio = userBioInput.split("\n");
       const topThreeLines = splitBio.slice(0, 3).join("\n");
