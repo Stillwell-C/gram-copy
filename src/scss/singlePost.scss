@@ -188,6 +188,9 @@
           }
           .comment-body {
             white-space: pre-wrap;
+            a {
+              color: $link-blue;
+            }
           }
         }
 
