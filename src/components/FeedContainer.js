@@ -2,10 +2,28 @@ import FeedRightInfo from "./FeedRightInfo";
 import ImageFeed from "./ImageFeed";
 import "../scss/feedContainer.scss";
 
-const FeedContainer = () => {
+const FeedContainer = ({
+  postData,
+  homeFeed,
+  isLoading,
+  isFetching,
+  hasNextPage,
+  fetchNextPage,
+  isError,
+  error,
+}) => {
   return (
     <main className='flex-container flex-justify-center fg-1'>
-      <ImageFeed />
+      <ImageFeed
+        postData={postData}
+        homeFeed={homeFeed}
+        isLoading={isLoading}
+        isFetching={isFetching}
+        hasNextPage={hasNextPage}
+        fetchNextPage={fetchNextPage}
+        isError={isError}
+        error={error}
+      />
       <FeedRightInfo />
     </main>
   );
