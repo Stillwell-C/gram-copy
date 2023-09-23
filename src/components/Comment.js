@@ -3,6 +3,7 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 
 import defaultProfilePic from "../assets/Default_pfp.svg";
+import useParseTextForLinks from "../hooks/useTextParseForLinks";
 
 const Comment = ({
   comment,
@@ -13,6 +14,8 @@ const Comment = ({
 }) => {
   const [dateCheck, setDateCheck] = useState(false);
   const [formatedDate, setFormatedDate] = useState("");
+
+  const parseTextForLinks = useParseTextForLinks();
 
   const userImgURL = comment?.author?.userImgKey
     ? `https://res.cloudinary.com/danscxcd2/image/upload/w_90,c_fill/${comment?.author?.userImgKey}`
@@ -30,45 +33,12 @@ const Comment = ({
     }
   };
 
-  const parseComment = (commentText) => {
-    const hashtagRegex = /#(\w+)/g;
-    const atRegex = /@(\w+)/g;
-    const commentLines = abbreviate
-      ? commentText.split("\n").slice(0, 4)
-      : commentText.split("\n").slice(0, 20);
-    const parsedText = commentLines.map((line) => {
-      const lineWords = line.split(" ");
-      return lineWords.map((fragment, i) => {
-        const key = `${fragment}-${i}`;
-        let parsedFragment = fragment;
-        if (hashtagRegex.test(fragment)) {
-          parsedFragment = (
-            <Link to={`/search/hash/${fragment.substring(1)}`}>{fragment}</Link>
-          );
-        }
-        if (atRegex.test(fragment)) {
-          parsedFragment = (
-            <Link to={`/${fragment.substring(1)}`}>{fragment}</Link>
-          );
-        }
-        const spaceOrBreak = i + 1 === lineWords.length ? <br /> : " ";
-        return (
-          <React.Fragment key={key}>
-            {parsedFragment}
-            {spaceOrBreak}
-          </React.Fragment>
-        );
-      });
-    });
-    return (
-      <span className='comment-body'>
-        {parsedText}
-        {abbreviate && commentText.split("\n").length > 4 && <>...</>}
-      </span>
-    );
-  };
-
-  const parsedCommentBody = parseComment(comment.commentBody);
+  const commentMaxLength = abbreviate ? 4 : 20;
+  const parsedCommentBody = parseTextForLinks(
+    comment.commentBody,
+    commentMaxLength,
+    abbreviate
+  );
 
   return (
     <div className='single-comment'>
