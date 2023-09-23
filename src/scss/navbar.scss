@@ -522,7 +522,7 @@
     border-radius: 0 16px 16px 0;
     border-right: 1px solid $margin-grey;
     z-index: 3;
-    overflow-x: hidden;
+    overflow: hidden;
 
     .search-top {
       .search-header-div {
@@ -545,7 +545,7 @@
 
           label {
             input {
-              width: 180%;
+              width: 100%;
             }
           }
         }
@@ -554,7 +554,8 @@
 
     .search-results-container {
       flex-grow: 1;
-      height: 100%;
+      height: calc(100vh - 160px);
+      height: calc(100svh - 160px);
       width: 100%;
       overflow-y: auto;
       overflow-x: hidden;
