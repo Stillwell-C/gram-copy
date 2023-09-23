@@ -9,6 +9,7 @@ const ExploreFeed = () => {
   const dispatch = useDispatch();
 
   const postLoadLimit = 5;
+  const queryKey = ["exploreFeed"];
 
   const {
     data: postData,
@@ -19,7 +20,7 @@ const ExploreFeed = () => {
     hasNextPage,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ["exploreFeed"],
+    queryKey,
     queryFn: ({ pageParam = 1 }) =>
       getMultiplePosts({
         pageParam,
@@ -52,6 +53,7 @@ const ExploreFeed = () => {
         fetchNextPage={fetchNextPage}
         isError={isError}
         error={error}
+        queryKey={queryKey}
       />
     );
 };

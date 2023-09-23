@@ -15,7 +15,7 @@ import useAuth from "../hooks/useAuth";
 import DeletePostConfirmationModal from "./DeletePostConfirmationModal";
 import TagUsersModal from "./TagUsersModal";
 
-const ImgFeedCard = React.forwardRef(({ post }, ref) => {
+const ImgFeedCard = React.forwardRef(({ post, queryKey }, ref) => {
   const { id } = useAuth();
 
   const [showPhotoModal, setShowPhotoModal] = useState(false);
@@ -110,6 +110,7 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
               like={post?.isLiked}
               postID={post?._id}
               postPage={post?.pageNo}
+              queryKey={queryKey}
             />
             <button
               className='commentButton icon-button'
@@ -134,6 +135,7 @@ const ImgFeedCard = React.forwardRef(({ post }, ref) => {
               save={post?.isSaved}
               postID={post?._id}
               postPage={post?.pageNo}
+              queryKey={queryKey}
             />
           </div>
         </div>

@@ -31,6 +31,8 @@ const SearchFeed = () => {
     formattedSearchQuery.replace("%20", " ");
   }
 
+  const queryKey = ["searchFeed", formattedSearchParam, formattedSearchQuery];
+
   const {
     data: postData,
     isLoading,
@@ -40,7 +42,7 @@ const SearchFeed = () => {
     hasNextPage,
     fetchNextPage,
   } = useInfiniteQuery({
-    queryKey: ["searchFeed", formattedSearchParam, formattedSearchQuery],
+    queryKey,
     queryFn: ({ pageParam = 1 }) =>
       searchPosts({
         pageParam,
@@ -75,6 +77,7 @@ const SearchFeed = () => {
         fetchNextPage={fetchNextPage}
         isError={isError}
         error={error}
+        queryKey={queryKey}
       />
     );
 };

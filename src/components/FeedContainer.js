@@ -11,6 +11,7 @@ const FeedContainer = ({
   fetchNextPage,
   isError,
   error,
+  queryKey,
 }) => {
   return (
     <main className='flex-container flex-justify-center fg-1'>
@@ -23,6 +24,7 @@ const FeedContainer = ({
         fetchNextPage={fetchNextPage}
         isError={isError}
         error={error}
+        queryKey={queryKey}
       />
       <FeedRightInfo />
     </main>
