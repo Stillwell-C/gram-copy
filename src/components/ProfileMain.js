@@ -24,6 +24,7 @@ import UnfollowButton from "./UnfollowButton";
 import ProfileUserImage from "./ProfileUserImage";
 import useParseNumber from "../hooks/useParseNumber";
 import BannedAccount from "./BannedAccount";
+import useParseTextForLinks from "../hooks/useTextParseForLinks";
 
 const ProfileMain = () => {
   const { userID } = useParams();
@@ -31,6 +32,8 @@ const ProfileMain = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const parseNum = useParseNumber();
+
+  const parseTextForLinks = useParseTextForLinks();
 
   const {
     data: userData,
@@ -177,6 +180,10 @@ const ProfileMain = () => {
     </>
   );
 
+  const parsedUserBio =
+    userData?.userBio.length > 0 &&
+    parseTextForLinks(userData?.userBio, 5, false);
+
   const profilePage = (
     <main className='profile-main-container fg-1 flex-container flex-column flex-align-center'>
       <div className='profile-content-container width-100 flex-container flex-column'>
@@ -195,7 +202,7 @@ const ProfileMain = () => {
             </div>
             <div className='user-info-bottom'>
               <div className='user-fullname'>{userData?.fullname}</div>
-              <div className='user-bio'>{userData?.userBio}</div>
+              <div className='user-bio'>{parsedUserBio}</div>
               {userData?.urlLink.length > 0 && (
                 <div className='user-link'>
                   <a href={userData?.urlLink}>
