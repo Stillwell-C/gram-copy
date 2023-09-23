@@ -28,7 +28,7 @@ const EditProfileInformationForm = ({
   const parseUserBio = (userBioInput) => {
     setUpdatedInfo({
       ...updatedInfo,
-      userBio: limitLineBreaks(userBioInput, 3),
+      userBio: limitLineBreaks(userBioInput, 5),
     });
   };
 
