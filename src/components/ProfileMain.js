@@ -48,13 +48,21 @@ const ProfileMain = () => {
   });
 
   useEffect(() => {
-    if (isError && error.response.status === 400) {
+    if (isError && error?.response?.status === 400) {
       navigate("/error", {
         replace: true,
         state: {
           errorTitle: "User not found.",
           errorMessage:
             "The link you followed may be broken, or the page may have been removed.",
+        },
+      });
+    }
+    if (isError) {
+      navigate("/error", {
+        replace: true,
+        state: {
+          errorCode: error?.response?.status,
         },
       });
     }
