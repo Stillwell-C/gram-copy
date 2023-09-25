@@ -44,12 +44,13 @@ const EditProfileInformation = () => {
 
   useEffect(() => {
     if (isError || error) {
-      if (isError)
+      if (isError) {
         setErrorMsg(
           userDataError?.response?.data?.message ||
             "An error occurred. Please try again."
         );
-      errRef.current.focus();
+      }
+      errRef?.current?.focus();
     }
   }, [isError || error]);
 
