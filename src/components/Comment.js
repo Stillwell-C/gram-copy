@@ -69,7 +69,7 @@ const Comment = ({
             onClick={handleClose}
           >
             <span className='comment-username'>
-              {comment?.author?.username || "A user"}
+              {comment?.author?.username || "Deleted User"}
             </span>
           </Link>
           {parsedCommentBody}

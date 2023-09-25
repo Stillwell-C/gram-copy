@@ -25,7 +25,7 @@ const Notification = ({ notification }) => {
               : "user not located. unable to move to user profile"
           }
         >
-          {notification?.notifyingUser?.username || "A user"}
+          {notification?.notifyingUser?.username || "Deleted User"}
         </Link>{" "}
         liked your <Link to={`/p/${notification?.post}`}>post</Link>
       </p>
@@ -42,7 +42,7 @@ const Notification = ({ notification }) => {
               : "user not located. unable to move to user profile"
           }
         >
-          {notification?.notifyingUser?.username || "A user"}
+          {notification?.notifyingUser?.username || "Deleted User"}
         </Link>{" "}
         followed you
       </p>
@@ -59,7 +59,7 @@ const Notification = ({ notification }) => {
               : "user not located. unable to move to user profile"
           }
         >
-          {notification?.notifyingUser?.username || "A user"}
+          {notification?.notifyingUser?.username || "Deleted User"}
         </Link>{" "}
         commented on your <Link to={`/p/${notification?.post}`}>post</Link>
       </p>
