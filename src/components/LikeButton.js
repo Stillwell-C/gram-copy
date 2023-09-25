@@ -38,6 +38,9 @@ const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
       if (queryKeyInvalidationKey[0] !== "posts") {
         queryClient.invalidateQueries({ queryKey: ["posts"] });
       }
+      if (queryKeyInvalidationKey[0] !== "explore") {
+        queryClient.invalidateQueries({ queryKey: ["explore"] });
+      }
       //Maybe just stop here
       // queryClient.invalidateQueries({
       //   queryKey: queryKeyInvalidationKey,
