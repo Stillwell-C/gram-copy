@@ -43,15 +43,7 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
   const imgURLLarge = `https://res.cloudinary.com/danscxcd2/image/upload/w_1500/${post?.imgKey}`;
   const imgURL = `https://res.cloudinary.com/danscxcd2/image/upload/${post?.imgKey}`;
 
-  const followButton = (
-    <FollowButton
-      user={post.user}
-      queryKey={{
-        key: ["posts", post?.user?.username],
-        multipleInvalidation: true,
-      }}
-    />
-  );
+  const followButton = <FollowButton user={post.user} queryKey={queryKey} />;
 
   const handleCommentClick = () => {
     commentRef.current.focus();

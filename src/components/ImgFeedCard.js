@@ -178,7 +178,11 @@ const ImgFeedCard = React.forwardRef(({ post, queryKey }, ref) => {
         <AddCommentForm post={post} />
       </div>
       {showPhotoModal && (
-        <PhotoModal setShowPhotoModal={setShowPhotoModal} post={post} />
+        <PhotoModal
+          setShowPhotoModal={setShowPhotoModal}
+          post={post}
+          queryKey={queryKey}
+        />
       )}
       {showAdditionalOptionsModal && (
         <AdditionalOptionsModal
