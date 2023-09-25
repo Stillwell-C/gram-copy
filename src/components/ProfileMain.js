@@ -29,6 +29,7 @@ import useParseTextForLinks from "../hooks/useTextParseForLinks";
 const ProfileMain = () => {
   const { userID } = useParams();
   const { authenticatedUser, username } = useAuth();
+  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const parseNum = useParseNumber();
