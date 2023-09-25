@@ -4,7 +4,7 @@ import { addFollow } from "../features/follow/followApiRoutes";
 import useAuth from "../hooks/useAuth";
 import { useNavigate, useParams } from "react-router-dom";
 
-const FollowButton = ({ user }) => {
+const FollowButton = ({ user, queryKey }) => {
   const { authenticatedUser, id, username } = useAuth();
 
   const { userID: usernameKey } = useParams();
@@ -42,6 +42,35 @@ const FollowButton = ({ user }) => {
           return data;
         }
       });
+      queryClient.setQueryData(["explore"], (oldData) => {
+        if (oldData) {
+          const data = oldData;
+          for (const page of data.pages) {
+            for (const post of page.posts) {
+              if (post.user._id === user._id) {
+                post.isFollow = true;
+              }
+            }
+          }
+          return data;
+        }
+      });
+      if (queryKey) {
+        console.log(queryKey);
+        queryClient.setQueryData(queryKey, (oldData) => {
+          if (oldData) {
+            const data = oldData;
+            for (const page of data.pages) {
+              for (const post of page.posts) {
+                if (post.user._id === user._id) {
+                  post.isFollow = true;
+                }
+              }
+            }
+            return data;
+          }
+        });
+      }
       queryClient.setQueryData(["following", usernameKey], (oldData) => {
         if (oldData) {
           const data = oldData;
