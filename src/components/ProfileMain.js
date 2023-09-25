@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/authContext";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Footer from "./Footer";
 import "../scss/profileMain.scss";
 import grid from "../assets/grid-svgrepo-com.svg";
@@ -32,7 +32,6 @@ const ProfileMain = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const parseNum = useParseNumber();
-
   const parseTextForLinks = useParseTextForLinks();
 
   const {
@@ -75,6 +74,12 @@ const ProfileMain = () => {
     }
     dispatch(setLoading(false));
   }, [isLoading, userID]);
+
+  useEffect(() => {
+    document
+      .getElementById("content-outlet")
+      .scroll({ top: 0, behavior: "auto" });
+  }, []);
 
   const { currentUser } = useContext(AuthContext);
 
