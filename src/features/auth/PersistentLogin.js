@@ -9,7 +9,7 @@ import { setLoading } from "../display/displaySlice";
 import { refresh } from "./authApiRoutes";
 
 const PersistentLogin = () => {
-  const [persistentLogin, setPersistentLogin] = usePersistentLogin();
+  // const [persistentLogin, setPersistentLogin] = usePersistentLogin();
   const accessToken = useSelector(selectCurrentToken);
   const runEffect = useRef(false);
 
@@ -20,6 +20,8 @@ const PersistentLogin = () => {
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
   const [loginUninitalized, setLoginUninitialized] = useState(true);
+
+  const loggedInCookie = document.cookie.match(/^loggedIn=true$/i);
 
   // const [refresh, { isUninitialized, isLoading, isSuccess, isError }] =
   //   useRefreshMutation();
@@ -39,12 +41,14 @@ const PersistentLogin = () => {
           // dispatch(setCredentialsLoading(false));
         } catch (err) {
           // dispatch(setCredentialsLoading(false));
-          setPersistentLogin(false);
+          // setPersistentLogin(false);
+
+          //logout ?
           dispatch(setLoading(false));
           navigate("/accounts/login", { replace: true });
         }
       };
-      if (!accessToken && persistentLogin) verifyRefreshToken();
+      if (!accessToken && loggedInCookie) verifyRefreshToken();
     }
 
     return () => (runEffect.current = true);
@@ -56,7 +60,7 @@ const PersistentLogin = () => {
   //   pageContent = "";
   // } else
 
-  if (!persistentLogin || loginSuccess || (accessToken && loginUninitalized)) {
+  if (!loggedInCookie || loginSuccess || (accessToken && loginUninitalized)) {
     pageContent = <Outlet />;
   } else if (loginError) {
     //Make an error div or page
