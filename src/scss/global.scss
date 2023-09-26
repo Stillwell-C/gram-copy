@@ -181,3 +181,10 @@ button {
   object-fit: cover;
   border-radius: 50%;
 }
+
+.error-page {
+  a {
+    font-weight: 500;
+    color: $link-blue;
+  }
+}

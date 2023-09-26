@@ -26,7 +26,7 @@ const ErrorPage = () => {
   }
 
   return (
-    <main className='flex-container fg-1 flex-column flex-align-center margin-top-3 gap-1'>
+    <main className='flex-container fg-1 flex-column flex-align-center margin-top-3 gap-1 error-page'>
       <h2>{errorTitle}</h2>
       {errorMessage && <p>{errorMessage}</p>}
       {!errorMessage && <p>An error occurred. Please try again.</p>}
