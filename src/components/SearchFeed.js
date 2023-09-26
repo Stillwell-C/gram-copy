@@ -8,8 +8,6 @@ import { useParams } from "react-router-dom";
 
 const SearchFeed = () => {
   const { searchParam, searchQuery } = useParams();
-  console.log("param ", searchParam);
-  console.log("query ", searchQuery);
 
   const dispatch = useDispatch();
 
