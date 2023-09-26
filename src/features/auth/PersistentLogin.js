@@ -3,6 +3,7 @@ import usePersistentLogin from "../../hooks/usePersistentLogin";
 import { selectCurrentToken, setCredentialsLoading } from "./authSlice";
 import { useEffect, useRef, useState } from "react";
 import { useRefreshMutation } from "./authApiSlice";
+import { useSendLogoutMutation } from "./authApiSlice";
 import LoadingFullPage from "../../components/LoadingFullPage";
 import { Outlet, useNavigate } from "react-router-dom";
 import { setLoading } from "../display/displaySlice";
@@ -26,6 +27,16 @@ const PersistentLogin = () => {
   // const [refresh, { isUninitialized, isLoading, isSuccess, isError }] =
   //   useRefreshMutation();
 
+  const [
+    sendLogout,
+    {
+      isLoading: logoutLoading,
+      isSuccess: logoutSuccess,
+      isError: logoutIsError,
+      error: logoutError,
+    },
+  ] = useSendLogoutMutation();
+
   useEffect(() => {
     if (runEffect.current === true || process.env.NODE_ENV !== "development") {
       const verifyRefreshToken = async () => {
@@ -42,15 +53,17 @@ const PersistentLogin = () => {
         } catch (err) {
           // dispatch(setCredentialsLoading(false));
           // setPersistentLogin(false);
-
+          console.log(err);
           //logout ?
-          dispatch(setLoading(false));
+          await sendLogout();
+          document.cookie = "loggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
           navigate("/accounts/login", {
             replace: true,
             state: {
               errorMessage: "Please log in again.",
             },
           });
+          dispatch(setLoading(false));
         }
       };
       if (!accessToken && loggedInCookie) verifyRefreshToken();
@@ -59,17 +72,24 @@ const PersistentLogin = () => {
     return () => (runEffect.current = true);
   }, [accessToken]);
 
+  let pageContent;
+
   if (!loggedInCookie || loginSuccess || (accessToken && loginUninitalized)) {
-    return <Outlet />;
+    pageContent = <Outlet />;
   } else if (loginError) {
+    sendLogout();
+    document.cookie = "loggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
     navigate("/accounts/login", {
       replace: true,
       state: {
         errorMessage: "Please log in again.",
       },
     });
+    pageContent = <Outlet />;
     console.log(loginError);
   }
+
+  return pageContent;
 };
 
 export default PersistentLogin;
