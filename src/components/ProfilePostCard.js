@@ -32,7 +32,7 @@ const ProfilePostCard = React.forwardRef(
           sizes='(max-width: 349px) 200px, (max-width: 647px) 350px, 550px'
         />
         <div className='hover-div'>
-          {id === post.user._id && profilePosts && (
+          {id === post?.user?._id && profilePosts && (
             <div className='delete-btn-div'>
               <button
                 className='delete-btn'
@@ -43,7 +43,7 @@ const ProfilePostCard = React.forwardRef(
               </button>
             </div>
           )}
-          {id === post.user._id && profilePosts && (
+          {id === post?.user?._id && profilePosts && (
             <div className='tag-user-btn-div'>
               <button
                 className='tag-user-btn'
