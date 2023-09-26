@@ -85,7 +85,7 @@ const LoginForm = () => {
         >
           <div className='error-msg' aria-live='assertive' ref={errRef}>
             {errData?.data?.message}
-            {location?.state?.errorMessage}
+            {!errData?.data?.message && location?.state?.errorMessage}
           </div>
         </div>
         <form className='login-form' onSubmit={handleSignIn}>
