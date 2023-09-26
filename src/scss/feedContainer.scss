@@ -6,6 +6,11 @@
     width: 100%;
     width: clamp(250px, 80vw, 500px);
     text-align: center;
+
+    a {
+      font-weight: 500;
+      color: $link-blue;
+    }
   }
 
   @include mobile-large {
