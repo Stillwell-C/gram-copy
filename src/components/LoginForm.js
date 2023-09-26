@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../features/auth/authApiSlice";
 import { setCredentials } from "../features/auth/authSlice";
 import { useDispatch } from "react-redux";
@@ -10,6 +10,7 @@ import logo from "../assets/Instagram_logo.png";
 
 const LoginForm = () => {
   const errRef = useRef();
+  const location = useLocation();
 
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [email, setEmail] = useState("");
@@ -67,13 +68,24 @@ const LoginForm = () => {
     }
   }, [isError]);
 
+  useEffect(() => {
+    if (location?.state?.errorMessage) {
+      errRef.current.focus();
+    }
+  }, [location?.state?.errorMessage]);
+
   return (
     <div className='login-container'>
       <div className='login-top'>
         <img src={logo} alt='instagram logo' className='login-logo' />
-        <div className={isError ? "error-div" : "offscreen"}>
+        <div
+          className={
+            isError || location?.state?.errorMessage ? "error-div" : "offscreen"
+          }
+        >
           <div className='error-msg' aria-live='assertive' ref={errRef}>
             {errData?.data?.message}
+            {location?.state?.errorMessage}
           </div>
         </div>
         <form className='login-form' onSubmit={handleSignIn}>

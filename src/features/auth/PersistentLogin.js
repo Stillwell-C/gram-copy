@@ -45,7 +45,12 @@ const PersistentLogin = () => {
 
           //logout ?
           dispatch(setLoading(false));
-          navigate("/accounts/login", { replace: true });
+          navigate("/accounts/login", {
+            replace: true,
+            state: {
+              errorMessage: "Please log in again.",
+            },
+          });
         }
       };
       if (!accessToken && loggedInCookie) verifyRefreshToken();
@@ -54,20 +59,17 @@ const PersistentLogin = () => {
     return () => (runEffect.current = true);
   }, [accessToken]);
 
-  let pageContent;
-
-  // if (persistentLogin && isLoading) {
-  //   pageContent = "";
-  // } else
-
   if (!loggedInCookie || loginSuccess || (accessToken && loginUninitalized)) {
-    pageContent = <Outlet />;
+    return <Outlet />;
   } else if (loginError) {
-    //Make an error div or page
+    navigate("/accounts/login", {
+      replace: true,
+      state: {
+        errorMessage: "Please log in again.",
+      },
+    });
     console.log(loginError);
   }
-
-  return pageContent;
 };
 
 export default PersistentLogin;
