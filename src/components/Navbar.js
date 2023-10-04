@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, Outlet, useLocation, Link } from "react-router-dom";
-import { useSendLogoutMutation } from "../features/auth/authApiSlice";
 
 import "../scss/navbar.scss";
 import styles from "../scss/layout.module.scss";
@@ -22,6 +21,7 @@ import SideNavbar from "./SideNavbar";
 import SideNavbarSearch from "./SideNavbarSearch";
 import NavbarSearch from "./NavbarSearch";
 import FooterNavbar from "./FooterNavbar";
+import { logout } from "../features/auth/authApiRoutes";
 
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
@@ -42,17 +42,6 @@ const Navbar = () => {
     displayNav = false;
   }
 
-  const [sendLogout, { isLoading, isSuccess, isError, error }] =
-    useSendLogoutMutation();
-
-  useEffect(() => {
-    if (isSuccess) window.location.reload();
-  }, [isSuccess]);
-
-  useEffect(() => {
-    if (isError) window.location.reload();
-  }, [isError]);
-
   const handleAddPostModal = () => {
     if (!authenticatedUser) {
       navigate("/accounts/login");
@@ -63,7 +52,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     if (authenticatedUser) {
-      sendLogout();
+      await logout();
     }
   };
 
