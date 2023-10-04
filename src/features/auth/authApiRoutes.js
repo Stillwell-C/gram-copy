@@ -12,16 +12,11 @@ export const refresh = async () => {
 };
 
 export const logout = async () => {
-  try {
-    await gramCopyApi.post("/auth/logout");
-    //Extra assurance that loggedIn cookie is cleared
-    document.cookie = "loggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-    store.dispatch(logOut());
-    window.location.reload();
-  } catch (err) {
-    console.log(err);
-    window.location.reload();
-  }
+  await gramCopyApi.post("/auth/logout");
+  //Extra assurance that loggedIn cookie is cleared
+  document.cookie = "loggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+  store.dispatch(logOut());
+  window.location.reload();
 };
 
 export const login = async (credentials) => {
