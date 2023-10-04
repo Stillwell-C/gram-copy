@@ -25,7 +25,6 @@ const LoginForm = () => {
   const loginMutation = useMutation({
     mutationFn: login,
     onSuccess: () => {
-      console.log("success");
       setEmail("");
       setPassword("");
       navigate("/");
