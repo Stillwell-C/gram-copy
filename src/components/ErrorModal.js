@@ -2,8 +2,10 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectErrorMessage,
+  selectErrorRefreshPage,
   setError,
   setErrorMessage,
+  setErrorRefreshPage,
 } from "../features/error/errorSlice";
 import FocusTrapModalParent from "./FocusTrapModalParent";
 
@@ -11,6 +13,7 @@ const ErrorModal = () => {
   const dispatch = useDispatch();
 
   const errorMessage = useSelector(selectErrorMessage);
+  const refreshPage = useSelector(selectErrorRefreshPage);
 
   const errorMessageText = errorMessage.length
     ? errorMessage
@@ -19,7 +22,10 @@ const ErrorModal = () => {
   const handleDismiss = () => {
     dispatch(setError(false));
     dispatch(setErrorMessage(""));
-    window.location.reload();
+    if (refreshPage) {
+      window.location.reload();
+    }
+    dispatch(setErrorRefreshPage(false));
   };
 
   const modalContent = (
