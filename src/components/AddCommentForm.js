@@ -3,12 +3,15 @@ import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "react-query";
 import { addNewComment } from "../features/comments/commentsApiRoutes";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const AddCommentForm = React.forwardRef(({ post }, ref) => {
   const { authenticatedUser, id } = useAuth();
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
 
   const [comment, setComment] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -23,6 +26,10 @@ const AddCommentForm = React.forwardRef(({ post }, ref) => {
         },
       });
       setComment("");
+    },
+    onError: () => {
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(false));
     },
   });
 
