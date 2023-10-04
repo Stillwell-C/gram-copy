@@ -1,11 +1,15 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import PostFeed from "./PostFeed";
 import { useInfiniteQuery } from "react-query";
 import useAuth from "../hooks/useAuth";
 import { getTaggedPosts } from "../features/posts/postApiRoutes";
 import { FadeLoader } from "react-spinners";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const ProfileTagged = ({ userID }) => {
+  const dispatch = useDispatch();
+
   const { id } = useAuth();
 
   const reqID = id || "";
@@ -54,6 +58,13 @@ const ProfileTagged = ({ userID }) => {
     },
     [isFetching, isLoading, hasNextPage]
   );
+
+  useEffect(() => {
+    if (isError) {
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(true));
+    }
+  }, [isError]);
 
   return isLoading ? (
     <div className='loading-div'>
