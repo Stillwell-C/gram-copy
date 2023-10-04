@@ -7,6 +7,7 @@ import LoadingFullPage from "../../components/LoadingFullPage";
 import { Outlet, useNavigate } from "react-router-dom";
 import { setLoading } from "../display/displaySlice";
 import { logout, refresh } from "./authApiRoutes";
+import { useMutation } from "react-query";
 
 const PersistentLogin = () => {
   // const [persistentLogin, setPersistentLogin] = usePersistentLogin();
@@ -22,18 +23,17 @@ const PersistentLogin = () => {
 
   const loggedInCookie = document.cookie.match(/^loggedIn=true$/i);
 
-  // const [refresh, { isUninitialized, isLoading, isSuccess, isError }] =
-  //   useRefreshMutation();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate("/accounts/login", {
-      replace: true,
-      state: {
-        errorMessage: "Please log in again.",
-      },
-    });
-  };
+  const logoutMutation = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      navigate("/accounts/login", {
+        replace: true,
+        state: {
+          errorMessage: "Please log in again.",
+        },
+      });
+    },
+  });
 
   useEffect(() => {
     if (runEffect.current === true || process.env.NODE_ENV !== "development") {
@@ -46,7 +46,7 @@ const PersistentLogin = () => {
           setLoginSuccess(true);
         } catch (err) {
           console.log(err);
-          await handleLogout();
+          logoutMutation.mutate();
         }
       };
       if (!accessToken && loggedInCookie) verifyRefreshToken();
@@ -61,7 +61,7 @@ const PersistentLogin = () => {
   if (!loggedInCookie || loginSuccess || (accessToken && loginUninitalized)) {
     pageContent = <Outlet />;
   } else if (loginError) {
-    handleLogout();
+    logoutMutation.mutate();
     pageContent = <Outlet />;
     console.log(loginError);
   }
