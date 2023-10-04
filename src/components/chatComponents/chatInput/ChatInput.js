@@ -1,8 +1,8 @@
 import React, { useContext, useRef, useState } from "react";
 import "./chatInput.scss";
 import photoImg from "../../../assets/image-svgrepo-com (1).svg";
-import { AuthContext } from "../../../context/authContext";
-import { ChatContext } from "../../../context/chatContext";
+// import { AuthContext } from "../../../context/authContext";
+// import { ChatContext } from "../../../context/chatContext";
 import {
   arrayUnion,
   doc,
@@ -15,8 +15,12 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 const ChatInput = () => {
   const imgInputRef = useRef(null);
-  const { currentUser } = useContext(AuthContext);
-  const { userData } = useContext(ChatContext);
+  // const { currentUser } = useContext(AuthContext);
+  // const { userData } = useContext(ChatContext);
+
+  //Placeholders to not cause errors
+  const currentUser = "";
+  const userData = "";
 
   const [text, setText] = useState("");
 

@@ -1,13 +1,18 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../context/authContext";
 import { db } from "../../../firebase";
-import { ChatContext } from "../../../context/chatContext";
+// import { AuthContext } from "../../../context/authContext";
+// import { ChatContext } from "../../../context/chatContext";
 import "./chatListChat.scss";
 
 const ChatListChat = ({ chat }) => {
-  const { currentUser } = useContext(AuthContext);
-  const { userData, dispatch } = useContext(ChatContext);
+  // const { currentUser } = useContext(AuthContext);
+  // const { userData, dispatch } = useContext(ChatContext);
+
+  //Placeholders to not cause errors
+  const currentUser = "";
+  const userData = "";
+  const dispatch = () => {};
 
   const [imgURL, setImgURL] = useState(chat[1].userInfo.photoURL);
   const [lastMsg, setLastMsg] = useState("");

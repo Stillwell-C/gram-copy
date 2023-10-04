@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../context/authContext";
 import "./chatMain.scss";
 
 import sendNewMessage from "../../../assets/pencil-edit-svgrepo-com.svg";
 import SendMessageModal from "../sendMessageModal/SendMessageModal";
 import ChatList from "../chatList/ChatList";
-import { ChatContext } from "../../../context/chatContext";
+// import { AuthContext } from "../../../context/authContext";
+// import { ChatContext } from "../../../context/chatContext";
 import ChatContainer from "../chatContainer/ChatContainer";
 
 const ChatMain = () => {

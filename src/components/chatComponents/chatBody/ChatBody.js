@@ -1,7 +1,7 @@
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { AuthContext } from "../../../context/authContext";
-import { ChatContext } from "../../../context/chatContext";
+// import { AuthContext } from "../../../context/authContext";
+// import { ChatContext } from "../../../context/chatContext";
 import { db } from "../../../firebase";
 import ChatMessage from "../chatMessage/ChatMessage";
 import "./chatBody.scss";
@@ -10,8 +10,12 @@ const ChatBody = () => {
   const [messages, setMessages] = useState([]);
   const [chatMessages, setChatMessages] = useState([]);
 
-  const { currentUser } = useContext(AuthContext);
-  const { userData } = useContext(ChatContext);
+  // const { currentUser } = useContext(AuthContext);
+  // const { userData } = useContext(ChatContext);
+
+  //Placeholders to not cause errors
+  const currentUser = "";
+  const userData = "";
 
   useEffect(() => {
     const unsub = onSnapshot(doc(db, "chats", userData.chatId), (doc) => {

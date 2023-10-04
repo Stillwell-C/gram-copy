@@ -10,13 +10,16 @@ import {
   where,
 } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../context/authContext";
+// import { AuthContext } from "../../../context/authContext";
 import { db } from "../../../firebase";
 
 import "./sendMessageModal.scss";
 
 const SendMessageModal = ({ setShowSendMessageModal }) => {
-  const { currentUser } = useContext(AuthContext);
+  // const { currentUser } = useContext(AuthContext);
+
+  //Placeholders to not cause errors
+  const currentUser = "";
 
   const [usernameQueryInput, setUsernameQueryInput] = useState("");
   const [searchResults, setSearchResults] = useState([]);

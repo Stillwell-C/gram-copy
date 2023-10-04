@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { ChatContext } from "../../../context/chatContext";
+// import { ChatContext } from "../../../context/chatContext";
 
 import infoSvg from "../../../assets/info-circle-svgrepo-com.svg";
 import "./chatHeader.scss";
 
 const ChatHeader = () => {
-  const { userData } = useContext(ChatContext);
+  // const { userData } = useContext(ChatContext);
+  //Placeholder to not cause errors
+  const userData = "";
   console.log(userData);
 
   return (

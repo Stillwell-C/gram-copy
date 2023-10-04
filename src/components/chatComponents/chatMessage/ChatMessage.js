@@ -1,13 +1,17 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../../context/authContext";
-import { ChatContext } from "../../../context/chatContext";
+// import { AuthContext } from "../../../context/authContext";
+// import { ChatContext } from "../../../context/chatContext";
 
 import "./chatMessage.scss";
 
 const ChatMessage = ({ message, time }) => {
-  const { currentUser } = useContext(AuthContext);
-  const { userData } = useContext(ChatContext);
+  // const { currentUser } = useContext(AuthContext);
+  // const { userData } = useContext(ChatContext);
+
+  //Placeholders to not cause errors
+  const currentUser = "";
+  const userData = "";
 
   const [timestamp, setTimestamp] = useState("");
 
