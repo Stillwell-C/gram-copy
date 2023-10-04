@@ -1,12 +1,15 @@
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { updatePostTaggedUsers } from "../features/posts/postApiRoutes";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const TaggedUserSearchResult = React.forwardRef(
   ({ user, post, selectedUser, setSelectedUser }, ref) => {
     const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${user.userImgKey}`;
 
     const queryClient = useQueryClient();
+    const dispatch = useDispatch();
 
     const taggedUsersWithCurrentUser = [...post?.taggedUsers, user._id];
 
@@ -27,6 +30,10 @@ const TaggedUserSearchResult = React.forwardRef(
             return data;
           }
         });
+      },
+      onError: () => {
+        dispatch(setError(true));
+        dispatch(setErrorRefreshPage(false));
       },
     });
 
