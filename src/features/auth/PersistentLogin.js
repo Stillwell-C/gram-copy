@@ -35,19 +35,22 @@ const PersistentLogin = () => {
     },
   });
 
+  const refreshMutation = useMutation({
+    mutationFn: refresh,
+    onSuccess: () => {
+      dispatch(setLoading(false));
+    },
+    onError: () => {
+      logoutMutation.mutate();
+    },
+  });
+
   useEffect(() => {
     if (runEffect.current === true || process.env.NODE_ENV !== "development") {
       const verifyRefreshToken = async () => {
-        try {
-          dispatch(setLoading(true));
-          setLoginUninitialized(false);
-          await refresh();
-          dispatch(setLoading(false));
-          setLoginSuccess(true);
-        } catch (err) {
-          console.log(err);
-          logoutMutation.mutate();
-        }
+        dispatch(setLoading(true));
+        setLoginUninitialized(false);
+        refreshMutation.mutate();
       };
       if (!accessToken && loggedInCookie) verifyRefreshToken();
       else setLoginUninitialized(true);
@@ -60,10 +63,8 @@ const PersistentLogin = () => {
 
   if (!loggedInCookie || loginSuccess || (accessToken && loginUninitalized)) {
     pageContent = <Outlet />;
-  } else if (loginError) {
-    logoutMutation.mutate();
+  } else if (refreshMutation.isError) {
     pageContent = <Outlet />;
-    console.log(loginError);
   }
 
   return pageContent;
