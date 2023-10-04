@@ -24,7 +24,7 @@ import FooterNavbar from "./FooterNavbar";
 import { logout } from "../features/auth/authApiRoutes";
 import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
-import { setError } from "../features/error/errorSlice";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
@@ -59,6 +59,7 @@ const Navbar = () => {
     mutationFn: logout,
     onError: () => {
       dispatch(setError(true));
+      dispatch(setErrorRefreshPage(true));
     },
   });
 

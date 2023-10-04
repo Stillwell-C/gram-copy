@@ -5,7 +5,7 @@ import useAuth from "../hooks/useAuth";
 import { logout } from "../features/auth/authApiRoutes";
 import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
-import { setError } from "../features/error/errorSlice";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const FeedRightInfo = () => {
   const { authenticatedUser, username, fullname, img } = useAuth();
@@ -17,6 +17,7 @@ const FeedRightInfo = () => {
     mutationFn: logout,
     onError: () => {
       dispatch(setError(true));
+      dispatch(setErrorRefreshPage(true));
     },
   });
 
