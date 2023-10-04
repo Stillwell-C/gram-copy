@@ -3,6 +3,8 @@ import { useInfiniteQuery } from "react-query";
 import { getUserSearch } from "../features/users/usersApiRoutes";
 import TaggedUserSearchResult from "./TaggedUserSearchResult";
 import { FadeLoader } from "react-spinners";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const TagUsersSearch = ({
   setShowTagUsersModal,
@@ -12,6 +14,7 @@ const TagUsersSearch = ({
   const [selectedUser, setSelectedUser] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
+  const dispatch = useDispatch();
   const searchBarRef = useRef();
 
   const {
@@ -33,6 +36,13 @@ const TagUsersSearch = ({
       return false;
     },
   });
+
+  useEffect(() => {
+    if (searchIsError) {
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(false));
+    }
+  }, [searchIsError]);
 
   const observer = useRef();
   const lastResultRef = useCallback(
