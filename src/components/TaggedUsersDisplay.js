@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { getUsersFromArr } from "../features/users/usersApiRoutes";
 import { FadeLoader } from "react-spinners";
 import RemoveTaggedUserButton from "./RemoveTaggedUserButton";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const TaggedUsersDisplay = ({
   post,
@@ -11,6 +14,8 @@ const TaggedUsersDisplay = ({
 }) => {
   const userImgURL = (imgKey) =>
     `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${imgKey}`;
+
+  const dispatch = useDispatch();
 
   const {
     data: taggedUsers,
@@ -23,6 +28,13 @@ const TaggedUsersDisplay = ({
     enabled: post?.taggedUsers?.length > 0,
     refetchOnWindowFocus: false,
   });
+
+  useEffect(() => {
+    if (isError) {
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(false));
+    }
+  }, [isError]);
 
   return (
     <div
