@@ -2,10 +2,13 @@ import { useMutation, useQueryClient } from "react-query";
 import { deletePost } from "../features/posts/postApiRoutes";
 import useAuth from "../hooks/useAuth";
 import FocusTrapModalParent from "./FocusTrapModalParent";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const DeletePostConfirmationModal = ({ post, setShowDeleteConfirmation }) => {
   const { id } = useAuth();
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
 
   const deletePostMutation = useMutation({
     mutationFn: deletePost,
@@ -13,6 +16,10 @@ const DeletePostConfirmationModal = ({ post, setShowDeleteConfirmation }) => {
       queryClient.invalidateQueries({
         queryKey: ["profilePosts", id],
       });
+    },
+    onError: () => {
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(false));
     },
   });
 
