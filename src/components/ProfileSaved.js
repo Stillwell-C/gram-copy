@@ -1,10 +1,14 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import PostFeed from "./PostFeed";
 import { useInfiniteQuery } from "react-query";
 import { getSavedPosts } from "../features/saved/savedApiRoutes";
 import { FadeLoader } from "react-spinners";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const ProfileSaved = ({ userID }) => {
+  const dispatch = useDispatch();
+
   const postLoadLimit = 9;
 
   const queryKey = ["savedPosts", userID];
@@ -49,6 +53,13 @@ const ProfileSaved = ({ userID }) => {
     },
     [isFetching, isLoading, hasNextPage]
   );
+
+  useEffect(() => {
+    if (isError) {
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(true));
+    }
+  }, [isError]);
 
   return isLoading ? (
     <div className='loading-div'>
