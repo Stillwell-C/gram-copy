@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { AuthContext } from "../context/authContext";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import Footer from "./Footer";
 import "../scss/profileMain.scss";
@@ -82,8 +81,6 @@ const ProfileMain = () => {
       .scroll({ top: 0, behavior: "auto" });
   }, []);
 
-  const { currentUser } = useContext(AuthContext);
-
   const [displaySelector, setDisplaySelector] = useState("posts");
   const [showAdditionalOptionsModal, setShowAdditionalOptionsModal] =
     useState(false);
@@ -94,7 +91,7 @@ const ProfileMain = () => {
   const displayOwnPage = authenticatedUser && username === userID;
 
   const handleMessage = () => {
-    if (!currentUser) {
+    if (!authenticatedUser) {
       navigate("/accounts/login");
       return;
     }
