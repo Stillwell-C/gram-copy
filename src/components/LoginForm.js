@@ -4,15 +4,16 @@ import { useLoginMutation } from "../features/auth/authApiSlice";
 import { setCredentials } from "../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { FadeLoader } from "react-spinners";
+import { login } from "../features/auth/authApiRoutes";
 
 import "../scss/login.scss";
 import logo from "../assets/Instagram_logo.png";
+import { useMutation } from "react-query";
 
 const LoginForm = () => {
   const errRef = useRef();
   const location = useLocation();
 
-  const [loginSuccess, setLoginSuccess] = useState(false);
   const [email, setEmail] = useState("");
   const [emailClick, setEmailClick] = useState(false);
   const [emailClass, setEmailClass] = useState("form-input-div");
@@ -21,10 +22,15 @@ const LoginForm = () => {
   const [passwordClass, setPasswordClass] = useState("form-input-div");
   const [showPassword, setShowPassword] = useState(false);
 
-  const [login, { isLoading, error: errData, isSuccess, isError }] =
-    useLoginMutation();
-
-  const dispatch = useDispatch();
+  const loginMutation = useMutation({
+    mutationFn: login,
+    onSuccess: () => {
+      console.log("success");
+      setEmail("");
+      setPassword("");
+      navigate("/");
+    },
+  });
 
   useEffect(() => {
     const active = email.length ? "active" : "";
@@ -46,27 +52,16 @@ const LoginForm = () => {
   };
 
   const signInUser = async () => {
-    const loginResponse = await login({ userIdentifier: email, password });
-    if (loginResponse?.data?.accessToken) {
-      dispatch(setCredentials({ accessToken: loginResponse.data.accessToken }));
-      localStorage.setItem("persistLogin", JSON.stringify(true));
-      setLoginSuccess(true);
-    }
+    loginMutation.mutate({ userIdentifier: email, password });
   };
 
   useEffect(() => {
-    if (loginSuccess) {
+    if (loginMutation.isSuccess) {
       setEmail("");
       setPassword("");
       navigate("/");
     }
-  }, [loginSuccess]);
-
-  useEffect(() => {
-    if (isError) {
-      errRef.current.focus();
-    }
-  }, [isError]);
+  }, [loginMutation.isSuccess]);
 
   useEffect(() => {
     if (location?.state?.errorMessage) {
@@ -80,12 +75,14 @@ const LoginForm = () => {
         <img src={logo} alt='instagram logo' className='login-logo' />
         <div
           className={
-            isError || location?.state?.errorMessage ? "error-div" : "offscreen"
+            loginMutation.isError || location?.state?.errorMessage
+              ? "error-div"
+              : "offscreen"
           }
         >
           <div className='error-msg' aria-live='assertive' ref={errRef}>
-            {errData?.data?.message}
-            {!errData?.data?.message && location?.state?.errorMessage}
+            {loginMutation?.error?.response?.data?.message}
+            {!loginMutation.isError && location?.state?.errorMessage}
           </div>
         </div>
         <form className='login-form' onSubmit={handleSignIn}>
@@ -132,7 +129,7 @@ const LoginForm = () => {
               </button>
             </div>
           </div>
-          {isLoading ? (
+          {loginMutation.isLoading ? (
             <div className='loading-spinner-div'>
               <FadeLoader cssOverride={{ scale: "0.7" }} color='#333' />
             </div>
