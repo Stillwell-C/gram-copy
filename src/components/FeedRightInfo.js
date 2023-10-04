@@ -3,15 +3,21 @@ import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import useAuth from "../hooks/useAuth";
 import { logout } from "../features/auth/authApiRoutes";
+import { useMutation } from "react-query";
 
 const FeedRightInfo = () => {
   const { authenticatedUser, username, fullname, img } = useAuth();
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
 
+  const logoutMutation = useMutation({
+    mutationFn: logout,
+  });
+
   const handleLogout = async () => {
     if (authenticatedUser) {
-      await logout();
+      // await logout();
+      logoutMutation.mutate();
     }
   };
 
