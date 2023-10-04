@@ -3,6 +3,8 @@ import useCloudinaryUpload from "../hooks/useCloudinaryUpload";
 import { updateUser } from "../features/users/usersApiRoutes";
 import { useMutation, useQueryClient } from "react-query";
 import DefaultUserImg from "../assets/Default_pfp.svg";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const ProfileUserImage = ({ user, displayOwnPage }) => {
   const [userImgSmall, setUserImgSmall] = useState(
@@ -15,6 +17,8 @@ const ProfileUserImage = ({ user, displayOwnPage }) => {
     `https://res.cloudinary.com/danscxcd2/image/upload/w_350,c_fill/${user?.userImgKey}`
   );
   const [newUserImgKey, setNewUserImgKey] = useState(null);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!user?.userImgKey) {
@@ -39,6 +43,10 @@ const ProfileUserImage = ({ user, displayOwnPage }) => {
       queryClient.invalidateQueries({
         queryKey: ["userInfo", user.username],
       });
+    },
+    onError: () => {
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(false));
     },
   });
 
