@@ -5,6 +5,8 @@ import useAuth from "../hooks/useAuth";
 import locationImg from "../assets/location-svgrepo-com.svg";
 import downArrow from "../assets/down-arrow-backup-2-svgrepo-com.svg";
 import useLimitLineBreaks from "../hooks/useLimitLineBreaks";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const CreatePostInformationForm = ({
   handleClear,
@@ -17,6 +19,7 @@ const CreatePostInformationForm = ({
   const { id, username, img } = useAuth();
 
   const limitLineBreaks = useLimitLineBreaks();
+  const dispatch = useDispatch();
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
 
@@ -45,6 +48,10 @@ const CreatePostInformationForm = ({
       setExpandAccessibility(false);
       handleClear();
       handleClose();
+    },
+    onError: () => {
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(false));
     },
   });
 
