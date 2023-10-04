@@ -1,15 +1,16 @@
 import React, { useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
 import { getNotifications } from "../features/notifications/notificationsApiRoutes";
-import { useNavigate } from "react-router-dom";
 import Notification from "./Notification";
 import addNotificationsIcon from "../assets/add-circle-svgrepo-com.svg";
 import { FadeLoader } from "react-spinners";
 import "../scss/notification.scss";
 import Footer from "./Footer";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const NotificationsPage = () => {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const notificationsLoadLimit = 10;
 
@@ -38,7 +39,10 @@ const NotificationsPage = () => {
   });
 
   useEffect(() => {
-    if (isError && error?.response?.status !== 400) navigate("/error");
+    if (isError && error?.response?.status !== 400) {
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(false));
+    }
   }, [isError]);
 
   useEffect(() => {
