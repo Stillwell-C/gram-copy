@@ -2,27 +2,16 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import useAuth from "../hooks/useAuth";
-import { useSendLogoutMutation } from "../features/auth/authApiSlice";
+import { logout } from "../features/auth/authApiRoutes";
 
 const FeedRightInfo = () => {
   const { authenticatedUser, username, fullname, img } = useAuth();
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
 
-  const [sendLogout, { isLoading, isSuccess, isError, error }] =
-    useSendLogoutMutation();
-
-  useEffect(() => {
-    if (isSuccess) window.location.reload();
-  }, [isSuccess]);
-
-  useEffect(() => {
-    if (isError) window.location.reload();
-  }, [isError]);
-
-  const handleLogout = () => {
+  const handleLogout = async () => {
     if (authenticatedUser) {
-      sendLogout();
+      await logout();
     }
   };
 
