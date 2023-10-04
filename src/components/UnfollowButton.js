@@ -3,6 +3,8 @@ import { useMutation, useQueryClient } from "react-query";
 import { deleteFollow } from "../features/follow/followApiRoutes";
 import useAuth from "../hooks/useAuth";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const UnfollowButton = ({ user }) => {
   const { authenticatedUser, id, username } = useAuth();
@@ -11,6 +13,7 @@ const UnfollowButton = ({ user }) => {
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const deleteFollowMutation = useMutation({
     mutationFn: deleteFollow,
@@ -70,6 +73,10 @@ const UnfollowButton = ({ user }) => {
           return data;
         }
       });
+    },
+    onError: () => {
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(false));
     },
   });
 
