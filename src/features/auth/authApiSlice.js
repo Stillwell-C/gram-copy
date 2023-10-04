@@ -1,4 +1,5 @@
 import { apiSlice } from "../../app/api/apiSlice";
+import { setLoading } from "../display/displaySlice";
 import { logOut, setCredentials } from "./authSlice";
 
 export const authApiSlice = apiSlice.injectEndpoints({
@@ -30,12 +31,15 @@ export const authApiSlice = apiSlice.injectEndpoints({
       }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
+          dispatch(setLoading(true));
           await queryFulfilled;
           dispatch(logOut());
           dispatch(apiSlice.util.resetApiState());
-          localStorage.setItem("persistLogin", JSON.stringify(false));
+          // localStorage.setItem("persistLogin", JSON.stringify(false));
+          dispatch(setLoading(false));
         } catch (err) {
           console.log(err);
+          dispatch(setLoading(false));
         }
       },
     }),
