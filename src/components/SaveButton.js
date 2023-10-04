@@ -5,6 +5,8 @@ import outlinedBookmark from "../assets/bookmark-outline.svg";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { addNewSave, deleteSave } from "../features/saved/savedApiRoutes";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const SaveButton = ({ save = false, postID, postPage, queryKey }) => {
   const [saved, setSaved] = useState(false);
@@ -12,6 +14,7 @@ const SaveButton = ({ save = false, postID, postPage, queryKey }) => {
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const queryKeyInvalidationKey = queryKey ? queryKey : ["posts"];
 
@@ -43,6 +46,10 @@ const SaveButton = ({ save = false, postID, postPage, queryKey }) => {
       //     return index === postPage;
       //   },
       // });
+    },
+    onError: () => {
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(false));
     },
   });
 
