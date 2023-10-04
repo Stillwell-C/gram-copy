@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import usePersistentLogin from "../../hooks/usePersistentLogin";
-import { selectCurrentToken, setCredentialsLoading } from "./authSlice";
+import { selectCurrentToken } from "./authSlice";
 import { useEffect, useRef, useState } from "react";
 import { useRefreshMutation } from "./authApiSlice";
 import { useSendLogoutMutation } from "./authApiSlice";
@@ -41,7 +41,6 @@ const PersistentLogin = () => {
     if (runEffect.current === true || process.env.NODE_ENV !== "development") {
       const verifyRefreshToken = async () => {
         try {
-          // dispatch(setCredentialsLoading(true));
           dispatch(setLoading(true));
           setLoginLoading(true);
           setLoginUninitialized(false);
@@ -49,9 +48,7 @@ const PersistentLogin = () => {
           dispatch(setLoading(false));
           setLoginSuccess(true);
           setLoginLoading(false);
-          // dispatch(setCredentialsLoading(false));
         } catch (err) {
-          // dispatch(setCredentialsLoading(false));
           // setPersistentLogin(false);
           console.log(err);
           //logout ?
