@@ -3,6 +3,8 @@ import { useMutation, useQueryClient } from "react-query";
 import { addFollow } from "../features/follow/followApiRoutes";
 import useAuth from "../hooks/useAuth";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const FollowButton = ({ user, queryKey }) => {
   const { authenticatedUser, id, username } = useAuth();
@@ -11,6 +13,7 @@ const FollowButton = ({ user, queryKey }) => {
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const addFollowMutation = useMutation({
     mutationFn: addFollow,
@@ -97,6 +100,10 @@ const FollowButton = ({ user, queryKey }) => {
           return data;
         }
       });
+    },
+    onError: () => {
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(false));
     },
   });
 
