@@ -16,7 +16,6 @@ const FeedRightInfo = () => {
 
   const handleLogout = async () => {
     if (authenticatedUser) {
-      // await logout();
       logoutMutation.mutate();
     }
   };
