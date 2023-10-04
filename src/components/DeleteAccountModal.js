@@ -19,9 +19,15 @@ const DeleteAccountModal = ({ setDisplayDeleteModal }) => {
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
+  const logoutMutation = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      navigate("/");
+    },
+  });
+
   const handleLogout = async () => {
-    await logout();
-    navigate("/");
+    logoutMutation.mutate();
   };
 
   const queryClient = useQueryClient();
