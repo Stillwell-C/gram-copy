@@ -5,6 +5,7 @@ import { searchPosts } from "../features/posts/postApiRoutes";
 import { setLoading } from "../features/display/displaySlice";
 import FeedContainer from "./FeedContainer";
 import { useParams } from "react-router-dom";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const SearchFeed = () => {
   const { searchParam, searchQuery } = useParams();
@@ -63,6 +64,13 @@ const SearchFeed = () => {
     }
     dispatch(setLoading(false));
   }, [isLoading]);
+
+  useEffect(() => {
+    if (isError) {
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(true));
+    }
+  }, [isError]);
 
   if (!isLoading)
     return (
