@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { getMultiplePosts } from "../features/posts/postApiRoutes";
 import { setLoading } from "../features/display/displaySlice";
 import FeedContainer from "./FeedContainer";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const HomeFeed = () => {
   const dispatch = useDispatch();
@@ -40,6 +41,13 @@ const HomeFeed = () => {
     }
     dispatch(setLoading(false));
   }, [isLoading]);
+
+  useEffect(() => {
+    if (isError) {
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(true));
+    }
+  }, [isError]);
 
   if (!isLoading)
     return (
