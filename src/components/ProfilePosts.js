@@ -3,8 +3,12 @@ import PostFeed from "./PostFeed";
 import { useInfiniteQuery } from "react-query";
 import { getMultiplePosts } from "../features/posts/postApiRoutes";
 import { FadeLoader } from "react-spinners";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const ProfilePosts = ({ userID }) => {
+  const dispatch = useDispatch();
+
   const postLoadLimit = 9;
 
   const queryKey = ["profilePosts", userID];
@@ -13,7 +17,6 @@ const ProfilePosts = ({ userID }) => {
     data: postData,
     isLoading,
     isError,
-    error,
     isFetching,
     hasNextPage,
     fetchNextPage,
@@ -51,6 +54,13 @@ const ProfilePosts = ({ userID }) => {
     [isFetching, isLoading, hasNextPage]
   );
 
+  useEffect(() => {
+    if (isError) {
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(true));
+    }
+  }, [isError]);
+
   return isLoading ? (
     <div className='loading-div'>
       <FadeLoader cssOverride={{ scale: "0.5" }} color='#333' />
@@ -60,8 +70,6 @@ const ProfilePosts = ({ userID }) => {
       posts={flattenedFeedData}
       lastPostRef={lastPostRef}
       isFetching={isFetching}
-      isError={isError}
-      error={error}
       profilePosts={true}
       userPostsFeed={true}
       queryKey={queryKey}
