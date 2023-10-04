@@ -1,3 +1,6 @@
+@import "./../breakpoints.scss";
+@import "./global.scss";
+
 .modal-body {
   position: fixed;
   top: 50%;
@@ -34,6 +37,37 @@
 }
 
 //try to universalize these
+.error-modal {
+  background-color: #fff;
+  z-index: 25;
+  border-radius: 0.5rem;
+  justify-content: space-between;
+
+  .error-modal-top-div {
+    padding: 1rem;
+  }
+
+  .error-modal-btn-div {
+    padding: 1rem;
+    width: 100%;
+    border-top: 1px solid $margin-grey;
+
+    button {
+      font-weight: bold;
+      font-size: $font-medium;
+      color: $button-blue;
+
+      &:hover {
+        color: $button-blue-hover-dark;
+      }
+    }
+  }
+
+  @include small {
+    width: 350px;
+    height: 350px;
+  }
+}
 
 .delete-confirmation-modal {
   position: fixed;
