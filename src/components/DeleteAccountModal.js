@@ -4,9 +4,9 @@ import "../scss/deleteAccountModal.scss";
 import { useMutation, useQueryClient } from "react-query";
 import useAuth from "../hooks/useAuth";
 import { FadeLoader } from "react-spinners";
-import { useSendLogoutMutation } from "../features/auth/authApiSlice";
 import { deleteUser } from "../features/users/usersApiRoutes";
 import FocusTrapModalParent from "./FocusTrapModalParent";
+import { logout } from "../features/auth/authApiRoutes";
 
 const DeleteAccountModal = ({ setDisplayDeleteModal }) => {
   const { id } = useAuth();
@@ -19,15 +19,10 @@ const DeleteAccountModal = ({ setDisplayDeleteModal }) => {
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
-  const [
-    sendLogout,
-    {
-      isLoading: logoutLoading,
-      isSuccess: logoutSuccess,
-      isError: logoutIsError,
-      error: logoutError,
-    },
-  ] = useSendLogoutMutation();
+  const handleLogout = async () => {
+    await logout();
+    navigate("/");
+  };
 
   const queryClient = useQueryClient();
 
@@ -35,21 +30,15 @@ const DeleteAccountModal = ({ setDisplayDeleteModal }) => {
     mutationFn: deleteUser,
     onSuccess: () => {
       queryClient.invalidateQueries();
-      sendLogout();
+      handleLogout();
     },
   });
 
   useEffect(() => {
-    if (logoutSuccess) {
-      navigate("/");
-    }
-  }, [logoutSuccess]);
-
-  useEffect(() => {
-    if (logoutIsError || deleteUserMutation.isError || error) {
+    if (deleteUserMutation.isError || error) {
       errRef.current.focus();
     }
-  }, [logoutIsError, deleteUserMutation.isError, error]);
+  }, [deleteUserMutation.isError, error]);
 
   const handleClose = () => {
     setDisplayDeleteModal(false);
@@ -95,7 +84,6 @@ const DeleteAccountModal = ({ setDisplayDeleteModal }) => {
           >
             <div className='error-msg' ref={errRef}>
               {deleteUserMutation?.error?.response?.data?.message}
-              {logoutError?.message}
               {errorMsg}
             </div>
           </div>
