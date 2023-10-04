@@ -10,8 +10,6 @@ const PostFeed = ({
   posts,
   lastPostRef,
   isFetching,
-  isError,
-  error,
   queryKey,
   userPostsFeed = false,
   profilePosts = false,
@@ -74,7 +72,6 @@ const PostFeed = ({
         {posts?.length <= 0 && userPostsFeed && userCheck && (
           <NoUserImgProfileFeed handleAddPostModal={handleAddPostModal} />
         )}
-        {isError && error?.data?.message}
         {displayPostModal && (
           <CreatePostModal setDisplayPostModal={setDisplayPostModal} />
         )}
