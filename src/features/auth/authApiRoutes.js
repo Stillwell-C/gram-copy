@@ -23,3 +23,15 @@ export const logout = async () => {
     window.location.reload();
   }
 };
+
+export const login = async (credentials) => {
+  const response = await gramCopyApi.request({
+    url: "/auth",
+    method: "POST",
+    data: { ...credentials },
+  });
+  const { accessToken } = response.data;
+  store.dispatch(setCredentials({ accessToken }));
+
+  return response;
+};
