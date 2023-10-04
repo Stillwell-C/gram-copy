@@ -57,6 +57,7 @@ const ErrorModal = () => {
       content={modalContent}
       initialFocus='#error-modal-btn'
       showClose={false}
+      handleClose={handleDismiss}
     />
   );
 };
