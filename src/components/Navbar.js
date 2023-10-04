@@ -22,6 +22,7 @@ import SideNavbarSearch from "./SideNavbarSearch";
 import NavbarSearch from "./NavbarSearch";
 import FooterNavbar from "./FooterNavbar";
 import { logout } from "../features/auth/authApiRoutes";
+import { useMutation } from "react-query";
 
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
@@ -50,9 +51,13 @@ const Navbar = () => {
     setDisplayPostModal(true);
   };
 
+  const logoutMutation = useMutation({
+    mutationFn: logout,
+  });
+
   const handleLogout = async () => {
     if (authenticatedUser) {
-      await logout();
+      logoutMutation.mutate();
     }
   };
 
