@@ -5,12 +5,15 @@ import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "react-query";
 import { addNewLike, deleteLike } from "../features/likes/likesApiRoutes";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
   const { authenticatedUser, id } = useAuth();
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [liked, setLiked] = useState(false);
 
@@ -49,6 +52,10 @@ const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
       //   },
       // });
     },
+    onError: () => {
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(false));
+    },
   });
 
   const deleteLikeMutation = useMutation({
@@ -80,6 +87,10 @@ const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
       //     return index === postPage;
       //   },
       // });
+    },
+    onError: () => {
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(false));
     },
   });
 
