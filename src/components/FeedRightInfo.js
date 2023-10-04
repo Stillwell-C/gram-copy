@@ -4,14 +4,20 @@ import Footer from "./Footer";
 import useAuth from "../hooks/useAuth";
 import { logout } from "../features/auth/authApiRoutes";
 import { useMutation } from "react-query";
+import { useDispatch } from "react-redux";
+import { setError } from "../features/error/errorSlice";
 
 const FeedRightInfo = () => {
   const { authenticatedUser, username, fullname, img } = useAuth();
+  const dispatch = useDispatch();
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
 
   const logoutMutation = useMutation({
     mutationFn: logout,
+    onError: () => {
+      dispatch(setError(true));
+    },
   });
 
   const handleLogout = async () => {

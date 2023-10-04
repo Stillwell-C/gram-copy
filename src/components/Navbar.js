@@ -23,6 +23,8 @@ import NavbarSearch from "./NavbarSearch";
 import FooterNavbar from "./FooterNavbar";
 import { logout } from "../features/auth/authApiRoutes";
 import { useMutation } from "react-query";
+import { useDispatch } from "react-redux";
+import { setError } from "../features/error/errorSlice";
 
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
@@ -31,6 +33,8 @@ const Navbar = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const { pathname } = useLocation();
 
   const { authenticatedUser, username, img } = useAuth();
@@ -53,6 +57,9 @@ const Navbar = () => {
 
   const logoutMutation = useMutation({
     mutationFn: logout,
+    onError: () => {
+      dispatch(setError(true));
+    },
   });
 
   const handleLogout = async () => {
