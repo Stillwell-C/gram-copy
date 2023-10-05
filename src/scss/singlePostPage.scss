@@ -7,8 +7,7 @@
 
   .single-post-container {
     border-radius: 0.5rem;
-    border: 1px solid $margin-grey;
-    background-color: #fff;
+    border: 1px solid var(--margin-grey);
     width: clamp(250px, 80%, 1000px);
     height: auto;
     min-height: 300px;
