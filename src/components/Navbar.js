@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, Outlet, useLocation, Link } from "react-router-dom";
 
 import "../scss/navbar.scss";
@@ -189,12 +189,37 @@ const Navbar = () => {
       aria-expanded={displayMenu ? "true" : "false"}
       aria-controls='large-navbar-menu-content'
     >
-      <div className='navbar-line' onClick={() => setDisplayMenu(!displayMenu)}>
+      <div
+        className='navbar-line'
+        onClick={() => setDisplayMenu((prev) => !prev)}
+      >
         <img className='themeable-icon' src={menu} alt='menu icon' />
         <span>More</span>
       </div>
     </Link>
   );
+
+  const menuRef = useRef(null);
+  const moreLinkRef = useRef(null);
+  const menuRefBtm = useRef(null);
+  const moreLinkRefBtm = useRef(null);
+
+  useEffect(() => {
+    const closeNavbarMenu = (e) => {
+      if (
+        !menuRef?.current?.contains(e.target) &&
+        !menuRefBtm?.current?.contains(e.target) &&
+        !moreLinkRef?.current?.contains(e.target) &&
+        !moreLinkRefBtm?.current?.contains(e.target)
+      ) {
+        setDisplayMenu((prev) => (prev === true ? false : prev));
+      }
+    };
+
+    document.addEventListener("mousedown", closeNavbarMenu);
+
+    return () => document.removeEventListener("mousedown", closeNavbarMenu);
+  }, []);
 
   const handleChangeTheme = () => {
     if (currentTheme === "theme-light") {
@@ -207,7 +232,7 @@ const Navbar = () => {
   };
 
   const menuContent = (
-    <>
+    <div>
       <div className='menu-line'>
         <button
           aria-label='click to change to dark mode'
@@ -229,7 +254,7 @@ const Navbar = () => {
           <Link to='/accounts/login'>Log in</Link>
         )}
       </div>
-    </>
+    </div>
   );
 
   const navbarSearch = (
@@ -267,6 +292,7 @@ const Navbar = () => {
             profileLink={profileLink}
             moreLink={moreLink}
             menuContent={menuContent}
+            ref={{ menuRef, moreLinkRef }}
             displayMenu={displayMenu}
             handleAddPostModal={handleAddPostModal}
             setDisplayMenu={setDisplayMenu}
@@ -287,6 +313,7 @@ const Navbar = () => {
           profileLink={profileLink}
           moreLink={moreLink}
           menuContent={menuContent}
+          ref={{ menuRefBtm, moreLinkRefBtm }}
           displayMenu={displayMenu}
           handleAddPostModal={handleAddPostModal}
           setDisplayMenu={setDisplayMenu}
