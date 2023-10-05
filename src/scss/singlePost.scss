@@ -24,6 +24,7 @@
   }
 
   .single-post-header {
+    background-color: var(--component-background);
     @include medium {
       display: none;
     }
@@ -32,18 +33,15 @@
       padding: 14px 4px 14px 16px;
 
       .photo-info-div {
-        .photo-info-top {
-          gap: 5px;
-          a {
-            text-decoration: none;
-            color: black;
-            font-weight: bold;
-            font-size: $font-medium;
-          }
+        a {
+          text-decoration: none;
+          color: var(--text-color);
+          font-size: $font-medium;
         }
 
-        .photo-location {
-          font-size: $font-medium;
+        .photo-info-top {
+          gap: 5px;
+          font-weight: bold;
         }
       }
 
@@ -112,30 +110,28 @@
     flex-grow: 1;
     min-width: 40%;
     justify-content: space-between;
+    background-color: var(--component-background);
 
     .photo-modal-right-top {
       padding: 14px 8px 14px 16px;
       display: none;
       justify-content: space-between;
-      border-bottom: 1px solid $margin-grey;
+      border-bottom: 1px solid var(--margin-grey);
 
       @include medium {
         display: flex;
       }
 
       .photo-info-div {
-        .photo-info-top {
-          gap: 5px;
-          a {
-            text-decoration: none;
-            color: black;
-            font-weight: bold;
-            font-size: $font-medium;
-          }
+        a {
+          text-decoration: none;
+          color: var(--text-color);
+          font-size: $font-medium;
         }
 
-        .photo-location {
-          font-size: $font-medium;
+        .photo-info-top {
+          gap: 5px;
+          font-weight: bold;
         }
       }
     }
@@ -145,13 +141,14 @@
     overflow: hidden;
     height: 40svh;
     height: 40vh;
+    background-color: var(--component-background);
   }
 
   .single-post-comments {
     padding: 1rem;
     box-sizing: content-box;
     overflow-y: scroll;
-    border-top: 1px solid $margin-grey;
+    border-top: 1px solid var(--margin-grey);
 
     @include medium {
       height: 100%;
@@ -164,7 +161,7 @@
 
       a {
         text-decoration: none;
-        color: black;
+        color: var(--text-color);
       }
 
       .comment-image {
@@ -189,7 +186,7 @@
           .comment-body {
             white-space: pre-wrap;
             a {
-              color: $link-blue;
+              color: var(--link-color);
               font-weight: 500;
             }
           }
@@ -198,32 +195,15 @@
         .comment-main-bottom {
           margin-top: 8px;
           font-size: $font-small;
-          color: $content-grey;
-        }
-      }
-    }
-
-    .add-comments-button-div {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      button {
-        padding: 8px;
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-
-        img {
-          width: 24px;
+          color: var(--content-grey);
         }
       }
     }
   }
 
   .single-post-bottom {
-    border-top: 1px solid $margin-grey;
+    border-top: 1px solid var(--margin-grey);
+    background-color: var(--component-background);
 
     .buttons {
       padding: 6px 16px 8px;
@@ -236,16 +216,14 @@
         img {
           width: 24px;
 
-          &:hover {
-            filter: invert(64%) sepia(0%) saturate(0%) hue-rotate(175deg)
-              brightness(87%) contrast(98%);
+          &.empty {
+            &:hover {
+              filter: invert(64%) sepia(0%) saturate(0%) hue-rotate(175deg)
+                brightness(87%) contrast(98%);
+            }
           }
         }
         .filled {
-          &:hover {
-            filter: none;
-          }
-
           &.heart {
             filter: invert(61%) sepia(68%) saturate(6105%) hue-rotate(328deg)
               brightness(94%) contrast(96%);
@@ -300,17 +278,13 @@
     .input-comment-div {
       width: 100%;
       height: 50px;
-      border-top: 1px solid $margin-grey;
+      border-top: 1px solid var(--margin-grey);
 
       form {
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-
-        &.disabled {
-          background-color: $background-grey;
-        }
 
         .input-left {
           margin-right: 12px;
@@ -321,6 +295,7 @@
             width: 100%;
             outline: none;
             border: none;
+            background-color: var(--component-background);
           }
         }
 
@@ -329,10 +304,6 @@
           align-items: center;
           justify-content: center;
           margin-right: 10px;
-
-          input:disabled {
-            background-color: $background-grey;
-          }
 
           button {
             color: $button-blue;
