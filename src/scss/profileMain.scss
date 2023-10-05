@@ -207,8 +207,11 @@
           justify-content: center;
           font-weight: bold;
           font-size: 12px;
-          color: var(--content-grey);
           padding: 20px 3px;
+
+          span {
+            color: var(--content-grey);
+          }
 
           img {
             width: 12px;
@@ -217,8 +220,11 @@
           }
 
           &.active {
-            color: var(--text-color);
             border-top: 1px solid var(--text-color);
+
+            span {
+              color: var(--text-color);
+            }
 
             img {
               filter: var(--profile-img-filter-dark-only);
