@@ -164,13 +164,13 @@
         }
 
         .view-more-div {
-          color: $content-grey;
+          color: var(--content-grey);
           cursor: pointer;
         }
 
         .time-ago {
           font-size: 0.75rem;
-          color: $content-grey;
+          color: var(--content-grey);
         }
       }
 
@@ -248,7 +248,7 @@
       }
 
       .user-name-bottom {
-        color: $content-grey;
+        color: var(--content-grey);
       }
     }
 
