@@ -73,7 +73,14 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
             )}
           </div>
           <div className='photo-location'>
-            {post?.location ? post?.location : ""}
+            {post?.location && (
+              <Link
+                to={`/search/location/${post.location}`}
+                aria-label={`search for other posts from this location`}
+              >
+                {post?.location}
+              </Link>
+            )}
           </div>
         </div>
         <div className='header-right'>
@@ -82,7 +89,12 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
             onClick={() => setShowAdditionalOptionsModal(true)}
             aria-label='click for additional options'
           >
-            <img src={threeDots} alt='' aria-hidden='true' />
+            <img
+              src={threeDots}
+              alt=''
+              className='themeable-icon'
+              aria-hidden='true'
+            />
           </button>
         </div>
       </div>
@@ -127,10 +139,19 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
             onClick={handleCommentClick}
             aria-label='click to write a comment'
           >
-            <img src={commentBubble} alt='' aria-hidden='true' />
+            <img
+              src={commentBubble}
+              className='themeable-icon empty'
+              alt=''
+              aria-hidden='true'
+            />
           </button>
           <button className='messageButton'>
-            <img src={message} alt='paper airplane' />
+            <img
+              src={message}
+              className='themeable-icon empty'
+              alt='paper airplane'
+            />
           </button>
         </div>
         <div className='buttons-right'>
@@ -209,14 +230,21 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
             )}
           </div>
           <div className='photo-location'>
-            {post?.location ? post?.location : ""}
+            {post?.location && (
+              <Link
+                to={`/search/location/${post.location}`}
+                aria-label={`search for other posts from this location`}
+              >
+                {post?.location}
+              </Link>
+            )}
           </div>
         </div>
         <button
           className='optionButton transparent-button'
           onClick={() => setShowAdditionalOptionsModal(true)}
         >
-          <img src={threeDots} alt='three dots' />
+          <img src={threeDots} className='themeable-icon' alt='three dots' />
         </button>
       </div>
       {singlePostComments}
