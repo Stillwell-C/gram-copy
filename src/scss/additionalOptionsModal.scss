@@ -4,7 +4,7 @@
 .options-modal-container {
   z-index: 20;
   border-radius: 0.5rem;
-  background-color: #fff;
+  background-color: var(--component-background);
   overflow: hidden;
 
   @include x-small {
@@ -13,7 +13,7 @@
 
   .options-modal-body {
     .select-option-div {
-      border-bottom: 1px solid $margin-grey;
+      border-bottom: 1px solid var(--margin-grey);
       display: flex;
       align-items: center;
       justify-content: center;
