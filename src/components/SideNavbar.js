@@ -22,8 +22,18 @@ const SideNavbar = ({
       <div className='navbar-top'>
         <div className='navbar-header'>
           <Link to='/'>
-            <img src={logo} alt='' aria-hidden='true' className='text-logo' />
-            <img src={squareLogo} alt='Instagram logo' className='image-logo' />
+            <img
+              src={logo}
+              alt=''
+              aria-hidden='true'
+              className='text-logo themeable-icon'
+            />
+            <img
+              src={squareLogo}
+              alt=''
+              aria-hidden='true'
+              className='image-logo themeable-icon'
+            />
           </Link>
         </div>
         <div className='navbar-row'>{homeLink}</div>
