@@ -10,7 +10,7 @@ const HeaderBar = ({ navbarSearch, notificationsLink, setSearchActive }) => {
         className='header-bar-left height-100 flex-container flex-align-center'
         onClick={() => setSearchActive(false)}
       >
-        <Link to='/'>
+        <Link to='/' aria-label='move to home screen'>
           <picture>
             <source srcSet={logo} media='(min-width:648px)' />
             <source srcSet={squareLogo} media='(max-width:647px)' />
@@ -18,7 +18,7 @@ const HeaderBar = ({ navbarSearch, notificationsLink, setSearchActive }) => {
               src={logo}
               alt=''
               aria-hidden='true'
-              aria-label='move to home screen'
+              className='themeable-icon'
             />
           </picture>
         </Link>
