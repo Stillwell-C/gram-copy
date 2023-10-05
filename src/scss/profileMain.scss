@@ -160,7 +160,7 @@
     .user-info-stats-small {
       justify-content: space-around;
       padding: 16px 0;
-      border-top: 1px solid $margin-grey;
+      border-top: 1px solid var(--margin-grey);
 
       & > div {
         display: flex;
@@ -184,7 +184,7 @@
 
     .profile-bottom {
       width: 100%;
-      border-top: 1px solid $margin-grey;
+      border-top: 1px solid var(--margin-grey);
 
       .display-selector {
         width: 100%;
@@ -207,22 +207,21 @@
           justify-content: center;
           font-weight: bold;
           font-size: 12px;
-          color: $content-grey;
+          color: var(--content-grey);
           padding: 20px 3px;
 
           img {
             width: 12px;
             margin-right: 5px;
-            filter: invert(66%) sepia(0%) saturate(1247%) hue-rotate(147deg)
-              brightness(85%) contrast(97%);
+            filter: var(--profile-img-filter);
           }
 
           &.active {
-            color: black;
-            border-top: 1px solid black;
+            color: var(--text-color);
+            border-top: 1px solid var(--text-color);
 
             img {
-              filter: none;
+              filter: var(--profile-img-filter-dark-only);
             }
           }
         }
@@ -343,8 +342,12 @@
                   justify-content: center;
                   gap: 5px;
                   font-size: $font-small;
-                  color: white;
+                  color: #f5f5f5;
                   font-weight: bold;
+
+                  span {
+                    color: #f5f5f5;
+                  }
 
                   @include small {
                     font-size: $font-medium;
@@ -423,5 +426,6 @@
   }
   img {
     width: 75px;
+    filter: var(--profile-img-filter-dark-only);
   }
 }
