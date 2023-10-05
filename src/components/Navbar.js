@@ -23,8 +23,9 @@ import NavbarSearch from "./NavbarSearch";
 import FooterNavbar from "./FooterNavbar";
 import { logout } from "../features/auth/authApiRoutes";
 import { useMutation } from "react-query";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
+import { selectThemeState, setTheme } from "../features/display/displaySlice";
 
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
@@ -34,6 +35,8 @@ const Navbar = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const currentTheme = useSelector(selectThemeState);
 
   const { pathname } = useLocation();
 
@@ -83,7 +86,7 @@ const Navbar = () => {
   const homeLink = (
     <Link to='/'>
       <div className='navbar-line' onClick={scrollUpOnHomeScreen}>
-        <img src={home} alt='' aria-hidden='true' />
+        <img src={home} alt='' className='themeable-icon' aria-hidden='true' />
         <span>Home</span>
       </div>
     </Link>
@@ -97,7 +100,12 @@ const Navbar = () => {
           setSearchActive(!searchActive);
         }}
       >
-        <img src={search} alt='' aria-hidden='true' />
+        <img
+          src={search}
+          alt=''
+          className='themeable-icon'
+          aria-hidden='true'
+        />
         <span>Search</span>
       </div>
     </Link>
@@ -115,7 +123,12 @@ const Navbar = () => {
   const exploreLink = (
     <Link to='/explore'>
       <div className='navbar-line' onClick={scrollUpOnExploreScreen}>
-        <img src={compass} alt='' aria-hidden='true' />
+        <img
+          src={compass}
+          className='themeable-icon'
+          alt=''
+          aria-hidden='true'
+        />
         <span>Explore</span>
       </div>
     </Link>
@@ -124,7 +137,12 @@ const Navbar = () => {
   const messagesLink = (
     <Link to='/direct/inbox'>
       <div className='navbar-line' onClick={() => setSearchActive(false)}>
-        <img src={message} alt='' aria-hidden='true' />
+        <img
+          src={message}
+          className='themeable-icon'
+          alt=''
+          aria-hidden='true'
+        />
         <span>Messages</span>
       </div>
     </Link>
@@ -133,7 +151,7 @@ const Navbar = () => {
   const notificationsLink = (
     <Link to='/notifications'>
       <div className='navbar-line' onClick={() => setSearchActive(false)}>
-        <img src={heart} alt='' aria-hidden='true' />
+        <img src={heart} className='themeable-icon' alt='' aria-hidden='true' />
         <span>Notifications</span>
       </div>
     </Link>
@@ -142,7 +160,7 @@ const Navbar = () => {
   const createLink = (
     <Link to='#'>
       <div className='navbar-line' onClick={() => setSearchActive(false)}>
-        <img src={add} alt='' aria-hidden='true' />
+        <img src={add} className='themeable-icon' alt='' aria-hidden='true' />
         <span>Create</span>
       </div>
     </Link>
@@ -153,7 +171,9 @@ const Navbar = () => {
       <div className='navbar-line' onClick={() => setSearchActive(false)}>
         <img
           src={authenticatedUser ? userImgURL : profile}
-          className={authenticatedUser ? "userProfileImg" : ""}
+          className={`themeable-icon ${
+            authenticatedUser ? "userProfileImg" : ""
+          }`}
           alt=''
           aria-hidden='true'
         />
@@ -170,18 +190,36 @@ const Navbar = () => {
       aria-controls='large-navbar-menu-content'
     >
       <div className='navbar-line' onClick={() => setDisplayMenu(!displayMenu)}>
-        <img src={menu} alt='menu icon' />
+        <img className='themeable-icon' src={menu} alt='menu icon' />
         <span>More</span>
       </div>
     </Link>
   );
 
+  const handleChangeTheme = () => {
+    if (currentTheme === "theme-light") {
+      dispatch(setTheme("theme-dark"));
+      localStorage.setItem("theme-setting", "theme-dark");
+    } else {
+      dispatch(setTheme("theme-light"));
+      localStorage.setItem("theme-setting", "theme-light");
+    }
+  };
+
   const menuContent = (
     <>
       <div className='menu-line'>
-        <button aria-label='click to change to dark mode'>
+        <button
+          aria-label='click to change to dark mode'
+          onClick={handleChangeTheme}
+        >
           <span>Change appearance</span>
-          <img src={moon} alt='' aria-hidden='true' />
+          <img
+            src={moon}
+            alt=''
+            className='themeable-icon'
+            aria-hidden='true'
+          />
         </button>
       </div>
       <div className='menu-line'>
