@@ -12,7 +12,7 @@ $search-background: #efefef;
 
 $link-blue: #00376b;
 
-$error-red: red;
+$error-red: #ff0033;
 $success-green: green;
 
 $grey-button: #efefef;
@@ -31,3 +31,47 @@ $header-medium: 2rem;
 $header-small: 1.5rem;
 $header-xsmall: 1.3rem;
 $header-xxsmall: 1.15rem;
+
+$text-color-dark: #f5f5f5;
+$text-color-light: #000;
+
+.theme-light {
+  --background-color: #fafafa;
+  --component-background: #fff;
+  //   --navbar-hover: #fafafa;
+  --navbar-hover: #f5f5f5;
+  --navbar-menu-background: #fff;
+  //   --navbar-menu-hover: #fafafa;
+  --navbar-menu-hover: #f5f5f5;
+  --text-color: #000;
+  --margin-grey: #cccccc;
+  --search-background: #efefef;
+  --link-color: #00376b;
+  --content-grey: #737373;
+
+  --profile-img-filter: invert(66%) sepia(0%) saturate(1247%) hue-rotate(147deg)
+    brightness(85%) contrast(97%);
+  --profile-img-filter-dark-only: none;
+}
+.theme-dark {
+  --background-color: #000;
+  --component-background: #000;
+  --navbar-hover: #181818;
+  --navbar-menu-background: #181818;
+  --navbar-menu-hover: #383838;
+  --text-color: #f5f5f5;
+  --margin-grey: #282828;
+  --search-background: #181818;
+  --link-color: #87cefa;
+  --content-grey: #a8a8a8;
+
+  --profile-img-filter: invert(97%) sepia(97%) saturate(0%) hue-rotate(330deg)
+    brightness(102%) contrast(100%);
+  --profile-img-filter-dark-only: invert(97%) sepia(97%) saturate(0%)
+    hue-rotate(330deg) brightness(102%) contrast(100%);
+
+  .themeable-icon {
+    filter: invert(97%) sepia(97%) saturate(0%) hue-rotate(330deg)
+      brightness(102%) contrast(100%);
+  }
+}
