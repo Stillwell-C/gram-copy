@@ -4,7 +4,7 @@
 .options-modal-container {
   z-index: 20;
   border-radius: 0.5rem;
-  background-color: var(--component-background);
+  background-color: var(--menu-background);
   overflow: hidden;
 
   @include x-small {
