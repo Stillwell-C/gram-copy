@@ -54,10 +54,10 @@ const FeedRightInfo = () => {
       {!authenticatedUser && (
         <div className='login-div'>
           <Link to='/accounts/login' aria-label='click to log in'>
-            <button>Log In</button>
+            <button className='grey-button'>Log In</button>
           </Link>
           <Link to='/accounts/emailsignup' aria-label='click to sign up'>
-            <button>Sign Up</button>
+            <button className='grey-button'>Sign Up</button>
           </Link>
         </div>
       )}
