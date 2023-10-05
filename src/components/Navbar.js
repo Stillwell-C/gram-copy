@@ -12,7 +12,8 @@ import heart from "../assets/heart-rounded-svgrepo-com.svg";
 import add from "../assets/add-box-svgrepo-com.svg";
 import profile from "../assets/Default_pfp.svg";
 import menu from "../assets/menu-svgrepo-com.svg";
-import moon from "../assets/moon-02-svgrepo-com.svg";
+import moon from "../assets/moon-svgrepo-com.svg";
+import sun from "../assets/sun-svgrepo-com.svg";
 
 import CreatePostModal from "./CreatePostModal";
 import HeaderBar from "./HeaderBar";
@@ -229,6 +230,8 @@ const Navbar = () => {
     }
   };
 
+  const themeIcon = currentTheme === "theme-light" ? moon : sun;
+
   const menuContent = (
     <div>
       <div className='menu-line'>
@@ -238,7 +241,7 @@ const Navbar = () => {
         >
           <span>Change appearance</span>
           <img
-            src={moon}
+            src={themeIcon}
             alt=''
             className='themeable-icon'
             aria-hidden='true'
