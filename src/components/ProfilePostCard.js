@@ -57,7 +57,7 @@ const ProfilePostCard = React.forwardRef(
           <div className='icon-div flex-container'>
             <div className='icon-row'>
               <img src={heart} alt='heart icon' />
-              <span>{post.likes}</span>
+              <span>{post?.likes || 0}</span>
             </div>
             <div className='icon-row'>
               <img src={message} alt='message bubble icon' />

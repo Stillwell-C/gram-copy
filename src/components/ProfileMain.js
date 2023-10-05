@@ -138,7 +138,12 @@ const ProfileMain = () => {
         aria-label='click for more options'
         onClick={() => setShowAdditionalOptionsModal(true)}
       >
-        <img src={threeDots} alt='' aria-hidden='true' />
+        <img
+          src={threeDots}
+          className='themeable-icon'
+          alt=''
+          aria-hidden='true'
+        />
       </button>
     </div>
   );
@@ -240,7 +245,7 @@ const ProfileMain = () => {
               aria-current={displaySelector === "posts"}
               onClick={() => setDisplaySelector("posts")}
             >
-              <img src={grid} alt='grid icon'></img>
+              <img src={grid} alt='' />
               <span>POSTS</span>
             </button>
             {displayOwnPage && (
@@ -252,7 +257,7 @@ const ProfileMain = () => {
                 aria-current={displaySelector === "saved"}
                 onClick={() => setDisplaySelector("saved")}
               >
-                <img src={bookmark} alt='bookmark icon'></img>
+                <img src={bookmark} alt='' />
                 <span>SAVED</span>
               </button>
             )}
@@ -264,7 +269,7 @@ const ProfileMain = () => {
               aria-current={displaySelector === "tagged"}
               onClick={() => setDisplaySelector("tagged")}
             >
-              <img src={tagged} alt='tagged user icon'></img>
+              <img src={tagged} alt='' />
               <span>TAGGED</span>
             </button>
           </nav>
