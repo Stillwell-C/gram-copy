@@ -171,9 +171,7 @@ const Navbar = () => {
       <div className='navbar-line' onClick={() => setSearchActive(false)}>
         <img
           src={authenticatedUser ? userImgURL : profile}
-          className={`themeable-icon ${
-            authenticatedUser ? "userProfileImg" : ""
-          }`}
+          className={authenticatedUser ? "userProfileImg" : ""}
           alt=''
           aria-hidden='true'
         />
