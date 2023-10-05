@@ -109,7 +109,7 @@ const SaveButton = ({ save = false, postID, postPage, queryKey }) => {
         src={saved ? filledBookmark : outlinedBookmark}
         alt=''
         aria-hidden='true'
-        className={saved ? "filled" : ""}
+        className={`themeable-icon ${saved ? "filled" : "empty"}`}
       />
     </button>
   );

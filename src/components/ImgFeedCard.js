@@ -71,7 +71,7 @@ const ImgFeedCard = React.forwardRef(({ post, queryKey }, ref) => {
           onClick={() => setShowAdditionalOptionsModal(true)}
           aria-label='click for additional options'
         >
-          <img src={threeDots} alt='three dots' />
+          <img src={threeDots} alt='three dots' className='themeable-icon' />
         </button>
       </div>
       <div className='main-img-div flex-container flex-align-center'>
@@ -121,13 +121,19 @@ const ImgFeedCard = React.forwardRef(({ post, queryKey }, ref) => {
                 alt=''
                 onClick={() => setShowPhotoModal(true)}
                 aria-hidden='true'
+                className='themeable-icon empty'
               />
             </button>
             <button
               className='messageButton icon-button'
               aria-label='click to share post'
             >
-              <img src={message} alt='' aria-hidden='true' />
+              <img
+                src={message}
+                alt=''
+                className='themeable-icon empty'
+                aria-hidden='true'
+              />
             </button>
           </div>
           <div className='buttons-right'>

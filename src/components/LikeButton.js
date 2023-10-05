@@ -124,7 +124,7 @@ const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
     >
       <img
         src={liked ? filledHeart : outlinedHeart}
-        className={liked ? "filled heart" : "heart"}
+        className={`themeable-icon ${liked ? "filled heart" : "heart empty"}`}
         alt=''
         aria-hidden='true'
       />
