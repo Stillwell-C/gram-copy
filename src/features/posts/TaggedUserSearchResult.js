@@ -1,8 +1,8 @@
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { updatePostTaggedUsers } from "../features/posts/postApiRoutes";
+import { updatePostTaggedUsers } from "./postApiRoutes";
 import { useDispatch } from "react-redux";
-import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
+import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
 const TaggedUserSearchResult = React.forwardRef(
   ({ user, post, selectedUser, setSelectedUser }, ref) => {
