@@ -36,6 +36,7 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
           setImgUploadData={setImgUploadData}
           setImgUploadLoading={setImgUploadLoading}
           handleClose={handleClose}
+          handleClear={handleClear}
         />
       ) : (
         <CreatePostInformationForm
