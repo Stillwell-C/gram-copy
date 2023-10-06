@@ -9,7 +9,7 @@ import NotFound from "./components/NotFound";
 import AccountError from "./components/AccountError";
 import ErrorPage from "./components/ErrorPage";
 import SinglePostPage from "./components/SinglePostPage";
-import NotificationsPage from "./components/NotificationsPage";
+import NotificationsPage from "./features/notifications/NotificationsPage";
 import RequireLogout from "./features/auth/RequireLogout";
 import RequireLogin from "./features/auth/RequireLogin";
 import EditProfileMain from "./components/EditProfileMain";
