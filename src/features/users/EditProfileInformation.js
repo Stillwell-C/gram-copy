@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import DeleteAccountModal from "../features/users/DeleteAccountModal";
+import DeleteAccountModal from "./DeleteAccountModal";
 import { useDispatch } from "react-redux";
-import EditProfileInformationForm from "../features/users/EditProfileInformationForm";
-import EditProfileInformationImage from "./EditProfileInformationImage";
+import EditProfileInformationForm from "./EditProfileInformationForm";
+import EditProfileInformationImage from "../../components/EditProfileInformationImage";
 import { useQuery } from "react-query";
-import { getUserData } from "../features/users/usersApiRoutes";
-import { setLoading } from "../features/display/displaySlice";
-import useAuth from "../hooks/useAuth";
+import { getUserData } from "./usersApiRoutes";
+import { setLoading } from "../display/displaySlice";
+import useAuth from "../../hooks/useAuth";
 
 const EditProfileInformation = () => {
   const { username } = useAuth();
