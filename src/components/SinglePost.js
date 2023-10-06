@@ -14,7 +14,7 @@ import AdditionalOptionsModal from "./AdditionalOptionsModal";
 import ReportModal from "./ReportModal";
 import "../scss/singlePost.scss";
 import TagUsersModal from "./TagUsersModal";
-import DeletePostConfirmationModal from "./DeletePostConfirmationModal";
+import DeletePostConfirmationModal from "../features/posts/DeletePostConfirmationModal";
 
 const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
   const { id } = useAuth();

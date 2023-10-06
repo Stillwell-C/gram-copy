@@ -6,7 +6,7 @@ import tagUserIcon from "../assets/user-add-svgrepo-com.svg";
 import PhotoModal from "./PhotoModal";
 import TagUsersModal from "./TagUsersModal";
 import useAuth from "../hooks/useAuth";
-import DeletePostConfirmationModal from "./DeletePostConfirmationModal";
+import DeletePostConfirmationModal from "../features/posts/DeletePostConfirmationModal";
 
 const ProfilePostCard = React.forwardRef(
   ({ post, profilePosts, queryKey }, ref) => {

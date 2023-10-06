@@ -12,7 +12,7 @@ import SaveButton from "./SaveButton";
 import LikeButton from "./LikeButton";
 import AddCommentForm from "../features/comments/AddCommentForm";
 import useAuth from "../hooks/useAuth";
-import DeletePostConfirmationModal from "./DeletePostConfirmationModal";
+import DeletePostConfirmationModal from "../features/posts/DeletePostConfirmationModal";
 import TagUsersModal from "./TagUsersModal";
 
 const ImgFeedCard = React.forwardRef(({ post, queryKey }, ref) => {
