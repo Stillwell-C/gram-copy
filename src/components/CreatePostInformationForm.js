@@ -164,7 +164,12 @@ const CreatePostInformationForm = ({
                     aria-label='image location'
                   />
                 </label>
-                <img src={locationImg} alt='map location pinpoint icon' />
+                <img
+                  src={locationImg}
+                  alt=''
+                  aria-hidden='true'
+                  className='themeable-icon'
+                />
               </div>
               <div
                 className={`accessibility-info width-100 flex-container flex-column flex-align-start flex-justify-center segmented-div ${
