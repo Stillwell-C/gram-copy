@@ -37,7 +37,7 @@ const SinglePostPage = () => {
   }, [isLoading, postID]);
 
   useEffect(() => {
-    if (isError) {
+    if (isError && error?.response?.status === 400) {
       navigate("/error", {
         replace: true,
         state: {
@@ -45,6 +45,14 @@ const SinglePostPage = () => {
           errorMessage:
             "The link you followed may be broken, or the page may have been removed.",
           errorCode: error?.status,
+        },
+      });
+    }
+    if (isError) {
+      navigate("/error", {
+        replace: true,
+        state: {
+          errorCode: error?.response?.status,
         },
       });
     }
