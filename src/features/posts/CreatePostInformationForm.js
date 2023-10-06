@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { addNewPost } from "../features/posts/postApiRoutes";
-import useAuth from "../hooks/useAuth";
+import { addNewPost } from "./postApiRoutes";
+import useAuth from "../../hooks/useAuth";
 import locationImg from "../assets/location-svgrepo-com.svg";
 import downArrow from "../assets/down-arrow-backup-2-svgrepo-com.svg";
-import useLimitLineBreaks from "../hooks/useLimitLineBreaks";
+import useLimitLineBreaks from "../../hooks/useLimitLineBreaks";
 import { useDispatch } from "react-redux";
-import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
+import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
 const CreatePostInformationForm = ({
   handleClear,
