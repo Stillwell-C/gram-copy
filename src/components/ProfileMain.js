@@ -19,7 +19,7 @@ import { getUser } from "../features/users/usersApiRoutes";
 import FollowingModal from "../features/follow/FollowingModal";
 import FollowerModal from "../features/follow/FollowerModal";
 import FollowButton from "../features/follow/FollowButton";
-import UnfollowButton from "./UnfollowButton";
+import UnfollowButton from "../features/follow/UnfollowButton";
 import ProfileUserImage from "../features/users/ProfileUserImage";
 import useParseNumber from "../hooks/useParseNumber";
 import BannedAccount from "./BannedAccount";

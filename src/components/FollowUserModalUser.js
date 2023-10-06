@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import FollowButton from "../features/follow/FollowButton";
-import UnfollowButton from "./UnfollowButton";
+import UnfollowButton from "../features/follow/UnfollowButton";
 
 const FollowUserModalUser = React.forwardRef(({ user, setShowModal }, ref) => {
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${user?.userImgKey}`;
