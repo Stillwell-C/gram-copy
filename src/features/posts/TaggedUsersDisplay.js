@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import { getUsersFromArr } from "./usersApiRoutes";
+import { getUsersFromArr } from "../users/usersApiRoutes";
 import { FadeLoader } from "react-spinners";
-import RemoveTaggedUserButton from "../posts/RemoveTaggedUserButton";
+import RemoveTaggedUserButton from "./RemoveTaggedUserButton";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
