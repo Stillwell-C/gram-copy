@@ -19,6 +19,7 @@ const Notification = ({ notification }) => {
       <p className='notification-link'>
         <Link
           to={`/${notification?.notifyingUser?.username || "#"}`}
+          className='notification-link-username'
           aria-label={
             notification?.notifyingUser?.username
               ? `move to ${notification?.notifyingUser?.username}'s profile`
@@ -27,7 +28,13 @@ const Notification = ({ notification }) => {
         >
           {notification?.notifyingUser?.username || "Deleted User"}
         </Link>{" "}
-        liked your <Link to={`/p/${notification?.post}`}>post</Link>
+        liked your{" "}
+        <Link
+          className='notification-link-content'
+          to={`/p/${notification?.post}`}
+        >
+          post
+        </Link>
       </p>
     );
   }
@@ -36,6 +43,7 @@ const Notification = ({ notification }) => {
       <p className='notification-link'>
         <Link
           to={`/${notification?.notifyingUser?.username || "#"}`}
+          className='notification-link-username'
           aria-label={
             notification?.notifyingUser?.username
               ? `move to ${notification?.notifyingUser?.username}'s profile`
@@ -53,6 +61,7 @@ const Notification = ({ notification }) => {
       <p className='notification-link'>
         <Link
           to={`/${notification?.notifyingUser?.username || "#"}`}
+          className='notification-link-username'
           aria-label={
             notification?.notifyingUser?.username
               ? `move to ${notification?.notifyingUser?.username}'s profile`
@@ -61,7 +70,13 @@ const Notification = ({ notification }) => {
         >
           {notification?.notifyingUser?.username || "Deleted User"}
         </Link>{" "}
-        commented on your <Link to={`/p/${notification?.post}`}>post</Link>
+        commented on your{" "}
+        <Link
+          className='notification-link-content'
+          to={`/p/${notification?.post}`}
+        >
+          post
+        </Link>
       </p>
     );
   }
