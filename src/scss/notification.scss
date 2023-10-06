@@ -5,10 +5,10 @@
   max-height: 100svh;
   max-height: 100vh;
   .notifications-container {
-    background-color: #fff;
+    background-color: var(--component-background);
     padding-top: 1rem;
     width: 95vw;
-    border: 1px solid $margin-grey;
+    border: 1px solid var(--margin-grey);
     border-radius: 0.25rem;
     margin-top: 1rem;
     max-height: calc(95% - 97px);
@@ -26,7 +26,7 @@
 
     .header-div {
       text-align: center;
-      border-bottom: 1px solid $margin-grey;
+      border-bottom: 1px solid var(--margin-grey);
 
       h2 {
         font-size: $header-xxsmall;
@@ -65,26 +65,30 @@
           height: 35px;
         }
 
-        a {
-          color: #000;
-          font-weight: bold;
-        }
-
         .notification-link {
           margin-bottom: 5px;
+          color: var(--text-color);
+
+          .notification-link-username {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: bold;
+          }
+
+          .notification-link-content {
+            text-decoration: none;
+            color: var(--link-color);
+            font-weight: bold;
+          }
         }
 
         .notification-date {
-          color: $content-grey;
+          color: var(--content-grey);
         }
       }
     }
   }
   .footer-container {
-    // display: none;
-    // @include small {
-    //   display: block;
-    // }
     .footer {
       align-items: center;
       padding: 1rem;
