@@ -1,10 +1,10 @@
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { addFollow } from "../features/follow/followApiRoutes";
-import useAuth from "../hooks/useAuth";
+import { addFollow } from "./followApiRoutes";
+import useAuth from "../../hooks/useAuth";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
+import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
 const FollowButton = ({ user, queryKey }) => {
   const { authenticatedUser, id, username } = useAuth();
