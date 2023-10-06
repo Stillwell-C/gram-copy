@@ -17,7 +17,7 @@ import ProfileTagged from "./ProfileTagged";
 import { useQuery } from "react-query";
 import { getUser } from "../features/users/usersApiRoutes";
 import FollowingModal from "./FollowingModal";
-import FollowerModal from "./FollowerModal";
+import FollowerModal from "../features/follow/FollowerModal";
 import FollowButton from "../features/follow/FollowButton";
 import UnfollowButton from "./UnfollowButton";
 import ProfileUserImage from "./ProfileUserImage";
