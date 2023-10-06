@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "react-query";
-import { addNewComment } from "../features/comments/commentsApiRoutes";
+import { addNewComment } from "./commentsApiRoutes";
 import { useDispatch } from "react-redux";
-import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
+import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
 const AddCommentForm = React.forwardRef(({ post }, ref) => {
   const { authenticatedUser, id } = useAuth();
