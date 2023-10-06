@@ -5,10 +5,10 @@
   margin: auto;
 
   .edit-profile-div {
-    background-color: #fff;
+    background-color: var(--background-color);
     width: 95%;
     height: fit-content;
-    border: 1px solid $margin-grey;
+    border: 1px solid var(--margin-grey);
     border-radius: 0.25rem;
     margin-top: 1rem;
 
@@ -23,10 +23,10 @@
     }
 
     .edit-profile-sidebar {
-      border-bottom: 1px solid $margin-grey;
+      border-bottom: 1px solid var(--margin-grey);
       @include medium {
         flex-direction: column;
-        border-right: 1px solid $margin-grey;
+        border-right: 1px solid var(--margin-grey);
         border-bottom: none;
       }
 
@@ -47,10 +47,10 @@
         }
 
         &:hover {
-          background-color: $background-grey;
+          background-color: var(--background-color);
 
           @include medium {
-            border-left: 2px solid $margin-grey;
+            border-left: 2px solid var(--margin-grey);
           }
         }
 
@@ -60,11 +60,11 @@
 
         &.active {
           font-weight: bold;
-          border-bottom: 1px solid black;
+          border-bottom: 1px solid var(--text-color);
 
           @include medium {
             border-bottom: none;
-            border-left: 2px solid black;
+            border-left: 2px solid var(--text-color);
           }
         }
       }
@@ -163,11 +163,12 @@
           }
 
           input {
-            border: 1px solid $margin-grey;
+            border: 1px solid var(--margin-grey);
             font-size: $font-large;
             padding: 0 10px;
             height: 32px;
             border-radius: 0.25rem;
+            background-color: var(--search-background-light);
 
             &:disabled {
               cursor: not-allowed;
@@ -176,16 +177,17 @@
 
           textarea {
             resize: vertical;
-            border: 1px solid $margin-grey;
+            border: 1px solid var(--margin-grey);
             font-size: $font-large;
             height: 60px;
             padding: 6px 10px;
             border-radius: 0.25rem;
+            background-color: var(--search-background-light);
           }
 
           .form-information {
             font-size: $font-small;
-            color: $content-grey;
+            color: var(--content-grey);
             margin-top: 5px;
 
             p {
@@ -224,7 +226,7 @@
       &.password-form {
         input {
           &.password-input {
-            background-color: #fafafa;
+            background-color: var(--search-background-light);
           }
         }
 
