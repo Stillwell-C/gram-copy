@@ -8,7 +8,7 @@ import PersistentLogin from "./features/auth/PersistentLogin";
 import NotFound from "./components/NotFound";
 import AccountError from "./components/AccountError";
 import ErrorPage from "./components/ErrorPage";
-import SinglePostPage from "./components/SinglePostPage";
+import SinglePostPage from "./features/posts/SinglePostPage";
 import NotificationsPage from "./features/notifications/NotificationsPage";
 import RequireLogout from "./features/auth/RequireLogout";
 import RequireLogin from "./features/auth/RequireLogin";
