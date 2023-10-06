@@ -20,7 +20,7 @@ import FollowingModal from "../features/follow/FollowingModal";
 import FollowerModal from "../features/follow/FollowerModal";
 import FollowButton from "../features/follow/FollowButton";
 import UnfollowButton from "./UnfollowButton";
-import ProfileUserImage from "./ProfileUserImage";
+import ProfileUserImage from "../features/users/ProfileUserImage";
 import useParseNumber from "../hooks/useParseNumber";
 import BannedAccount from "./BannedAccount";
 import useParseTextForLinks from "../hooks/useTextParseForLinks";
