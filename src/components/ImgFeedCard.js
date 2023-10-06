@@ -9,7 +9,7 @@ import PhotoModal from "./PhotoModal";
 import ReportModal from "./ReportModal";
 import AdditionalOptionsModal from "./AdditionalOptionsModal";
 import SaveButton from "./SaveButton";
-import LikeButton from "./LikeButton";
+import LikeButton from "../features/likes/LikeButton";
 import AddCommentForm from "../features/comments/AddCommentForm";
 import useAuth from "../hooks/useAuth";
 import DeletePostConfirmationModal from "../features/posts/DeletePostConfirmationModal";
