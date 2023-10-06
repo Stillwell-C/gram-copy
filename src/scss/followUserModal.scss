@@ -6,7 +6,8 @@
   overflow: hidden;
   border-radius: 0.5rem;
   cursor: default;
-  background-color: #fff;
+  background-color: var(--component-background);
+  border: 1px solid var(--margin-grey);
   height: 80svh;
   height: 80vh;
 
@@ -17,7 +18,7 @@
 
   .follow-user-modal-body {
     .follow-user-modal-header {
-      border-bottom: 1px solid $margin-grey;
+      border-bottom: 1px solid var(--margin-grey);
 
       div {
         flex: 1;
@@ -64,7 +65,7 @@
       .userinfo-div {
         a {
           text-decoration: none;
-          color: black;
+          color: var(--text-color);
         }
 
         .username {
@@ -73,7 +74,7 @@
           margin-bottom: 4px;
         }
         .fullname {
-          color: $content-grey;
+          color: var(--content-grey);
           font-size: $font-medium;
         }
       }
