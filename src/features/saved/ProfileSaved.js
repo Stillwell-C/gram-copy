@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef } from "react";
-import PostFeed from "./PostFeed";
+import PostFeed from "../../components/PostFeed";
 import { useInfiniteQuery } from "react-query";
-import { getSavedPosts } from "../features/saved/savedApiRoutes";
+import { getSavedPosts } from "./savedApiRoutes";
 import { FadeLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
-import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
-import FadeLoaderStyled from "./FadeLoaderStyled";
+import { setError, setErrorRefreshPage } from "../error/errorSlice";
+import FadeLoaderStyled from "../../components/FadeLoaderStyled";
 
 const ProfileSaved = ({ userID }) => {
   const dispatch = useDispatch();
