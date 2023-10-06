@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useDispatch } from "react-redux";
-import { searchPosts } from "../features/posts/postApiRoutes";
-import { setLoading } from "../features/display/displaySlice";
-import FeedContainer from "./FeedContainer";
+import { searchPosts } from "./postApiRoutes";
+import { setLoading } from "../display/displaySlice";
+import FeedContainer from "../../components/FeedContainer";
 import { useParams } from "react-router-dom";
-import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
+import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
 const SearchFeed = () => {
   const { searchParam, searchQuery } = useParams();
