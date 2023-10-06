@@ -16,7 +16,7 @@ import EditProfileMain from "./components/EditProfileMain";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
 import HomeFeed from "./components/HomeFeed";
-import ExploreFeed from "./components/ExploreFeed";
+import ExploreFeed from "./features/posts/ExploreFeed";
 import SearchFeed from "./components/SearchFeed";
 
 function App() {
