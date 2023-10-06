@@ -17,7 +17,7 @@ import LoginForm from "./features/auth/LoginForm";
 import SignupForm from "./components/SignupForm";
 import HomeFeed from "./features/posts/HomeFeed";
 import ExploreFeed from "./features/posts/ExploreFeed";
-import SearchFeed from "./components/SearchFeed";
+import SearchFeed from "./features/posts/SearchFeed";
 
 function App() {
   return (
