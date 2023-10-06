@@ -2,12 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../scss/deleteAccountModal.scss";
 import { useMutation, useQueryClient } from "react-query";
-import useAuth from "../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 import { FadeLoader } from "react-spinners";
-import { deleteUser } from "../features/users/usersApiRoutes";
-import FocusTrapModalParent from "./FocusTrapModalParent";
-import { logout } from "../features/auth/authApiRoutes";
-import FadeLoaderStyled from "./FadeLoaderStyled";
+import { deleteUser } from "./usersApiRoutes";
+import FocusTrapModalParent from "../../components/FocusTrapModalParent";
+import { logout } from "../auth/authApiRoutes";
+import FadeLoaderStyled from "../../components/FadeLoaderStyled";
 
 const DeleteAccountModal = ({ setDisplayDeleteModal }) => {
   const { id } = useAuth();
