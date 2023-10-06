@@ -36,9 +36,9 @@
   }
 }
 
-//try to universalize these
 .error-modal {
-  background-color: #fff;
+  background-color: var(--component-background);
+  border: 1px solid var(--margin-grey);
   z-index: 25;
   border-radius: 0.5rem;
   justify-content: space-between;
@@ -52,7 +52,7 @@
   .error-modal-btn-div {
     padding: 1rem;
     width: 100%;
-    border-top: 1px solid $margin-grey;
+    border-top: 1px solid var(--margin-grey);
 
     button {
       font-weight: bold;
@@ -78,7 +78,8 @@
   transform: translate(-50%, -50%);
   z-index: 15;
   border-radius: 0.5rem;
-  background-color: #fff;
+  background-color: var(--component-background);
+  border: 1px solid var(--margin-grey);
   width: 300px;
   overflow: hidden;
   cursor: default;
@@ -100,30 +101,6 @@
     .button-div {
       display: flex;
       gap: 15px;
-
-      button {
-        padding: 7px 16px;
-        border-radius: 0.5rem;
-        border: none;
-        font-size: 0.85rem;
-        font-weight: bold;
-        color: black;
-        background-color: #efefef;
-        cursor: pointer;
-
-        &:hover {
-          background-color: #dbdbdb;
-        }
-
-        &.delete {
-          background-color: #0095f6;
-          color: #fff;
-
-          &:hover {
-            background-color: #1877f2;
-          }
-        }
-      }
     }
   }
 }
