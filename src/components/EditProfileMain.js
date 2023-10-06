@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import EditProfileInformation from "../features/users/EditProfileInformation";
-import { EditProfilePassword } from "./EditProfilePassword";
+import { EditProfilePassword } from "../features/users/EditProfilePassword";
 import Footer from "./Footer";
 import "../scss/editProfileMain.scss";
 
