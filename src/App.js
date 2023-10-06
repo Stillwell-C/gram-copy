@@ -13,7 +13,7 @@ import NotificationsPage from "./components/NotificationsPage";
 import RequireLogout from "./features/auth/RequireLogout";
 import RequireLogin from "./features/auth/RequireLogin";
 import EditProfileMain from "./components/EditProfileMain";
-import LoginForm from "./components/LoginForm";
+import LoginForm from "./features/auth/LoginForm";
 import SignupForm from "./components/SignupForm";
 import HomeFeed from "./features/posts/HomeFeed";
 import ExploreFeed from "./features/posts/ExploreFeed";
