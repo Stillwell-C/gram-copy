@@ -118,7 +118,7 @@ const CreatePostDragDrop = ({
       >
         <div>
           <img
-            className='media-upload-display-img'
+            className='media-upload-display-img themeable-icon'
             src={photoImg}
             alt='media'
           />
