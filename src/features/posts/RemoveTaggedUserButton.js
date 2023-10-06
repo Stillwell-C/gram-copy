@@ -1,6 +1,6 @@
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { updatePostTaggedUsers } from "../features/posts/postApiRoutes";
+import { updatePostTaggedUsers } from "./postApiRoutes";
 
 const RemoveTaggedUserButton = ({ user, post }) => {
   const queryClient = useQueryClient();
