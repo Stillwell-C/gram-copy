@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../scss/deleteAccountModal.scss";
+import "../../scss/deleteAccountModal.scss";
 import { useMutation, useQueryClient } from "react-query";
 import useAuth from "../../hooks/useAuth";
 import { FadeLoader } from "react-spinners";

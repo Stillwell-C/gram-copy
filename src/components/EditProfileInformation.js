@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import DeleteAccountModal from "./DeleteAccountModal";
+import DeleteAccountModal from "../features/users/DeleteAccountModal";
 import { useDispatch } from "react-redux";
 import EditProfileInformationForm from "./EditProfileInformationForm";
 import EditProfileInformationImage from "./EditProfileInformationImage";
