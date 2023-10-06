@@ -38,16 +38,20 @@ $text-color-light: #000;
 .theme-light {
   --background-color: #fafafa;
   --component-background: #fff;
-  //   --navbar-hover: #fafafa;
   --navbar-hover: #f5f5f5;
   --menu-background: #fff;
-  //   --navbar-menu-hover: #fafafa;
   --menu-hover: #f5f5f5;
+  --menu-hover-dark: #dedede;
   --text-color: #000;
+  --text-color-inverse: #f5f5f5;
   --margin-grey: #cccccc;
   --search-background: #efefef;
+  --search-background-light: #fff;
   --link-color: #00376b;
   --content-grey: #737373;
+  --scrollbar-track: auto;
+  --scrollbar-thumb: auto;
+  --loading-color: #333;
 
   --profile-img-filter: invert(66%) sepia(0%) saturate(1247%) hue-rotate(147deg)
     brightness(85%) contrast(97%);
@@ -59,11 +63,17 @@ $text-color-light: #000;
   --navbar-hover: #181818;
   --menu-background: #181818;
   --menu-hover: #383838;
+  --menu-hover-dark: #282828;
   --text-color: #f5f5f5;
+  --text-color-inverse: #000;
   --margin-grey: #282828;
   --search-background: #181818;
+  --search-background-light: #181818;
   --link-color: #87cefa;
   --content-grey: #a8a8a8;
+  --scrollbar-track: #181818;
+  --scrollbar-thumb: #282828;
+  --loading-color: #efefef;
 
   --profile-img-filter: invert(97%) sepia(97%) saturate(0%) hue-rotate(330deg)
     brightness(102%) contrast(100%);
