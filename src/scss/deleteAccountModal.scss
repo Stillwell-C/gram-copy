@@ -2,10 +2,10 @@
 @import "../breakpoints.scss";
 
 .delete-account-modal-container {
-  border: 1px solid $margin-grey;
+  border: 1px solid var(--margin-grey);
   border-radius: 0.5rem;
   z-index: 15;
-  background-color: #fff;
+  background-color: var(--component-background);
   height: 90vh;
   height: 85svh;
 
@@ -18,7 +18,7 @@
 
   .modal-header {
     padding: 10px;
-    border-bottom: 0.5px solid $margin-grey;
+    border-bottom: 0.5px solid var(--margin-grey);
     h2 {
       font-size: $font-large;
 
@@ -59,25 +59,25 @@
     .modal-confirmation {
       form {
         margin-top: 1.5rem;
-        color: $content-grey;
+        color: var(--content-grey);
         padding-bottom: 0;
 
         .larger-text {
           font-size: 1rem;
           font-weight: bold;
-          color: $content-grey;
+          color: var(--content-grey);
         }
 
         .fine-print-div {
           height: 5rem;
           overflow-y: scroll;
-          border: 1px solid $margin-grey;
+          border: 1px solid var(--margin-grey);
           border-radius: 0.25rem;
           padding: 5px 10px;
 
           span {
             font-size: $font-small;
-            color: $content-grey;
+            color: var(--content-grey);
           }
         }
 
@@ -91,12 +91,12 @@
         .confirmation-div {
           .confirmation-prompt {
             font-size: $font-medium;
-            color: black;
+            color: var(--text-color);
             margin-bottom: 1rem;
           }
 
           input {
-            border: 1px solid $margin-grey;
+            border: 1px solid var(--margin-grey);
             font-size: 16px;
             padding: 0 10px;
             height: 32px;
@@ -116,7 +116,7 @@
 
           p {
             font-size: 0.9rem;
-            color: black;
+            color: var(--text-color);
           }
         }
       }
