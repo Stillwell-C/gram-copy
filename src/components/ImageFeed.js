@@ -45,6 +45,8 @@ const ImageFeed = ({
   );
 
   const flattenedFeedData = postData?.pages?.reduce((acc, page) => {
+    if (!page?.posts?.length) return acc;
+
     return [...acc, ...page.posts];
   }, []);
 
@@ -102,7 +104,6 @@ const ImageFeed = ({
           homeFeed &&
           noFollowingDiv}
         {(isFetching || isLoading) && <FadeLoaderStyled />}
-        {isError && error.message}
       </>
     </section>
   );

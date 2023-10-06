@@ -34,6 +34,8 @@ const ProfileSaved = ({ userID }) => {
   });
 
   const flattenedFeedData = postData?.pages?.reduce((acc, page) => {
+    if (!page?.posts?.length) return acc;
+
     return [...acc, ...page.posts];
   }, []);
 

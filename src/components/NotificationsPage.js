@@ -50,6 +50,8 @@ const NotificationsPage = () => {
   }, [hasNextPage]);
 
   const flattenedData = notificationsData?.pages?.reduce((acc, page) => {
+    if (!page?.notifications?.length) return acc;
+
     return [...acc, ...page?.notifications];
   }, []);
 

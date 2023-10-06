@@ -37,6 +37,8 @@ const PhotoModalComments = ({ post, setShowPhotoModal }) => {
 
   const flattenedFeedData = commentData?.pages?.length
     ? commentData?.pages?.reduce((acc, page) => {
+        if (!page?.comments?.length) return acc;
+
         return [...acc, ...page?.comments];
       }, [])
     : [];

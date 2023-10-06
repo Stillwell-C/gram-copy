@@ -39,6 +39,8 @@ const ProfileTagged = ({ userID }) => {
   });
 
   const flattenedFeedData = postData?.pages?.reduce((acc, page) => {
+    if (!page?.posts?.legnth) return acc;
+
     return [...acc, ...page.posts];
   }, []);
 

@@ -44,7 +44,7 @@ const FollowingModal = ({ user, setShowFollowingModal }) => {
   );
 
   const flattenedFeedData = followData?.pages?.reduce((acc, page) => {
-    if (!page?.following?.length) return [...acc];
+    if (!page?.following?.length) return acc;
 
     return [...acc, ...page?.following];
   }, []);

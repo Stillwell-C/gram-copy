@@ -64,6 +64,8 @@ const TagUsersSearch = ({
   );
 
   const flattenedSearchData = searchData?.pages?.reduce((acc, page) => {
+    if (!page?.users.length) return acc;
+
     return [...acc, ...page?.users];
   }, []);
 
