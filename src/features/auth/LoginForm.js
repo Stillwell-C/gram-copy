@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { setCredentials } from "../features/auth/authSlice";
+import { setCredentials } from "./authSlice";
 import { useDispatch } from "react-redux";
 import { FadeLoader } from "react-spinners";
-import { login } from "../features/auth/authApiRoutes";
+import { login } from "./authApiRoutes";
 
-import "../scss/login.scss";
-import logo from "../assets/Instagram_logo.png";
+import "../../scss/login.scss";
+import logo from "../../assets/Instagram_logo.png";
 import { useMutation } from "react-query";
-import FadeLoaderStyled from "./FadeLoaderStyled";
+import FadeLoaderStyled from "../../components/FadeLoaderStyled";
 
 const LoginForm = () => {
   const errRef = useRef();
