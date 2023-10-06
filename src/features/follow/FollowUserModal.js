@@ -1,7 +1,7 @@
-import "../scss/followUserModal.scss";
+import "../../scss/followUserModal.scss";
 import { FadeLoader } from "react-spinners";
-import FocusTrapModalParent from "./FocusTrapModalParent";
-import FadeLoaderStyled from "./FadeLoaderStyled";
+import FocusTrapModalParent from "../../components/FocusTrapModalParent";
+import FadeLoaderStyled from "../../components/FadeLoaderStyled";
 
 const FollowUserModal = ({
   users,
