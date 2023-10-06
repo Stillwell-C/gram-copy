@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef } from "react";
-import PostFeed from "./PostFeed";
+import PostFeed from "../../components/PostFeed";
 import { useInfiniteQuery } from "react-query";
-import useAuth from "../hooks/useAuth";
-import { getTaggedPosts } from "../features/posts/postApiRoutes";
+import useAuth from "../../hooks/useAuth";
+import { getTaggedPosts } from "./postApiRoutes";
 import { FadeLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
-import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
-import FadeLoaderStyled from "./FadeLoaderStyled";
+import { setError, setErrorRefreshPage } from "../error/errorSlice";
+import FadeLoaderStyled from "../../components/FadeLoaderStyled";
 
 const ProfileTagged = ({ userID }) => {
   const dispatch = useDispatch();
