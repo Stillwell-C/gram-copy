@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import addCommentIcon from "../assets/add-circle-svgrepo-com.svg";
-import Comment from "./Comment";
+import addCommentIcon from "../../assets/add-circle-svgrepo-com.svg";
+import Comment from "../../components/Comment";
 import { useInfiniteQuery } from "react-query";
-import { getPostComments } from "../features/comments/commentsApiRoutes";
+import { getPostComments } from "./commentsApiRoutes";
 import { FadeLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
-import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
+import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
 const PhotoModalComments = ({ post, setShowPhotoModal }) => {
   const dispatch = useDispatch();
