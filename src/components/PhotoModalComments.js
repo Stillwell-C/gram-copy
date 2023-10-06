@@ -4,8 +4,12 @@ import Comment from "./Comment";
 import { useInfiniteQuery } from "react-query";
 import { getPostComments } from "../features/comments/commentsApiRoutes";
 import { FadeLoader } from "react-spinners";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 
 const PhotoModalComments = ({ post, setShowPhotoModal }) => {
+  const dispatch = useDispatch();
+
   const commentLoadLimit = 10;
 
   const {
@@ -32,7 +36,11 @@ const PhotoModalComments = ({ post, setShowPhotoModal }) => {
   });
 
   useEffect(() => {
-    if (isError) console.log(error);
+    if (isError) {
+      if (error?.response?.status === 400) return;
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(false));
+    }
   }, [isError]);
 
   const flattenedFeedData = commentData?.pages?.length
