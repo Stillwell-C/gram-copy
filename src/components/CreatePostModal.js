@@ -20,12 +20,6 @@ const CreatePostModal = ({ setDisplayPostModal }) => {
     setImgUploadData({});
   };
 
-  useEffect(() => {
-    if (addNewPost.isError) {
-      console.log(addNewPost.error);
-    }
-  }, [addNewPost.isError]);
-
   const content = (
     <>
       {dragDropScreen ? (
