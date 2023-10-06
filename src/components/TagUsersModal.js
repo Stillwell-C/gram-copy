@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../scss/tagUsersModal.scss";
-import TagUsersSearch from "./TagUsersSearch";
+import TagUsersSearch from "../features/posts/TagUsersSearch";
 import TaggedUsersDisplay from "../features/posts/TaggedUsersDisplay";
 import FocusTrapModalParent from "./FocusTrapModalParent";
 
