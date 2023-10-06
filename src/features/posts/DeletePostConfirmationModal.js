@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "react-query";
-import { deletePost } from "../features/posts/postApiRoutes";
-import useAuth from "../hooks/useAuth";
-import FocusTrapModalParent from "./FocusTrapModalParent";
+import { deletePost } from "./postApiRoutes";
+import useAuth from "../../hooks/useAuth";
+import FocusTrapModalParent from "../../components/FocusTrapModalParent";
 import { useDispatch } from "react-redux";
-import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
+import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
 const DeletePostConfirmationModal = ({ post, setShowDeleteConfirmation }) => {
   const { id } = useAuth();
