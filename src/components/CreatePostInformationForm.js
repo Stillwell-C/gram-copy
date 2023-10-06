@@ -37,7 +37,6 @@ const CreatePostInformationForm = ({
     onSuccess: () => {
       queryClient.invalidateQueries(["profilePosts", id]);
 
-      console.log("success");
       setFormData({
         caption: "",
         location: "",
@@ -63,14 +62,16 @@ const CreatePostInformationForm = ({
   const uploadPost = async (e) => {
     e.preventDefault();
     if (!imgUploadData) {
-      console.log("Error. No image data found.");
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(false));
+      handleClear();
+      handleClose();
       return;
     }
     const uploadData = {
       ...formData,
       imgData: imgUploadData,
     };
-    console.log(uploadData);
     addNewPostMutation.mutate({ ...uploadData });
   };
 
