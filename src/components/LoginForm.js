@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useLoginMutation } from "../features/auth/authApiSlice";
 import { setCredentials } from "../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { FadeLoader } from "react-spinners";
