@@ -4,6 +4,7 @@ import axios from "axios";
 import gramCopyApi from "../app/api/gramCopyApi";
 import { useDispatch } from "react-redux";
 import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
+import useCloudinaryUpload from "../hooks/useCloudinaryUpload";
 
 const api_key = "419818228346469";
 const cloud_name = "danscxcd2";
@@ -21,6 +22,7 @@ const CreatePostDragDrop = ({
 
   const inputRef = useRef(null);
   const dispatch = useDispatch();
+  const cloudinaryUpload = useCloudinaryUpload();
 
   const handleDrag = (e) => {
     e.preventDefault();
@@ -56,35 +58,13 @@ const CreatePostDragDrop = ({
 
   useEffect(() => {
     setImgUploadLoading(true);
-    //upload file uploaded by user to Cloudinary
+
     const uploadFile = async () => {
-      const signatureResponse = await gramCopyApi.get("/auth/cloud-signature");
-
-      const imgData = new FormData();
-      imgData.append("file", imgFileUpload);
-      imgData.append("api_key", api_key);
-      imgData.append("signature", signatureResponse.data.signature);
-      imgData.append("timestamp", signatureResponse.data.timestamp);
-
       try {
-        const cloudinaryRes = await axios.post(
-          `https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`,
-          imgData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-          }
-        );
-
-        setImgUploadData({
-          public_id: cloudinaryRes.data.public_id,
-          version: cloudinaryRes.data.version,
-          signature: cloudinaryRes.data.signature,
-          format: cloudinaryRes.data.format,
-        });
+        const cloudinaryResponse = await cloudinaryUpload(imgFileUpload);
+        setImgUploadData(cloudinaryResponse);
         setImgUploadLoading(false);
       } catch (err) {
-        dispatch(setError(true));
-        dispatch(setErrorRefreshPage(false));
         handleClear();
         handleClose();
       }
