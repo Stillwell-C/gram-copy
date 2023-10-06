@@ -20,7 +20,7 @@ import HeaderBar from "./HeaderBar";
 import useAuth from "../hooks/useAuth";
 import SideNavbar from "./SideNavbar";
 import SideNavbarSearch from "./SideNavbarSearch";
-import NavbarSearch from "./NavbarSearch";
+import NavbarSearch from "../features/users/NavbarSearch";
 import FooterNavbar from "./FooterNavbar";
 import { logout } from "../features/auth/authApiRoutes";
 import { useMutation } from "react-query";
