@@ -9,7 +9,7 @@ import moment from "moment";
 import PhotoModalComments from "./PhotoModalComments";
 import LikeButton from "./LikeButton";
 import SaveButton from "./SaveButton";
-import AddCommentForm from "./AddCommentForm";
+import AddCommentForm from "../features/comments/AddCommentForm";
 import AdditionalOptionsModal from "./AdditionalOptionsModal";
 import ReportModal from "./ReportModal";
 import "../scss/singlePost.scss";

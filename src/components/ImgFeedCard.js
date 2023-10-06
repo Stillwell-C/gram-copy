@@ -10,7 +10,7 @@ import ReportModal from "./ReportModal";
 import AdditionalOptionsModal from "./AdditionalOptionsModal";
 import SaveButton from "./SaveButton";
 import LikeButton from "./LikeButton";
-import AddCommentForm from "./AddCommentForm";
+import AddCommentForm from "../features/comments/AddCommentForm";
 import useAuth from "../hooks/useAuth";
 import DeletePostConfirmationModal from "./DeletePostConfirmationModal";
 import TagUsersModal from "./TagUsersModal";
