@@ -67,6 +67,7 @@ const SearchFeed = () => {
 
   useEffect(() => {
     if (isError) {
+      if (error?.response?.status === 400) return;
       dispatch(setError(true));
       dispatch(setErrorRefreshPage(true));
     }

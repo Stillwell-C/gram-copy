@@ -18,6 +18,7 @@ const ProfilePosts = ({ userID }) => {
     data: postData,
     isLoading,
     isError,
+    error,
     isFetching,
     hasNextPage,
     fetchNextPage,
@@ -59,6 +60,7 @@ const ProfilePosts = ({ userID }) => {
 
   useEffect(() => {
     if (isError) {
+      if (error?.response?.status === 400) return;
       dispatch(setError(true));
       dispatch(setErrorRefreshPage(true));
     }
