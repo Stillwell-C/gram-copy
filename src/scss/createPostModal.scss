@@ -3,9 +3,11 @@
 
 .modal-container {
   z-index: 15;
-  background-color: #fff;
+  background-color: var(--menu-background);
   height: 80svh;
   height: 80vh;
+  border-radius: 0.5rem;
+  border: 1px solid var(--margin-grey);
 
   @include small {
     width: clamp(300px, 90%, 1200px);
@@ -26,7 +28,7 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    border-bottom: 0.5px solid $margin-grey;
+    border-bottom: 0.5px solid var(--margin-grey);
     padding: 10px;
     font-weight: bold;
 
@@ -55,7 +57,7 @@
       }
 
       button:disabled {
-        color: $content-grey;
+        color: var(--content-grey);
       }
     }
   }
@@ -83,7 +85,7 @@
         }
 
         &.drag-active {
-          background-color: $background-grey-highlighted;
+          background-color: var(--menu-hover);
         }
       }
 
@@ -116,7 +118,7 @@
       .modal-content {
         max-height: 100%;
         overflow-y: scroll;
-        background-color: #fff;
+        background-color: var(--component-background);
 
         @include small {
           flex-direction: row;
@@ -126,7 +128,7 @@
         .modal-body-left {
           flex: 3;
           background-color: #000;
-          border-right: 1px solid $margin-grey;
+          border-right: 1px solid var(--margin-grey);
 
           img {
             object-fit: cover;
@@ -140,7 +142,7 @@
         .modal-body-right {
           flex: 2;
           gap: 15px;
-          background-color: #fff;
+          background-color: var(--component-background);
 
           .top-user-info {
             padding: 15px;
@@ -165,6 +167,7 @@
             width: 100%;
             font-size: 1rem;
             height: 50px;
+            background-color: var(--component-background);
 
             @include small {
               height: 175px;
@@ -179,7 +182,7 @@
             align-items: center;
             justify-content: flex-end;
             font-size: 12px;
-            color: $content-grey;
+            color: var(--content-grey);
             cursor: pointer;
             position: relative;
 
@@ -189,8 +192,8 @@
 
             .caption-length-info {
               position: absolute;
-              background-color: #000;
-              color: white;
+              background-color: var(--text-color);
+              color: var(--text-color-inverse);
               padding: 5px;
               text-align: center;
               border-radius: 0.25rem;
@@ -204,8 +207,8 @@
           }
 
           .segmented-div {
-            border-top: 1px solid $margin-grey;
-            border-bottom: 1px solid $margin-grey;
+            border-top: 1px solid var(--margin-grey);
+            border-bottom: 1px solid var(--margin-grey);
           }
 
           .location-input-div {
@@ -220,6 +223,7 @@
                 border: none;
                 outline: none;
                 font-size: 1rem;
+                background-color: var(--component-background);
               }
             }
 
@@ -263,7 +267,7 @@
                 .accessibility-info-text {
                   font-size: 12px;
                   margin: 7px 0;
-                  color: $content-grey;
+                  color: var(--content-grey);
                 }
 
                 .accessibility-input-div {
@@ -287,7 +291,8 @@
                       margin-right: 15px;
                       border-radius: 0.25rem;
                       outline: none;
-                      border: 1px solid $margin-grey;
+                      border: 1px solid var(--margin-grey);
+                      background-color: var(--component-background);
                     }
                   }
                 }
