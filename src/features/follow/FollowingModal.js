@@ -1,8 +1,8 @@
 import React, { useCallback, useRef } from "react";
 import { useInfiniteQuery } from "react-query";
-import { getFollowing } from "../features/follow/followApiRoutes";
-import FollowUserModalUser from "./FollowUserModalUser";
-import FollowUserModal from "./FollowUserModal";
+import { getFollowing } from "./followApiRoutes";
+import FollowUserModalUser from "../../components/FollowUserModalUser";
+import FollowUserModal from "../../components/FollowUserModal";
 
 const FollowingModal = ({ user, setShowFollowingModal }) => {
   const {
