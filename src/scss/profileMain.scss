@@ -145,12 +145,19 @@
           }
           .user-bio {
             white-space: pre-wrap;
+
+            a {
+              text-decoration: none;
+              color: var(--link-color);
+            }
           }
 
           .user-link {
             margin-top: 5px;
             a {
               font-weight: bold;
+              text-decoration: none;
+              color: var(--link-color);
             }
           }
         }
