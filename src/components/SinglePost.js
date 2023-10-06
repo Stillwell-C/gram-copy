@@ -6,7 +6,7 @@ import threeDots from "../assets/three-dots-line-svgrepo-com.svg";
 import commentBubble from "../assets/message-circle-01-svgrepo-com.svg";
 import message from "../assets/plane-svgrepo-com.svg";
 import moment from "moment";
-import PhotoModalComments from "./PhotoModalComments";
+import PhotoModalComments from "../features/comments/PhotoModalComments";
 import LikeButton from "../features/likes/LikeButton";
 import SaveButton from "./SaveButton";
 import AddCommentForm from "../features/comments/AddCommentForm";
