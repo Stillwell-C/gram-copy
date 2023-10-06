@@ -15,7 +15,7 @@ import RequireLogin from "./features/auth/RequireLogin";
 import EditProfileMain from "./components/EditProfileMain";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
-import HomeFeed from "./components/HomeFeed";
+import HomeFeed from "./features/posts/HomeFeed";
 import ExploreFeed from "./features/posts/ExploreFeed";
 import SearchFeed from "./components/SearchFeed";
 
