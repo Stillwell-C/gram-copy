@@ -6,6 +6,7 @@ import { getTaggedPosts } from "../features/posts/postApiRoutes";
 import { FadeLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
 import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
+import FadeLoaderStyled from "./FadeLoaderStyled";
 
 const ProfileTagged = ({ userID }) => {
   const dispatch = useDispatch();
@@ -67,9 +68,7 @@ const ProfileTagged = ({ userID }) => {
   }, [isError]);
 
   return isLoading ? (
-    <div className='loading-div'>
-      <FadeLoader cssOverride={{ scale: "0.5" }} color='#333' />
-    </div>
+    <FadeLoaderStyled />
   ) : (
     <PostFeed
       posts={flattenedFeedData}

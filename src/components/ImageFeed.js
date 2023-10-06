@@ -7,6 +7,7 @@ import { useInfiniteQuery } from "react-query";
 import { getMultiplePosts } from "../features/posts/postApiRoutes";
 import { FadeLoader } from "react-spinners";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import FadeLoaderStyled from "./FadeLoaderStyled";
 
 const FOLLOWFEED_REGEX = /^\/$/;
 const EXPLORE_REGEX = /^\/explore/i;
@@ -100,11 +101,7 @@ const ImageFeed = ({
           !content?.length &&
           homeFeed &&
           noFollowingDiv}
-        {(isFetching || isLoading) && (
-          <div className='loading-div'>
-            <FadeLoader cssOverride={{ scale: "0.5" }} color='#333' />
-          </div>
-        )}
+        {(isFetching || isLoading) && <FadeLoaderStyled />}
         {isError && error.message}
       </>
     </section>

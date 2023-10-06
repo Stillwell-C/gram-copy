@@ -45,12 +45,13 @@ const DeletePostConfirmationModal = ({ post, setShowDeleteConfirmation }) => {
             aria-label='click to cancel and not delete this image'
             onClick={() => setShowDeleteConfirmation(false)}
             id='modal-cancel-btn'
+            className='grey-button standard-button'
           >
             Cancel
           </button>
           <button
             aria-label='click to delete this image'
-            className='delete'
+            className='delete blue-button standard-button'
             onClick={handleDelete}
           >
             Delete

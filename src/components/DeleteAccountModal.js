@@ -7,6 +7,7 @@ import { FadeLoader } from "react-spinners";
 import { deleteUser } from "../features/users/usersApiRoutes";
 import FocusTrapModalParent from "./FocusTrapModalParent";
 import { logout } from "../features/auth/authApiRoutes";
+import FadeLoaderStyled from "./FadeLoaderStyled";
 
 const DeleteAccountModal = ({ setDisplayDeleteModal }) => {
   const { id } = useAuth();
@@ -154,9 +155,7 @@ const DeleteAccountModal = ({ setDisplayDeleteModal }) => {
               {deleteUserMutation.isLoading && (
                 <div className='delete-loading-div flex-container flex-align-center flex-justify-center flex-column'>
                   <div className='loading-spinner-div'>
-                    <div className='loading-div'>
-                      <FadeLoader color='#333' cssOverride={{ scale: "0.5" }} />
-                    </div>
+                    <FadeLoaderStyled />
                   </div>
                   <p>Deleting Account...</p>
                   <p>Do not refresh or close page.</p>

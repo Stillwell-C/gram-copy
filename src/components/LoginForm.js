@@ -9,6 +9,7 @@ import { login } from "../features/auth/authApiRoutes";
 import "../scss/login.scss";
 import logo from "../assets/Instagram_logo.png";
 import { useMutation } from "react-query";
+import FadeLoaderStyled from "./FadeLoaderStyled";
 
 const LoginForm = () => {
   const errRef = useRef();
@@ -130,7 +131,7 @@ const LoginForm = () => {
           </div>
           {loginMutation.isLoading ? (
             <div className='loading-spinner-div'>
-              <FadeLoader cssOverride={{ scale: "0.7" }} color='#333' />
+              <FadeLoaderStyled />
             </div>
           ) : (
             <button type='submit' className='submit-button'>

@@ -5,6 +5,7 @@ import ProfilePostCard from "./ProfilePostCard";
 import useAuth from "../hooks/useAuth";
 import { useParams } from "react-router-dom";
 import { FadeLoader } from "react-spinners";
+import FadeLoaderStyled from "./FadeLoaderStyled";
 
 const PostFeed = ({
   posts,
@@ -64,11 +65,7 @@ const PostFeed = ({
     <div className='user-posts-container'>
       <>
         {content}
-        {isFetching && (
-          <div className='loading-div'>
-            <FadeLoader cssOverride={{ scale: "0.5" }} color='#333' />
-          </div>
-        )}
+        {isFetching && <FadeLoaderStyled />}
         {posts?.length <= 0 && userPostsFeed && userCheck && (
           <NoUserImgProfileFeed handleAddPostModal={handleAddPostModal} />
         )}

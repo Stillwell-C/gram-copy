@@ -1,6 +1,7 @@
 import "../scss/followUserModal.scss";
 import { FadeLoader } from "react-spinners";
 import FocusTrapModalParent from "./FocusTrapModalParent";
+import FadeLoaderStyled from "./FadeLoaderStyled";
 
 const FollowUserModal = ({
   users,
@@ -40,9 +41,7 @@ const FollowUserModal = ({
         <div className='follow-user-modal-content width-100 height-100 flex-container flex-column'>
           {users}
           <div className='loading-div'>
-            {(isFetching || isLoading) && (
-              <FadeLoader cssOverride={{ scale: "0.5" }} color='#333' />
-            )}
+            {(isFetching || isLoading) && <FadeLoaderStyled />}
           </div>
         </div>
       </div>

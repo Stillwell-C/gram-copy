@@ -12,6 +12,7 @@ import {
 
 import logo from "../assets/Instagram_logo.png";
 import "../scss/login.scss";
+import FadeLoaderStyled from "./FadeLoaderStyled";
 
 //Begin with upper/lower case letter and contain 3-23 more characters
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
@@ -366,7 +367,7 @@ const SignupForm = () => {
           </p>
           {loading ? (
             <div className='loading-spinner-div'>
-              <FadeLoader cssOverride={{ scale: "0.7" }} color='#333' />
+              <FadeLoaderStyled />
             </div>
           ) : (
             <button type='submit' className='submit-button'>

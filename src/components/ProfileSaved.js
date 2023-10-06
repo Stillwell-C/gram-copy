@@ -5,6 +5,7 @@ import { getSavedPosts } from "../features/saved/savedApiRoutes";
 import { FadeLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
 import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
+import FadeLoaderStyled from "./FadeLoaderStyled";
 
 const ProfileSaved = ({ userID }) => {
   const dispatch = useDispatch();
@@ -62,9 +63,7 @@ const ProfileSaved = ({ userID }) => {
   }, [isError]);
 
   return isLoading ? (
-    <div className='loading-div'>
-      <FadeLoader cssOverride={{ scale: "0.5" }} color='#333' />
-    </div>
+    <FadeLoaderStyled />
   ) : (
     <PostFeed
       posts={flattenedFeedData}
