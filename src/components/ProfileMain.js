@@ -11,7 +11,7 @@ import ReportModal from "./ReportModal";
 import useAuth from "../hooks/useAuth";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../features/display/displaySlice";
-import ProfilePosts from "./ProfilePosts";
+import ProfilePosts from "../features/posts/ProfilePosts";
 import ProfileSaved from "./ProfileSaved";
 import ProfileTagged from "./ProfileTagged";
 import { useQuery } from "react-query";
