@@ -9,14 +9,7 @@ export const getPostComments = async ({ pageParam, postID, ...args }) => {
   const response = await gramCopyApi.get(`/comments/post/${postID}`, {
     params: { page: pageParam, ...args },
   });
-  console.log(response.data);
-  //This can be reincluded if removing cases errors
-  //   const commentDataWithPage = response.data.comments.map((comment) => ({
-  //     ...comment,
-  //     pageNo: pageParam - 1,
-  //   }));
   return {
-    // comments: commentDataWithPage,
     page: pageParam,
     ...response.data,
   };
