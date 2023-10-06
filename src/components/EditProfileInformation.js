@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import DeleteAccountModal from "../features/users/DeleteAccountModal";
 import { useDispatch } from "react-redux";
-import EditProfileInformationForm from "./EditProfileInformationForm";
+import EditProfileInformationForm from "../features/users/EditProfileInformationForm";
 import EditProfileInformationImage from "./EditProfileInformationImage";
 import { useQuery } from "react-query";
 import { getUserData } from "../features/users/usersApiRoutes";
