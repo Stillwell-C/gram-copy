@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
-import { getNotifications } from "../features/notifications/notificationsApiRoutes";
-import Notification from "./Notification";
-import addNotificationsIcon from "../assets/add-circle-svgrepo-com.svg";
+import { getNotifications } from "./notificationsApiRoutes";
+import Notification from "../../components/Notification";
+import addNotificationsIcon from "../../assets/add-circle-svgrepo-com.svg";
 import { FadeLoader } from "react-spinners";
-import "../scss/notification.scss";
-import Footer from "./Footer";
+import "../../scss/notification.scss";
+import Footer from "../../components/Footer";
 import { useDispatch } from "react-redux";
-import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
+import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
 const NotificationsPage = () => {
   const dispatch = useDispatch();
