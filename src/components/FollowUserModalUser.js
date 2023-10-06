@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import FollowButton from "./FollowButton";
+import FollowButton from "../features/follow/FollowButton";
 import UnfollowButton from "./UnfollowButton";
 
 const FollowUserModalUser = React.forwardRef(({ user, setShowModal }, ref) => {
