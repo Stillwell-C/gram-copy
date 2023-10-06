@@ -7,7 +7,7 @@ import bookmark from "../assets/bookmark-svgrepo-com.svg";
 import tagged from "../assets/user-square-svgrepo-com.svg";
 import threeDots from "../assets/three-dots-line-svgrepo-com.svg";
 import AdditionalOptionsModal from "./AdditionalOptionsModal";
-import ReportModal from "./ReportModal";
+import ReportModal from "../features/reports/ReportModal";
 import useAuth from "../hooks/useAuth";
 import { useDispatch } from "react-redux";
 import { setLoading } from "../features/display/displaySlice";

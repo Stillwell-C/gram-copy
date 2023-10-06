@@ -6,7 +6,7 @@ import message from "../assets/plane-svgrepo-com.svg";
 import Comment from "./Comment";
 import moment from "moment";
 import PhotoModal from "./PhotoModal";
-import ReportModal from "./ReportModal";
+import ReportModal from "../features/reports/ReportModal";
 import AdditionalOptionsModal from "./AdditionalOptionsModal";
 import SaveButton from "./SaveButton";
 import LikeButton from "../features/likes/LikeButton";
