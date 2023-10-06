@@ -1,10 +1,10 @@
 import React, { useCallback, useRef, useState } from "react";
 import { useInfiniteQuery } from "react-query";
-import { getUserSearch } from "../features/users/usersApiRoutes";
-import SearchResult from "./SearchResult";
+import { getUserSearch } from "./usersApiRoutes";
+import SearchResult from "../../components/SearchResult";
 import { FadeLoader } from "react-spinners";
 
-import closeCircle from "../assets/close-circle-svgrepo-com.svg";
+import closeCircle from "../../assets/close-circle-svgrepo-com.svg";
 
 const NavbarSearch = ({
   searchActive,
