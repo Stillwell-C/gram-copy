@@ -31,7 +31,6 @@ const NotificationsPage = () => {
       }),
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, pages) => {
-      console.log(lastPage);
       if (lastPage.page < lastPage.totalPages)
         return parseInt(lastPage.page) + 1;
       return false;
@@ -44,10 +43,6 @@ const NotificationsPage = () => {
       dispatch(setErrorRefreshPage(false));
     }
   }, [isError]);
-
-  useEffect(() => {
-    console.log(hasNextPage);
-  }, [hasNextPage]);
 
   const flattenedData = notificationsData?.pages?.reduce((acc, page) => {
     if (!page?.notifications?.length) return acc;

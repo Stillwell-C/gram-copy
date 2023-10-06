@@ -59,7 +59,6 @@ const FollowButton = ({ user, queryKey }) => {
         }
       });
       if (queryKey) {
-        console.log(queryKey);
         queryClient.setQueryData(queryKey, (oldData) => {
           if (oldData) {
             const data = oldData;

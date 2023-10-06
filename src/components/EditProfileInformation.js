@@ -39,7 +39,6 @@ const EditProfileInformation = () => {
       return;
     }
     dispatch(setLoading(false));
-    console.log(userData);
   }, [isLoading, username]);
 
   useEffect(() => {

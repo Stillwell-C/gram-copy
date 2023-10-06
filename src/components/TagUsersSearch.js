@@ -53,9 +53,7 @@ const TagUsersSearch = ({
 
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasNextPage) {
-          console.log("has more pages: ");
           fetchNextPage();
-          console.log("near last result");
         }
       });
 

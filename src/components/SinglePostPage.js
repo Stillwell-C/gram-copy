@@ -26,8 +26,6 @@ const SinglePostPage = () => {
     refetchOnWindowFocus: false,
   });
 
-  useEffect(() => console.log(postData), [postData]);
-
   useEffect(() => {
     if (isLoading) {
       dispatch(setLoading(true));
