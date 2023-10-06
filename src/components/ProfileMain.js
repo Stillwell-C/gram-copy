@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import { setLoading } from "../features/display/displaySlice";
 import ProfilePosts from "../features/posts/ProfilePosts";
 import ProfileSaved from "../features/saved/ProfileSaved";
-import ProfileTagged from "./ProfileTagged";
+import ProfileTagged from "../features/posts/ProfileTagged";
 import { useQuery } from "react-query";
 import { getUser } from "../features/users/usersApiRoutes";
 import FollowingModal from "../features/follow/FollowingModal";
