@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import styles from "../scss/layout.module.scss";
 import "../scss/global.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   selectLoadingState,
   selectThemeState,
@@ -17,6 +17,18 @@ const Layout = () => {
   const themeState = useSelector(selectThemeState);
 
   const [theme, setTheme] = useState("theme-light");
+
+  useEffect(() => {
+    const localTheme = localStorage.getItem("theme-setting");
+    if (
+      (!localTheme ||
+        localTheme !== "theme-light" ||
+        localTheme !== "theme-dark") &&
+      themeState
+    ) {
+      localStorage.setItem("theme-setting", themeState);
+    }
+  }, []);
 
   useEffect(() => {
     if (!themeState) return;
