@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import outlinedHeart from "../../assets/heart-rounded-svgrepo-com.svg";
-import filledHeart from "../../assets/heart-svgrepo-com.svg";
-import useAuth from "../../hooks/useAuth";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useMutation, useQueryClient } from "react-query";
+
+import useAuth from "../../hooks/useAuth";
 import { addNewLike, deleteLike } from "./likesApiRoutes";
-import { useDispatch } from "react-redux";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
+
+import outlinedHeart from "../../assets/heart-rounded-svgrepo-com.svg";
+import filledHeart from "../../assets/heart-svgrepo-com.svg";
 
 const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
   const { authenticatedUser, id } = useAuth();

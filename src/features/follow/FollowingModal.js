@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { useInfiniteQuery } from "react-query";
-import { getFollowing } from "./followApiRoutes";
-import FollowUserModalUser from "../../components/FollowUserModalUser";
-import FollowUserModal from "./FollowUserModal";
 import { useDispatch } from "react-redux";
+
+import FollowUserModalUser from "../../components/FollowUserModalUser";
+import { getFollowing } from "./followApiRoutes";
+import FollowUserModal from "./FollowUserModal";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
 const FollowingModal = ({ user, setShowFollowingModal }) => {

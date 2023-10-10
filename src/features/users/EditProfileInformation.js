@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import DeleteAccountModal from "./DeleteAccountModal";
 import { useDispatch } from "react-redux";
+import { useQuery } from "react-query";
+
+import DeleteAccountModal from "./DeleteAccountModal";
 import EditProfileInformationForm from "./EditProfileInformationForm";
 import EditProfileInformationImage from "./EditProfileInformationImage";
-import { useQuery } from "react-query";
 import { getUserData } from "./usersApiRoutes";
 import { setLoading } from "../display/displaySlice";
 import useAuth from "../../hooks/useAuth";

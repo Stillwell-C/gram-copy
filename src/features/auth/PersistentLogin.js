@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentToken } from "./authSlice";
-import { useEffect, useRef, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useMutation } from "react-query";
+
+import { selectCurrentToken } from "./authSlice";
 import { setLoading } from "../display/displaySlice";
 import { logout, refresh } from "./authApiRoutes";
-import { useMutation } from "react-query";
 
 const PersistentLogin = () => {
   const accessToken = useSelector(selectCurrentToken);

@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useInfiniteQuery } from "react-query";
+import { useDispatch } from "react-redux";
+import { FadeLoader } from "react-spinners";
+
 import { getUserSearch } from "../users/usersApiRoutes";
 import TaggedUserSearchResult from "./TaggedUserSearchResult";
-import { FadeLoader } from "react-spinners";
-import { useDispatch } from "react-redux";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
 const TagUsersSearch = ({

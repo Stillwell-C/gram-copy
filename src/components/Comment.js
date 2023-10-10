@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { Link } from "react-router-dom";
 
-import defaultProfilePic from "../assets/Default_pfp.svg";
 import useParseTextForLinks from "../hooks/useTextParseForLinks";
+
+import defaultProfilePic from "../assets/Default_pfp.svg";
 
 const Comment = ({
   comment,

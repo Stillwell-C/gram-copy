@@ -1,20 +1,24 @@
 import React, { useRef, useState } from "react";
-import FollowButton from "../features/follow/FollowButton";
 import { Link, useParams } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
-import threeDots from "../assets/three-dots-line-svgrepo-com.svg";
-import commentBubble from "../assets/message-circle-01-svgrepo-com.svg";
-import message from "../assets/plane-svgrepo-com.svg";
 import moment from "moment";
+
+import FollowButton from "../features/follow/FollowButton";
 import PhotoModalComments from "../features/comments/PhotoModalComments";
 import LikeButton from "../features/likes/LikeButton";
 import SaveButton from "../features/saved/SaveButton";
 import AddCommentForm from "../features/comments/AddCommentForm";
 import AdditionalOptionsModal from "./AdditionalOptionsModal";
 import ReportModal from "../features/reports/ReportModal";
-import "../scss/singlePost.scss";
 import TagUsersModal from "./TagUsersModal";
 import DeletePostConfirmationModal from "../features/posts/DeletePostConfirmationModal";
+
+import useAuth from "../hooks/useAuth";
+
+import threeDots from "../assets/three-dots-line-svgrepo-com.svg";
+import commentBubble from "../assets/message-circle-01-svgrepo-com.svg";
+import message from "../assets/plane-svgrepo-com.svg";
+
+import "../scss/singlePost.scss";
 
 const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
   const { id } = useAuth();

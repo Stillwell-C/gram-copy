@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 import Footer from "./Footer";
-import useAuth from "../hooks/useAuth";
 import LogoutButton from "../features/auth/LogoutButton";
+
+import useAuth from "../hooks/useAuth";
 
 const FeedRightInfo = () => {
   const { authenticatedUser, username, fullname, img } = useAuth();

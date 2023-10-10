@@ -1,8 +1,10 @@
 import { useRef, useCallback } from "react";
-import ImgFeedCard from "./ImgFeedCard";
-import useAuth from "../hooks/useAuth";
 import { Link } from "react-router-dom";
+
+import ImgFeedCard from "./ImgFeedCard";
 import FadeLoaderStyled from "./FadeLoaderStyled";
+
+import useAuth from "../hooks/useAuth";
 
 const ImageFeed = ({
   postData,

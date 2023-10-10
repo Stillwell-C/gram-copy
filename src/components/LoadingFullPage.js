@@ -1,5 +1,7 @@
 import React from "react";
+
 import gramImg from "../assets/instagram-svgrepo-com.svg";
+
 import "../scss/layout.scss";
 import "../scss/loadingFullPage.scss";
 

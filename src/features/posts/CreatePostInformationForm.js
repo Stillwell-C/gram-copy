@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+import { useDispatch } from "react-redux";
+
 import { addNewPost } from "./postApiRoutes";
 import useAuth from "../../hooks/useAuth";
+import useLimitLineBreaks from "../../hooks/useLimitLineBreaks";
+import { setError, setErrorRefreshPage } from "../error/errorSlice";
+
 import locationImg from "../../assets/location-svgrepo-com.svg";
 import downArrow from "../../assets/down-arrow-backup-2-svgrepo-com.svg";
-import useLimitLineBreaks from "../../hooks/useLimitLineBreaks";
-import { useDispatch } from "react-redux";
-import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
 const CreatePostInformationForm = ({
   handleClear,

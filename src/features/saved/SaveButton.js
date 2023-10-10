@@ -1,12 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
-import filledBookmark from "../../assets/bookmark-filled.svg";
-import outlinedBookmark from "../../assets/bookmark-outline.svg";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { addNewSave, deleteSave } from "./savedApiRoutes";
 import { useDispatch } from "react-redux";
+
+import useAuth from "../../hooks/useAuth";
+import { addNewSave, deleteSave } from "./savedApiRoutes";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
+
+import filledBookmark from "../../assets/bookmark-filled.svg";
+import outlinedBookmark from "../../assets/bookmark-outline.svg";
 
 const SaveButton = ({ save = false, postID, postPage, queryKey }) => {
   const [saved, setSaved] = useState(false);

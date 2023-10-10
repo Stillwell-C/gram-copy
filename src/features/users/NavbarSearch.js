@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { useInfiniteQuery } from "react-query";
-import { getUserSearch } from "./usersApiRoutes";
-import SearchResult from "../../components/SearchResult";
+import { useDispatch } from "react-redux";
 import { FadeLoader } from "react-spinners";
 
-import closeCircle from "../../assets/close-circle-svgrepo-com.svg";
-import { useDispatch } from "react-redux";
+import SearchResult from "../../components/SearchResult";
+import { getUserSearch } from "./usersApiRoutes";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
+
+import closeCircle from "../../assets/close-circle-svgrepo-com.svg";
 
 const NavbarSearch = ({
   searchActive,

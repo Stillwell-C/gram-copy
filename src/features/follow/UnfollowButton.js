@@ -1,9 +1,10 @@
 import React from "react";
 import { useMutation, useQueryClient } from "react-query";
-import { deleteFollow } from "./followApiRoutes";
-import useAuth from "../../hooks/useAuth";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
+
+import { deleteFollow } from "./followApiRoutes";
+import useAuth from "../../hooks/useAuth";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
 const UnfollowButton = ({ user }) => {

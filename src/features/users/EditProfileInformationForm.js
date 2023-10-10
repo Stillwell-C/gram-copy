@@ -1,7 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
+
 import { updateUser } from "./usersApiRoutes";
-import { useNavigate } from "react-router-dom";
 import useLimitLineBreaks from "../../hooks/useLimitLineBreaks";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;

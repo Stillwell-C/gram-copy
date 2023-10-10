@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useRef } from "react";
-import PostFeed from "../../components/PostFeed";
 import { useInfiniteQuery } from "react-query";
-import { getSavedPosts } from "./savedApiRoutes";
 import { useDispatch } from "react-redux";
+
+import PostFeed from "../../components/PostFeed";
+import { getSavedPosts } from "./savedApiRoutes";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
 import FadeLoaderStyled from "../../components/FadeLoaderStyled";
 

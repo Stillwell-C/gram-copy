@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 import FollowButton from "../features/follow/FollowButton";
 import UnfollowButton from "../features/follow/UnfollowButton";
 

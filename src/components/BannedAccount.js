@@ -1,4 +1,5 @@
 import React from "react";
+
 import prohibited from "../assets/blocked-svgrepo-com.svg";
 
 const BannedAccount = () => {

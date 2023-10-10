@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Outlet, useLocation, Link } from "react-router-dom";
-
-import "../scss/navbar.scss";
-import "../scss/layout.scss";
 
 import home from "../assets/home-2-svgrepo-com.svg";
 import search from "../assets/search-svgrepo-com.svg";
@@ -17,14 +15,18 @@ import sun from "../assets/sun-svgrepo-com.svg";
 
 import CreatePostModal from "./CreatePostModal";
 import HeaderBar from "./HeaderBar";
-import useAuth from "../hooks/useAuth";
 import SideNavbar from "./SideNavbar";
 import SideNavbarSearch from "./SideNavbarSearch";
 import NavbarSearch from "../features/users/NavbarSearch";
 import FooterNavbar from "./FooterNavbar";
-import { useDispatch, useSelector } from "react-redux";
-import { selectThemeState, setTheme } from "../features/display/displaySlice";
 import LogoutButton from "../features/auth/LogoutButton";
+
+import useAuth from "../hooks/useAuth";
+
+import { selectThemeState, setTheme } from "../features/display/displaySlice";
+
+import "../scss/navbar.scss";
+import "../scss/layout.scss";
 
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);

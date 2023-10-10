@@ -1,6 +1,7 @@
-import "../../scss/followUserModal.scss";
 import FocusTrapModalParent from "../../components/FocusTrapModalParent";
 import FadeLoaderStyled from "../../components/FadeLoaderStyled";
+
+import "../../scss/followUserModal.scss";
 
 const FollowUserModal = ({
   users,

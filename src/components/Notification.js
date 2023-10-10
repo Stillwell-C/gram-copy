@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import defaultProfilePic from "../assets/Default_pfp.svg";
 import moment from "moment";
+
+import defaultProfilePic from "../assets/Default_pfp.svg";
 
 const Notification = ({ notification }) => {
   let notificationMessage;

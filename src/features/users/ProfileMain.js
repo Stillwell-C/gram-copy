@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "react-query";
+import { useDispatch } from "react-redux";
+
 import Footer from "../../components/Footer";
-import "../../scss/profileMain.scss";
-import grid from "../../assets/grid-svgrepo-com.svg";
-import bookmark from "../../assets/bookmark-svgrepo-com.svg";
-import tagged from "../../assets/user-square-svgrepo-com.svg";
 import AdditionalOptionsModal from "../../components/AdditionalOptionsModal";
 import ReportModal from "../reports/ReportModal";
-import useAuth from "../../hooks/useAuth";
-import { useDispatch } from "react-redux";
 import { setLoading } from "../display/displaySlice";
 import ProfilePosts from "../posts/ProfilePosts";
 import ProfileSaved from "../saved/ProfileSaved";
 import ProfileTagged from "../posts/ProfileTagged";
-import { useQuery } from "react-query";
 import { getUser } from "./usersApiRoutes";
 import FollowingModal from "../follow/FollowingModal";
 import FollowerModal from "../follow/FollowerModal";
 import BannedAccount from "../../components/BannedAccount";
 import ProfileTop from "../../components/ProfileTop";
+
+import useAuth from "../../hooks/useAuth";
+
+import "../../scss/profileMain.scss";
+
+import grid from "../../assets/grid-svgrepo-com.svg";
+import bookmark from "../../assets/bookmark-svgrepo-com.svg";
+import tagged from "../../assets/user-square-svgrepo-com.svg";
 
 const ProfileMain = () => {
   const { userID } = useParams();

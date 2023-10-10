@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
 import { useDispatch } from "react-redux";
+
 import { getMultiplePosts } from "./postApiRoutes";
 import { setLoading } from "../display/displaySlice";
 import FeedContainer from "../../components/FeedContainer";

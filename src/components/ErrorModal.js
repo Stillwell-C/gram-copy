@@ -1,5 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import FocusTrapModalParent from "./FocusTrapModalParent";
+
 import {
   selectErrorMessage,
   selectErrorRefreshPage,
@@ -7,7 +9,6 @@ import {
   setErrorMessage,
   setErrorRefreshPage,
 } from "../features/error/errorSlice";
-import FocusTrapModalParent from "./FocusTrapModalParent";
 
 const ErrorModal = () => {
   const dispatch = useDispatch();

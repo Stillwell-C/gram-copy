@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { useInfiniteQuery } from "react-query";
+import { useDispatch } from "react-redux";
+
 import { getFollowers } from "./followApiRoutes";
 import FollowUserModalUser from "../../components/FollowUserModalUser";
 import FollowUserModal from "./FollowUserModal";
-import { useDispatch } from "react-redux";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
 const FollowerModal = ({ user, setShowFollowerModal }) => {

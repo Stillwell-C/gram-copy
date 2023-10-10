@@ -1,8 +1,9 @@
 import React from "react";
 import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
-import { logout } from "./authApiRoutes";
+
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
+import { logout } from "./authApiRoutes";
 import useAuth from "../../hooks/useAuth";
 
 const LogoutButton = () => {

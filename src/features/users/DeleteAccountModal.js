@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../scss/deleteAccountModal.scss";
 import { useMutation, useQueryClient } from "react-query";
+
 import useAuth from "../../hooks/useAuth";
 import { deleteUser } from "./usersApiRoutes";
 import FocusTrapModalParent from "../../components/FocusTrapModalParent";
 import { logout } from "../auth/authApiRoutes";
 import FadeLoaderStyled from "../../components/FadeLoaderStyled";
+
+import "../../scss/deleteAccountModal.scss";
 
 const DeleteAccountModal = ({ setDisplayDeleteModal }) => {
   const { id } = useAuth();

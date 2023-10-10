@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import DefaultUserImg from "../../assets/Default_pfp.svg";
-import useCloudinaryUpload from "../../hooks/useCloudinaryUpload";
 import { useMutation, useQueryClient } from "react-query";
+
+import useCloudinaryUpload from "../../hooks/useCloudinaryUpload";
 import { updateUser } from "./usersApiRoutes";
+
+import DefaultUserImg from "../../assets/Default_pfp.svg";
 
 const EditProfileInformationImage = ({
   user,

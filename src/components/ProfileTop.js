@@ -1,12 +1,15 @@
 import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+
+import UnfollowButton from "../features/follow/UnfollowButton";
+import FollowButton from "../features/follow/FollowButton";
+import ProfileUserImage from "../features/users/ProfileUserImage";
+
 import useParseNumber from "../hooks/useParseNumber";
 import useParseTextForLinks from "../hooks/useTextParseForLinks";
 import useAuth from "../hooks/useAuth";
-import UnfollowButton from "../features/follow/UnfollowButton";
-import FollowButton from "../features/follow/FollowButton";
+
 import threeDots from "../assets/three-dots-line-svgrepo-com.svg";
-import ProfileUserImage from "../features/users/ProfileUserImage";
 
 const ProfileTop = ({
   displayOwnPage,

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+
 import EditProfileInformation from "../features/users/EditProfileInformation";
 import { EditProfilePassword } from "../features/users/EditProfilePassword";
 import Footer from "./Footer";
+
 import "../scss/editProfileMain.scss";
 
 const EditProfileMain = () => {

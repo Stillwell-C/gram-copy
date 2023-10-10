@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useMutation, useQueryClient } from "react-query";
+import { useDispatch } from "react-redux";
+
 import useCloudinaryUpload from "../../hooks/useCloudinaryUpload";
 import { updateUser } from "./usersApiRoutes";
-import { useMutation, useQueryClient } from "react-query";
-import DefaultUserImg from "../../assets/Default_pfp.svg";
-import { useDispatch } from "react-redux";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
+
+import DefaultUserImg from "../../assets/Default_pfp.svg";
 
 const ProfileUserImage = ({ user, displayOwnPage }) => {
   const [userImgSmall, setUserImgSmall] = useState(

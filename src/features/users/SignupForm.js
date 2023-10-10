@@ -1,17 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import errorIcon from "../../assets/error-warning-danger-problem-attention-svgrepo-com.svg";
-import successIcon from "../../assets/check-circle-svgrepo-com.svg";
 import { useMutation, useQuery, useQueryClient } from "react-query";
+
 import {
   createUser,
   getEmailAvailability,
   getUsernameAvailability,
 } from "./usersApiRoutes";
-
-import logo from "../../assets/Instagram_logo.png";
-import "../../scss/login.scss";
 import FadeLoaderStyled from "../../components/FadeLoaderStyled";
+
+import "../../scss/login.scss";
+
+import errorIcon from "../../assets/error-warning-danger-problem-attention-svgrepo-com.svg";
+import successIcon from "../../assets/check-circle-svgrepo-com.svg";
+import logo from "../../assets/Instagram_logo.png";
 
 //Begin with upper/lower case letter and contain 3-23 more characters
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;

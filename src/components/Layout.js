@@ -1,15 +1,18 @@
+import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
-import "../scss/layout.scss";
-import "../scss/global.scss";
 import { useSelector } from "react-redux";
+
 import {
   selectLoadingState,
   selectThemeState,
 } from "../features/display/displaySlice";
-import LoadingFullPage from "./LoadingFullPage";
 import { selectError } from "../features/error/errorSlice";
+
+import LoadingFullPage from "./LoadingFullPage";
 import ErrorModal from "./ErrorModal";
-import { useEffect, useState } from "react";
+
+import "../scss/layout.scss";
+import "../scss/global.scss";
 
 const Layout = () => {
   const loadingState = useSelector(selectLoadingState);

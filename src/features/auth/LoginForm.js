@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useMutation } from "react-query";
+
 import { login } from "./authApiRoutes";
+import FadeLoaderStyled from "../../components/FadeLoaderStyled";
 
 import "../../scss/login.scss";
+
 import logo from "../../assets/Instagram_logo.png";
-import { useMutation } from "react-query";
-import FadeLoaderStyled from "../../components/FadeLoaderStyled";
 
 const LoginForm = () => {
   const errRef = useRef();

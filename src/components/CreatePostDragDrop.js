@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import photoImg from "../assets/photo-svgrepo-com.svg";
 import { useDispatch } from "react-redux";
+
 import useCloudinaryUpload from "../hooks/useCloudinaryUpload";
+
+import photoImg from "../assets/photo-svgrepo-com.svg";
 
 const CreatePostDragDrop = ({
   imgFileUpload,

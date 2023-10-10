@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+
 import CreatePostModal from "./CreatePostModal";
 import NoUserImgProfileFeed from "./NoUserImgProfileFeed";
 import ProfilePostCard from "./ProfilePostCard";
-import useAuth from "../hooks/useAuth";
-import { useParams } from "react-router-dom";
 import FadeLoaderStyled from "./FadeLoaderStyled";
+
+import useAuth from "../hooks/useAuth";
 
 const PostFeed = ({
   posts,

@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import SinglePost from "../../components/SinglePost";
 import { useQuery } from "react-query";
-import { getPost } from "./postApiRoutes";
 import { useDispatch } from "react-redux";
+
+import SinglePost from "../../components/SinglePost";
+import { getPost } from "./postApiRoutes";
 import { setLoading } from "../display/displaySlice";
+
 import "../../scss/singlePostPage.scss";
 
 const SinglePostPage = () => {
