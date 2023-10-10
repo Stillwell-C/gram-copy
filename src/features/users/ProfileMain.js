@@ -1,33 +1,30 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-import Footer from "./Footer";
-import "../scss/profileMain.scss";
-import grid from "../assets/grid-svgrepo-com.svg";
-import bookmark from "../assets/bookmark-svgrepo-com.svg";
-import tagged from "../assets/user-square-svgrepo-com.svg";
-import threeDots from "../assets/three-dots-line-svgrepo-com.svg";
-import AdditionalOptionsModal from "./AdditionalOptionsModal";
-import ReportModal from "../features/reports/ReportModal";
-import useAuth from "../hooks/useAuth";
+import Footer from "../../components/Footer";
+import "../../scss/profileMain.scss";
+import grid from "../../assets/grid-svgrepo-com.svg";
+import bookmark from "../../assets/bookmark-svgrepo-com.svg";
+import tagged from "../../assets/user-square-svgrepo-com.svg";
+import threeDots from "../../assets/three-dots-line-svgrepo-com.svg";
+import AdditionalOptionsModal from "../../components/AdditionalOptionsModal";
+import ReportModal from "../reports/ReportModal";
+import useAuth from "../../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectLoadingState,
-  setLoading,
-} from "../features/display/displaySlice";
-import ProfilePosts from "../features/posts/ProfilePosts";
-import ProfileSaved from "../features/saved/ProfileSaved";
-import ProfileTagged from "../features/posts/ProfileTagged";
+import { selectLoadingState, setLoading } from "../display/displaySlice";
+import ProfilePosts from "../posts/ProfilePosts";
+import ProfileSaved from "../saved/ProfileSaved";
+import ProfileTagged from "../posts/ProfileTagged";
 import { useQuery } from "react-query";
-import { getUser } from "../features/users/usersApiRoutes";
-import FollowingModal from "../features/follow/FollowingModal";
-import FollowerModal from "../features/follow/FollowerModal";
-import FollowButton from "../features/follow/FollowButton";
-import UnfollowButton from "../features/follow/UnfollowButton";
-import ProfileUserImage from "../features/users/ProfileUserImage";
-import useParseNumber from "../hooks/useParseNumber";
-import BannedAccount from "./BannedAccount";
-import useParseTextForLinks from "../hooks/useTextParseForLinks";
-import ProfileTop from "./ProfileTop";
+import { getUser } from "./usersApiRoutes";
+import FollowingModal from "../follow/FollowingModal";
+import FollowerModal from "../follow/FollowerModal";
+import FollowButton from "../follow/FollowButton";
+import UnfollowButton from "../follow/UnfollowButton";
+import ProfileUserImage from "./ProfileUserImage";
+import useParseNumber from "../../hooks/useParseNumber";
+import BannedAccount from "../../components/BannedAccount";
+import useParseTextForLinks from "../../hooks/useTextParseForLinks";
+import ProfileTop from "../../components/ProfileTop";
 
 const ProfileMain = () => {
   const { userID } = useParams();
