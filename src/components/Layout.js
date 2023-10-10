@@ -18,28 +18,6 @@ const Layout = () => {
 
   const [theme, setTheme] = useState("theme-light");
 
-  const setLocalStorageTheme = (theme) => {
-    localStorage.setItem("theme-setting", theme);
-  };
-
-  useEffect(() => {
-    const localTheme = localStorage.getItem("theme-setting");
-    if (
-      localTheme &&
-      (localTheme === "theme-light" || localTheme === "theme-dark")
-    ) {
-      setTheme(localTheme);
-    } else {
-      const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "theme-dark"
-        : "theme-light";
-
-      setLocalStorageTheme(preferredTheme);
-      setTheme(preferredTheme);
-    }
-  }, []);
-
   useEffect(() => {
     if (!themeState) return;
     setTheme(themeState);
