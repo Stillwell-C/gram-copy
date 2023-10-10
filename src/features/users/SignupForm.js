@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import errorIcon from "../../assets/error-warning-danger-problem-attention-svgrepo-com.svg";
 import successIcon from "../../assets/check-circle-svgrepo-com.svg";
-import { FadeLoader } from "react-spinners";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
   createUser,

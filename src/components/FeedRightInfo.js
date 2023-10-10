@@ -1,11 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Footer from "./Footer";
 import useAuth from "../hooks/useAuth";
-import { logout } from "../features/auth/authApiRoutes";
-import { useMutation } from "react-query";
-import { useDispatch } from "react-redux";
-import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 import LogoutButton from "../features/auth/LogoutButton";
 
 const FeedRightInfo = () => {

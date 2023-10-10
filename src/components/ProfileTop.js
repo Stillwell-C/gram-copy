@@ -1,11 +1,7 @@
-import React, { useEffect } from "react";
-import { useQuery } from "react-query";
+import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getUser } from "../features/users/usersApiRoutes";
 import useParseNumber from "../hooks/useParseNumber";
 import useParseTextForLinks from "../hooks/useTextParseForLinks";
-import { useDispatch } from "react-redux";
-import { setLoading } from "../features/display/displaySlice";
 import useAuth from "../hooks/useAuth";
 import UnfollowButton from "../features/follow/UnfollowButton";
 import FollowButton from "../features/follow/FollowButton";

@@ -1,16 +1,15 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import "../../scss/profileMain.scss";
 import grid from "../../assets/grid-svgrepo-com.svg";
 import bookmark from "../../assets/bookmark-svgrepo-com.svg";
 import tagged from "../../assets/user-square-svgrepo-com.svg";
-import threeDots from "../../assets/three-dots-line-svgrepo-com.svg";
 import AdditionalOptionsModal from "../../components/AdditionalOptionsModal";
 import ReportModal from "../reports/ReportModal";
 import useAuth from "../../hooks/useAuth";
-import { useDispatch, useSelector } from "react-redux";
-import { selectLoadingState, setLoading } from "../display/displaySlice";
+import { useDispatch } from "react-redux";
+import { setLoading } from "../display/displaySlice";
 import ProfilePosts from "../posts/ProfilePosts";
 import ProfileSaved from "../saved/ProfileSaved";
 import ProfileTagged from "../posts/ProfileTagged";
@@ -18,23 +17,15 @@ import { useQuery } from "react-query";
 import { getUser } from "./usersApiRoutes";
 import FollowingModal from "../follow/FollowingModal";
 import FollowerModal from "../follow/FollowerModal";
-import FollowButton from "../follow/FollowButton";
-import UnfollowButton from "../follow/UnfollowButton";
-import ProfileUserImage from "./ProfileUserImage";
-import useParseNumber from "../../hooks/useParseNumber";
 import BannedAccount from "../../components/BannedAccount";
-import useParseTextForLinks from "../../hooks/useTextParseForLinks";
 import ProfileTop from "../../components/ProfileTop";
 
 const ProfileMain = () => {
   const { userID } = useParams();
   const { authenticatedUser, username } = useAuth();
 
-  const { pathname } = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const parseNum = useParseNumber();
-  const parseTextForLinks = useParseTextForLinks();
 
   const {
     data: userData,

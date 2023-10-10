@@ -12,7 +12,6 @@ const FooterNavbar = React.forwardRef(
       menuContent,
       displayMenu,
       handleAddPostModal,
-      setDisplayMenu,
     },
     { moreLinkRefBtm, menuRefBtm }
   ) => {

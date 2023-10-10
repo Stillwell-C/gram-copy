@@ -4,7 +4,6 @@ import NoUserImgProfileFeed from "./NoUserImgProfileFeed";
 import ProfilePostCard from "./ProfilePostCard";
 import useAuth from "../hooks/useAuth";
 import { useParams } from "react-router-dom";
-import { FadeLoader } from "react-spinners";
 import FadeLoaderStyled from "./FadeLoaderStyled";
 
 const PostFeed = ({

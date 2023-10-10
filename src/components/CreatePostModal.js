@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "../scss/createPostModal.scss";
-import { addNewPost } from "../features/posts/postApiRoutes";
 import CreatePostDragDrop from "./CreatePostDragDrop";
 import FocusTrapModalParent from "./FocusTrapModalParent";
 import CreatePostInformationForm from "../features/posts/CreatePostInformationForm";

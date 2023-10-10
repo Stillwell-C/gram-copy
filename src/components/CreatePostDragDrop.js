@@ -1,13 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import photoImg from "../assets/photo-svgrepo-com.svg";
-import axios from "axios";
-import gramCopyApi from "../app/api/gramCopyApi";
 import { useDispatch } from "react-redux";
-import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 import useCloudinaryUpload from "../hooks/useCloudinaryUpload";
-
-const api_key = "419818228346469";
-const cloud_name = "danscxcd2";
 
 const CreatePostDragDrop = ({
   imgFileUpload,

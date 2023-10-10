@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useState } from "react";
 import EditProfileInformation from "../features/users/EditProfileInformation";
 import { EditProfilePassword } from "../features/users/EditProfilePassword";
 import Footer from "./Footer";

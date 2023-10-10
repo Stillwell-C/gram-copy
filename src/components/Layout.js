@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import "../scss/layout.scss";
 import "../scss/global.scss";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   selectLoadingState,
   selectThemeState,

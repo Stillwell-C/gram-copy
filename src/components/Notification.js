@@ -4,11 +4,6 @@ import defaultProfilePic from "../assets/Default_pfp.svg";
 import moment from "moment";
 
 const Notification = ({ notification }) => {
-  // const date = new Date(notification.createdAt).toLocaleDateString("en-US", {
-  //   month: "short",
-  //   day: "numeric",
-  // });
-
   let notificationMessage;
   const userImgURL = notification?.notifyingUser?.userImgKey
     ? `https://res.cloudinary.com/danscxcd2/image/upload/w_90,c_fill/${notification?.notifyingUser?.userImgKey}`

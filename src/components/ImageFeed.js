@@ -1,21 +1,11 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useRef, useCallback } from "react";
 import ImgFeedCard from "./ImgFeedCard";
-import { useDispatch } from "react-redux";
-import { setLoading } from "../features/display/displaySlice";
 import useAuth from "../hooks/useAuth";
-import { useInfiniteQuery } from "react-query";
-import { getMultiplePosts } from "../features/posts/postApiRoutes";
-import { FadeLoader } from "react-spinners";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import FadeLoaderStyled from "./FadeLoaderStyled";
-
-const FOLLOWFEED_REGEX = /^\/$/;
-const EXPLORE_REGEX = /^\/explore/i;
 
 const ImageFeed = ({
   postData,
-  isError,
-  error,
   isLoading,
   isFetching,
   hasNextPage,

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import "../../scss/deleteAccountModal.scss";
 import { useMutation, useQueryClient } from "react-query";
 import useAuth from "../../hooks/useAuth";
-import { FadeLoader } from "react-spinners";
 import { deleteUser } from "./usersApiRoutes";
 import FocusTrapModalParent from "../../components/FocusTrapModalParent";
 import { logout } from "../auth/authApiRoutes";

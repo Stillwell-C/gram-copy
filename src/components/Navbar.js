@@ -22,10 +22,7 @@ import SideNavbar from "./SideNavbar";
 import SideNavbarSearch from "./SideNavbarSearch";
 import NavbarSearch from "../features/users/NavbarSearch";
 import FooterNavbar from "./FooterNavbar";
-import { logout } from "../features/auth/authApiRoutes";
-import { useMutation } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
-import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 import { selectThemeState, setTheme } from "../features/display/displaySlice";
 import LogoutButton from "../features/auth/LogoutButton";
 
