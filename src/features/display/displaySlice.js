@@ -8,6 +8,7 @@ const determineInitialTheme = () => {
   ) {
     return localTheme;
   } else {
+    //If there is a set preferred theme of dark, set dark. Else, set light
     const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)")
       .matches
       ? "theme-dark"
