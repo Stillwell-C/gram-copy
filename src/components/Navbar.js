@@ -223,8 +223,10 @@ const Navbar = () => {
   const handleChangeTheme = () => {
     if (currentTheme === "theme-light") {
       dispatch(setTheme("theme-dark"));
+      localStorage.setItem("theme-setting", "theme-dark");
     } else {
       dispatch(setTheme("theme-light"));
+      localStorage.setItem("theme-setting", "theme-light");
     }
   };
 
