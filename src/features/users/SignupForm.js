@@ -212,7 +212,11 @@ const SignupForm = () => {
   const createUserPage = (
     <>
       <div className='login-top'>
-        <img src={logo} alt='instagram logo' className='login-logo' />
+        <img
+          src={logo}
+          alt='instagram logo'
+          className='login-logo themeable-icon'
+        />
         <h2 className='sign-up-header'>
           Sign up to see photos and videos from your friends.
         </h2>
@@ -370,7 +374,10 @@ const SignupForm = () => {
               <FadeLoaderStyled />
             </div>
           ) : (
-            <button type='submit' className='submit-button'>
+            <button
+              type='submit'
+              className='submit-button blue-button standard-button'
+            >
               Sign up
             </button>
           )}

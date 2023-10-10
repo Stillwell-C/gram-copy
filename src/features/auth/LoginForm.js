@@ -71,7 +71,11 @@ const LoginForm = () => {
   return (
     <div className='login-container'>
       <div className='login-top'>
-        <img src={logo} alt='instagram logo' className='login-logo' />
+        <img
+          src={logo}
+          alt='instagram logo'
+          className='login-logo themeable-icon'
+        />
         <div
           className={
             loginMutation.isError || location?.state?.errorMessage
@@ -133,7 +137,10 @@ const LoginForm = () => {
               <FadeLoaderStyled />
             </div>
           ) : (
-            <button type='submit' className='submit-button'>
+            <button
+              type='submit'
+              className='submit-button blue-button standard-button'
+            >
               Log in
             </button>
           )}
