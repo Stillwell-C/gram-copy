@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, Outlet, useLocation, Link } from "react-router-dom";
 
 import "../scss/navbar.scss";
-import styles from "../scss/layout.module.scss";
+import "../scss/layout.scss";
 
 import home from "../assets/home-2-svgrepo-com.svg";
 import search from "../assets/search-svgrepo-com.svg";
@@ -288,7 +288,7 @@ const Navbar = () => {
           <SideNavbarSearch navbarSearch={navbarSearch} />
         </nav>
       )}
-      <div className={styles.outlet} id='content-outlet'>
+      <div className='outlet-styles' id='content-outlet'>
         <Outlet />
       </div>
       {displayNav && (

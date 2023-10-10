@@ -1,6 +1,6 @@
 import React from "react";
 import gramImg from "../assets/instagram-svgrepo-com.svg";
-import LayoutStyles from "../scss/layout.module.scss";
+import "../scss/layout.scss";
 import "../scss/loadingFullPage.scss";
 
 const LoadingFullPage = ({ loadingState }) => {
@@ -9,9 +9,7 @@ const LoadingFullPage = ({ loadingState }) => {
       className={`loadingFullPage`}
       style={{ display: loadingState ? "block" : "none" }}
     >
-      <div
-        className={`${LayoutStyles.layout} flex-justify-center flex-align-center`}
-      >
+      <div className={"layout-styles flex-justify-center flex-align-center"}>
         <img src={gramImg} alt='Gram Copy Logo' />
       </div>
     </main>

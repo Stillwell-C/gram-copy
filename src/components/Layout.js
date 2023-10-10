@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import styles from "../scss/layout.module.scss";
+import "../scss/layout.scss";
 import "../scss/global.scss";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -38,7 +38,7 @@ const Layout = () => {
   return (
     <div className={theme}>
       <LoadingFullPage loadingState={loadingState} />
-      <div className={styles.layout}>
+      <div className='layout-styles'>
         <Outlet />
         {error && <ErrorModal />}
       </div>
