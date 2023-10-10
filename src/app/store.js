@@ -11,8 +11,3 @@ export const store = configureStore({
   },
   devTools: true,
 });
-
-store.subscribe(() => {
-  const { display } = store.getState();
-  localStorage.setItem("theme-setting", display.theme);
-});
