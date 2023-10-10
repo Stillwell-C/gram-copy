@@ -1,5 +1,6 @@
 @import "./../breakpoints.scss";
 @import "./global.scss";
+@import "./variables.scss";
 
 .login-container {
   flex-grow: 1;
@@ -17,8 +18,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: white;
-    border: 1px solid $margin-grey;
+    background-color: var(--menu-background);
+    border: 1px solid var(--margin-grey);
   }
 
   .login-top {
@@ -34,18 +35,21 @@
     }
 
     .error-div {
-      color: red;
       margin-bottom: 10px;
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
+
+      .error-msg {
+        color: $error-red;
+      }
     }
 
     .sign-up-header {
       font-size: 17px;
-      color: #8e8e8e;
+      color: var(--content-grey);
       width: clamp(230px, 90%, 250px);
       margin-bottom: 1rem;
     }
@@ -71,8 +75,8 @@
       input {
         width: clamp(230px, 90%, 260px);
         padding: 10px 5px;
-        background-color: $background-grey;
-        border: 1px solid $margin-grey;
+        background-color: var(--search-background-light);
+        border: 1px solid var(--margin-grey);
         border-radius: 0.25rem;
         margin-bottom: 5px;
         font-family: inherit;
@@ -82,7 +86,7 @@
         position: relative;
         width: clamp(230px, 90%, 260px);
         height: 36px;
-        border: 1px solid $margin-grey;
+        border: 1px solid var(--margin-grey);
         border-radius: 0.25rem;
         margin-bottom: 5px;
         display: flex;
@@ -90,7 +94,7 @@
         label {
           flex: 1;
           .label-text {
-            color: $content-grey;
+            color: var(--content-grey);
             font-size: 0.8rem;
             position: absolute;
             left: 8px;
@@ -116,7 +120,7 @@
         }
 
         .input-side-div {
-          background-color: $background-grey;
+          background-color: var(--search-background-light);
           padding: 0 8px;
           display: none;
           align-items: center;
@@ -126,10 +130,10 @@
             background-color: transparent;
             border: none;
             cursor: pointer;
-            color: black;
+            color: var(--text-color);
             font-weight: bold;
             &:hover {
-              color: #262626;
+              color: var(--content-grey);
               opacity: 0.5;
             }
           }
@@ -142,7 +146,7 @@
         }
 
         &.clicked {
-          border-color: $margin-grey-highlighted;
+          border-color: var(--margin-grey-highlight);
         }
 
         &.active {
@@ -183,17 +187,7 @@
 
       .submit-button {
         margin: 10px 0;
-        background-color: #0099ff;
-        color: white;
-        font-weight: bold;
-        padding: 7px 16px;
         width: clamp(230px, 90%, 260px);
-        border: none;
-        border-radius: 0.5rem;
-        cursor: pointer;
-        &:hover {
-          background-color: #1877f2;
-        }
       }
 
       .loading-spinner-div {
@@ -214,13 +208,13 @@
       .line {
         width: 40%;
         height: 1px;
-        background-color: #8e8e8e;
+        background-color: var(--content-grey);
         opacity: 0.7;
       }
 
       .or-lettering {
         margin: 0 18px;
-        color: #8e8e8e;
+        color: var(--content-grey);
       }
     }
 
