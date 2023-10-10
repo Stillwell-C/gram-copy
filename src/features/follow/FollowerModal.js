@@ -1,10 +1,14 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { useInfiniteQuery } from "react-query";
-import { getFollowers, getFollowing } from "./followApiRoutes";
+import { getFollowers } from "./followApiRoutes";
 import FollowUserModalUser from "../../components/FollowUserModalUser";
 import FollowUserModal from "./FollowUserModal";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
 const FollowerModal = ({ user, setShowFollowerModal }) => {
+  const dispatch = useDispatch();
+
   const {
     data: followData,
     isLoading,
@@ -23,6 +27,14 @@ const FollowerModal = ({ user, setShowFollowerModal }) => {
       return false;
     },
   });
+
+  useEffect(() => {
+    if (isError) {
+      if (error?.response?.status === 400) return;
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(false));
+    }
+  }, [isError]);
 
   const observer = useRef();
   const lastResultRef = useCallback(
