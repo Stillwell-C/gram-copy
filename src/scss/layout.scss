@@ -1,7 +1,7 @@
 @import "./breakpoints.scss";
 @import "./variables.scss";
 
-.layout {
+.layout-styles {
   background-color: var(--background-color);
   height: 100vh;
   height: 100svh;
@@ -14,7 +14,7 @@
   }
 }
 
-.outlet {
+.outlet-styles {
   overflow-y: auto;
   flex: 1;
   display: flex;
