@@ -27,6 +27,7 @@ import { useMutation } from "react-query";
 import { useDispatch, useSelector } from "react-redux";
 import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
 import { selectThemeState, setTheme } from "../features/display/displaySlice";
+import LogoutButton from "../features/auth/LogoutButton";
 
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
@@ -57,20 +58,6 @@ const Navbar = () => {
       return;
     }
     setDisplayPostModal(true);
-  };
-
-  const logoutMutation = useMutation({
-    mutationFn: logout,
-    onError: () => {
-      dispatch(setError(true));
-      dispatch(setErrorRefreshPage(true));
-    },
-  });
-
-  const handleLogout = async () => {
-    if (authenticatedUser) {
-      logoutMutation.mutate();
-    }
   };
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_90,c_fill/${img}`;
@@ -250,7 +237,7 @@ const Navbar = () => {
       </div>
       <div className='menu-line'>
         {authenticatedUser ? (
-          <button onClick={handleLogout}>Log out</button>
+          <LogoutButton />
         ) : (
           <Link to='/accounts/login'>Log in</Link>
         )}

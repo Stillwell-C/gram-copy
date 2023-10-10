@@ -6,26 +6,12 @@ import { logout } from "../features/auth/authApiRoutes";
 import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
 import { setError, setErrorRefreshPage } from "../features/error/errorSlice";
+import LogoutButton from "../features/auth/LogoutButton";
 
 const FeedRightInfo = () => {
   const { authenticatedUser, username, fullname, img } = useAuth();
-  const dispatch = useDispatch();
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
-
-  const logoutMutation = useMutation({
-    mutationFn: logout,
-    onError: () => {
-      dispatch(setError(true));
-      dispatch(setErrorRefreshPage(true));
-    },
-  });
-
-  const handleLogout = async () => {
-    if (authenticatedUser) {
-      logoutMutation.mutate();
-    }
-  };
 
   return (
     <div className='right-info-container'>
@@ -45,9 +31,7 @@ const FeedRightInfo = () => {
             <div className='user-name-bottom'>{fullname}</div>
           </div>
           <div className='button-div flex-container flex-align-center flex-justify-center'>
-            <button aria-label='click to log out' onClick={handleLogout}>
-              Log out
-            </button>
+            <LogoutButton />
           </div>
         </div>
       )}
