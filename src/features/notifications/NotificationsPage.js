@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
+import { useDispatch } from "react-redux";
+
 import { getNotifications } from "./notificationsApiRoutes";
 import Notification from "../../components/Notification";
 import addNotificationsIcon from "../../assets/add-circle-svgrepo-com.svg";
-import { FadeLoader } from "react-spinners";
-import "../../scss/notification.scss";
 import Footer from "../../components/Footer";
-import { useDispatch } from "react-redux";
+import FadeLoaderStyled from "../../components/FadeLoaderStyled";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
+
+import "../../scss/notification.scss";
 
 const NotificationsPage = () => {
   const dispatch = useDispatch();
@@ -63,12 +65,7 @@ const NotificationsPage = () => {
         <div className='notifications-content width-100 flex-container flex-column gap-2'>
           {content}
           {isError && error?.response?.data?.message}
-          {(isLoading || isFetching) && (
-            <FadeLoader
-              cssOverride={{ alignSelf: "center", scale: "0.5" }}
-              color='#333'
-            />
-          )}
+          {(isLoading || isFetching) && <FadeLoaderStyled />}
           {hasNextPage && !isLoading && !isFetching && (
             <div className='add-notifications-button-div width-100 flex-container flex-justify-center'>
               <button
