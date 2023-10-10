@@ -31,13 +31,6 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_90,c_fill/${post?.user?.userImgKey}`;
 
-  // const imgURLXSmall = `https://res.cloudinary.com/danscxcd2/image/upload/w_370/${post?.imgKey}`;
-  // const imgURLSmall = `https://res.cloudinary.com/danscxcd2/image/upload/w_500/${post?.imgKey}`;
-  // const imgURLMedium = `https://res.cloudinary.com/danscxcd2/image/upload/w_800/${post?.imgKey}`;
-  // const imgURLLarge = `https://res.cloudinary.com/danscxcd2/image/upload/w_1000/${post?.imgKey}`;
-  // const imgURLXLarge = `https://res.cloudinary.com/danscxcd2/image/upload/w_1500/${post?.imgKey}`;
-  // const imgURL = `https://res.cloudinary.com/danscxcd2/image/upload/${post?.imgKey}`;
-
   const imgURLSmall = `https://res.cloudinary.com/danscxcd2/image/upload/w_500/${post?.imgKey}`;
   const imgURLMedium = `https://res.cloudinary.com/danscxcd2/image/upload/w_1000/${post?.imgKey}`;
   const imgURLLarge = `https://res.cloudinary.com/danscxcd2/image/upload/w_1500/${post?.imgKey}`;
@@ -101,19 +94,9 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
     </div>
   );
 
-  //Make picture
   const singlePhotoImage = (
     <div className='single-post-left flex-container flex-align-center flex-justify-center'>
       <div className='single-post-img-container flex-container flex-align-center flex-justify-center'>
-        {/* <picture>
-          <source media='(min-width:1200px)' srcSet={imgURL} />
-          <source media='(min-width:1000px)' srcSet={imgURLXLarge} />
-          <source media='(min-width:768px)' srcSet={imgURLLarge} />
-          <source media='(min-width:648px)' srcSet={imgURLMedium} />
-          <source media='(min-width:370px)' srcSet={imgURLSmall} />
-          <source media='(max-width:369px)' srcSet={imgURLXSmall} />
-          <img alt={post.altText ? post.altText : "user upload"} src={imgURL} />
-        </picture> */}
         <img
           alt={post.altText ? post.altText : "user upload"}
           srcSet={`${imgURLSmall} 500w, ${imgURLMedium} 1000w, ${imgURLLarge} 1500w, ${imgURL} 2000w`}
