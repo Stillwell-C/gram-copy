@@ -1,4 +1,4 @@
-import "./App.css";
+import "./scss/global.scss";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ProfileMain from "./features/users/ProfileMain";
