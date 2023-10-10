@@ -71,19 +71,6 @@ const ProfileUserImage = ({ user, displayOwnPage }) => {
   };
 
   const userImg = (
-    // <picture className='user-img-picture'>
-    //   <source
-    //     srcSet={userImgLarge}
-    //     media='(min-width:768px)'
-    //     alt='user profile'
-    //   />
-    //   <source srcSet={userImgSmall} alt='user profile' />
-    //   <img
-    //     src={userImgLarge}
-    //     alt='user profile'
-    //     className='circular-image user-profile-img'
-    //   />
-    // </picture>
     <img
       src={userImgLarge}
       alt='user profile'
