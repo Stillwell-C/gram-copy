@@ -352,6 +352,14 @@
     display: none;
   }
 
+  .bottom-home-link {
+    display: none;
+
+    @include mobile-medium {
+      display: block;
+    }
+  }
+
   .navbar-menu-container {
     position: relative;
 

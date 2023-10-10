@@ -21,7 +21,7 @@ const FooterNavbar = React.forwardRef(
         className='navbar-container-bottom'
         aria-label='bottom navigation bar'
       >
-        <div className='navbar-row'>{homeLink}</div>
+        <div className='navbar-row bottom-home-link'>{homeLink}</div>
         <div className='navbar-row'>{exploreLink}</div>
         <div className='navbar-row' onClick={handleAddPostModal}>
           {createLink}
