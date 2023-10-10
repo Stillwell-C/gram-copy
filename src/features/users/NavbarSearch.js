@@ -1,10 +1,12 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { useInfiniteQuery } from "react-query";
 import { getUserSearch } from "./usersApiRoutes";
 import SearchResult from "../../components/SearchResult";
 import { FadeLoader } from "react-spinners";
 
 import closeCircle from "../../assets/close-circle-svgrepo-com.svg";
+import { useDispatch } from "react-redux";
+import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
 const NavbarSearch = ({
   searchActive,
@@ -12,7 +14,7 @@ const NavbarSearch = ({
   searchQuery,
   setSearchQuery,
 }) => {
-  // const [searchQuery, setSearchQuery] = useState("");
+  const dispatch = useDispatch();
 
   const {
     data: searchData,
@@ -33,6 +35,14 @@ const NavbarSearch = ({
       return false;
     },
   });
+
+  useEffect(() => {
+    if (searchIsError) {
+      if (searchError?.response?.status === 400) return;
+      dispatch(setError(true));
+      dispatch(setErrorRefreshPage(false));
+    }
+  }, [searchIsError]);
 
   const handleClearSearch = () => {
     setSearchQuery("");
