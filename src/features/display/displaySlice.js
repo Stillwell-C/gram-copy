@@ -1,8 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const determineInitialTheme = () => {
+  const localTheme = localStorage.getItem("theme-setting");
+  if (
+    localTheme &&
+    (localTheme === "theme-light" || localTheme === "theme-dark")
+  ) {
+    return localTheme;
+  } else {
+    const preferredTheme = window.matchMedia("(prefers-color-scheme: dark)")
+      .matches
+      ? "theme-dark"
+      : "theme-light";
+
+    return preferredTheme;
+  }
+};
+
+const initialState = {
+  loading: false,
+  theme: determineInitialTheme(),
+};
+
 const displaySlice = createSlice({
   name: "display",
-  initialState: { loading: false },
+  initialState,
   reducers: {
     setLoading: (state, action) => {
       return { ...state, loading: action.payload };
