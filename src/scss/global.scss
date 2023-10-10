@@ -9,6 +9,11 @@
   color: var(--text-color);
 }
 
+.offscreen {
+  position: absolute;
+  left: -9999px;
+}
+
 .loading-div {
   width: 100%;
   display: flex;
