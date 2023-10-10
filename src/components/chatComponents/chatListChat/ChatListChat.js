@@ -1,4 +1,4 @@
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+// import { doc, getDoc, updateDoc } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { db } from "../../../firebase";
 // import { AuthContext } from "../../../context/authContext";
@@ -17,31 +17,31 @@ const ChatListChat = ({ chat }) => {
   const [imgURL, setImgURL] = useState(chat[1].userInfo.photoURL);
   const [lastMsg, setLastMsg] = useState("");
 
-  useEffect(() => {
-    const getURL = async () => {
-      const userInfo = await getDoc(doc(db, "userInfo", chat[1].userInfo.uid));
+  // useEffect(() => {
+  //   const getURL = async () => {
+  //     const userInfo = await getDoc(doc(db, "userInfo", chat[1].userInfo.uid));
 
-      if (userInfo.data().userImgURL !== chat[1].userInfo.photoURL) {
-        await updateDoc(doc(db, "userChats", currentUser.uid), {
-          [`${chat[0]}.userInfo`]: {
-            photoURL: userInfo.userImgURL,
-          },
-        });
-        setImgURL(userInfo.userImgURL);
-      }
-    };
+  //     if (userInfo.data().userImgURL !== chat[1].userInfo.photoURL) {
+  //       await updateDoc(doc(db, "userChats", currentUser.uid), {
+  //         [`${chat[0]}.userInfo`]: {
+  //           photoURL: userInfo.userImgURL,
+  //         },
+  //       });
+  //       setImgURL(userInfo.userImgURL);
+  //     }
+  //   };
 
-    if (chat[1].lastMessage) {
-      if (chat[1].lastMessage.text.length > 20) {
-        setLastMsg(chat[1].lastMessage.text.slice(0, 20) + "...");
-      }
-      if (chat[1].lastMessage.text.length < 20) {
-        setLastMsg(chat[1].lastMessage.text);
-      }
-    }
+  //   if (chat[1].lastMessage) {
+  //     if (chat[1].lastMessage.text.length > 20) {
+  //       setLastMsg(chat[1].lastMessage.text.slice(0, 20) + "...");
+  //     }
+  //     if (chat[1].lastMessage.text.length < 20) {
+  //       setLastMsg(chat[1].lastMessage.text);
+  //     }
+  //   }
 
-    currentUser.uid && getURL();
-  }, [currentUser.uid, chat]);
+  //   currentUser.uid && getURL();
+  // }, [currentUser.uid, chat]);
 
   const handleSelect = () => {
     dispatch({ type: "CHANGE_USER", payload: chat[1].userInfo });
