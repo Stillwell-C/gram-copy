@@ -55,8 +55,7 @@ const PersistentLogin = () => {
   if (persistLoginCheck && refreshMutation.isLoading) {
     pageContent = <LoadingFullPage />;
   } else if (
-    !loggedInCookie ||
-    !loggedInLocal ||
+    !persistLoginCheck ||
     refreshMutation.isSuccess ||
     (accessToken && loginUninitalized)
   ) {
