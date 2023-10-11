@@ -41,6 +41,7 @@ const PersistentLogin = () => {
         refreshMutation.mutate();
       };
       console.log("cookie ", Boolean(loggedInCookie));
+      console.log("all cookies ", document.cookie);
       if (!accessToken && loggedInCookie) verifyRefreshToken();
       else setLoginUninitialized(true);
     }
