@@ -17,6 +17,7 @@ const PersistentLogin = () => {
   const [loginUninitalized, setLoginUninitialized] = useState(true);
 
   const loggedInCookie = document.cookie.match(/^loggedIn=true$/i);
+  const loggedInLocal = JSON.parse(localStorage.getItem("loggedIn"));
 
   const logoutMutation = useMutation({
     mutationFn: logout,
@@ -40,9 +41,8 @@ const PersistentLogin = () => {
         setLoginUninitialized(false);
         refreshMutation.mutate();
       };
-      console.log("cookie ", Boolean(loggedInCookie));
-      console.log("all cookies ", document.getElementById("cookies"));
-      if (!accessToken && loggedInCookie) verifyRefreshToken();
+      if (!accessToken && (loggedInCookie || loggedInLocal))
+        verifyRefreshToken();
       else setLoginUninitialized(true);
     }
 
@@ -53,6 +53,7 @@ const PersistentLogin = () => {
 
   if (
     !loggedInCookie ||
+    !loggedInLocal ||
     refreshMutation.isSuccess ||
     (accessToken && loginUninitalized)
   ) {
