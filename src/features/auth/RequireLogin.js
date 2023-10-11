@@ -10,10 +10,10 @@ const RequireLogin = () => {
   const location = useLocation();
   const loading = useSelector(selectLoadingState);
 
+  console.log("require loading ", loading);
+  console.log("require auth ", authenticatedUser);
   let content;
   if (!loading) {
-    console.log("require loading ", loading);
-    console.log("require auth ", authenticatedUser);
     content = authenticatedUser ? (
       <Outlet />
     ) : (
