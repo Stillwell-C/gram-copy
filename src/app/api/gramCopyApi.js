@@ -10,6 +10,7 @@ const gramCopyApi = axios.create({
 gramCopyApi.interceptors.request.use((config) => {
   const state = store.getState();
   const token = state.auth.token;
+  console.log("interceptor token ", token);
   if (token !== null) {
     config.headers["authorization"] = `Bearer ${token}`;
   }
