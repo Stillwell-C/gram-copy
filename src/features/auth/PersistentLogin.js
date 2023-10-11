@@ -34,8 +34,8 @@ const PersistentLogin = () => {
 
   useEffect(() => {
     if (runEffect.current === true || process.env.NODE_ENV !== "development") {
+      console.log("effect reached");
       const verifyRefreshToken = async () => {
-        console.log("effect run");
         dispatch(setLoading(true));
         setLoginUninitialized(false);
         refreshMutation.mutate();
