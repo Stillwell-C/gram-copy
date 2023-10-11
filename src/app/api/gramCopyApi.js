@@ -1,6 +1,7 @@
 import axios from "axios";
 import { store } from "../store";
 import { refresh } from "../../features/auth/authApiRoutes";
+import { setCredentials } from "../../features/auth/authSlice";
 
 const gramCopyApi = axios.create({
   baseURL: "https://gram-copy-api-production.up.railway.app",
@@ -30,6 +31,7 @@ gramCopyApi.interceptors.response.use(
     ) {
       const refreshResult = await refresh();
       if (refreshResult?.data?.accessToken) {
+        store.dispatch(setCredentials(refreshResult?.data?.accessToken));
         return gramCopyApi.request(error.config);
       }
       if (!refreshResult) {
