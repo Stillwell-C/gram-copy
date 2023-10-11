@@ -12,6 +12,8 @@ const RequireLogin = () => {
 
   let content;
   if (!loading) {
+    console.log("require loading ", loading);
+    console.log("require auth ", authenticatedUser);
     content = authenticatedUser ? (
       <Outlet />
     ) : (
