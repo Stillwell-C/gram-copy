@@ -31,7 +31,6 @@ gramCopyApi.interceptors.response.use(
     ) {
       const refreshResult = await refresh();
       if (refreshResult?.data?.accessToken) {
-        store.dispatch(setCredentials(refreshResult?.data?.accessToken));
         return gramCopyApi.request(error.config);
       }
       if (!refreshResult) {
