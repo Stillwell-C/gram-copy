@@ -13,11 +13,13 @@ import ErrorModal from "./ErrorModal";
 
 import "../scss/layout.scss";
 import "../scss/global.scss";
+import useAuth from "../hooks/useAuth";
 
 const Layout = () => {
   const loadingState = useSelector(selectLoadingState);
   const error = useSelector(selectError);
   const themeState = useSelector(selectThemeState);
+  const { authenticatedUser } = useAuth();
 
   const [theme, setTheme] = useState("theme-light");
 
@@ -37,6 +39,10 @@ const Layout = () => {
     if (!themeState) return;
     setTheme(themeState);
   }, [themeState]);
+
+  useEffect(() => {
+    console.log("from layout ", authenticatedUser);
+  }, [authenticatedUser]);
 
   return (
     <div className={theme}>
