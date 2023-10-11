@@ -20,6 +20,8 @@ const RequireLogin = () => {
       //This will replace inaccessible page from history
       <Navigate to='/accounts/login' state={{ from: location }} replace />
     );
+  } else {
+    content = <Outlet />;
   }
 
   return content;
