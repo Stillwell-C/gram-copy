@@ -50,7 +50,9 @@ const AdditionalOptionsModal = ({
   );
 
   const handleCopyLink = async () => {
-    await navigator.clipboard.writeText(`http://localhost:3000/p/${post._id}`);
+    await navigator.clipboard.writeText(
+      `https://gram-copy.vercel.app/p/${post._id}`
+    );
   };
 
   const copyLinkButton = (
