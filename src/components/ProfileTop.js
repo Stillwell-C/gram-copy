@@ -68,7 +68,7 @@ const ProfileTop = ({
   const optionsButton = (
     <div className='options-div'>
       <button
-        className='options-button transparent-button'
+        className='options-button transparent-button flex-container flex-align-center flex-justify-center'
         aria-label='click for more options'
         onClick={() => setShowAdditionalOptionsModal(true)}
       >
