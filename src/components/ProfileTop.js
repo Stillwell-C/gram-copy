@@ -68,7 +68,7 @@ const ProfileTop = ({
   const optionsButton = (
     <div className='options-div'>
       <button
-        className='options-button transparent-button'
+        className='options-button transparent-button flex-container flex-align-center flex-justify-center'
         aria-label='click for more options'
         onClick={() => setShowAdditionalOptionsModal(true)}
       >
@@ -142,7 +142,7 @@ const ProfileTop = ({
           <div className='user-info-top flex-container flex-column flex-align-start flex-justify-center'>
             <div className='user-info-top-heading flex-container flex-align-center'>
               <div className='user-info-username'>{userID}</div>
-              {!authenticatedUser && optionsButton}
+              {!displayOwnPage && optionsButton}
             </div>
             {userInfoButtons}
           </div>

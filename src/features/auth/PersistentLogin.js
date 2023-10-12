@@ -6,6 +6,7 @@ import { useMutation } from "react-query";
 import { selectCurrentToken } from "./authSlice";
 import { setLoading } from "../display/displaySlice";
 import { logout, refresh } from "./authApiRoutes";
+import LoadingFullPage from "../../components/LoadingFullPage";
 
 const PersistentLogin = () => {
   const accessToken = useSelector(selectCurrentToken);
@@ -17,6 +18,8 @@ const PersistentLogin = () => {
   const [loginUninitalized, setLoginUninitialized] = useState(true);
 
   const loggedInCookie = document.cookie.match(/^loggedIn=true$/i);
+  const loggedInLocal = JSON.parse(localStorage.getItem("loggedIn"));
+  const persistLoginCheck = loggedInCookie || loggedInLocal;
 
   const logoutMutation = useMutation({
     mutationFn: logout,
@@ -39,17 +42,19 @@ const PersistentLogin = () => {
         setLoginUninitialized(false);
         refreshMutation.mutate();
       };
-      if (!accessToken && loggedInCookie) verifyRefreshToken();
+      if (!accessToken && persistLoginCheck) verifyRefreshToken();
       else setLoginUninitialized(true);
     }
 
     return () => (runEffect.current = true);
-  }, [accessToken]);
+  }, []);
 
   let pageContent;
 
-  if (
-    !loggedInCookie ||
+  if (persistLoginCheck && refreshMutation.isLoading) {
+    pageContent = <LoadingFullPage />;
+  } else if (
+    !persistLoginCheck ||
     refreshMutation.isSuccess ||
     (accessToken && loginUninitalized)
   ) {
