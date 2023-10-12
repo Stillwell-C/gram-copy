@@ -131,7 +131,7 @@ const ProfileTop = ({
   );
 
   const parsedUserBio =
-    userData?.userBio.length > 0 &&
+    userData?.userBio?.length > 0 &&
     parseTextForLinks(userData?.userBio, 5, false);
 
   return (
@@ -152,7 +152,7 @@ const ProfileTop = ({
           <div className='user-info-bottom'>
             <div className='user-fullname'>{userData?.fullname}</div>
             <div className='user-bio'>{parsedUserBio}</div>
-            {userData?.urlLink.length > 0 && (
+            {userData?.urlLink?.length > 0 && (
               <div className='user-link'>
                 <a href={userData?.urlLink}>
                   {userData?.urlLinkText || userData?.urlLink}
