@@ -8,11 +8,11 @@ import "../scss/loadingFullPage.scss";
 const LoadingFullPage = ({ loadingState }) => {
   return (
     <main
-      className={`loadingFullPage`}
+      className='loadingFullPage'
       style={{ display: loadingState ? "block" : "none" }}
     >
       <div className={"layout-styles flex-justify-center flex-align-center"}>
-        <img src={gramImg} alt='Gram Copy Logo' />
+        <img src={gramImg} alt='loading' />
       </div>
     </main>
   );
