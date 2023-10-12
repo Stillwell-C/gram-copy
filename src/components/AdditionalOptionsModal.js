@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+
 import FocusTrapModalParent from "./FocusTrapModalParent";
 
 import "../scss/additionalOptionsModal.scss";
