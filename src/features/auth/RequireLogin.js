@@ -10,8 +10,6 @@ const RequireLogin = () => {
   const location = useLocation();
   const loading = useSelector(selectLoadingState);
 
-  console.log("require loading ", loading);
-  console.log("require auth ", authenticatedUser);
   let content;
   if (!loading) {
     content = authenticatedUser ? (
@@ -21,6 +19,9 @@ const RequireLogin = () => {
       <Navigate to='/accounts/login' state={{ from: location }} replace />
     );
   } else {
+    //This is necessary to accurately toggle off loading splash page for some pages
+    //Page will still not be visible due to splash page
+    //Sensitive operations & supplying of personal data are also protected on server side
     content = <Outlet />;
   }
 
