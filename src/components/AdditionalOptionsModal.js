@@ -52,6 +52,7 @@ const AdditionalOptionsModal = ({
 
   const handleCopyLink = async () => {
     await navigator.clipboard.writeText(`http://localhost:3000/p/${post._id}`);
+    handleClose();
   };
 
   const copyLinkButton = (
