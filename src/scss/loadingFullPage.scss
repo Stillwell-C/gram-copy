@@ -10,7 +10,16 @@
 
   img {
     width: clamp(75px, 20vw, 250px);
-    animation: colorShift 5s infinite alternate;
+    animation: colorShift 5s infinite alternate, fadeIn 1s;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
