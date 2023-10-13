@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 
 const useParseTextForLinks = () => {
   const parseTextForLinks = (textInput, maxLength, abbreviate = false) => {
-    const hashtagRegex = /#(\w+)/g;
-    const atRegex = /@(\w+)/g;
+    const hashtagRegex = /#(\w+)/;
+    const atRegex = /@(\w+)/;
     const commentLines = textInput.split("\n").slice(0, maxLength);
     const parsedText = commentLines.map((line) => {
       const lineWords = line.split(" ");
