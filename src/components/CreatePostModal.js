@@ -4,7 +4,7 @@ import FocusTrapModalParent from "./FocusTrapModalParent";
 import CreatePostDragDrop from "./CreatePostDragDrop";
 import CreatePostInformationForm from "../features/posts/CreatePostInformationForm";
 
-import "../scss/createPostModal.scss";
+import "../scss/postModal.scss";
 
 const CreatePostModal = ({ setDisplayPostModal }) => {
   const [dragDropScreen, setDragDropScreen] = useState(true);
