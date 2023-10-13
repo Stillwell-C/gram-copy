@@ -76,7 +76,7 @@ const EditPostInformationForm = ({ post, handleClose, setShowPhotoModal }) => {
       <form onSubmit={uploadPost} className='height-100'>
         <div className='modal-header'>
           <div></div>
-          <h2 id='dialog-header'>Create new post</h2>
+          <h2 id='dialog-header'>Edit post</h2>
           <div className='button-div'>
             <button
               type='submit'
