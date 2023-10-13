@@ -1,6 +1,3 @@
-import FocusTrapModalParent from "./FocusTrapModalParent";
-
-import "../scss/postModal.scss";
 import EditPostInformationForm from "../features/posts/EditPostInformationForm";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -8,6 +5,8 @@ import { useQuery } from "react-query";
 import { getPost } from "../features/posts/postApiRoutes";
 import { useEffect } from "react";
 import { setLoading } from "../features/display/displaySlice";
+
+import "../scss/postModal.scss";
 
 const EditPostModal = () => {
   const { postID } = useParams();
