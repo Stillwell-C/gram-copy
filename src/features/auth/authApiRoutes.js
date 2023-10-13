@@ -4,7 +4,6 @@ import { logOut, setCredentials } from "./authSlice";
 
 export const refresh = async () => {
   const response = await gramCopyApi.get(`/auth/refresh`);
-  console.log(response);
 
   const { accessToken } = response.data;
   store.dispatch(setCredentials({ accessToken }));
