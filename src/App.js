@@ -18,6 +18,7 @@ import SignupForm from "./features/users/SignupForm";
 import HomeFeed from "./features/posts/HomeFeed";
 import ExploreFeed from "./features/posts/ExploreFeed";
 import SearchFeed from "./features/posts/SearchFeed";
+import EditPostModal from "./components/EditPostModal";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             />
             <Route path='/:userID' element={<ProfileMain />} />
             <Route path='/p/:postID' element={<SinglePostPage />} />
+            <Route path='/p/:postID/edit' element={<EditPostModal />} />
 
             <Route element={<RequireLogin />}>
               <Route path='/direct/inbox' element={<ChatMain />} />
