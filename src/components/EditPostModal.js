@@ -3,9 +3,9 @@ import FocusTrapModalParent from "./FocusTrapModalParent";
 import "../scss/postModal.scss";
 import EditPostInformationForm from "../features/posts/EditPostInformationForm";
 
-const EditPostModal = ({ setClosePostModal, post }) => {
+const EditPostModal = ({ setShowEditPostModal, post }) => {
   const handleClose = () => {
-    setClosePostModal(true);
+    setShowEditPostModal(false);
   };
 
   const content = (
