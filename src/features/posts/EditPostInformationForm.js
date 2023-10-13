@@ -69,7 +69,7 @@ const EditPostInformationForm = ({ post, handleClose, setShowPhotoModal }) => {
 
   return (
     <div
-      className='secondary-create-post-display'
+      className='modal-container secondary-create-post-display'
       role='dialog'
       aria-labelledby='dialog-header'
     >
