@@ -15,6 +15,7 @@ const AdditionalOptionsModal = ({
   setShowDeleteConfirmation,
   setShowTagUsersModal,
   setShowEditPostModal,
+  setShowPhotoModal = false,
 }) => {
   const navigate = useNavigate();
 
@@ -85,6 +86,7 @@ const AdditionalOptionsModal = ({
 
   const handleOpenEditPostModal = () => {
     setShowAdditionalOptionsModal(false);
+    if (setShowPhotoModal) setShowPhotoModal(false);
     setShowEditPostModal(true);
   };
 
