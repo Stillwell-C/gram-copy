@@ -31,6 +31,7 @@ const EditPostInformationForm = ({ post, handleClose, setShowPhotoModal }) => {
         caption: "",
         location: "",
         altText: "",
+        id: "",
       });
 
       setShowCaptionInfo(false);
@@ -51,16 +52,13 @@ const EditPostInformationForm = ({ post, handleClose, setShowPhotoModal }) => {
 
   const uploadPost = async (e) => {
     e.preventDefault();
-    if (!post._id) {
+    if (!post?._id) {
       dispatch(setError(true));
       dispatch(setErrorRefreshPage(false));
       handleClose();
       return;
     }
-    const uploadData = {
-      ...formData,
-    };
-    addNewPostMutation.mutate({ ...uploadData });
+    addNewPostMutation.mutate(formData);
   };
 
   const imgURLxSmall = `https://res.cloudinary.com/danscxcd2/image/upload/w_50/${post?.imgKey}`;
