@@ -84,6 +84,7 @@ export const addNewPost = async (postData) => {
 };
 
 export const updatePost = async (postData) => {
+  console.log(postData);
   const response = await gramCopyApi.request({
     url: `/posts/`,
     method: "PATCH",
