@@ -1,10 +1,10 @@
-import EditPostInformationForm from "../features/posts/EditPostInformationForm";
+import EditPostInformationForm from "./EditPostInformationForm";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useQuery } from "react-query";
-import { getPost } from "../features/posts/postApiRoutes";
+import { getPost } from "./postApiRoutes";
 import { useEffect } from "react";
-import { setLoading } from "../features/display/displaySlice";
+import { setLoading } from "../display/displaySlice";
 
 import "../scss/postModal.scss";
 
