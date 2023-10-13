@@ -11,7 +11,6 @@ import AdditionalOptionsModal from "./AdditionalOptionsModal";
 import ReportModal from "../features/reports/ReportModal";
 import TagUsersModal from "./TagUsersModal";
 import DeletePostConfirmationModal from "../features/posts/DeletePostConfirmationModal";
-import EditPostModal from "./EditPostModal";
 
 import useAuth from "../hooks/useAuth";
 
@@ -32,7 +31,6 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
   const [showReportModal, setShowReportModal] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showTagUsersModal, setShowTagUsersModal] = useState(false);
-  const [showEditPostModal, setShowEditPostModal] = useState(false);
   const [displayCommentsMobile, setDisplayCommentsMobile] = useState(false);
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_90,c_fill/${post?.user?.userImgKey}`;
@@ -266,9 +264,7 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
           setShowTagUsersModal={
             post.user._id === id ? setShowTagUsersModal : false
           }
-          setShowEditPostModal={
-            post.user._id === id ? setShowEditPostModal : false
-          }
+          goToEditPost={post.user._id === id ? true : false}
         />
       )}
       {showReportModal && (
@@ -288,13 +284,6 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
         <TagUsersModal
           post={post}
           setShowTagUsersModal={setShowTagUsersModal}
-        />
-      )}
-      {showEditPostModal && post.user._id === id && (
-        <EditPostModal
-          post={post}
-          setShowEditPostModal={setShowEditPostModal}
-          setShowPhotoModal={setShowPhotoModal}
         />
       )}
     </>
