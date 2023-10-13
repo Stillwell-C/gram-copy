@@ -104,7 +104,7 @@ const EditPostInformationForm = ({ post, handleClose }) => {
             showCaptionInfo={showCaptionInfo}
             setShowCaptionInfo={setShowCaptionInfo}
             expandAccessibility={expandAccessibility}
-            accessibilityImgURL={URL.createObjectURL(imgURLxSmall)}
+            accessibilityImgURL={imgURLxSmall}
           />
         </div>
       </form>
