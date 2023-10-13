@@ -79,24 +79,6 @@ const ImgFeedCard = React.forwardRef(({ post, queryKey }, ref) => {
       </div>
       <div className='main-img-div flex-container flex-align-center'>
         <div className='img-div flex-container flex-align-center flex-justify-center height-100 width-100'>
-          {/* <picture>
-            <source
-              className='mainImg'
-              media='(min-width:370px)'
-              srcSet={imgURLLarge}
-              alt={post.altText ? post.altText : "user upload"}
-            />
-            <source
-              className='mainImg'
-              srcSet={imgURLSmall}
-              alt={post.altText ? post.altText : "user upload"}
-            />
-            <img
-              className='mainImg'
-              alt={post.altText ? post.altText : "user upload"}
-              src={imgURL}
-            />
-          </picture> */}
           <img
             className='mainImg'
             alt={post.altText ? post.altText : "user upload"}
