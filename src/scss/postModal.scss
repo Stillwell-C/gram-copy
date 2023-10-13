@@ -11,7 +11,7 @@
 
   @include small {
     width: clamp(300px, 90%, 1200px);
-    height: clamp(300px, 60%, 1500px);
+    height: clamp(300px, 80%, 1500px);
 
     &.initial-create-post-display {
       max-width: 700px;
