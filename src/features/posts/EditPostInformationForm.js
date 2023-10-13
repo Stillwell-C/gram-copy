@@ -5,12 +5,14 @@ import useAuth from "../../hooks/useAuth";
 import { useDispatch } from "react-redux";
 import { updatePost } from "./postApiRoutes";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
+import { useNavigate } from "react-router-dom";
 
-const EditPostInformationForm = ({ post, handleClose, setShowPhotoModal }) => {
+const EditPostInformationForm = ({ post }) => {
   const queryClient = useQueryClient();
-  const { id } = useAuth();
+  const { id, username } = useAuth();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     caption: post?.caption,
@@ -36,8 +38,8 @@ const EditPostInformationForm = ({ post, handleClose, setShowPhotoModal }) => {
 
       setShowCaptionInfo(false);
       setExpandAccessibility(false);
-      handleClose();
-      if (setShowPhotoModal) setShowPhotoModal(false);
+
+      navigate(`/${username}`);
     },
     onError: () => {
       dispatch(setError(true));
@@ -55,7 +57,6 @@ const EditPostInformationForm = ({ post, handleClose, setShowPhotoModal }) => {
     if (!post?._id) {
       dispatch(setError(true));
       dispatch(setErrorRefreshPage(false));
-      handleClose();
       return;
     }
     addNewPostMutation.mutate(formData);
@@ -88,7 +89,7 @@ const EditPostInformationForm = ({ post, handleClose, setShowPhotoModal }) => {
           </div>
         </div>
         <div className='modal-content flex-container flex-column'>
-          <div className='modal-body-left height-100 flex-container flex-align-center flex-justify-center'>
+          <div className='modal-body-left flex-container flex-align-center flex-justify-center'>
             <img
               alt={post.altText ? post.altText : "post upload"}
               srcSet={`${imgURLSmall} 500w, ${imgURLMedium} 1000w, ${imgURLLarge} 1500w, ${imgURL} 2000w`}
