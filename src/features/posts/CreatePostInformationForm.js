@@ -4,11 +4,9 @@ import { useDispatch } from "react-redux";
 
 import { addNewPost } from "./postApiRoutes";
 import useAuth from "../../hooks/useAuth";
-import useLimitLineBreaks from "../../hooks/useLimitLineBreaks";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
-import locationImg from "../../assets/location-svgrepo-com.svg";
-import downArrow from "../../assets/down-arrow-backup-2-svgrepo-com.svg";
+import PostInformationForm from "../../components/PostInformationForm";
 
 const CreatePostInformationForm = ({
   handleClear,
@@ -18,12 +16,9 @@ const CreatePostInformationForm = ({
   imgFileUpload,
 }) => {
   const queryClient = useQueryClient();
-  const { id, username, img } = useAuth();
+  const { id } = useAuth();
 
-  const limitLineBreaks = useLimitLineBreaks();
   const dispatch = useDispatch();
-
-  const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
 
   const [formData, setFormData] = useState({
     caption: "",
@@ -106,7 +101,16 @@ const CreatePostInformationForm = ({
               src={URL.createObjectURL(imgFileUpload)}
             />
           </div>
-          <div className='modal-body-right flex-container flex-align-start flex-justify-start flex-column height-100 width-100'>
+          <PostInformationForm
+            formData={formData}
+            setFormData={setFormData}
+            handleExpand={handleExpand}
+            showCaptionInfo={showCaptionInfo}
+            setShowCaptionInfo={setShowCaptionInfo}
+            expandAccessibility={expandAccessibility}
+            accessibilityImgURL={URL.createObjectURL(imgFileUpload)}
+          />
+          {/* <div className='modal-body-right flex-container flex-align-start flex-justify-start flex-column height-100 width-100'>
             <div className='top-user-info flex-container flex-align-center flex-justify-start'>
               <img
                 className='userImg circular-image'
@@ -239,7 +243,7 @@ const CreatePostInformationForm = ({
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </form>
     </div>
