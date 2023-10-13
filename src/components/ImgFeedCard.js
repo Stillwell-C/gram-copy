@@ -11,7 +11,6 @@ import LikeButton from "../features/likes/LikeButton";
 import AddCommentForm from "../features/comments/AddCommentForm";
 import DeletePostConfirmationModal from "../features/posts/DeletePostConfirmationModal";
 import TagUsersModal from "./TagUsersModal";
-import EditPostModal from "./EditPostModal";
 
 import useAuth from "../hooks/useAuth";
 
@@ -28,7 +27,6 @@ const ImgFeedCard = React.forwardRef(({ post, queryKey }, ref) => {
   const [showReportModal, setShowReportModal] = useState(false);
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showTagUsersModal, setShowTagUsersModal] = useState(false);
-  const [showEditPostModal, setShowEditPostModal] = useState(false);
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_90,c_fill/${post?.user?.userImgKey}`;
 
@@ -209,9 +207,7 @@ const ImgFeedCard = React.forwardRef(({ post, queryKey }, ref) => {
           setShowTagUsersModal={
             post.user._id === id ? setShowTagUsersModal : false
           }
-          setShowEditPostModal={
-            post.user._id === id ? setShowEditPostModal : false
-          }
+          goToEditPost={post.user._id === id ? true : false}
         />
       )}
       {showReportModal && (
@@ -231,12 +227,6 @@ const ImgFeedCard = React.forwardRef(({ post, queryKey }, ref) => {
         <TagUsersModal
           post={post}
           setShowTagUsersModal={setShowTagUsersModal}
-        />
-      )}
-      {showEditPostModal && post.user._id === id && (
-        <EditPostModal
-          post={post}
-          setShowEditPostModal={setShowEditPostModal}
         />
       )}
     </>
