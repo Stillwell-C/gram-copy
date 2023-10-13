@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { updatePost } from "./postApiRoutes";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
-const EditPostInformationForm = ({ post, handleClose }) => {
+const EditPostInformationForm = ({ post, handleClose, setShowPhotoModal }) => {
   const queryClient = useQueryClient();
   const { id } = useAuth();
 
@@ -36,6 +36,7 @@ const EditPostInformationForm = ({ post, handleClose }) => {
       setShowCaptionInfo(false);
       setExpandAccessibility(false);
       handleClose();
+      if (setShowPhotoModal) setShowPhotoModal(false);
     },
     onError: () => {
       dispatch(setError(true));
