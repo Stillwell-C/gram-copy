@@ -14,7 +14,7 @@ const AdditionalOptionsModal = ({
   copyLink,
   setShowDeleteConfirmation,
   setShowTagUsersModal,
-  setShowEditPostModal,
+  goToEditPost,
 }) => {
   const navigate = useNavigate();
 
@@ -83,16 +83,16 @@ const AdditionalOptionsModal = ({
     </div>
   );
 
-  const handleOpenEditPostModal = () => {
+  const handleGoToEditPost = () => {
     setShowAdditionalOptionsModal(false);
-    setShowEditPostModal(true);
+    navigate(`/p/${post._id}/edit`);
   };
 
-  const showEditPostModalButton = (
+  const editPostButton = (
     <div className='select-option-div'>
       <button
         className='cancel-button'
-        onClick={handleOpenEditPostModal}
+        onClick={handleGoToEditPost}
         aria-label=''
       >
         Edit post
@@ -137,7 +137,7 @@ const AdditionalOptionsModal = ({
         {goToProfile && goToProfileButton}
         {copyLink && copyLinkButton}
         {setShowTagUsersModal && showTagUsersModalButton}
-        {setShowEditPostModal && showEditPostModalButton}
+        {goToEditPost && editPostButton}
         {setShowDeleteConfirmation && showDeleteConfirmationModalButton}
         <div className='select-option-div'>
           <button
