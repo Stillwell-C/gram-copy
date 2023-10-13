@@ -60,7 +60,6 @@ const PersistentLogin = () => {
   ) {
     pageContent = <Outlet />;
   } else if (refreshMutation.isError) {
-    // pageContent = <Outlet />;
     navigate("/accounts/login", {
       replace: true,
       state: {
