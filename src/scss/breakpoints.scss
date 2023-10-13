@@ -38,6 +38,12 @@ $breakpoints: (
   }
 }
 
+@mixin max-small {
+  @media (max-width: map-get($breakpoints, "small")) {
+    @content;
+  }
+}
+
 @mixin medium {
   @media (min-width: map-get($breakpoints, "medium")) {
     @content;
