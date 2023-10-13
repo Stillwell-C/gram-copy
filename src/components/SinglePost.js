@@ -294,6 +294,7 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
         <EditPostModal
           post={post}
           setShowEditPostModal={setShowEditPostModal}
+          setShowPhotoModal={setShowPhotoModal}
         />
       )}
     </>
