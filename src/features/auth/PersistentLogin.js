@@ -31,7 +31,7 @@ const PersistentLogin = () => {
       dispatch(setLoading(false));
     },
     onError: () => {
-      logoutMutation.mutate();
+      // logoutMutation.mutate();
     },
   });
 
@@ -60,7 +60,8 @@ const PersistentLogin = () => {
   ) {
     pageContent = <Outlet />;
   } else if (refreshMutation.isError) {
-    pageContent = <Outlet />;
+    // pageContent = <Outlet />;
+    console.log(refreshMutation.error);
     navigate("/accounts/login", {
       replace: true,
       state: {
