@@ -3,7 +3,7 @@ import { store } from "../store";
 import { refresh } from "../../features/auth/authApiRoutes";
 
 const gramCopyApi = axios.create({
-  baseURL: "https://gram-copy-api-production.up.railway.app",
+  baseURL: "http://localhost:3500",
   withCredentials: true,
 });
 
