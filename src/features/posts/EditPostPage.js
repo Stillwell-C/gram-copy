@@ -6,7 +6,7 @@ import { getPost } from "./postApiRoutes";
 import { useEffect } from "react";
 import { setLoading } from "../display/displaySlice";
 
-import "../scss/postModal.scss";
+import "../../scss/postModal.scss";
 
 const EditPostPage = () => {
   const { postID } = useParams();
