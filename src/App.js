@@ -18,7 +18,7 @@ import SignupForm from "./features/users/SignupForm";
 import HomeFeed from "./features/posts/HomeFeed";
 import ExploreFeed from "./features/posts/ExploreFeed";
 import SearchFeed from "./features/posts/SearchFeed";
-import EditPostPage from "./components/EditPostPage";
+import EditPostPage from "./features/posts/EditPostPage";
 
 function App() {
   return (
