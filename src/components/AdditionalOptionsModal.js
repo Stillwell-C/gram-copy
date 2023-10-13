@@ -14,6 +14,7 @@ const AdditionalOptionsModal = ({
   copyLink,
   setShowDeleteConfirmation,
   setShowTagUsersModal,
+  setShowEditPostModal,
 }) => {
   const navigate = useNavigate();
 
@@ -31,7 +32,7 @@ const AdditionalOptionsModal = ({
       <button
         className='cancel-button'
         onClick={() => navigate(`/p/${post._id}`)}
-        aria-label='click to close'
+        aria-label=''
       >
         Go to post
       </button>
@@ -43,7 +44,7 @@ const AdditionalOptionsModal = ({
       <button
         className='cancel-button'
         onClick={() => navigate(`/${post.user.username}`)}
-        aria-label='click to close'
+        aria-label=''
       >
         Go to profile
       </button>
@@ -59,11 +60,7 @@ const AdditionalOptionsModal = ({
 
   const copyLinkButton = (
     <div className='select-option-div'>
-      <button
-        className='cancel-button'
-        onClick={handleCopyLink}
-        aria-label='click to close'
-      >
+      <button className='cancel-button' onClick={handleCopyLink} aria-label=''>
         Copy Link
       </button>
     </div>
@@ -79,9 +76,26 @@ const AdditionalOptionsModal = ({
       <button
         className='cancel-button'
         onClick={handleOpenTagUsersModal}
-        aria-label='click to close'
+        aria-label=''
       >
         Tag Users
+      </button>
+    </div>
+  );
+
+  const handleOpenEditPostModal = () => {
+    setShowAdditionalOptionsModal(false);
+    setShowEditPostModal(true);
+  };
+
+  const showEditPostModalButton = (
+    <div className='select-option-div'>
+      <button
+        className='cancel-button'
+        onClick={handleOpenEditPostModal}
+        aria-label=''
+      >
+        Edit post
       </button>
     </div>
   );
@@ -96,7 +110,7 @@ const AdditionalOptionsModal = ({
       <button
         className='cancel-button'
         onClick={handleDeletePost}
-        aria-label='click to close'
+        aria-label=''
       >
         Delete Post
       </button>
@@ -113,7 +127,7 @@ const AdditionalOptionsModal = ({
         <div className='select-option-div'>
           <button
             className='report-button'
-            aria-label='Click to report'
+            aria-label='report'
             onClick={handleShowReportModal}
           >
             Report
@@ -123,6 +137,7 @@ const AdditionalOptionsModal = ({
         {goToProfile && goToProfileButton}
         {copyLink && copyLinkButton}
         {setShowTagUsersModal && showTagUsersModalButton}
+        {setShowEditPostModal && showEditPostModalButton}
         {setShowDeleteConfirmation && showDeleteConfirmationModalButton}
         <div className='select-option-div'>
           <button
