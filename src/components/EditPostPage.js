@@ -8,7 +8,7 @@ import { setLoading } from "../features/display/displaySlice";
 
 import "../scss/postModal.scss";
 
-const EditPostModal = () => {
+const EditPostPage = () => {
   const { postID } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -64,4 +64,4 @@ const EditPostModal = () => {
   );
 };
 
-export default EditPostModal;
+export default EditPostPage;
