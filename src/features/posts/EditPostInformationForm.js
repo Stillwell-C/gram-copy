@@ -70,11 +70,11 @@ const EditPostInformationForm = ({ post }) => {
 
   return (
     <div
-      className='modal-container secondary-create-post-display'
+      className='post-information-display'
       role='dialog'
       aria-labelledby='dialog-header'
     >
-      <form onSubmit={uploadPost} className='height-100'>
+      <form onSubmit={uploadPost} className='edit-post-form'>
         <div className='modal-header'>
           <div></div>
           <h2 id='dialog-header'>Edit post</h2>
