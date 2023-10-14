@@ -131,7 +131,7 @@ const CreatePostDragDrop = ({
 
   return (
     <div
-      className='modal-container initial-create-post-display modal-body flex-container flex-column'
+      className='initial-create-post-display modal-body modal-container flex-container flex-column'
       role='dialog'
       aria-labelledby='dialog-header'
     >
@@ -147,7 +147,7 @@ const CreatePostDragDrop = ({
           </button>
         </div>
       </div>
-      <div className='modal-content'>
+      <div className='modal-content flex-container flex-column flex-align-center flex-justify-center fg-1'>
         {!imgFileUpload ? uploadForm : previewImg}
       </div>
     </div>

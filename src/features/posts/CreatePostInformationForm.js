@@ -74,11 +74,11 @@ const CreatePostInformationForm = ({
 
   return (
     <div
-      className='modal-body modal-container secondary-create-post-display'
+      className='post-information-display modal-body modal-container'
       role='dialog'
       aria-labelledby='dialog-header'
     >
-      <form onSubmit={uploadPost} className='height-100'>
+      <form onSubmit={uploadPost}>
         <div className='modal-header'>
           <div></div>
           <h2 id='dialog-header'>Create new post</h2>
@@ -94,7 +94,7 @@ const CreatePostInformationForm = ({
           </div>
         </div>
         <div className='modal-content flex-container flex-column'>
-          <div className='modal-body-left height-100 flex-container flex-align-center flex-justify-center'>
+          <div className='modal-body-left flex-container flex-align-center flex-justify-center'>
             <img
               className='upload-image-preview'
               alt='User upload preview'

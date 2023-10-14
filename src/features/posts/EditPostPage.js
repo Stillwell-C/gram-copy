@@ -6,7 +6,7 @@ import { getPost } from "./postApiRoutes";
 import { useEffect } from "react";
 import { setLoading } from "../display/displaySlice";
 
-import "../../scss/postModal.scss";
+import "../../scss/createAndEditPost.scss";
 
 const EditPostPage = () => {
   const { postID } = useParams();
@@ -58,7 +58,7 @@ const EditPostPage = () => {
   }, [isError]);
 
   return (
-    <div className='flex-container fg-1 flex-align-center flex-justify-center'>
+    <div className='flex-container fg-1 flex-align-center flex-justify-center padding-1'>
       {postData?._id && <EditPostInformationForm post={postData} />}
     </div>
   );

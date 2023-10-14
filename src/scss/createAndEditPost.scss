@@ -1,0 +1,332 @@
+@import "./breakpoints.scss";
+@import "./variables.scss";
+
+.modal-container {
+  z-index: 15;
+  background-color: var(--menu-background);
+  border-radius: 0.5rem;
+  border: 1px solid var(--margin-grey);
+}
+
+.edit-post-form {
+  border: 1px solid var(--margin-grey);
+  border-radius: 0.5rem;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-bottom: 0.5px solid var(--margin-grey);
+  padding: 10px;
+  font-weight: bold;
+
+  h2 {
+    font-size: $font-large;
+  }
+
+  div {
+    flex: 1;
+  }
+
+  div.hidden {
+    display: none;
+  }
+
+  .button-div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    button {
+      border: none;
+      color: $button-blue;
+      background-color: transparent;
+      font-weight: bold;
+    }
+
+    button:disabled {
+      color: var(--content-grey);
+    }
+  }
+}
+
+.initial-create-post-display {
+  height: 80svh;
+  height: 80vh;
+  max-height: 80svh;
+  max-height: 80vh;
+  max-width: 90vw;
+  overflow: hidden;
+  @include small {
+    max-width: 700px;
+    max-height: 700px;
+  }
+
+  .initial-file-upload-form {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    position: relative;
+
+    #initial-file-upload {
+      display: none;
+    }
+
+    label {
+      gap: 10px;
+
+      .media-upload-display-img {
+        width: 75px;
+      }
+
+      &.drag-active {
+        background-color: var(--menu-hover);
+      }
+    }
+
+    .drag-file-element {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+  }
+
+  .upload-image-preview {
+    max-width: 100%;
+    max-height: 100%;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      @include small {
+        max-width: 660px;
+        max-height: 660px;
+      }
+
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+  }
+}
+
+.post-information-display {
+  width: clamp(300px, 90%, 1200px);
+
+  form {
+    .modal-content {
+      flex-grow: 1;
+      background-color: var(--component-background);
+      height: 80%;
+
+      @include medium {
+        border-bottom-left-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+        overflow: hidden;
+        height: 100%;
+        flex-direction: row;
+        padding-bottom: 0px;
+      }
+
+      .modal-body-left {
+        flex: 3;
+        background-color: #000;
+        border-right: 1px solid var(--margin-grey);
+        max-height: 30vh;
+        overflow: hidden;
+
+        @include medium {
+          min-height: 60vh;
+          max-height: 100%;
+        }
+
+        img {
+          object-fit: cover;
+          max-height: 30vh;
+          max-width: 100%;
+          width: auto;
+          height: auto;
+
+          @include medium {
+            max-height: 80vh;
+          }
+        }
+      }
+
+      .modal-body-right {
+        flex: 2;
+        gap: 15px;
+        background-color: var(--component-background);
+        max-height: 35vh;
+        overflow-y: auto;
+
+        @include medium {
+          min-height: 100%;
+          max-height: 100%;
+        }
+
+        .top-user-info {
+          padding: 15px;
+          font-weight: bold;
+          font-size: $font-medium;
+          img {
+            width: 28px;
+            height: 28px;
+            margin-right: 10px;
+          }
+        }
+
+        .bottom-user-input {
+          width: 100%;
+        }
+
+        .caption-textarea {
+          padding: 0 15px;
+          border: none;
+          outline: none;
+          resize: none;
+          width: 100%;
+          font-size: 1rem;
+          height: 100px;
+          background-color: var(--component-background);
+
+          @include medium {
+            height: 175px;
+          }
+        }
+
+        .textarea-info {
+          padding: 0 15px;
+          margin: 5px 0;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          font-size: 12px;
+          color: var(--content-grey);
+          cursor: pointer;
+          position: relative;
+
+          &:hover {
+            color: #000;
+          }
+
+          .caption-length-info {
+            position: absolute;
+            background-color: var(--text-color);
+            color: var(--text-color-inverse);
+            padding: 5px;
+            text-align: center;
+            border-radius: 0.25rem;
+            top: 120%;
+            font-size: 1rem;
+
+            &.hidden {
+              display: none;
+            }
+          }
+        }
+
+        .segmented-div {
+          border-top: 1px solid var(--margin-grey);
+          border-bottom: 1px solid var(--margin-grey);
+        }
+
+        .location-input-div {
+          padding: 5px 15px;
+          justify-content: space-between;
+
+          label {
+            flex: 1;
+            input {
+              width: 100%;
+              padding: 5px 0px;
+              border: none;
+              outline: none;
+              font-size: 1rem;
+              background-color: var(--component-background);
+            }
+          }
+
+          img {
+            width: 16px;
+            margin-left: 15px;
+          }
+        }
+
+        .accessibility-info {
+          border-top: none;
+          padding: 10px 15px;
+          color: #000;
+
+          .accessibility-top {
+            justify-content: space-between;
+            font-size: $font-large;
+            cursor: pointer;
+
+            button {
+              .down-arrow-img {
+                width: 16px;
+              }
+            }
+          }
+
+          .accessibility-body {
+            display: none;
+          }
+
+          &.expand {
+            .down-arrow-img {
+              -webkit-transform: scaleY(-1);
+              transform: scaleY(-1);
+            }
+
+            .accessibility-body {
+              display: block;
+              width: 100%;
+
+              .accessibility-info-text {
+                font-size: 12px;
+                margin: 7px 0;
+                color: var(--content-grey);
+              }
+
+              .accessibility-input-div {
+                gap: 5px;
+
+                .accessibility-img-div {
+                  overflow: hidden;
+
+                  img {
+                    height: 44px;
+                    width: 44px;
+                    object-fit: contain;
+                  }
+                }
+
+                label {
+                  flex: 1;
+                  input {
+                    padding: 12px 5px;
+                    width: 100%;
+                    margin-right: 15px;
+                    border-radius: 0.25rem;
+                    outline: none;
+                    border: 1px solid var(--margin-grey);
+                    background-color: var(--component-background);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
