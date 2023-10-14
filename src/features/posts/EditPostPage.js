@@ -58,7 +58,7 @@ const EditPostPage = () => {
   }, [isError]);
 
   return (
-    <div className='flex-container fg-1 flex-align-center flex-justify-center'>
+    <div className='flex-container fg-1 flex-align-center flex-justify-center padding-1'>
       {postData?._id && <EditPostInformationForm post={postData} />}
     </div>
   );
