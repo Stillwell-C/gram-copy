@@ -60,12 +60,27 @@ const PersistentLogin = () => {
   ) {
     pageContent = <Outlet />;
   } else if (refreshMutation.isError) {
-    navigate("/accounts/login", {
-      replace: true,
-      state: {
-        errorMessage: "Please log in again.",
-      },
-    });
+    dispatch(setLoading(false));
+    pageContent = <Outlet />;
+
+    if (
+      refreshMutation?.error?.code === "ERR_NETWORK" ||
+      refreshMutation?.error?.code === 500
+    ) {
+      navigate("/error", {
+        replace: true,
+        state: {
+          errorCode: 500,
+        },
+      });
+    } else {
+      navigate("/accounts/login", {
+        replace: true,
+        state: {
+          errorMessage: "Please log in again.",
+        },
+      });
+    }
   }
 
   return pageContent;
