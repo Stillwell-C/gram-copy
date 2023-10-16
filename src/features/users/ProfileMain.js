@@ -44,7 +44,6 @@ const ProfileMain = () => {
   });
 
   useEffect(() => {
-    console.log(error?.response?.status);
     if (isError && error?.response?.status === 400) {
       navigate("/error", {
         replace: true,
