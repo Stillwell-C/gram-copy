@@ -44,6 +44,7 @@ const ProfileMain = () => {
   });
 
   useEffect(() => {
+    console.log(error?.response?.status);
     if (isError && error?.response?.status === 400) {
       navigate("/error", {
         replace: true,
@@ -53,8 +54,7 @@ const ProfileMain = () => {
             "The link you followed may be broken, or the page may have been removed.",
         },
       });
-    }
-    if (isError) {
+    } else if (isError) {
       navigate("/error", {
         replace: true,
         state: {
