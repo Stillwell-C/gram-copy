@@ -47,8 +47,7 @@ const SinglePostPage = () => {
           errorCode: error?.status,
         },
       });
-    }
-    if (isError) {
+    } else if (isError) {
       navigate("/error", {
         replace: true,
         state: {
