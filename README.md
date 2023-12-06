@@ -125,3 +125,56 @@ All images were found on [unsplash](https://unsplash.com/). Profiles and posts w
 - MongoDB/Mongoose
 - Bcrypt
 - Cloudinary (image storage)
+
+## ScreenShots
+
+### Desktop
+
+#### User Feed
+
+![user feed light mode](./ProjectImages/HomescreenLight.png)
+![user feed dark mode](./ProjectImages/HomescreenDark.png)
+
+#### User Profile
+
+![user profile light mode](./ProjectImages/ProfileLight.png)
+![user profile dark mode](./ProjectImages/ProfileDark.png)
+
+#### User Search
+
+![user search](./ProjectImages/UserSearch.png)
+
+#### Notifications
+
+![notifications](./ProjectImages/Notifications.png)
+
+#### Create Post
+
+![create post](./ProjectImages/CreatePost.png)
+
+#### Edit User Info
+
+![edit user info](./ProjectImages/EditUserInfo.png)
+
+#### Post Options
+
+![post options](./ProjectImages/PostOptions.png)
+
+#### View Followers / Following
+
+![view followers](./ProjectImages/ViewFollowers.png)
+
+### Mobile
+
+#### User Feed
+
+![user feed light mode](./ProjectImages/MobileFeed.PNG)
+![user feed dark mode](./ProjectImages/MobileFeedDark.PNG)
+
+#### User Profile
+
+![user profile](./ProjectImages/MobileProfile.PNG)
+
+#### Post
+
+![post](./ProjectImages/MobilePost.PNG)
