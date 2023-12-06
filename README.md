@@ -168,13 +168,14 @@ All images were found on [unsplash](https://unsplash.com/). Profiles and posts w
 
 #### User Feed
 
-![user feed light mode](./ProjectImages/MobileFeed.PNG)
-![user feed dark mode](./ProjectImages/MobileFeedDark.PNG)
+<img src="./ProjectImages/MobileFeed.PNG" alt="mobile user feed light mode" height="500" >
+
+<img src="./ProjectImages/MobileFeedDark.PNG" alt="mobile user feed dark mode" height="500" >
 
 #### User Profile
 
-![user profile](./ProjectImages/MobileProfile.PNG)
+<img src="./ProjectImages/MobileProfile.PNG" alt="mobile user profile" height="500" >
 
 #### Post
 
-![post](./ProjectImages/MobilePost.PNG)
+<img src="./ProjectImages/MobilePost.PNG" alt="mobile post" height="500" >
