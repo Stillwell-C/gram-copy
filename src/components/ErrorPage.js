@@ -6,7 +6,10 @@ const ErrorPage = () => {
   let errorTitle = "Error";
   let errorMessage = "";
 
-  if (location?.state?.errorCode === 500) {
+  if (
+    location?.state?.errorCode === 500 ||
+    location?.state?.errorCode === "ERR_NETWORK"
+  ) {
     errorTitle = "Something went wrong.";
     errorMessage = "Sorry, a network error occurred. Please try again.";
   }
