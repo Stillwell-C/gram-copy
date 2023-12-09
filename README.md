@@ -51,15 +51,17 @@ Users can create an account and sign in using their email or username and a pass
 
 Users are limited to 5 attempts with a incorrect passwords in a 3 hour span before being locked out for 15 minutes. This is implemented using the [rate-limiter-flexible](https://www.npmjs.com/package/rate-limiter-flexible/v/0.9.2) package and a MongoDB collection.
 
-Authentication is handled with a JWT refresh token stored in an HTTP only secure cookie and a separate JWT access token stored in a redux store with a 15-minute expiration.
+Authentication is handled with a JWT refresh token stored in an HTTP only secure cookie and a separate JWT access token stored in a redux store with a 15-minute expiration. These tokens are never stored in local storage.
 
-If a user is logged in and does not have a JWT access token (e.g. the user has refreshed their page) or has sent a request to the sever that has been rejected due to an expired access token, the front end will automatically access the API's refresh route and save the access token received before reattempting the user's initial request.
+If a user is logged in and does not have a JWT access token (e.g. the user has refreshed their page) or has sent a request to the sever that has been rejected due to an expired access token, the front end will automatically send the user's refresh token to the API's refresh route and save the access token received before reattempting the user's initial request. If this process fails, the user will be logged out and given an error message to log in again.
 
-Specific routes require a valid JWT access token to access. JWT verification is done using the [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) package. Anytime a user's ID is used on the backend (e.g. requesting a user's feed, updating data, etc.), this is supplied by the decoded access token. Pages for routes requring a JWT to access are also protected on the frontend and require a user to be logged in to access.
-
-Axios and TanStack Query are used to make server requests and cache/invalidate data on the frontend. Altering data receieved from the server (such as liking a post or following a user) will update the cache or will invalidate the cache (requiring refetch of some or all of the data). This works well for data across the cache in most cases (if you like a post, I intend for all instances of that post to be invalidated including in the multiple types of image feeds and on a user's profile even when this means invalidating a whole feed); however, there may be some limited cases where some cached data is not perfectly updated or cached. I hope to continue to hone this feature for better performance and user experience. The only server data stored in the redux store is the access token.
+Specific routes require a valid JWT access token to access. JWT verification is done using the [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) package. Anytime a user's ID is used on the backend (e.g. requesting a user's feed, updating data, etc.), this is supplied by the decoded access token, not by a userID sent directly from the front end. Pages for routes requring a JWT to access are also protected on the frontend (protected routes) and require a user to be logged in to access. In some cases, a route does not explicitly require a JWT (e.g. the endpoint for a single post); however, if one is provided it will be verified and decoded, and information sent by the endpoint may differ accordingly (e.g. if a user requests a post with a valid JWT, the endpoint will check if the user has liked or saved the post before returning the data).
 
 The [cors](https://www.npmjs.com/package/cors) package is used to only allow requests from specific origins. In this case, I am only allowing requests originating from the frontend.
+
+#### Font end data management
+
+Axios is used to make server requests and Tanstack Query is used to cache/invalidate data on the front end. I originally attempted to use Redux & RTK query for this, but found the caching system, especially with regard to infinite scrolling, limiting. Altering data receieved from the server (such as liking a post or following a user) will update the cache or will invalidate the cache (requiring refetch of some or all of the data). This works well for data across the cache in most cases (if you like a post, I intend for all instances of that post to be invalidated including in the multiple types of image feeds and on a user's profile even when this means invalidating a whole feed); however, there may be some limited cases where some cached data is not perfectly updated or cached. I hope to continue to hone this feature for better performance and user experience. Redux is also used in this application, but the user's JWT access token is the only server data that is stored in the redux store.
 
 #### Users, Posts, Follows, and Notifications
 
@@ -85,9 +87,9 @@ Click on the notifications tab to see notifications for any time another user fo
 
 #### Accessibility
 
-Throughout this project, I have tried to make this website accessible to screen readers, especially with respect to forms, error messages, and modals. However, any input on how to improve on this is greatly appreciated. I am sure there are instances where I have misused or neglected to properly implement ARIA.
+Throughout this project, I have tried to make this website accessible to screen readers, especially with respect to forms, error messages, and modals. However, any input on how to improve on this is greatly appreciated. I am sure there are instances where I have misused or neglected to properly implement ARIA or other accessibility best practices.
 
-Users are able to add custom alt text for the images in their posts.
+Users are able to add custom alt text for the images in their posts. If users do not provide this, blanket alt messages are offered that do not describe the content of the images.
 
 The [focus-trap-react](https://www.npmjs.com/package/focus-trap-react) package is used to trap focus when a modal is present on the screen. All modals can be exited using the escape key.
 
