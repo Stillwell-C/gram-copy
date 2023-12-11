@@ -12,27 +12,25 @@ The application is live at https://gram-copy.vercel.app/
 
 View the backend code [here](https://github.com/Stillwell-C/gram-copy-api)
 
-Or the API's landing page [here](https://gram-copy-api-production.up.railway.app)
-
 ## Description
 
 ### Overview
 
 - Built using MERN stack / REST API
 - Reponsive, mobile-first UI
-- TanStack Query
+- TanStack Query (formerly React Query)
 - Toggleable dark and light mode
 - Authentication with JWT refresh & access tokens
 - Create/edit/delete user accounts
-- Create/edit/delete posts
+- Create/edit/delete posts with images
 - Tag users in your own posts
 - Like or Save posts
 - Comment on posts
 - Follow other users to see their posts in your feed
-- Add @ to link to users or # to link to hashtag
 - Seach users
-- View posts from specific locations
 - Get notifications for new followers, comments, and likes
+- View posts from specific locations
+- Link to users using the @ symbol & posts using a hashtag with the # symbol
 - A11y accessibility (to the best of my ability)
 
 ### Detailed Description
@@ -43,7 +41,7 @@ This application was made to clone most of Instagram's basic functionality.
 
 The UI was made to be responsive with a mobile-first design and should function on both mobile devices and web browsers with larger screens. SCSS was used to style most components.
 
-There is a dark and light mode that can be toggled through the navigation menu. A user's preference will be stored in local storage for the next time they visit the site. If there is no user preference is already stored in local storage, the initial theme will be set using the user's preferred color theme in their browser if present. If there is no preferred theme in their browser or theme in local storage, it will default to the light color theme.
+There is a dark and light mode that can be toggled through the navigation menu. A user's preference will be stored in local storage for the next time they visit the site. If no user preference is stored in local storage, the initial theme will be set using the user's preferred color theme in their browser if present. If there is no preferred theme in their browser or theme in local storage, it will default to the light color theme.
 
 #### API & Authentication
 
@@ -73,7 +71,7 @@ Visit a user's profile to see their posts, posts they are tagged in, user inform
 
 A user profile can be banned, in which case the profile will not be accessible or searchable.
 
-Add a hashtag or at sign in front of text (comments, bio, etc.) to link to a hashtag search or a user's profile. Clicking on text starting with an @ symbol with link you to the user's profile page. Clicking on text starting with a # symbol will link you to posts where the user has used the hashtag in their initial comment.
+Add a hashtag or at sign in front of text (comments, bio, etc.) to link to a hashtag search or a user's profile. Clicking on text starting with an @ symbol with link you to the user's profile page. Clicking on text starting with a # symbol will link you to posts where the user has used the hashtag in their initial caption for the post (displays as the first comment).
 
 The locations displayed on each image can be clicked to search for other posts from the same location.
 
@@ -119,6 +117,7 @@ All images were found on [unsplash](https://unsplash.com/). Profiles and posts w
 - Axios
 - Tanstack-Query
 - SASS
+- Focus-Trap-React
 
 ### Backend
 
