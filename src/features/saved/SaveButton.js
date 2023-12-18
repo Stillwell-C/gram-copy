@@ -1,49 +1,63 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useDispatch } from "react-redux";
 
 import useAuth from "../../hooks/useAuth";
-import { addNewSave, deleteSave } from "./savedApiRoutes";
+import { addNewSave, deleteSave, getSave } from "./savedApiRoutes";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
 import filledBookmark from "../../assets/bookmark-filled.svg";
 import outlinedBookmark from "../../assets/bookmark-outline.svg";
 
-const SaveButton = ({ save = false, postID, postPage, queryKey }) => {
-  const [saved, setSaved] = useState(false);
+const SaveButton = ({ postID }) => {
   const { authenticatedUser, id } = useAuth();
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const queryKeyInvalidationKey = queryKey ? queryKey : ["posts"];
+  const [saved, setSaved] = useState(false);
+
+  const saveQueryKey = "save:" + postID;
+
+  const { data: save, isLoading } = useQuery({
+    queryKey: saveQueryKey,
+    queryFn: () => getSave({ parentPostID: postID }),
+    refetchOnWindowFocus: false,
+  });
 
   const addNewSaveMutation = useMutation({
     mutationFn: addNewSave,
     onSuccess: () => {
-      queryClient.setQueryData(queryKeyInvalidationKey, (oldData) => {
+      queryClient.setQueryData(saveQueryKey, (oldData) => {
         const data = oldData;
-        //Increment like
-        if (data?.pages) {
-          data.pages[postPage].posts.find(
-            (post) => post._id === postID
-          ).isSaved = true;
-        } else if (data?.imgKey) {
+        if (data?.isSaved) {
           data.isSaved = true;
         }
         return data;
       });
-      if (queryKeyInvalidationKey[0] !== "posts") {
-        queryClient.invalidateQueries({ queryKey: ["posts"] });
-      }
-      if (queryKeyInvalidationKey[0] !== "explore") {
-        queryClient.invalidateQueries({ queryKey: ["explore"] });
-      }
+      // queryClient.setQueryData(postQueryKeyInvalidationKey, (oldData) => {
+      //   const data = oldData;
+      //   //Increment like
+      //   if (data?.pages) {
+      //     data.pages[postPage].posts.find(
+      //       (post) => post._id === postID
+      //     ).isSaved = true;
+      //   } else if (data?.imgKey) {
+      //     data.isSaved = true;
+      //   }
+      //   return data;
+      // });
+      // if (postQueryKeyInvalidationKey[0] !== "posts") {
+      //   queryClient.invalidateQueries({ queryKey: ["posts"] });
+      // }
+      // if (postQueryKeyInvalidationKey[0] !== "explore") {
+      //   queryClient.invalidateQueries({ queryKey: ["explore"] });
+      // }
       //Maybe just stop here
       // queryClient.invalidateQueries({
-      //   queryKey: queryKeyInvalidationKey,
+      //   queryKey: postQueryKeyInvalidationKey,
       //   refetchPage: (page, index, allPages) => {
       //     return index === postPage;
       //   },
@@ -58,24 +72,31 @@ const SaveButton = ({ save = false, postID, postPage, queryKey }) => {
   const deleteSaveMutation = useMutation({
     mutationFn: deleteSave,
     onSuccess: () => {
-      queryClient.setQueryData(queryKeyInvalidationKey, (oldData) => {
+      queryClient.setQueryData(saveQueryKey, (oldData) => {
         const data = oldData;
-        //Increment like
-        if (data?.pages) {
-          data.pages[postPage].posts.find(
-            (post) => post._id === postID
-          ).isSaved = false;
-        } else if (data?.imgKey) {
+        if (data?.isSaved) {
           data.isSaved = false;
         }
         return data;
       });
-      if (queryKeyInvalidationKey[0] !== "posts") {
-        queryClient.invalidateQueries({ queryKey: ["posts"] });
-      }
+      // queryClient.setQueryData(postQueryKeyInvalidationKey, (oldData) => {
+      //   const data = oldData;
+      //   //Increment like
+      //   if (data?.pages) {
+      //     data.pages[postPage].posts.find(
+      //       (post) => post._id === postID
+      //     ).isSaved = false;
+      //   } else if (data?.imgKey) {
+      //     data.isSaved = false;
+      //   }
+      //   return data;
+      // });
+      // if (postQueryKeyInvalidationKey[0] !== "posts") {
+      //   queryClient.invalidateQueries({ queryKey: ["posts"] });
+      // }
       //Maybe just stop here
       // queryClient.invalidateQueries({
-      //   queryKey: queryKeyInvalidationKey,
+      //   queryKey: postQueryKeyInvalidationKey,
       //   refetchPage: (page, index, allPages) => {
       //     return index === postPage;
       //   },
@@ -84,7 +105,8 @@ const SaveButton = ({ save = false, postID, postPage, queryKey }) => {
   });
 
   useEffect(() => {
-    setSaved(save);
+    if (isLoading) return;
+    setSaved(save?.isSaved ?? false);
   }, [save]);
 
   const handleSave = () => {
