@@ -141,12 +141,7 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
           </button>
         </div>
         <div className='buttons-right'>
-          <SaveButton
-            save={post?.isSaved}
-            postID={post?._id}
-            postPage={post?.pageNo}
-            queryKey={queryKey}
-          />
+          <SaveButton postID={post?._id} />
         </div>
       </div>
       <div className='post-bottom-text flex-container flex-column flex-align-start flex-justify-center'>

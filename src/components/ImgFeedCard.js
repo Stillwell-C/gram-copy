@@ -121,12 +121,7 @@ const ImgFeedCard = React.forwardRef(({ post, queryKey }, ref) => {
             </button>
           </div>
           <div className='buttons-right'>
-            <SaveButton
-              save={post?.isSaved}
-              postID={post?._id}
-              postPage={post?.pageNo}
-              queryKey={queryKey}
-            />
+            <SaveButton postID={post?._id} />
           </div>
         </div>
         <div className='card-bottom-text flex-container flex-justify-center flex-column gap-5p'>
