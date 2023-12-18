@@ -11,7 +11,7 @@ import outlinedHeart from "../../assets/heart-rounded-svgrepo-com.svg";
 import filledHeart from "../../assets/heart-svgrepo-com.svg";
 
 const LikeButton = ({ postID, postPage, queryKey }) => {
-  const { authenticatedUser, id } = useAuth();
+  const { authenticatedUser } = useAuth();
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
