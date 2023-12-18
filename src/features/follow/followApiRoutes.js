@@ -1,5 +1,14 @@
 import gramCopyApi from "../../app/api/gramCopyApi";
 
+export const getFollow = async ({ userID }) => {
+  try {
+    const response = await gramCopyApi.get(`/follow/user/${userID}`);
+    return response.data;
+  } catch (err) {
+    return { message: err.message, isError: true };
+  }
+};
+
 export const getFollowers = async ({ userID, ...args }) => {
   try {
     const response = await gramCopyApi.get(`/follow/${userID}/followers`, {
