@@ -100,7 +100,7 @@ const LikeButton = ({ postID, postPage, queryKey }) => {
 
   useEffect(() => {
     if (isLoading) return;
-    setLiked(like?.isLiked);
+    setLiked(like?.isLiked ?? false);
   }, [like]);
 
   const handleLike = () => {
