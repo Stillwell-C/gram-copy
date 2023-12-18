@@ -92,7 +92,6 @@ const ImgFeedCard = React.forwardRef(({ post, queryKey }, ref) => {
         <div className='bottom-buttons flex-container flex-align-center'>
           <div className='buttons-left flex-container flex-align-center'>
             <LikeButton
-              like={post?.isLiked}
               postID={post?._id}
               postPage={post?.pageNo}
               queryKey={queryKey}

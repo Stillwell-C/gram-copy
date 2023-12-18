@@ -116,7 +116,6 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
       <div className='buttons flex-container flex-align-center'>
         <div className='buttons-left flex-container flex-align-center flex-justify-center'>
           <LikeButton
-            like={post?.isLiked}
             postID={post?._id}
             postPage={post?.pageNo}
             queryKey={queryKey}
