@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 import useAuth from "../../hooks/useAuth";
-import { addNewLike, deleteLike } from "./likesApiRoutes";
+import { addNewLike, deleteLike, getLike } from "./likesApiRoutes";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
 import outlinedHeart from "../../assets/heart-rounded-svgrepo-com.svg";
 import filledHeart from "../../assets/heart-svgrepo-com.svg";
 
-const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
+const LikeButton = ({ postID, postPage, queryKey }) => {
   const { authenticatedUser, id } = useAuth();
 
   const queryClient = useQueryClient();
@@ -19,40 +19,43 @@ const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
 
   const [liked, setLiked] = useState(false);
 
-  const queryKeyInvalidationKey = queryKey ? queryKey : ["posts"];
+  const postQueryKeyInvalidationKey = queryKey ? queryKey : ["posts"];
+  const likeQueryKey = "like:" + postID;
+
+  const { data: like, isLoading } = useQuery({
+    queryKey: likeQueryKey,
+    queryFn: () => getLike({ parentPostID: postID }),
+    refetchOnWindowFocus: false,
+  });
 
   const addNewLikeMutation = useMutation({
     mutationFn: addNewLike,
     onSuccess: () => {
-      queryClient.setQueryData(queryKeyInvalidationKey, (oldData) => {
+      queryClient.setQueryData(postQueryKeyInvalidationKey, (oldData) => {
         const data = oldData;
         if (data?.pages) {
-          // Increment like
+          // Increment like count
           data.pages[postPage].posts.find(
             (post) => post._id === postID
           ).likes += 1;
-          data.pages[postPage].posts.find(
-            (post) => post._id === postID
-          ).isLiked = true;
         } else if (data?.imgKey) {
-          data.isLiked = true;
           data.likes += 1;
         }
         return data;
       });
-      if (queryKeyInvalidationKey[0] !== "posts") {
-        queryClient.invalidateQueries({ queryKey: ["posts"] });
-      }
-      if (queryKeyInvalidationKey[0] !== "explore") {
-        queryClient.invalidateQueries({ queryKey: ["explore"] });
-      }
-      //Maybe just stop here
-      // queryClient.invalidateQueries({
-      //   queryKey: queryKeyInvalidationKey,
-      //   refetchPage: (page, index, allPages) => {
-      //     return index === postPage;
-      //   },
-      // });
+      // if (postQueryKeyInvalidationKey[0] !== "posts") {
+      //   queryClient.invalidateQueries({ queryKey: ["posts"] });
+      // }
+      // if (postQueryKeyInvalidationKey[0] !== "explore") {
+      //   queryClient.invalidateQueries({ queryKey: ["explore"] });
+      // }
+      queryClient.setQueryData(likeQueryKey, (oldData) => {
+        const data = oldData;
+        if (data?.isLiked) {
+          data.isLiked = true;
+        }
+        return data;
+      });
     },
     onError: () => {
       dispatch(setError(true));
@@ -63,32 +66,31 @@ const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
   const deleteLikeMutation = useMutation({
     mutationFn: deleteLike,
     onSuccess: () => {
-      queryClient.setQueryData(queryKeyInvalidationKey, (oldData) => {
+      queryClient.setQueryData(postQueryKeyInvalidationKey, (oldData) => {
         const data = oldData;
         if (data?.pages) {
-          //Decrement like
+          //Decrement like count
           data.pages[postPage].posts.find(
             (post) => post._id === postID
           ).likes -= 1;
-          data.pages[postPage].posts.find(
-            (post) => post._id === postID
-          ).isLiked = false;
         } else if (data?.imgKey) {
-          data.isLiked = false;
           data.likes -= 1;
         }
         return data;
       });
-      if (queryKeyInvalidationKey[0] !== "posts") {
-        queryClient.invalidateQueries({ queryKey: ["posts"] });
-      }
-      //Maybe just stop here
-      // queryClient.invalidateQueries({
-      //   queryKey: queryKeyInvalidationKey,
-      //   refetchPage: (page, index, allPages) => {
-      //     return index === postPage;
-      //   },
-      // });
+      // if (postQueryKeyInvalidationKey[0] !== "posts") {
+      //   queryClient.invalidateQueries({ queryKey: ["posts"] });
+      // }
+      // if (postQueryKeyInvalidationKey[0] !== "explore") {
+      //   queryClient.invalidateQueries({ queryKey: ["explore"] });
+      // }
+      queryClient.setQueryData(likeQueryKey, (oldData) => {
+        const data = oldData;
+        if (data?.isLiked) {
+          data.isLiked = false;
+        }
+        return data;
+      });
     },
     onError: () => {
       dispatch(setError(true));
@@ -97,7 +99,8 @@ const LikeButton = ({ like = false, postID, postPage, queryKey }) => {
   });
 
   useEffect(() => {
-    setLiked(like);
+    if (isLoading) return;
+    setLiked(like?.isLiked);
   }, [like]);
 
   const handleLike = () => {
