@@ -32,15 +32,7 @@ const ProfileTop = ({
     navigate("/direct/inbox");
   };
 
-  const friendButton = userData?.isFollow ? (
-    <UnfollowButton
-      user={userData}
-      queryKey={{
-        key: ["userInfo", userData?.username],
-        multipleInvalidation: false,
-      }}
-    />
-  ) : (
+  const friendButton = (
     <FollowButton
       user={userData}
       queryKey={{

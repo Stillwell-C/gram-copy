@@ -7,11 +7,7 @@ import UnfollowButton from "../features/follow/UnfollowButton";
 const FollowUserModalUser = React.forwardRef(({ user, setShowModal }, ref) => {
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${user?.userImgKey}`;
 
-  const followButton = user?.isFollow ? (
-    <UnfollowButton user={user} />
-  ) : (
-    <FollowButton user={user} />
-  );
+  const followButton = <FollowButton user={user} />;
 
   const userInfo = (
     <>

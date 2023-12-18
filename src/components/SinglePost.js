@@ -32,6 +32,7 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
   const [showTagUsersModal, setShowTagUsersModal] = useState(false);
   const [displayCommentsMobile, setDisplayCommentsMobile] = useState(false);
+  const [followedUserToParent, setFollowedUserToParent] = useState(false);
 
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_90,c_fill/${post?.user?.userImgKey}`;
 
@@ -40,7 +41,14 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
   const imgURLLarge = `https://res.cloudinary.com/danscxcd2/image/upload/w_1500/${post?.imgKey}`;
   const imgURL = `https://res.cloudinary.com/danscxcd2/image/upload/${post?.imgKey}`;
 
-  const followButton = <FollowButton user={post.user} queryKey={queryKey} />;
+  const followButton = (
+    <FollowButton
+      user={post.user}
+      queryKey={queryKey}
+      displayOnFollow={false}
+      setFollowedUserToParent={setFollowedUserToParent}
+    />
+  );
 
   const handleCommentClick = () => {
     commentRef.current.focus();
@@ -62,7 +70,7 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
             >
               <div className='userName'>{post?.user?.username}</div>
             </Link>
-            {id !== post?.user?._id && !post?.isFollow && (
+            {id !== post?.user?._id && !setFollowedUserToParent && (
               <>
                 <span>•</span>
                 {followButton}
@@ -203,7 +211,7 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
             >
               <div className='userName'>{post?.user?.username}</div>
             </Link>
-            {id !== post?.user?._id && !post?.isFollow && (
+            {id !== post?.user?._id && !setFollowedUserToParent && (
               <>
                 <span>•</span>
                 {followButton}
