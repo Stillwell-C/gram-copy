@@ -11,7 +11,7 @@ import filledBookmark from "../../assets/bookmark-filled.svg";
 import outlinedBookmark from "../../assets/bookmark-outline.svg";
 
 const SaveButton = ({ postID }) => {
-  const { authenticatedUser, id } = useAuth();
+  const { authenticatedUser } = useAuth();
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
