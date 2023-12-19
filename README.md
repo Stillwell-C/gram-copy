@@ -18,7 +18,8 @@ View the backend code [here](https://github.com/Stillwell-C/gram-copy-api)
 
 - Built using MERN stack / REST API
 - Reponsive, mobile-first UI
-- TanStack Query (formerly React Query)
+- TanStack Query (React Query)
+- Redis for data caching
 - Toggleable dark and light mode
 - Authentication with JWT refresh & access tokens
 - Create/edit/delete user accounts
