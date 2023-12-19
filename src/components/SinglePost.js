@@ -70,7 +70,7 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
             >
               <div className='userName'>{post?.user?.username}</div>
             </Link>
-            {id !== post?.user?._id && !setFollowedUserToParent && (
+            {id !== post?.user?._id && !followedUserToParent && (
               <>
                 <span>•</span>
                 {followButton}
@@ -211,7 +211,7 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
             >
               <div className='userName'>{post?.user?.username}</div>
             </Link>
-            {id !== post?.user?._id && !setFollowedUserToParent && (
+            {id !== post?.user?._id && !followedUserToParent && (
               <>
                 <span>•</span>
                 {followButton}
