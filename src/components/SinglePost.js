@@ -19,6 +19,7 @@ import commentBubble from "../assets/message-circle-01-svgrepo-com.svg";
 import message from "../assets/plane-svgrepo-com.svg";
 
 import "../scss/singlePost.scss";
+import LikesCounter from "../features/likes/LikesCounter";
 
 const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
   const { id } = useAuth();
@@ -154,8 +155,12 @@ const SinglePost = ({ post, queryKey, setShowPhotoModal }) => {
       </div>
       <div className='post-bottom-text flex-container flex-column flex-align-start flex-justify-center'>
         <div className='likes-counter'>
-          {post?.likes}
-          {post?.likes === 1 ? " Like" : " Likes"}
+          <LikesCounter
+            postLikes={post?.likes}
+            postID={post?._id}
+            postPage={post?.pageNo}
+            queryKey={queryKey}
+          />
         </div>
         <div className='time-ago'>
           {moment(post?.updatedAt).fromNow().toUpperCase()}
