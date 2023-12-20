@@ -11,6 +11,7 @@ import heart from "../assets/heart-svgrepo-com.svg";
 import trashIcon from "../assets/trash-delete-svgrepo-com.svg";
 import tagUserIcon from "../assets/user-add-svgrepo-com.svg";
 import LikesCounter from "../features/likes/LikesCounter";
+import CommentsCounter from "../features/comments/CommentsCounter";
 
 const ProfilePostCard = React.forwardRef(
   ({ post, profilePosts, queryKey }, ref) => {
@@ -70,7 +71,10 @@ const ProfilePostCard = React.forwardRef(
             </div>
             <div className='icon-row'>
               <img src={message} alt='message bubble icon' />
-              <span>{post?.comments || 0}</span>
+              <CommentsCounter
+                postComments={post?.comments}
+                postID={post?._id}
+              />
             </div>
           </div>
           <div
