@@ -32,3 +32,12 @@ export const deleteComment = async ({ id }) => {
   });
   return response.data;
 };
+
+export const getCommentsCount = async ({ id }) => {
+  const response = await gramCopyApi.request({
+    url: `/comments/count/post/${id}`,
+    method: "GET",
+  });
+
+  return response.data;
+};
