@@ -39,7 +39,6 @@ const LikesCounter = ({
 
   useEffect(() => {
     if (isLoading) return;
-    console.log(queriedLikes.likes);
     setLikes(queriedLikes.likes);
   }, [queriedLikes]);
 
