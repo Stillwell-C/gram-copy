@@ -23,3 +23,12 @@ export const deleteLike = async ({ parentPostID }) => {
   });
   return response.data;
 };
+
+export const getLikeCount = async ({ parentPostID }) => {
+  const response = await gramCopyApi.request({
+    url: `/postlike/count/post/${parentPostID}`,
+    method: "GET",
+  });
+
+  return response.data;
+};
