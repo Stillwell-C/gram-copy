@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useQuery, useQueryClient } from "react-query";
 import { getLikeCount } from "./likesApiRoutes";
 
-const LikesCounter = ({ postLikes, postID, queryKey, postPage }) => {
+const LikesCounter = ({
+  postLikes,
+  postID,
+  queryKey,
+  postPage,
+  verbose = true,
+}) => {
   const [likes, setLikes] = useState(0);
 
   const queryClient = useQueryClient();
@@ -14,7 +20,7 @@ const LikesCounter = ({ postLikes, postID, queryKey, postPage }) => {
     onSuccess: () => {
       queryClient.setQueryData(queryKey, (oldData) => {
         const data = oldData;
-        if (data?.pages) {
+        if (data?.pages && postPage) {
           // Increment like count
           data.pages[postPage].posts.find(
             (post) => post._id === postID
@@ -33,13 +39,14 @@ const LikesCounter = ({ postLikes, postID, queryKey, postPage }) => {
 
   useEffect(() => {
     if (isLoading) return;
+    console.log(queriedLikes.likes);
     setLikes(queriedLikes.likes);
   }, [queriedLikes]);
 
   return (
     <>
       {likes}
-      {likes === 1 ? " Like" : " Likes"}
+      {verbose && (likes === 1 ? " Like" : " Likes")}
     </>
   );
 };
