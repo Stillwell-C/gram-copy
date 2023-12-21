@@ -34,10 +34,14 @@ export const deleteComment = async ({ id }) => {
 };
 
 export const getCommentsCount = async ({ id }) => {
-  const response = await gramCopyApi.request({
-    url: `/comments/count/post/${id}`,
-    method: "GET",
-  });
+  try {
+    const response = await gramCopyApi.request({
+      url: `/comments/count/post/${id}`,
+      method: "GET",
+    });
 
-  return response.data;
+    return response.data;
+  } catch (err) {
+    return { comments: 0 };
+  }
 };
