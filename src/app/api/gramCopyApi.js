@@ -5,6 +5,7 @@ import { refresh } from "../../features/auth/authApiRoutes";
 const gramCopyApi = axios.create({
   baseURL: "https://gram-copy-api-production.up.railway.app",
   withCredentials: true,
+  withXSRFToken: true,
 });
 
 gramCopyApi.interceptors.request.use((config) => {
