@@ -1,11 +1,15 @@
 import gramCopyApi from "../../app/api/gramCopyApi";
 
 export const getLike = async ({ parentPostID }) => {
-  const response = await gramCopyApi.request({
-    url: `/postlike/post/${parentPostID}`,
-    method: "GET",
-  });
-  return response.data;
+  try {
+    const response = await gramCopyApi.request({
+      url: `/postlike/post/${parentPostID}`,
+      method: "GET",
+    });
+    return response.data;
+  } catch (err) {
+    return { isLiked: false };
+  }
 };
 
 export const addNewLike = async ({ parentPostID }) => {
@@ -25,10 +29,14 @@ export const deleteLike = async ({ parentPostID }) => {
 };
 
 export const getLikeCount = async ({ parentPostID }) => {
-  const response = await gramCopyApi.request({
-    url: `/postlike/count/post/${parentPostID}`,
-    method: "GET",
-  });
+  try {
+    const response = await gramCopyApi.request({
+      url: `/postlike/count/post/${parentPostID}`,
+      method: "GET",
+    });
 
-  return response.data;
+    return response.data;
+  } catch (err) {
+    return { likes: 0 };
+  }
 };
