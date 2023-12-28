@@ -146,7 +146,11 @@ const ProfileTop = ({
             <div className='user-bio'>{parsedUserBio}</div>
             {userData?.urlLink?.length > 0 && (
               <div className='user-link'>
-                <a href={userData?.urlLink}>
+                <a
+                  href={userData?.urlLink}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
                   {userData?.urlLinkText || userData?.urlLink}
                 </a>
               </div>
