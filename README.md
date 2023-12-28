@@ -46,17 +46,29 @@ There is a dark and light mode that can be toggled through the navigation menu. 
 
 #### API & Authentication
 
+##### Users & Authentication
+
 Users can create an account and sign in using their email or username and a password. Passwords are encrypted/decrypted and verified using the [bcrypt](https://www.npmjs.com/package/bcrypt) package.
-
-Redis is used to cache the post data displayed on a user's profile page. This is currently the only part of the site where it is employed, but I would like to expand implementation of Redis to improve overall site performance. This data is held for a maximum of 24 hours and is invalidated if a user uploads a new post, edits an existing post, or deletes an existing post. I do not invalidate the cache for updates to the number of likes or comments (which are currently stored on the post itself but may be entirely removed in the future), but separate queries for these counts should resolve any potential inconsistencies. Caching the data does not affect the display of comments made after the post data was cached and accurate display of whether the user has liked or saved the post as these are all handled by separate queries.
-
-Users are limited to 5 attempts with a incorrect passwords in a 3 hour span before being locked out for 15 minutes. This is implemented using the [rate-limiter-flexible](https://www.npmjs.com/package/rate-limiter-flexible/v/0.9.2) package and a MongoDB collection.
 
 Authentication is handled with a JWT refresh token stored in an HTTP only secure cookie and a separate JWT access token stored in a redux store with a 15-minute expiration. These tokens are never stored in local storage.
 
 If a user is logged in and does not have a JWT access token (e.g. the user has refreshed their page) or has sent a request to the sever that has been rejected due to an expired access token, the front end will automatically send the user's refresh token to the API's refresh route and save the access token received before reattempting the user's initial request. If this process fails, the user will be logged out and given an error message to log in again.
 
-Specific routes require a valid JWT access token to access. JWT verification is done using the [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) package. Anytime a user's ID is used on the backend (e.g. requesting a user's feed, updating data, etc.), this is supplied by the decoded access token, not by a userID sent directly from the front end. Pages for routes requring a JWT to access are also protected on the frontend (protected routes) and require a user to be logged in to access. In some cases, a route does not explicitly require a JWT (e.g. the endpoint for a single post); however, but a selective JWT verification middleware will verify and decode the JWT if one is provided.
+Specific routes require a valid JWT access token to access. JWT verification is done using the [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) package. Anytime a user's ID is used on the backend (e.g. requesting a user's feed, updating data, etc.), this is supplied by the decoded access token, not by a userID sent directly from the front end. Pages for routes requring a JWT to access are also protected on the frontend (with protected routes) and require a user to be logged in to access. In some cases, a route does not explicitly require a JWT, but a selective JWT verification middleware will verify and decode the JWT if one is provided.
+
+Users are limited to 5 attempts with a incorrect passwords in a 3-hour span before being locked out for 15 minutes. This is implemented using the [rate-limiter-flexible](https://www.npmjs.com/package/rate-limiter-flexible/v/0.9.2) package and a MongoDB collection.
+
+##### Data Caching
+
+Redis is used to cache the post data on two different API routes. These are currently the only parts of the site where it is employed, but I would like to expand implementation of Redis to improve overall site performance.
+
+The first type of cached post data is for the posts displayed on user profiles. This data is held for a maximum of 24 hours and is invalidated if a user uploads a new post, edits an existing post, or deletes an existing post. I do not invalidate the cache for updates to the number of likes or comments (which are currently stored on the post itself but may be entirely removed in the future), but separate queries for these counts should resolve any potential inconsistencies.
+
+The second type of cached post data is for posts that are searched for via clicking on a hashtag or a post's location. This data is not invalidated by adding a new post with this hashtag or location, but the data is only stored for 15 minutes to allow for this data to be relatively up to date.
+
+Caching data for posts does not affect the display of comments made after the post data was cached and accurate display of whether the user has liked or saved the post as these are all handled by separate queries.
+
+##### Cors
 
 The [cors](https://www.npmjs.com/package/cors) package is used to only allow requests from specific origins. In this case, I am only allowing requests originating from the frontend.
 
