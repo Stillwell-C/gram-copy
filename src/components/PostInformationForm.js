@@ -105,7 +105,7 @@ const PostInformationForm = ({
               className='transparent-button'
             >
               <img
-                className='down-arrow-img'
+                className='down-arrow-img themeable-icon'
                 aria-expanded={expandAccessibility ? "true" : "false"}
                 src={downArrow}
                 alt=''
