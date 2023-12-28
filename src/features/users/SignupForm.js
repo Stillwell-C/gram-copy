@@ -395,7 +395,11 @@ const SignupForm = () => {
 
   const successPage = (
     <div className='login-top success'>
-      <img src={logo} alt='instagram logo' className='login-logo' />
+      <img
+        src={logo}
+        alt='instagram logo'
+        className='login-logo themeable-icon'
+      />
 
       <h1>Success</h1>
       <p>
