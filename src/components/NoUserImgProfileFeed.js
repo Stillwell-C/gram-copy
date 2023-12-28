@@ -11,7 +11,7 @@ const NoUserImgProfileFeed = ({ handleAddPostModal }) => {
         aria-label='upload an image from your computer'
         onClick={handleAddPostModal}
       >
-        <img src={camera} alt='camera' />
+        <img src={camera} alt='camera' className='themeable-icon' />
       </button>
       <h2 className='header-text'>Share Photos</h2>
       <div className='sub-text'>
