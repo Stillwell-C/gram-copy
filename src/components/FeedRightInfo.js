@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import Footer from "./Footer";
 import LogoutButton from "../features/auth/LogoutButton";
 
 import useAuth from "../hooks/useAuth";
@@ -12,7 +11,7 @@ const FeedRightInfo = () => {
   const userImgURL = `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${img}`;
 
   return (
-    <div className='right-info-container'>
+    <div>
       {authenticatedUser && (
         <div className='top-user-info flex-container'>
           <Link to={`/${username}`}>
@@ -43,7 +42,6 @@ const FeedRightInfo = () => {
           </Link>
         </div>
       )}
-      <Footer />
     </div>
   );
 };
