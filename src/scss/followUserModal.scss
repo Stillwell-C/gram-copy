@@ -46,37 +46,36 @@
       overflow-y: auto;
     }
   }
+}
+.individual-user {
+  padding: 8px 16px;
+  justify-content: space-between;
+  cursor: pointer;
 
-  .individual-user {
-    padding: 8px 16px;
-    justify-content: space-between;
-    cursor: pointer;
+  .individual-user-left {
+    .profile-picture {
+      margin-right: 12px;
 
-    .individual-user-left {
-      .profile-picture {
-        margin-right: 12px;
+      img {
+        height: 44px;
+        width: 44px;
+      }
+    }
 
-        img {
-          height: 44px;
-          width: 44px;
-        }
+    .userinfo-div {
+      a {
+        text-decoration: none;
+        color: var(--text-color);
       }
 
-      .userinfo-div {
-        a {
-          text-decoration: none;
-          color: var(--text-color);
-        }
-
-        .username {
-          font-weight: bold;
-          font-size: $font-medium;
-          margin-bottom: 4px;
-        }
-        .fullname {
-          color: var(--content-grey);
-          font-size: $font-medium;
-        }
+      .username {
+        font-weight: bold;
+        font-size: $font-medium;
+        margin-bottom: 4px;
+      }
+      .fullname {
+        color: var(--content-grey);
+        font-size: $font-medium;
       }
     }
   }
