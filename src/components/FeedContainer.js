@@ -2,6 +2,7 @@ import FeedRightInfo from "./FeedRightInfo";
 import ImageFeed from "./ImageFeed";
 
 import "../scss/feedContainer.scss";
+import FeedRight from "./FeedRight";
 
 const FeedContainer = ({
   postData,
@@ -27,7 +28,8 @@ const FeedContainer = ({
         error={error}
         queryKey={queryKey}
       />
-      <FeedRightInfo />
+      {/* <FeedRightInfo /> */}
+      <FeedRight />
     </main>
   );
 };
