@@ -82,17 +82,23 @@
 
     .user-error-div,
     .user-confirmation-div {
+      width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
+      margin-top: 0.25rem;
     }
 
     .user-error-div {
-      color: $error-red;
+      span {
+        color: $error-red;
+      }
     }
 
     .user-success-div {
-      color: $success-green;
+      span {
+        color: $success-green;
+      }
     }
 
     .file-upload-input {
