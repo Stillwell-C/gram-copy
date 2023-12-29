@@ -281,4 +281,13 @@
       }
     }
   }
+
+  .popular-users-container {
+    margin-top: 2rem;
+
+    h2 {
+      font-size: var(--font-large);
+      margin-bottom: 1rem;
+    }
+  }
 }
