@@ -27,6 +27,7 @@ import { selectThemeState, setTheme } from "../features/display/displaySlice";
 
 import "../scss/navbar.scss";
 import "../scss/layout.scss";
+import LoginTestUserButton from "../features/auth/LoginTestUserButton";
 
 const Navbar = () => {
   const [displayPostModal, setDisplayPostModal] = useState(false);
@@ -241,6 +242,11 @@ const Navbar = () => {
           <Link to='/accounts/login'>Log in</Link>
         )}
       </div>
+      {!authenticatedUser && (
+        <div className='menu-line'>
+          <LoginTestUserButton />
+        </div>
+      )}
     </div>
   );
 
