@@ -60,11 +60,13 @@ Users are limited to 5 attempts with a incorrect passwords in a 3-hour span befo
 
 ##### Data Caching
 
-Redis is used to cache the post data on two different API routes. These are currently the only parts of the site where it is employed, but I would like to expand implementation of Redis to improve overall site performance.
+Redis is used to cache post data and user data on three different API routes. These are currently the only parts of the site where it is employed, but I would like to expand implementation of Redis to improve overall site performance.
 
 The first type of cached post data is for the posts displayed on user profiles. This data is held for a maximum of 24 hours and is invalidated if a user uploads a new post, edits an existing post, or deletes an existing post. I do not invalidate the cache for updates to the number of likes or comments (which are currently stored on the post itself but may be entirely removed in the future), but separate queries for these counts should resolve any potential inconsistencies.
 
 The second type of cached post data is for posts that are searched for via clicking on a hashtag or a post's location. This data is not invalidated by adding a new post with this hashtag or location, but the data is only stored for 15 minutes to allow for this data to be relatively up to date.
+
+The cached user data is for the popular users list displayed on the home feed and explore feed on larger screens. This data is stored in the cache for 24 hours and is not invalidated during this period.
 
 Caching data for posts does not affect the display of comments made after the post data was cached and accurate display of whether the user has liked or saved the post as these are all handled by separate queries.
 
@@ -77,6 +79,10 @@ The [cors](https://www.npmjs.com/package/cors) package is used to only allow req
 Axios is used to make server requests and Tanstack Query is used to cache/invalidate data on the front end. I originally attempted to use Redux & RTK query for this, but found the caching system, especially with regard to infinite scrolling, limiting. Altering data receieved from the server (such as liking a post or following a user) will update the cache or will invalidate the cache (requiring refetch of some or all of the data). This works well for data across the cache in most cases (if you like a post, I intend for all instances of that post to be invalidated including in the multiple types of image feeds and on a user's profile even when this means invalidating a whole feed); however, there may be some limited cases where some cached data is not perfectly updated or cached. I hope to continue to hone this feature for better performance and user experience. Redux is also used in this application, but the user's JWT access token is the only server data that is stored in the redux store.
 
 #### Users, Posts, Follows, and Notifications
+
+To sign in without an account, click the "Try Test Account" button in the side or navigation bar menus. Test accounts have some actions which are prohibited, such as changing the password or username and deleting the account.
+
+Create a new account using the sign up button. The sign up page checks and displays email & username availability, fullname compatibility, and password requirements while user makes inputs.
 
 Users can create and edit their own posts (posts must include an image) and can tag up to 20 users on each post. Any logged in user can like, save, and comment on posts. Saved posts can be viewed on your own account on the "saved" tab (this is only visible to you) and images a user is tagged in can be viewed through the "tagged" tab of their profile.
 
