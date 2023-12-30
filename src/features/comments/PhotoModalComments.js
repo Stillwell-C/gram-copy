@@ -32,7 +32,8 @@ const PhotoModalComments = ({ post, setShowPhotoModal }) => {
       }),
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, pages) => {
-      if (lastPage.page < lastPage.totalPages) return lastPage.page + 1;
+      if (lastPage.page < lastPage.totalPages)
+        return parseInt(lastPage.page) + 1;
       return false;
     },
   });
