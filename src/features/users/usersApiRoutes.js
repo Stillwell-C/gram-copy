@@ -2,15 +2,19 @@ import gramCopyApi from "../../app/api/gramCopyApi";
 import { store } from "../../app/store";
 import { setCredentials } from "../auth/authSlice";
 
-export const getUserSearch = async ({ searchQuery, pageParam, args }) => {
-  const response = await gramCopyApi.get(`/users/search/${searchQuery}`, {
-    params: { page: pageParam, ...args },
-  });
-  //   const postDataWithPage = response.data.posts.map((post) => ({
-  //     ...post,
-  //     pageNo: pageParam - 1,
-  //   }));
-  return response.data;
+export const getUserSearch = async ({ searchQuery, pageParam, ...args }) => {
+  try {
+    const response = await gramCopyApi.get(`/users/search/${searchQuery}`, {
+      params: { page: pageParam, ...args },
+    });
+    return { ...response.data, page: pageParam };
+  } catch (err) {
+    return {
+      users: [],
+      totalUsers: 0,
+      page: 0,
+    };
+  }
 };
 
 export const getUser = async (userID) => {
