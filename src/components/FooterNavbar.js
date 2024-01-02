@@ -1,4 +1,5 @@
 import React from "react";
+import useAuth from "../hooks/useAuth";
 
 const FooterNavbar = React.forwardRef(
   (
@@ -15,6 +16,10 @@ const FooterNavbar = React.forwardRef(
     },
     { moreLinkRefBtm, menuRefBtm }
   ) => {
+    const { authenticatedUser } = useAuth();
+
+    const menuPosition = authenticatedUser ? "-5.3rem" : "-7.8rem";
+
     return (
       <nav
         className='navbar-container-bottom'
@@ -36,7 +41,10 @@ const FooterNavbar = React.forwardRef(
           aria-hidden={!displayMenu ? "true" : "false"}
           ref={menuRefBtm}
         >
-          <div className={displayMenu ? "navbar-menu active" : "navbar-menu"}>
+          <div
+            style={{ top: menuPosition }}
+            className={displayMenu ? "navbar-menu active" : "navbar-menu"}
+          >
             {menuContent}
           </div>
         </div>
