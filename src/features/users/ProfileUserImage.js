@@ -9,15 +9,9 @@ import { setError, setErrorRefreshPage } from "../error/errorSlice";
 import DefaultUserImg from "../../assets/Default_pfp.svg";
 
 const ProfileUserImage = ({ user, displayOwnPage }) => {
-  const [userImgSmall, setUserImgSmall] = useState(
-    `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${user?.userImgKey}`
-  );
-  const [userImgMedium, setUserImgMedium] = useState(
-    `https://res.cloudinary.com/danscxcd2/image/upload/w_250,c_fill/${user?.userImgKey}`
-  );
-  const [userImgLarge, setUserImgLarge] = useState(
-    `https://res.cloudinary.com/danscxcd2/image/upload/w_350,c_fill/${user?.userImgKey}`
-  );
+  const [userImgSmall, setUserImgSmall] = useState("");
+  const [userImgMedium, setUserImgMedium] = useState("");
+  const [userImgLarge, setUserImgLarge] = useState("");
   const [newUserImgKey, setNewUserImgKey] = useState(null);
 
   const dispatch = useDispatch();
@@ -28,6 +22,15 @@ const ProfileUserImage = ({ user, displayOwnPage }) => {
       setUserImgMedium(DefaultUserImg);
       setUserImgLarge(DefaultUserImg);
     }
+    setUserImgSmall(
+      `https://res.cloudinary.com/danscxcd2/image/upload/w_150,c_fill/${user?.userImgKey}`
+    );
+    setUserImgMedium(
+      `https://res.cloudinary.com/danscxcd2/image/upload/w_250,c_fill/${user?.userImgKey}`
+    );
+    setUserImgLarge(
+      `https://res.cloudinary.com/danscxcd2/image/upload/w_350,c_fill/${user?.userImgKey}`
+    );
   }, [user]);
 
   const imgInputRef = useRef(null);
@@ -64,6 +67,7 @@ const ProfileUserImage = ({ user, displayOwnPage }) => {
         userImgKey: `${cloudinaryResponse.public_id}.${cloudinaryResponse.format}`,
       });
       setUserImgSmall(URL.createObjectURL(e.target.files[0]));
+      setUserImgMedium(URL.createObjectURL(e.target.files[0]));
       setUserImgLarge(URL.createObjectURL(e.target.files[0]));
     }
   };
