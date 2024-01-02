@@ -6,13 +6,23 @@ export const getComment = async (commentID) => {
 };
 
 export const getPostComments = async ({ pageParam, postID, ...args }) => {
-  const response = await gramCopyApi.get(`/comments/post/${postID}`, {
-    params: { page: pageParam, ...args },
-  });
-  return {
-    page: pageParam,
-    ...response.data,
-  };
+  try {
+    const response = await gramCopyApi.get(`/comments/post/${postID}`, {
+      params: { page: pageParam, ...args },
+    });
+    return {
+      page: pageParam,
+      ...response.data,
+    };
+  } catch (err) {
+    return {
+      page: 1,
+      comments: [],
+      totalComments: 0,
+      limit: "10",
+      totalPages: 1,
+    };
+  }
 };
 
 export const addNewComment = async (commentData) => {
