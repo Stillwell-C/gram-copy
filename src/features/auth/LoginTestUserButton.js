@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { login } from "./authApiRoutes";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
@@ -8,10 +8,12 @@ import { setError, setErrorRefreshPage } from "../error/errorSlice";
 const LoginTestUserButton = ({ classname }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   const loginMutation = useMutation({
     mutationFn: login,
     onSuccess: () => {
+      queryClient.invalidateQueries(["posts"]);
       navigate("/");
     },
     onError: () => {
