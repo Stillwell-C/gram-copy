@@ -28,6 +28,11 @@ export const getMultiplePosts = async ({ pageParam, ...args }) => {
   }
 };
 
+export const countPosts = async ({ userID }) => {
+  const response = await gramCopyApi.get(`/posts/user/count/${userID}`);
+  return response.data;
+};
+
 export const searchPosts = async ({ pageParam, ...args }) => {
   try {
     const response = await gramCopyApi.get(`/posts/search`, {
