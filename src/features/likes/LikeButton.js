@@ -43,12 +43,6 @@ const LikeButton = ({ postID, postPage, queryKey }) => {
         }
         return data;
       });
-      // if (postQueryKeyInvalidationKey[0] !== "posts") {
-      //   queryClient.invalidateQueries({ queryKey: ["posts"] });
-      // }
-      // if (postQueryKeyInvalidationKey[0] !== "explore") {
-      //   queryClient.invalidateQueries({ queryKey: ["explore"] });
-      // }
       queryClient.setQueryData(likeQueryKey, (oldData) => {
         const data = oldData;
         if (data?.isLiked) {
@@ -78,12 +72,6 @@ const LikeButton = ({ postID, postPage, queryKey }) => {
         }
         return data;
       });
-      // if (postQueryKeyInvalidationKey[0] !== "posts") {
-      //   queryClient.invalidateQueries({ queryKey: ["posts"] });
-      // }
-      // if (postQueryKeyInvalidationKey[0] !== "explore") {
-      //   queryClient.invalidateQueries({ queryKey: ["explore"] });
-      // }
       queryClient.setQueryData(likeQueryKey, (oldData) => {
         const data = oldData;
         if (data?.isLiked) {
