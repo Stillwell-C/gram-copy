@@ -66,23 +66,46 @@ const ImageFeed = ({
     <>
       <p className='margin-btm-5p'>
         To see your feed, <Link to='/accounts/login'>log in</Link> or{" "}
-        <Link to='/accounts/emailsignup'>sign up</Link>{" "}
+        <Link to='/accounts/emailsignup'>sign up</Link>.{" "}
       </p>
     </>
   );
 
   const noFollowingDiv = (
-    <div className='no-following-div flex-container flex-column flex-align-center margin-top-3 padding-1'>
+    <div className='feed-msg flex-container flex-column flex-align-center margin-top-3 padding-1'>
       <h2 className='margin-btm-1'>No Feed Yet...</h2>
       {authenticatedUser
         ? noFollowingAuthenticated
         : noFollowingUnauthenticated}
       <p>
-        Hop on over to the <Link to='/explore'>Explore Page</Link> to find posts
-        from our community.
+        Or hop on over to the <Link to='/explore'>Explore Page</Link> to find
+        posts from our community.
       </p>
     </div>
   );
+
+  const endOfHomeFeed = (
+    <div className='feed-msg feed-msg-btm flex-container flex-column flex-align-center margin-top-3 padding-1'>
+      <h2 className='margin-btm-1'>That's far enough.</h2>
+      <p>You've reached the end of your feed.</p>
+      <p>
+        Hop on over to the <Link to='/explore'>Explore Page</Link> to find more
+        posts from our community.
+      </p>
+    </div>
+  );
+
+  const endOfExploreFeed = (
+    <div className='feed-msg feed-msg-btm flex-container flex-column flex-align-center margin-top-3 padding-1'>
+      <h2 className='margin-btm-1'>That's far enough</h2>
+      <p>
+        Congratulations! You've seen every post. Check back later to see if any
+        new posts have been made.
+      </p>
+    </div>
+  );
+
+  const endOfFeed = homeFeed ? endOfHomeFeed : endOfExploreFeed;
 
   return (
     <section className='img-feed-container'>
@@ -93,6 +116,11 @@ const ImageFeed = ({
           !content?.length &&
           homeFeed &&
           noFollowingDiv}
+        {!isFetching &&
+          !isLoading &&
+          content?.length > 0 &&
+          !hasNextPage &&
+          endOfFeed}
         {(isFetching || isLoading) && <FadeLoaderStyled />}
       </>
     </section>
