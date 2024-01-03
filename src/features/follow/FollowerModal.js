@@ -21,10 +21,11 @@ const FollowerModal = ({ user, setShowFollowerModal }) => {
   } = useInfiniteQuery({
     queryKey: ["followers", user.username],
     queryFn: ({ pageParam = 1 }) =>
-      getFollowers({ pageParam, limit: 10, userID: user._id }),
+      getFollowers({ page: pageParam, limit: 10, userID: user._id }),
     refetchOnWindowFocus: false,
     getNextPageParam: (lastPage, pages) => {
-      if (lastPage?.page < lastPage?.totalPages) return lastPage.page + 1;
+      if (lastPage?.page < lastPage?.totalPages)
+        return parseInt(lastPage.page) + 1;
       return false;
     },
   });
