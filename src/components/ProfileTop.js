@@ -10,6 +10,7 @@ import useParseTextForLinks from "../hooks/useTextParseForLinks";
 import useAuth from "../hooks/useAuth";
 
 import threeDots from "../assets/three-dots-line-svgrepo-com.svg";
+import ProfileUserStats from "./ProfileUserStats";
 
 const ProfileTop = ({
   displayOwnPage,
@@ -21,7 +22,6 @@ const ProfileTop = ({
   const { userID } = useParams();
   const { authenticatedUser, username } = useAuth();
   const navigate = useNavigate();
-  const parseNum = useParseNumber();
   const parseTextForLinks = useParseTextForLinks();
 
   const handleMessage = () => {
@@ -94,34 +94,6 @@ const ProfileTop = ({
   const userInfoButtons =
     username === userID ? ownPageButtons : defaultPageButtons;
 
-  const userStats = (
-    <>
-      <div>
-        <span className='user-figure'>{parseNum(userData?.postNo)}</span>
-        <span className='category'>
-          {userData?.posts === 1 ? "post" : "posts"}
-        </span>
-      </div>
-      <div
-        className='clickable'
-        aria-label='click to see followers dialog'
-        onClick={() => setShowFollowerModal(true)}
-      >
-        <span className='user-figure'>{parseNum(userData?.followerNo)}</span>
-        {userData?.followerNo === 1 ? "follower" : "followers"}
-        <span className='category'></span>
-      </div>
-      <div
-        className='clickable'
-        aria-label='click to see following dialog'
-        onClick={() => setShowFollowingModal(true)}
-      >
-        <span className='user-figure'>{parseNum(userData?.followingNo)}</span>
-        following<span className='category'></span>
-      </div>
-    </>
-  );
-
   const parsedUserBio =
     userData?.userBio?.length > 0 &&
     parseTextForLinks(userData?.userBio, 5, false);
@@ -139,7 +111,11 @@ const ProfileTop = ({
             {userInfoButtons}
           </div>
           <div className='user-info-middle flex-align-center flex-justify-start'>
-            {userStats}
+            <ProfileUserStats
+              setShowFollowerModal={setShowFollowerModal}
+              setShowFollowingModal={setShowFollowingModal}
+              userData={userData}
+            />
           </div>
           <div className='user-info-bottom'>
             <div className='user-fullname'>{userData?.fullname}</div>
@@ -159,7 +135,11 @@ const ProfileTop = ({
         </div>
       </div>
       <div className='user-info-stats-small width-100 flex-container flex-align-center'>
-        {userStats}
+        <ProfileUserStats
+          setShowFollowerModal={setShowFollowerModal}
+          setShowFollowingModal={setShowFollowingModal}
+          userData={userData}
+        />
       </div>
     </>
   );
