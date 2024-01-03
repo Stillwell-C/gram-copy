@@ -12,11 +12,15 @@ const FollowUserModalUser = React.forwardRef(
 
     const style = removeLeftPadding ? { paddingLeft: "0px" } : {};
 
+    const handleCloseModal = () => {
+      if (setShowModal) setShowModal(false);
+    };
+
     const userInfo = (
       <>
         <div
           className='individual-user-left flex-container flex-align-center'
-          onClick={() => setShowModal(false)}
+          onClick={handleCloseModal}
         >
           <Link
             to={`/${user?.username}`}
