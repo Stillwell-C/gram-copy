@@ -1,4 +1,3 @@
-import FeedRightInfo from "./FeedRightInfo";
 import ImageFeed from "./ImageFeed";
 
 import "../scss/feedContainer.scss";
