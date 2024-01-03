@@ -2,15 +2,19 @@
 @import "./variables.scss";
 
 .img-feed-container {
-  .no-following-div {
+  .feed-msg {
     width: 100%;
-    width: clamp(250px, 80vw, 500px);
+    width: clamp(250px, 80vw, 468px);
     text-align: center;
 
     a {
       font-weight: 500;
       color: var(--link-color);
     }
+  }
+
+  .feed-msg-btm {
+    padding-bottom: 5rem;
   }
 
   @include mobile-large {
