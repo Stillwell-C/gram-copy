@@ -37,31 +37,6 @@ const SaveButton = ({ postID }) => {
         }
         return data;
       });
-      // queryClient.setQueryData(postQueryKeyInvalidationKey, (oldData) => {
-      //   const data = oldData;
-      //   //Increment like
-      //   if (data?.pages) {
-      //     data.pages[postPage].posts.find(
-      //       (post) => post._id === postID
-      //     ).isSaved = true;
-      //   } else if (data?.imgKey) {
-      //     data.isSaved = true;
-      //   }
-      //   return data;
-      // });
-      // if (postQueryKeyInvalidationKey[0] !== "posts") {
-      //   queryClient.invalidateQueries({ queryKey: ["posts"] });
-      // }
-      // if (postQueryKeyInvalidationKey[0] !== "explore") {
-      //   queryClient.invalidateQueries({ queryKey: ["explore"] });
-      // }
-      //Maybe just stop here
-      // queryClient.invalidateQueries({
-      //   queryKey: postQueryKeyInvalidationKey,
-      //   refetchPage: (page, index, allPages) => {
-      //     return index === postPage;
-      //   },
-      // });
     },
     onError: () => {
       dispatch(setError(true));
@@ -79,28 +54,6 @@ const SaveButton = ({ postID }) => {
         }
         return data;
       });
-      // queryClient.setQueryData(postQueryKeyInvalidationKey, (oldData) => {
-      //   const data = oldData;
-      //   //Increment like
-      //   if (data?.pages) {
-      //     data.pages[postPage].posts.find(
-      //       (post) => post._id === postID
-      //     ).isSaved = false;
-      //   } else if (data?.imgKey) {
-      //     data.isSaved = false;
-      //   }
-      //   return data;
-      // });
-      // if (postQueryKeyInvalidationKey[0] !== "posts") {
-      //   queryClient.invalidateQueries({ queryKey: ["posts"] });
-      // }
-      //Maybe just stop here
-      // queryClient.invalidateQueries({
-      //   queryKey: postQueryKeyInvalidationKey,
-      //   refetchPage: (page, index, allPages) => {
-      //     return index === postPage;
-      //   },
-      // });
     },
   });
 
