@@ -31,6 +31,16 @@ export const getFollowing = async ({ userID, ...args }) => {
   }
 };
 
+export const getFollowerCount = async ({ userID }) => {
+  const response = await gramCopyApi.get(`/follow/${userID}/followers/count`);
+  return response.data;
+};
+
+export const getFollowingCount = async ({ userID }) => {
+  const response = await gramCopyApi.get(`/follow/${userID}/following/count`);
+  return response.data;
+};
+
 export const addFollow = async ({ followedID }) => {
   try {
     const response = await gramCopyApi.request({
