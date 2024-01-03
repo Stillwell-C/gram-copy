@@ -28,7 +28,6 @@ const FeedContainer = ({
         error={error}
         queryKey={queryKey}
       />
-      {/* <FeedRightInfo /> */}
       <FeedRight />
     </main>
   );
