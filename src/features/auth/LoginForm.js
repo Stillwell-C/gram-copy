@@ -149,8 +149,9 @@ const LoginForm = () => {
           <div className='or-lettering'>or</div>
           <div className='line'> </div>
         </div>
-        <div className='login-google'>Log in with Google</div>
-        <div className='forgot-password'>Forgot password?</div>
+        <div className='login-link-div '>
+          <Link to='/'>Return Home</Link>
+        </div>
       </div>
       <div className='login-bottom'>
         <p>
