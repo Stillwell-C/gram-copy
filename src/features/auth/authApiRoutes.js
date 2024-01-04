@@ -17,7 +17,7 @@ export const logout = async () => {
   document.cookie = "loggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
   localStorage.setItem("loggedIn", JSON.stringify(false));
   store.dispatch(logOut());
-  window.location.reload();
+  // window.location.reload();
 };
 
 export const login = async (credentials) => {
