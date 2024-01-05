@@ -100,7 +100,12 @@ const PhotoModalComments = ({ post, setShowPhotoModal }) => {
             title='click to show more comments'
             onClick={fetchNextPage}
           >
-            <img src={addCommentIcon} alt='' aria-hidden='true' />
+            <img
+              src={addCommentIcon}
+              className='themeable-icon'
+              alt=''
+              aria-hidden='true'
+            />
           </button>
         </div>
       )}
