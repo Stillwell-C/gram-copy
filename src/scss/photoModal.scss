@@ -3,9 +3,11 @@
 .photo-modal-container {
   z-index: 15;
   border-radius: 0.5rem;
+  border: 1px solid var(--margin-grey);
   background-color: #fff;
   min-height: 300px;
   cursor: default;
+  overflow: hidden;
 
   @include medium {
     border-radius: 0 0.5rem 0.5rem 0;
