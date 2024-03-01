@@ -12,6 +12,27 @@ The application is live at https://gram-copy.vercel.app/
 
 View the backend code [here](https://github.com/Stillwell-C/gram-copy-api)
 
+## Contents
+
+- [Description](#description)
+  - [Overview](#overview)
+  - [Detailed Description](#detailed-description)
+    - [UI](#ui)
+    - [API & Authentication](#api--authentication)
+      - [Users & Authentication](#users--authentication)
+      - [Data Caching](#data-caching)
+      - [Cors](#cors)
+    - [Front End Data management](#front-end-data-management)
+    - [Users, Posts, Follows, and Notifications](#users-posts-follows-and-notifications)
+    - [Accessibility](#accessibility)
+    - [Additional Info](#additional-info)
+  - [Known Issues](#known-issues)
+    - [Authentication & Persisted Log In On Certain Browsers](#authentication--persisted-log-in-on-certain-browsers)
+- [Built With](#built-with)
+- [Screenshots](#screenshots)
+  - [Desktop](#desktop)
+  - [Mobile](#mobile)
+
 ## Description
 
 ### Overview
@@ -74,7 +95,7 @@ Caching data for posts does not affect the display of comments made after the po
 
 The [cors](https://www.npmjs.com/package/cors) package is used to only allow requests from specific origins. In this case, I am only allowing requests originating from the frontend.
 
-#### Font end data management
+#### Front End Data Management
 
 Axios is used to make server requests and Tanstack Query is used to cache/invalidate data on the front end. I originally attempted to use Redux & RTK query for this, but found the caching system, especially with regard to infinite scrolling, limiting. Altering data receieved from the server (such as liking a post or following a user) will update the cache or will invalidate the cache (requiring refetch of some or all of the data). This works well for data across the cache in most cases (if you like a post, I intend for all instances of that post to be invalidated including in the multiple types of image feeds and on a user's profile even when this means invalidating a whole feed); however, there may be some limited cases where some cached data is not perfectly updated or cached. I hope to continue to hone this feature for better performance and user experience. Redux is also used in this application, but the user's JWT access token is the only server data that is stored in the redux store.
 
@@ -122,11 +143,11 @@ All images were found on [unsplash](https://unsplash.com/). Profiles and posts w
 
 ## Known Issues
 
-### Authentication
+### Authentication & Persisted Log In On Certain Browsers
 
 - Persisting user login was originally done using a cookie to show that a user was logged in (as the access token can easily be deleted by refreshing the browser). However, possibly due to Vercel being on the [public suffix list](https://publicsuffix.org/), I could not access this cookie once the site was live. To remedy this, a single item called "loggedIn" is set in local storage upon log in. The code utilizing a cookie was not deleted from the front or back end, and either a cookie or local storage item can be used for this functionality. No JWT (access or refresh token) is stored in local storage at any time. Logging out will remove the loggedIn cookie (if present) and set the "loggedIn" item to false.
 
-- The frontend is hosted on [Vercel](https://vercel.com/) and the backend is hosted on [Railway](https://railway.app/). Resultingly, the refresh token stored in an HTTP only secure cookie is a cross-site cookie and does not function properly on some browsers, particularly some incognito or private browser windows such as Chrome and Opera. Refreshing the page will log you out on these browsers in incognito windows.
+- The frontend is hosted on [Vercel](https://vercel.com/) and the backend is hosted on [Railway](https://railway.app/). Resultingly, the refresh token stored in an HTTP only secure cookie is a cross-site cookie and does not function properly on some browsers, including Safari and incognito or private browser modes of browsers such as Chrome and Opera. Due to how these browsers treat the cross-site cookie, log cannot be persisted and refreshing the page will log you out.
 
 ## Built with
 
