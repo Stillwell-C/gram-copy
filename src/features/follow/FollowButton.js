@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import useAuth from "../../hooks/useAuth";
 import { addFollow, deleteFollow, getFollow } from "./followApiRoutes";
 import { setError, setErrorRefreshPage } from "../error/errorSlice";
 
-const FollowButton = ({ user, queryKey, setFollowedUserToParent }) => {
-  const { authenticatedUser, id, username } = useAuth();
-
-  const { userID: usernameKey } = useParams();
+const FollowButton = ({ user, setFollowedUserToParent }) => {
+  const { authenticatedUser, id } = useAuth();
 
   const [followed, setFollowed] = useState(false);
 
