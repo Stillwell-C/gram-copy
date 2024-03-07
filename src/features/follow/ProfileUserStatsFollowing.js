@@ -9,8 +9,9 @@ const ProfileUserStatsFollowing = ({ userData }) => {
   const [userFollowing, setUserFollowing] = useState(userData?.followingNo);
 
   const { data, isLoading } = useQuery({
-    queryKey: ["userFollowingCount", userData._id],
-    queryFn: () => getFollowingCount({ userID: userData._id }),
+    queryKey: ["userFollowingCount", userData?._id],
+    enabled: userData?._id,
+    queryFn: () => getFollowingCount({ userID: userData?._id }),
     refetchOnWindowFocus: false,
   });
 
