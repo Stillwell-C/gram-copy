@@ -18,11 +18,12 @@ const FollowButton = ({ user, queryKey, setFollowedUserToParent }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const followQueryKey = "follow:" + user._id;
+  const followQueryKey = "follow:" + user?._id;
 
   const { data: follow, isLoading } = useQuery({
     queryKey: followQueryKey,
-    queryFn: () => getFollow({ userID: user._id }),
+    enabled: user?._id,
+    queryFn: () => getFollow({ userID: user?._id }),
     refetchOnWindowFocus: false,
   });
 
