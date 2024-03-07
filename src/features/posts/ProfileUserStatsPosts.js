@@ -10,7 +10,7 @@ const ProfileUserStatsPosts = ({ userData }) => {
 
   const { data, isLoading } = useQuery({
     queryKey: ["userPostCount", userData?._id],
-    enabled: userData?._id,
+    enabled: !!userData?._id,
     queryFn: () => countPosts({ userID: userData?._id }),
     refetchOnWindowFocus: false,
   });

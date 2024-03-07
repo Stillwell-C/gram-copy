@@ -10,7 +10,7 @@ const ProfileUserStatsFollowers = ({ userData }) => {
 
   const { data, isLoading } = useQuery({
     queryKey: ["userFollowerCount", userData?._id],
-    enabled: userData?._id,
+    enabled: !!userData?._id,
     queryFn: () => getFollowerCount({ userID: userData?._id }),
     refetchOnWindowFocus: false,
   });
