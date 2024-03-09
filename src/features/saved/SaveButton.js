@@ -23,6 +23,7 @@ const SaveButton = ({ postID }) => {
 
   const { data: save, isLoading } = useQuery({
     queryKey: saveQueryKey,
+    enabled: authenticatedUser,
     queryFn: () => getSave({ parentPostID: postID }),
     refetchOnWindowFocus: false,
   });

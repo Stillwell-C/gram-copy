@@ -24,6 +24,7 @@ const LikeButton = ({ postID, postPage, queryKey }) => {
 
   const { data: like, isLoading } = useQuery({
     queryKey: likeQueryKey,
+    enabled: authenticatedUser,
     queryFn: () => getLike({ parentPostID: postID }),
     refetchOnWindowFocus: false,
   });
