@@ -1,3 +1,5 @@
+[![kr](https://img.shields.io/badge/언어-한국어-red.svg)](https://github.com/Stillwell-C/gram-copy/blob/main/README-kr.md)
+
 # Gram Copy
 
 This repository is the frontend for Gram Copy, a MERN stack social media application inspired heavily by Instagram.
